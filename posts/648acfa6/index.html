@@ -1,0 +1,150 @@
+<!doctype html><html><title>Kernel_panic</title><meta name=description content="需要打开以下项，保证有足够的调试信息
+1 2 3 4 5 6  CONFIG_DEBUG_KERNEL=y CONFIG_DEBUG_INFO=y CONFIG_KALLSYMS=y CONFIG_KALLSYMS_ALL=y CONFIG_DEBUG_BUGVERBOSE=y CONFIG_STACKTRACE=y   "><meta name=hash content="98a25f045e5faa0e35bf6c2d7e190717b14cea0c "><meta name=lastmod content="2021-02-04 20:08:57 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>Kernel_panic</h1><p><small>2021-01-24, updated 2021-02-04</small></p></header><p>需要打开以下项，保证有足够的调试信息</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>CONFIG_DEBUG_KERNEL=y
+CONFIG_DEBUG_INFO=y
+CONFIG_KALLSYMS=y
+CONFIG_KALLSYMS_ALL=y
+CONFIG_DEBUG_BUGVERBOSE=y
+CONFIG_STACKTRACE=y
+</code></pre></td></tr></table></div></div><p>panic 信息</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[  201.500000] hello,world
+[  201.510000] Kernel bug detected[#1]:
+[  201.510000] CPU: 0 PID: 2491 Comm: insmod Not tainted 3.10.90 #10
+[  201.510000] task: 871732a0 ti: 84248000 task.ti: 84248000
+[  201.510000] $ 0   : 00000000 80840000 00000001 000052a0
+[  201.510000] $ 4   : c013c260 c013c260 ffffd988 00100000
+[  201.510000] $ 8   : 00000064 00000003 00000000 00000000
+[  201.510000] $12   : 00000187 00000000 00000000 00000000
+[  201.510000] $16   : c013c260 8002f34c 00000000 c0144000
+[  201.510000] $20   : 00000000 806c0000 00000001 840dbe80
+[  201.510000] $24   : 00000002 8000183c                  
+[  201.510000] $28   : 84248000 8424bdc8 00000001 c0144084
+[  201.510000] Hi    : 00000000
+[  201.510000] Lo    : 364ea000
+[  201.510000] epc   : 8002f354 add_timer+0x8/0x14
+[  201.510000]     Not tainted
+[  201.510000] ra    : c0144084 init_module+0x84/0x9c [timer_test]
+[  201.510000] Status: 1000f403 KERNEL EXL IE 
+[  201.510000] Cause : 10800034
+[  201.510000] PrId  : 00019385 (MIPS 24Kc)
+[  201.510000] Modules linked in: timer_test(+) GobiNet [last unloaded: timer_test]
+[  201.510000] Process insmod (pid: 2491, threadinfo=84248000, task=871732a0, tls=77e0be50)
+[  201.510000] Stack : 00000001 00000001 c013c120 ffffffff c013c12c c013c12c 80840000 8000043c
+          00000000 8080007f 00000001 8428fe00 8424bed8 c013c12c c013c120 80046e04
+          8424bed8 c013c12c c013c120 8424bed8 806c0000 00000000 806c0000 80061c48
+          c013c120 771f8e54 00000001 8008f920 c013c12c 00007fff 8005f290 8424be88
+          fff94000 00000000 00000000 00000000 00000000 00000000 00000000 00464008
+          ...
+[  201.510000] Call Trace:
+[  201.510000] [&lt;8002f354&gt;] add_timer+0x8/0x14
+[  201.510000] [&lt;c0144084&gt;] init_module+0x84/0x9c [timer_test]
+[  201.510000] [&lt;8000043c&gt;] do_one_initcall+0x3c/0x1b4
+[  201.510000] [&lt;80061c48&gt;] load_module+0xf84/0x14c4
+[  201.510000] [&lt;8006225c&gt;] SyS_init_module+0xd4/0xec
+[  201.510000] [&lt;8000b244&gt;] stack_done+0x20/0x40
+[  201.510000] 
+[  201.510000] 
+Code: 00402021  8c820000  0002102b &lt;00020336&gt; 0800bc71  8c850008  27bdffd8  afbf0024  afb30020 
+[  201.510000] c0_compare_interrupt 64
+
+</code></pre></td></tr></table></div></div><p>可以使用gdb来查看错误位置</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ gdb vmlinux 
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &#34;show copying&#34;
+and &#34;show warranty&#34; for details.
+This GDB was configured as &#34;x86_64-linux-gnu&#34;.
+Type &#34;show configuration&#34; for configuration details.
+For bug reporting instructions, please see:
+&lt;http://www.gnu.org/software/gdb/bugs/&gt;.
+Find the GDB manual and other documentation resources online at:
+&lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+For help, type &#34;help&#34;.
+Type &#34;apropos word&#34; to search for commands related to &#34;word&#34;...
+Reading symbols from vmlinux...done.
+(gdb) l *add_timer+0x8
+0x8002f3e8 is in add_timer (/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10/arch/mips-ori/include/asm/bug.h:29).
+24                      if (condition)
+25                              BUG();
+26                      else
+27                              return;
+28              }
+29              __asm__ __volatile__(&#34;tne $0, %0, %1&#34;
+30                                   : : &#34;r&#34; (condition), &#34;i&#34; (BRK_BUG));
+31      }
+32
+33      #define BUG_ON(C) __BUG_ON((unsigned long)(C))
+</code></pre></td></tr></table></div></div><p>需要有Reading symbols from vmlinux&mldr;done.才能调试，如果没有会显示Reading symbols from vmlinux&mldr;(no debugging symbols found)&mldr;done.</p></article></div></body><div><small>words: 564 tags:</small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

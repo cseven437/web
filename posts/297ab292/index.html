@@ -1,0 +1,188 @@
+<!doctype html><html><title>树莓派摄像头的使用</title><meta name=description content="准备一个树莓派，一个摄像头模块
+"><meta name=hash content="94775a034adb00951a6ce8bdd9a483a39f827943 "><meta name=lastmod content="2021-05-14 17:58:43 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>树莓派摄像头的使用</h1><p><small>2021-05-12, updated 2021-05-14</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#开启camera>开启camera</a></li><li><a href=#测试是否可以正常使用>测试是否可以正常使用</a></li><li><a href=#通过vlc实现http视频播放>通过vlc实现http视频播放</a></li><li><a href=#直播推流>直播推流</a></li><li><a href=#raspivid-部分参数解释>raspivid 部分参数解释</a></li></ul></nav></aside><p>准备一个树莓派，一个摄像头模块</p><h2 id=开启camera>开启camera</h2><ol><li>执行<code>sudo raspi-config</code></li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>┌─────────────────────────────┤ Raspberry Pi Software Configuration Tool (raspi-config) ├──────────────────────────────┐ 
+│                                                                                                                      │ 
+│                           1 System Options       Configure system settings                                           │ 
+│                           2 Display Options      Configure display settings                                          │ 
+│                           3 Interface Options    Configure connections to peripherals                                │ 
+│                           4 Performance Options  Configure performance settings                                      │ 
+│                           5 Localisation Options Configure language and regional settings                            │ 
+│                           6 Advanced Options     Configure advanced settings                                         │ 
+│                           8 Update               Update this tool to the latest version                              │ 
+│                           9 About raspi-config   Information about this configuration tool                           │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                  &lt;Select&gt;                                  &lt;Finish&gt;                                  │ 
+│                                                                                                                      │ 
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 
+</code></pre></td></tr></table></div></div><ol start=2><li>选择 3</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>┌─────────────────────────────┤ Raspberry Pi Software Configuration Tool (raspi-config) ├──────────────────────────────┐ 
+│                                                                                                                      │ 
+│                        P1 Camera      Enable/disable connection to the Raspberry Pi Camera                           │ 
+│                        P2 SSH         Enable/disable remote command line access using SSH                            │ 
+│                        P3 VNC         Enable/disable graphical remote access using RealVNC                           │ 
+│                        P4 SPI         Enable/disable automatic loading of SPI kernel module                          │ 
+│                        P5 I2C         Enable/disable automatic loading of I2C kernel module                          │ 
+│                        P6 Serial Port Enable/disable shell messages on the serial connection                         │ 
+│                        P7 1-Wire      Enable/disable one-wire interface                                              │ 
+│                        P8 Remote GPIO Enable/disable remote access to GPIO pins                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                  &lt;Select&gt;                                  &lt;Back&gt;                                    │ 
+│                                                                                                                      │ 
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 
+</code></pre></td></tr></table></div></div><ol start=3><li>选择<code>P1 Camera</code></li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback> ┌──────────────────────────────────────────────────────────┐
+ │                                                          │
+ │ Would you like the camera interface to be enabled?       │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │               &lt;Yes&gt;                  &lt;No&gt;                │
+ │                                                          │
+ └──────────────────────────────────────────────────────────┘
+</code></pre></td></tr></table></div></div><ol start=4><li>选择<code>Yes</code> 然后重启系统</li></ol><h2 id=测试是否可以正常使用>测试是否可以正常使用</h2><p>执行<code>raspistill -o image.jpg</code>看是否可以拍照成功</p><h2 id=通过vlc实现http视频播放>通过vlc实现http视频播放</h2><p>在树莓派中安装vlc</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>sudo apt update
+sudo apt install vlc
+</code></pre></td></tr></table></div></div><p>执行以下代码</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>raspivid -o - -t <span style=color:#ae81ff>0</span>  -fps <span style=color:#ae81ff>30</span> -b <span style=color:#ae81ff>6000000</span> -ex auto -awb auto -vs  |cvlc -vvv stream:///dev/stdin --sout <span style=color:#e6db74>&#39;#standard{access=http,mux=ts,dst=:8080}&#39;</span> :demux<span style=color:#f92672>=</span>h264
+</code></pre></td></tr></table></div></div><p>在同一个局域网的电脑中，使用视频播放器打开url <code>http://192.168.1.9:8080</code>， 不可以用浏览器打开</p><h2 id=直播推流>直播推流</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>pi@raspberrypi:~ $ cat obs-start.sh 
+<span style=color:#75715e>#!/bin/sh</span>
+
+rtmpurl<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;&#34;</span>
+rtmpval<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;&#34;</span>
+
+<span style=color:#66d9ef>if</span> tmux has-session -t <span style=color:#e6db74>&#39;obs-start&#39;</span>; <span style=color:#66d9ef>then</span>
+        echo <span style=color:#e6db74>&#34;obs is already running.&#34;</span>
+        echo <span style=color:#e6db74>&#34;To stop it use: ./obs-stop.sh&#34;</span>
+        echo <span style=color:#e6db74>&#34;To attach to it use: tmux attach -t obs&#34;</span>
+<span style=color:#66d9ef>else</span>
+        tmux new-session -s <span style=color:#e6db74>&#39;obs&#39;</span> -d
+        tmux send-keys <span style=color:#e6db74>&#39;raspivid -o - -t 0 -fps 24 -b 6000000 -ex auto | ffmpeg -re -stream_loop -1 -f h264 -i - -vcodec copy -acodec aac -b:a 192k -f flv &#34;&#39;</span>$rtmpurl$rtmpval<span style=color:#e6db74>&#39;&#34;&#39;</span> <span style=color:#e6db74>&#39;C-m&#39;</span>
+        <span style=color:#75715e>#tmux split-window</span>
+        <span style=color:#75715e>#tmux select-layout tiled 2&gt;/dev/null</span>
+        tmux rename-window <span style=color:#e6db74>&#39;obs&#39;</span>
+
+        echo <span style=color:#e6db74>&#34;obs has been started in tmux session &#39;obs&#39;&#34;</span>
+        echo <span style=color:#e6db74>&#34;To attach to session, use: tmux attach -t obs&#34;</span>
+        echo <span style=color:#e6db74>&#34;To switch between panes use Ctrl+B-ArrowKey&#34;</span>
+        echo <span style=color:#e6db74>&#34;To deattach, press Ctrl+B-D&#34;</span>
+        echo <span style=color:#e6db74>&#34;To stop obs, use: ./obs-stop.sh&#34;</span>
+<span style=color:#66d9ef>fi</span>
+pi@raspberrypi:~ $ cat obs-stop.sh 
+<span style=color:#75715e>#!/bin/sh</span>
+<span style=color:#66d9ef>if</span> tmux has-session -t <span style=color:#e6db74>&#39;obs&#39;</span> 2&gt;/dev/null; <span style=color:#66d9ef>then</span>
+        tmux kill-session -t obs 2&gt;/dev/null
+        echo <span style=color:#e6db74>&#34;obs has been stopped.&#34;</span>
+<span style=color:#66d9ef>else</span>
+        echo <span style=color:#e6db74>&#34;obs is not running!&#34;</span>
+<span style=color:#66d9ef>fi</span>
+</code></pre></td></tr></table></div></div><h2 id=raspivid-部分参数解释>raspivid 部分参数解释</h2><ul><li>fps: 设置fps值</li><li>b: 设置码率</li><li>-ex: 曝光模式选项，有夜拍模式的摄像头可以选择auto，会自动打开夜拍模式<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Exposure mode options :
+off,auto,night,nightpreview,backlight,spotlight,sports,snow,beach,verylong,fixedfps,antishake,fireworks
+</code></pre></td></tr></table></div></div></li></ul></article></div></body><div><small>words: 1245 tags:</small>
+<small><code><a href=https://arair.net/tags/raspberry>raspberry</a></code></small>
+<small><code><a href=https://arair.net/tags/camera>camera</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

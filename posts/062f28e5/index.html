@@ -1,0 +1,211 @@
+<!doctype html><html><title>linux进程间通信-消息队列</title><meta name=description content="简介 消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 msgget用于创建一个新队列或打开一个现存的队列。 msgsnd用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给msgsnd。msgrcv用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。
+"><meta name=lastmod content="2021-03-14 10:41:23 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux进程间通信-消息队列</h1><p><small>2021-03-14</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#简介>简介</a></li><li><a href=#函数介绍>函数介绍</a><ul><li><a href=#ftok>ftok</a></li><li><a href=#msgget>msgget</a></li><li><a href=#msgsnd>msgsnd</a></li><li><a href=#msgrcv>msgrcv</a></li><li><a href=#msgctl>msgctl</a></li></ul></li><li><a href=#示例>示例</a></li><li><a href=#其它>其它</a></li></ul></nav></aside><h2 id=简介>简介</h2><p>消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 <code>msgget</code>用于创建一个新队列或打开一个现存的队列。 <code>msgsnd</code>用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给<code>msgsnd</code>。<code>msgrcv</code>用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。</p><h2 id=函数介绍>函数介绍</h2><h3 id=ftok>ftok</h3><p>生成一个key(键值)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+key_t <span style=color:#a6e22e>ftok</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>pathname, <span style=color:#66d9ef>int</span> proj_id);
+</code></pre></td></tr></table></div></div><ul><li>ftok根据路径名，提取文件信息，再根据这些文件信息及project ID合成key，该路径可以随便设置。</li><li>该路径是必须存在的，ftok只是根据文件inode在系统内的唯一性来取一个数值，和文件的权限无关。</li><li>proj_id是可以根据自己的约定，随意设置。这个数字,有的称之为project ID; 在UNIX系统上,它的取值是1到255;</li></ul><h3 id=msgget>msgget</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/msg.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>msgget</span>(key_t key, <span style=color:#66d9ef>int</span> msgflg);
+</code></pre></td></tr></table></div></div><p>功能：创建或取得一个消息队列对象
+返回：消息队列对象的id 同一个key得到同一个对象
+格式：msgget(key,flag|mode);
+flag:可以是0或者IPC_CREAT(不存在就创建)
+mode:同文件权限一样</p><h3 id=msgsnd>msgsnd</h3><p>将msgp消息写入标识为msgid的消息队列</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>msgsnd</span>(<span style=color:#66d9ef>int</span> msqid, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>msgp, size_t msgsz, <span style=color:#66d9ef>int</span> msgflg);
+</code></pre></td></tr></table></div></div><ul><li>msgp<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> msgbuf {
+    <span style=color:#66d9ef>long</span> mtype; <span style=color:#75715e>/* message type, must be &gt; 0 */</span><span style=color:#960050;background-color:#1e0010>消息的类型必须</span><span style=color:#f92672>&gt;</span><span style=color:#ae81ff>0</span>
+    <span style=color:#66d9ef>char</span> mtext[<span style=color:#ae81ff>1</span>]; <span style=color:#75715e>/* message data */</span><span style=color:#960050;background-color:#1e0010>长度随意</span>
+};
+</code></pre></td></tr></table></div></div></li><li>msgsz：要发送的消息的大小 不包括消息的类型占用的4个字节</li><li>msgflg： 如果是0 当消息队列为满 msgsnd会阻塞，如果是IPC_NOWAIT 当消息队列为满时 不阻塞 立即返回</li></ul><p>返回值：</p><ul><li>成功返回id</li><li>失败返回-1</li></ul><h3 id=msgrcv>msgrcv</h3><p>从标识符为msgid的消息队列里接收一个指定类型的消息 并 存储于msgp中 读取后 把消息从消息队列中删除</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>ssize_t <span style=color:#a6e22e>msgrcv</span>(<span style=color:#66d9ef>int</span> msqid, <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>msgp, size_t msgsz, <span style=color:#66d9ef>long</span> msgtyp,
+<span style=color:#66d9ef>int</span> msgflg);
+</code></pre></td></tr></table></div></div><p>参数:</p><ul><li>msgtyp：为 0 表示无论什么类型 都可以接收</li><li>msgp：存放消息的结构体</li><li>msgsz：要接收的消息的大小 不包含消息类型占用的4字节</li><li>msgflg：如果是0 标识如果没有指定类型的消息 就一直等待，如果是IPC_NOWAIT 则表示不等待</li></ul><h3 id=msgctl>msgctl</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>msgctl</span>(<span style=color:#66d9ef>int</span> msqid, <span style=color:#66d9ef>int</span> cmd, <span style=color:#66d9ef>struct</span> msqid_ds <span style=color:#f92672>*</span>buf);
+msgctl(msgid,IPC_RMID<span style=color:#960050;background-color:#1e0010>，</span>NULL);<span style=color:#75715e>//删除消息队列对象
+</span></code></pre></td></tr></table></div></div><h2 id=示例>示例</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>// snd.c
+</span><span style=color:#75715e></span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;    </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;  </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/msg.h&gt;  </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;error.h&gt;    </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;   </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;fcntl.h&gt;    </span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>struct</span>{
+    <span style=color:#66d9ef>long</span> type;
+    <span style=color:#66d9ef>char</span> name[<span style=color:#ae81ff>20</span>];
+    <span style=color:#66d9ef>int</span> age;
+}Msg;
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+    key_t key <span style=color:#f92672>=</span> ftok(<span style=color:#e6db74>&#34;./ftok_kk&#34;</span>,<span style=color:#e6db74>&#39;6&#39;</span>);
+    printf(<span style=color:#e6db74>&#34;key:%x</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,key);
+
+    <span style=color:#66d9ef>int</span> msgid <span style=color:#f92672>=</span> msgget(key,IPC_CREAT<span style=color:#f92672>|</span>O_WRONLY<span style=color:#f92672>|</span><span style=color:#ae81ff>0777</span>);
+    <span style=color:#66d9ef>if</span>(msgid<span style=color:#f92672>&lt;</span><span style=color:#ae81ff>0</span>)
+    {   
+        perror(<span style=color:#e6db74>&#34;msgget error!&#34;</span>);
+        exit(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>);
+    }   
+
+    Msg m;
+    puts(<span style=color:#e6db74>&#34;please input your type name age:&#34;</span>);
+    scanf(<span style=color:#e6db74>&#34;%ld%s%d&#34;</span>,<span style=color:#f92672>&amp;</span>m.type,m.name,<span style=color:#f92672>&amp;</span>m.age);
+    msgsnd(msgid,<span style=color:#f92672>&amp;</span>m,<span style=color:#66d9ef>sizeof</span>(m)<span style=color:#f92672>-</span><span style=color:#66d9ef>sizeof</span>(m.type),<span style=color:#ae81ff>0</span>);
+
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>// rcv.c
+</span><span style=color:#75715e></span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;    </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;  </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/msg.h&gt;  </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;error.h&gt;    </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;   </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;fcntl.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span> 
+<span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>struct</span>{
+    <span style=color:#66d9ef>long</span> type;
+    <span style=color:#66d9ef>char</span> name[<span style=color:#ae81ff>20</span>];
+    <span style=color:#66d9ef>int</span> age;
+}Msg;
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+    key_t key <span style=color:#f92672>=</span> ftok(<span style=color:#e6db74>&#34;./ftok_kk&#34;</span>,<span style=color:#e6db74>&#39;6&#39;</span>);
+    printf(<span style=color:#e6db74>&#34;key:%x</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,key);
+
+    <span style=color:#66d9ef>int</span> msgid <span style=color:#f92672>=</span> msgget(key,O_RDONLY);
+    <span style=color:#66d9ef>if</span>(msgid<span style=color:#f92672>&lt;</span><span style=color:#ae81ff>0</span>)
+    {   
+        perror(<span style=color:#e6db74>&#34;msgget error!&#34;</span>);
+        exit(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>);
+    }   
+
+    Msg rcv;
+    <span style=color:#66d9ef>long</span> type;
+    puts(<span style=color:#e6db74>&#34;please input type you want!&#34;</span>);
+    scanf(<span style=color:#e6db74>&#34;%ld&#34;</span>,<span style=color:#f92672>&amp;</span>type);
+
+    msgrcv(msgid,<span style=color:#f92672>&amp;</span>rcv,<span style=color:#66d9ef>sizeof</span>(rcv)<span style=color:#f92672>-</span><span style=color:#66d9ef>sizeof</span>(type),type,<span style=color:#ae81ff>0</span>);
+    printf(<span style=color:#e6db74>&#34;rcv--name:%s age:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,rcv.name,rcv.age);
+
+    msgctl(msgid,IPC_RMID,NULL);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ ./snd
+key:36012dbf
+please input your type name age:
+3
+1
+2
+
+$ ./rcv
+key:36012dbf
+please input type you want!
+3
+rcv--name:1 age:2
+</code></pre></td></tr></table></div></div><h2 id=其它>其它</h2><p><code>ipcs -q</code> 查看消息队列</p><p>参考: <a href=https://www.cnblogs.com/liudw-0215/p/8978945.html>https://www.cnblogs.com/liudw-0215/p/8978945.html</a></p></article></div></body><div><small>words: 1174 tags:</small>
+<small><code><a href=https://arair.net/tags/linux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1>linux进程间通信</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

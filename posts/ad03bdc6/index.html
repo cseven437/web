@@ -1,0 +1,101 @@
+<!doctype html><html><title>Docker</title><meta name=description content="Docker 镜像加速 国内从DockerHub拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker官方和国内很多云服务商都提供了国内加速器服务，例如：
+ Docker官方提供地中国镜像库：https://registry.docker-cn.com 七牛云加速器：https://reg-mirror.qiniu.com  当配置某个加速器地址之后，若发现拉取不到镜像，请切换到另一个加速器地址。国内各大云服务商均提供了Docker镜像加速服务，建议根据运行Docker地云平台选择对应地镜像加速服务。
+我们以Docker官方加速器为例进行介绍。
+"><meta name=hash content="56699c5398e5f8e3d5c02761edc644a7b34c249e "><meta name=lastmod content="2021-04-12 15:40:08 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>Docker</h1><p><small>2021-02-07, updated 2021-04-12</small></p></header><h2 id=docker-镜像加速>Docker 镜像加速</h2><p>国内从DockerHub拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker官方和国内很多云服务商都提供了国内加速器服务，例如：</p><ul><li>Docker官方提供地中国镜像库：<a href=https://registry.docker-cn.com>https://registry.docker-cn.com</a></li><li>七牛云加速器：<a href=https://reg-mirror.qiniu.com>https://reg-mirror.qiniu.com</a></li></ul><p>当配置某个加速器地址之后，若发现拉取不到镜像，请切换到另一个加速器地址。国内各大云服务商均提供了Docker镜像加速服务，建议根据运行Docker地云平台选择对应地镜像加速服务。</p><p>我们以Docker官方加速器为例进行介绍。</p><h2 id=ubuntu1404debian7>Ubuntu14.04、Debian7</h2><p>对于使用upstart地系统而言，编辑/etc/default/docker文件，在其中地DOCKER_OPTS中配置加速器地址：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>DOCKER_OPTS=&#34;--registry-mirror=https://registry.docker-cn.com&#34;
+</code></pre></td></tr></table></div></div><h2 id=windows配置修改>windows配置修改</h2><p>修改文件<code>C:\Users\(username)\AppData\Roaming\Docker\settings.json</code></p><ul><li>memoryMiB: 内存</li><li>cpus: cpu核心数量</li></ul><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+  <span style=color:#f92672>&#34;settingsVersion&#34;</span>: <span style=color:#ae81ff>6</span>,
+  <span style=color:#f92672>&#34;autoStart&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;analyticsEnabled&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;useCloudCli&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;displayedTutorial&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;displayed15063Deprecation&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;displayRestartDialog&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;displaySwitchWinLinContainers&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;displaySwitchVersionPack&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;latestBannerKey&#34;</span>: <span style=color:#66d9ef>null</span>,
+  <span style=color:#f92672>&#34;acceptCanaryUpdates&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;dataFolder&#34;</span>: <span style=color:#e6db74>&#34;C:\\ProgramData\\DockerDesktop\\vm-data&#34;</span>,
+  <span style=color:#f92672>&#34;memoryMiB&#34;</span>: <span style=color:#ae81ff>512</span>,
+  <span style=color:#f92672>&#34;swapMiB&#34;</span>: <span style=color:#ae81ff>512</span>,
+  <span style=color:#f92672>&#34;cpus&#34;</span>: <span style=color:#ae81ff>1</span>,
+  <span style=color:#f92672>&#34;diskSizeMiB&#34;</span>: <span style=color:#ae81ff>65536</span>,
+  <span style=color:#f92672>&#34;vpnkitCIDR&#34;</span>: <span style=color:#e6db74>&#34;192.168.65.0/28&#34;</span>,
+  <span style=color:#f92672>&#34;socksProxyPort&#34;</span>: <span style=color:#ae81ff>0</span>,
+  <span style=color:#f92672>&#34;proxyHttpMode&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;overrideProxyHttp&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+  <span style=color:#f92672>&#34;overrideProxyHttps&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+  <span style=color:#f92672>&#34;overrideProxyExclude&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+  <span style=color:#f92672>&#34;filesharingDirectories&#34;</span>: [],
+  <span style=color:#f92672>&#34;synchronizedDirectories&#34;</span>: [],
+  <span style=color:#f92672>&#34;useDnsForwarder&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;dns&#34;</span>: <span style=color:#e6db74>&#34;8.8.8.8&#34;</span>,
+  <span style=color:#f92672>&#34;kubernetesEnabled&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;showKubernetesSystemContainers&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;kubernetesInitialInstallPerformed&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;versionPack&#34;</span>: <span style=color:#e6db74>&#34;default&#34;</span>,
+  <span style=color:#f92672>&#34;executableDate&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+  <span style=color:#f92672>&#34;useWindowsContainers&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;swarmFederationExplicitlyLoggedOut&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;activeOrganizationName&#34;</span>: <span style=color:#66d9ef>null</span>,
+  <span style=color:#f92672>&#34;exposeDockerAPIOnTCP2375&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;lifecycleTimeoutSeconds&#34;</span>: <span style=color:#ae81ff>600</span>,
+  <span style=color:#f92672>&#34;customWslDistroDir&#34;</span>: <span style=color:#66d9ef>null</span>,
+  <span style=color:#f92672>&#34;wslEngineEnabled&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;integratedWslDistros&#34;</span>: [],
+  <span style=color:#f92672>&#34;enableIntegrationWithDefaultWslDistro&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;skipUpdateToWSLPrompt&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;skipWSLMountPerfWarning&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;sharedDrives&#34;</span>: <span style=color:#66d9ef>null</span>,
+  <span style=color:#f92672>&#34;networkCIDR&#34;</span>: <span style=color:#66d9ef>null</span>,
+  <span style=color:#f92672>&#34;diskPath&#34;</span>: <span style=color:#66d9ef>null</span>
+}
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 572 tags:</small>
+<small><code><a href=https://arair.net/tags/docker>docker</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

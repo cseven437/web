@@ -1,0 +1,323 @@
+<!doctype html><html><title>linux c--标准IO</title><meta name=description content="标准I/O是ANSI C建立的一个标准I/O模型，是一个标准函数包和stdio.h头文件中的定义，具有一定的可移植性。标准I/O库处理很多细节。例如缓存分配，以优化长度执行I/O等。标准的I/O提供了三种类型的缓存。
+ 全缓存：当填满标准I/O缓存后才进行实际的I/O操作。 行缓存：当输入或输出中遇到新行符时，标准I/O库执行I/O操作。 不带缓存：stderr就是了。 "><meta name=lastmod content="2021-03-08 14:07:53 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux c--标准IO</h1><p><small>2021-03-08</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#fopen>fopen</a></li><li><a href=#fclose>fclose</a></li><li><a href=#fread>fread</a></li><li><a href=#fwrite>fwrite</a></li><li><a href=#fseek>fseek</a></li><li><a href=#ftell>ftell</a></li><li><a href=#freopen>freopen</a></li><li><a href=#fgets>fgets</a></li><li><a href=#ferror>ferror</a></li></ul></nav></aside><p>标准I/O是ANSI C建立的一个标准I/O模型，是一个标准函数包和stdio.h头文件中的定义，具有一定的可移植性。标准I/O库处理很多细节。例如缓存分配，以优化长度执行I/O等。标准的I/O提供了三种类型的缓存。</p><ol><li>全缓存：当填满标准I/O缓存后才进行实际的I/O操作。</li><li>行缓存：当输入或输出中遇到新行符时，标准I/O库执行I/O操作。</li><li>不带缓存：stderr就是了。</li></ol><h2 id=fopen>fopen</h2><p>C 库函数<code>FILE _fopen(const char _filename, const char *mode)</code>使用给定的模式 mode 打开 filename 所指向的文件。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>FILE <span style=color:#f92672>*</span>fopen(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>filename, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>mode)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>filename &ndash; 这是 C 字符串，包含了要打开的文件名称。</li><li>mode &ndash; 这是 C 字符串，包含了文件访问模式，模式如下：<ul><li>&ldquo;r&rdquo; 打开一个用于读取的文件。该文件必须存在。</li><li>&ldquo;w&rdquo; 创建一个用于写入的空文件。如果文件名称与已存在的文件相同，则会删除已有文件的内容，文件被视为一个新的空文件。</li><li>&ldquo;a&rdquo; 追加到一个文件。写操作向文件末尾追加数据。如果文件不存在，则创建文件。</li><li>&ldquo;r+&rdquo; 打开一个用于更新的文件，可读取也可写入。该文件必须存在。</li><li>&ldquo;w+&rdquo; 创建一个用于读写的空文件。</li><li>&ldquo;a+&rdquo; 打开一个用于读取和追加的文件。</li><li>控制读写方式的字符串<ul><li>&ldquo;t&rdquo; 文本文件。如果不写，默认为"t"。</li><li>&ldquo;b&rdquo; 二进制文件。</li></ul></li></ul></li></ul><p>调用 fopen() 函数时必须指明读写权限，但是可以不指明读写方式（此时默认为"t"）。</p><p>返回值</p><p>该函数返回一个 FILE 指针。否则返回 NULL，且设置全局变量 errno 来标识错误。</p><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+   FILE <span style=color:#f92672>*</span> fp;
+
+   fp <span style=color:#f92672>=</span> fopen (<span style=color:#e6db74>&#34;file.txt&#34;</span>, <span style=color:#e6db74>&#34;w+&#34;</span>);
+   fprintf(fp, <span style=color:#e6db74>&#34;%s %s %s %d&#34;</span>, <span style=color:#e6db74>&#34;We&#34;</span>, <span style=color:#e6db74>&#34;are&#34;</span>, <span style=color:#e6db74>&#34;in&#34;</span>, <span style=color:#ae81ff>2014</span>);
+   
+   fclose(fp);
+   
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><h2 id=fclose>fclose</h2><p>C 库函数<code>int fclose(FILE *stream)</code>关闭流 stream。刷新所有的缓冲区。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> fclose(FILE <span style=color:#f92672>*</span>stream)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>stream &ndash; 这是指向 FILE 对象的指针，该 FILE 对象指定了要被关闭的流</li></ul><p>返回值</p><p>如果流成功关闭，则该方法返回零。如果失败，则返回 EOF。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+   FILE <span style=color:#f92672>*</span>fp;
+ 
+   fp <span style=color:#f92672>=</span> fopen(<span style=color:#e6db74>&#34;file.txt&#34;</span>, <span style=color:#e6db74>&#34;w&#34;</span>);
+
+   fprintf(fp, <span style=color:#e6db74>&#34;%s&#34;</span>, <span style=color:#e6db74>&#34;这里是 runoob.com&#34;</span>);
+   fclose(fp);
+   
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><h2 id=fread>fread</h2><p>C 库函数<code>size_t fread(void _ptr, size_t size, size_t nmemb, FILE _stream)</code>从给定流 stream 读取数据到 ptr 所指向的数组中。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>size_t fread(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>ptr, size_t size, size_t nmemb, FILE <span style=color:#f92672>*</span>stream)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>ptr &ndash; 这是指向带有最小尺寸 size*nmemb 字节的内存块的指针。</li><li>size &ndash; 这是要读取的每个元素的大小，以字节为单位。</li><li>nmemb &ndash; 这是元素的个数，每个元素的大小为 size 字节。</li><li>stream &ndash; 这是指向 FILE 对象的指针，该 FILE 对象指定了一个输入流。</li></ul><p>返回值</p><p>成功读取的元素总数会以 size_t 对象返回，size_t 对象是一个整型数据类型。如果总数与 nmemb 参数不同，则可能发生了一个错误或者到达了文件末尾。</p><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span> 
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+   FILE <span style=color:#f92672>*</span>fp;
+   <span style=color:#66d9ef>char</span> c[] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;This is runoob&#34;</span>;
+   <span style=color:#66d9ef>char</span> buffer[<span style=color:#ae81ff>20</span>];
+ 
+   <span style=color:#75715e>/* 打开文件用于读写 */</span>
+   fp <span style=color:#f92672>=</span> fopen(<span style=color:#e6db74>&#34;file.txt&#34;</span>, <span style=color:#e6db74>&#34;w+&#34;</span>);
+ 
+   <span style=color:#75715e>/* 写入数据到文件 */</span>
+   fwrite(c, strlen(c) <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, fp);
+ 
+   <span style=color:#75715e>/* 查找文件的开头 */</span>
+   fseek(fp, <span style=color:#ae81ff>0</span>, SEEK_SET);
+ 
+   <span style=color:#75715e>/* 读取并显示数据 */</span>
+   fread(buffer, strlen(c)<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, fp);
+   printf(<span style=color:#e6db74>&#34;%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, buffer);
+   fclose(fp);
+   
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><h2 id=fwrite>fwrite</h2><p>C 库函数<code>size_t fwrite(const void _ptr, size_t size, size_t nmemb, FILE _stream)</code>把 ptr 所指向的数组中的数据写入到给定流 stream 中。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>size_t fwrite(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>ptr, size_t size, size_t nmemb, FILE <span style=color:#f92672>*</span>stream)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li><p>ptr &ndash; 这是指向要被写入的元素数组的指针。</p></li><li><p>size &ndash; 这是要被写入的每个元素的大小，以字节为单位。</p></li><li><p>nmemb &ndash; 这是元素的个数，每个元素的大小为 size 字节。</p></li><li><p>stream &ndash; 这是指向 FILE 对象的指针，该 FILE 对象指定了一个输出流。</p></li></ul><p>返回值</p><p>如果成功，该函数返回一个 size_t 对象，表示元素的总数，该对象是一个整型数据类型。如果该数字与 nmemb 参数不同，则会显示一个错误。</p><p>注意</p><p>fwrite写完后文件流指针会偏移到写入字符串的最后位置</p><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span> 
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span> ()
+{
+   FILE <span style=color:#f92672>*</span>fp;
+   <span style=color:#66d9ef>char</span> str[] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;This is runoob.com&#34;</span>;
+ 
+   fp <span style=color:#f92672>=</span> fopen( <span style=color:#e6db74>&#34;file.txt&#34;</span> , <span style=color:#e6db74>&#34;w&#34;</span> );
+   fwrite(str, <span style=color:#66d9ef>sizeof</span>(str) , <span style=color:#ae81ff>1</span>, fp );
+ 
+   fclose(fp);
+  
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><h2 id=fseek>fseek</h2><p>C 库函数<code>int fseek(FILE *stream, long int offset, int whence)</code>设置流 stream 的文件位置为给定的偏移 offset，参数 offset 意味着从给定的 whence 位置查找的字节数。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> fseek(FILE <span style=color:#f92672>*</span>stream, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>int</span> offset, <span style=color:#66d9ef>int</span> whence)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>stream &ndash; 这是指向 FILE 对象的指针，该 FILE 对象标识了流。</li><li>offset &ndash; 这是相对 whence 的偏移量，以字节为单位。</li><li>whence &ndash; 这是表示开始添加偏移 offset 的位置。它一般指定为下列常量之一：<ul><li>SEEK_SET 文件的开头</li><li>SEEK_CUR 文件指针的当前位置</li><li>SEEK_END 文件的末尾</li></ul></li></ul><p>返回值</p><p>如果成功，则该函数返回零，否则返回非零值。</p><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span> ()
+{
+   FILE <span style=color:#f92672>*</span>fp;
+
+   fp <span style=color:#f92672>=</span> fopen(<span style=color:#e6db74>&#34;file.txt&#34;</span>,<span style=color:#e6db74>&#34;w+&#34;</span>);
+   fputs(<span style=color:#e6db74>&#34;This is runoob.com&#34;</span>, fp);
+  
+   fseek( fp, <span style=color:#ae81ff>7</span>, SEEK_SET );
+   fputs(<span style=color:#e6db74>&#34; C Programming Langauge&#34;</span>, fp);
+   fclose(fp);
+   
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><h2 id=ftell>ftell</h2><p>C 库函数<code>long int ftell(FILE *stream)</code>返回给定流 stream 的当前文件位置。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>long</span> <span style=color:#66d9ef>int</span> ftell(FILE <span style=color:#f92672>*</span>stream)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>stream &ndash; 这是指向 FILE 对象的指针，该 FILE 对象标识了流。</li></ul><p>返回值</p><p>该函数返回位置标识符的当前值。如果发生错误，则返回 -1L，全局变量 errno 被设置为一个正值。</p><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span> ()
+{
+   FILE <span style=color:#f92672>*</span>fp;
+   <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>int</span> len;
+
+   fp <span style=color:#f92672>=</span> fopen(<span style=color:#e6db74>&#34;file.txt&#34;</span>, <span style=color:#e6db74>&#34;r&#34;</span>);
+   <span style=color:#66d9ef>if</span>( fp <span style=color:#f92672>==</span> NULL ) 
+   {
+      perror (<span style=color:#e6db74>&#34;打开文件错误&#34;</span>);
+      <span style=color:#66d9ef>return</span>(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>);
+   }
+   <span style=color:#75715e>// fseek  将文件标识符偏移到文件末尾
+</span><span style=color:#75715e></span>   fseek(fp, <span style=color:#ae81ff>0</span>, SEEK_END);
+   
+   <span style=color:#75715e>// 返回当前位置，这里在最后，可以用来表示文件大小
+</span><span style=color:#75715e></span>   len <span style=color:#f92672>=</span> ftell(fp);
+   fclose(fp);
+
+   printf(<span style=color:#e6db74>&#34;file.txt 的总大小 = %ld 字节</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, len);
+   
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><h2 id=freopen>freopen</h2><p>以指定模式重新指定到另一个文件。模式用于指定新文件的访问方式。</p><p>头文件：<code>stdio.h</code></p><p>C89函数声明：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>FILE <span style=color:#f92672>*</span><span style=color:#a6e22e>freopen</span>( <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>filename, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>mode, FILE <span style=color:#f92672>*</span>stream );
+</code></pre></td></tr></table></div></div><p>C99函数声明：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>FILE <span style=color:#f92672>*</span><span style=color:#a6e22e>freopen</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>restrict</span> filename, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>restrict</span> mode, FILE <span style=color:#f92672>*</span> <span style=color:#66d9ef>restrict</span> stream);
+</code></pre></td></tr></table></div></div><p>形参说明：</p><ul><li>filename：需要重定向到的文件名或文件路径。</li><li>mode：代表文件访问权限的字符串。<ul><li>r 打开一个用于读取的文件。该文件必须存在。</li><li>w 创建一个用于写入的空文件。如果文件名称与已存在的文件相同，则会删除已有文件的内容，文件被视为一个新的空文件。</li><li>a 追加到一个文件。写操作向文件末尾追加数据。如果文件不存在，则创建文件。</li><li>r+ 打开一个用于更新的文件，可读取也可写入。该文件必须存在。</li><li>w+ 创建一个用于读写的空文件。</li><li>a+ 打开一个用于读取和追加的文件。</li></ul></li><li>stream：需要被重定向的文件流。</li></ul><p>返回值：如果成功，则返回该指向该输出流的文件指针，否则返回为NULL。</p><p>示例：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span> ()
+{
+   FILE <span style=color:#f92672>*</span>fp;
+
+   printf(<span style=color:#e6db74>&#34;该文本重定向到 stdout</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+
+   fp <span style=color:#f92672>=</span> freopen(<span style=color:#e6db74>&#34;file.txt&#34;</span>, <span style=color:#e6db74>&#34;w+&#34;</span>, stdout);
+
+   printf(<span style=color:#e6db74>&#34;该文本重定向到 file.txt</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+
+   fclose(fp);
+   
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><p>调用<code>freopen()</code>前会打印到标准输出
+调用<code>freopen()</code>后会打印到<code>file.txt</code></p><h2 id=fgets>fgets</h2><p>C 库函数<code>char *fgets(char *str, int n, FILE *stream)</code>从指定的流 stream 读取一行，并把它存储在 str 所指向的字符串内。当读取 (n-1) 个字符时，或者读取到换行符时，或者到达文件末尾时，它会停止，具体视情况而定。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>fgets(<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str, <span style=color:#66d9ef>int</span> n, FILE <span style=color:#f92672>*</span>stream)
+</code></pre></td></tr></table></div></div><p>参数:</p><ul><li>str: 这是指向一个字符数组的指针，该数组存储了要读取的字符串。</li><li>n: 这是要读取的最大字符数（包括最后的空字符）。通常是使用以 str 传递的数组长度。</li><li>stream: 这是指向 FILE 对象的指针，该 FILE 对象标识了要从中读取字符的流。</li></ul><p>返回值:</p><ul><li>成功: 该函数返回相同的 str 参数。如果到达文件末尾或者没有读取到任何字符，str 的内容保持不变，并返回一个空指针。</li><li>错误: 返回一个空指针。</li></ul><h2 id=ferror>ferror</h2><p>C 库函数 <code>int ferror(FILE *stream)</code> 测试给定流 stream 的错误标识符。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> ferror(FILE <span style=color:#f92672>*</span>stream)
+</code></pre></td></tr></table></div></div><p>参数:</p><ul><li>stream: 这是指向 FILE 对象的指针，该 FILE 对象标识了流。</li></ul><p>返回值:</p><p>如果设置了与流关联的错误标识符，该函数返回一个非零值，否则返回一个零值。</p><p>例子:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+   FILE <span style=color:#f92672>*</span>fp;
+   <span style=color:#66d9ef>char</span> c;
+
+   fp <span style=color:#f92672>=</span> fopen(<span style=color:#e6db74>&#34;file.txt&#34;</span>, <span style=color:#e6db74>&#34;w&#34;</span>);
+
+   c <span style=color:#f92672>=</span> fgetc(fp);
+   <span style=color:#66d9ef>if</span>( ferror(fp) )
+   {
+      printf(<span style=color:#e6db74>&#34;读取文件：file.txt 时发生错误</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+   }
+   clearerr(fp);
+   <span style=color:#66d9ef>if</span>( ferror(fp) )
+   {
+      printf(<span style=color:#e6db74>&#34;读取文件：file.txt 时发生错误</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+   }
+   fclose(fp);
+
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><p>假设我们有一个文本文件 file.txt，它是一个空文件。让我们编译并运行上面的程序，因为我们试图读取一个以只写模式打开的文件，这将产生以下结果。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>读取文件：file.txt 时发生错误
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 2910 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

@@ -1,0 +1,395 @@
+<!doctype html><html><title>Security</title><meta name=description content="环境
+1 2  debian: 10 gcc: 8.3.0   技术简介 Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。
+"><meta name=hash content="98a25f045e5faa0e35bf6c2d7e190717b14cea0c "><meta name=lastmod content="2021-02-04 20:08:57 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>Security</h1><p><small>2021-01-31, updated 2021-02-04</small></p></header><p>环境</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>debian: 10
+gcc: 8.3.0
+</code></pre></td></tr></table></div></div><h2 id=技术简介>技术简介</h2><p>Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。</p><h2 id=canary>CANARY</h2><p>启用 CANARY 后，函数开始执行的时候会先往栈里插入 canary 信息，当函数返回时验证插入的 canary 是否被修改，如果是，则说明发生了栈溢出，程序停止运行。</p><p>下面是一个例子：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#66d9ef>char</span> buf[<span style=color:#ae81ff>10</span>];
+    scanf(<span style=color:#e6db74>&#34;%s&#34;</span>, buf);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><p>我们先开启 CANARY，来看看执行的结果：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ gcc -fstack-protector canary.c -o f.out
+$ python -c &#39;print(&#34;A&#34;*20)&#39; | ./f.out
+*** stack smashing detected ***: &lt;unknown&gt; terminated
+Aborted (core dumped)
+</code></pre></td></tr></table></div></div><p>接下来关闭 CANARY：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ gcc -fno-stack-protector canary.c -o fno.out
+$ python -c &#39;print(&#34;A&#34;*20)&#39; | ./fno.out
+Segmentation fault (core dumped)
+</code></pre></td></tr></table></div></div><p>可以看到当开启 CANARY 的时候，提示检测到栈溢出和段错误，而关闭的时候，只有提示段错误。
+下面对比一下反汇编代码上的差异：
+开启 CANARY 时：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>(gdb) disassemble main
+Dump of assembler code for function main:
+   0x0000000000001145 &lt;+0&gt;:     push   %rbp
+   0x0000000000001146 &lt;+1&gt;:     mov    %rsp,%rbp
+   0x0000000000001149 &lt;+4&gt;:     sub    $0x20,%rsp
+   0x000000000000114d &lt;+8&gt;:     mov    %fs:0x28,%rax            ;
+   0x0000000000001156 &lt;+17&gt;:    mov    %rax,-0x8(%rbp)          ;
+   0x000000000000115a &lt;+21&gt;:    xor    %eax,%eax                ; 
+   0x000000000000115c &lt;+23&gt;:    lea    -0x12(%rbp),%rax
+   0x0000000000001160 &lt;+27&gt;:    mov    %rax,%rsi
+   0x0000000000001163 &lt;+30&gt;:    lea    0xe9a(%rip),%rdi        # 0x2004
+   0x000000000000116a &lt;+37&gt;:    mov    $0x0,%eax
+   0x000000000000116f &lt;+42&gt;:    callq  0x1040 &lt;__isoc99_scanf@plt&gt;
+   0x0000000000001174 &lt;+47&gt;:    mov    $0x0,%eax
+   0x0000000000001179 &lt;+52&gt;:    mov    -0x8(%rbp),%rdx
+   0x000000000000117d &lt;+56&gt;:    xor    %fs:0x28,%rdx
+   0x0000000000001186 &lt;+65&gt;:    je     0x118d &lt;main+72&gt;
+   0x0000000000001188 &lt;+67&gt;:    callq  0x1030 &lt;__stack_chk_fail@plt&gt;
+   0x000000000000118d &lt;+72&gt;:    leaveq 
+   0x000000000000118e &lt;+73&gt;:    retq   
+End of assembler dump.
+</code></pre></td></tr></table></div></div><p>关闭 CANARY 时：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>(gdb) disassemble main
+Dump of assembler code for function main:
+   0x0000000000001135 &lt;+0&gt;:     push   %rbp
+   0x0000000000001136 &lt;+1&gt;:     mov    %rsp,%rbp
+   0x0000000000001139 &lt;+4&gt;:     sub    $0x10,%rsp
+   0x000000000000113d &lt;+8&gt;:     lea    -0xa(%rbp),%rax
+   0x0000000000001141 &lt;+12&gt;:    mov    %rax,%rsi
+   0x0000000000001144 &lt;+15&gt;:    lea    0xeb9(%rip),%rdi        # 0x2004
+   0x000000000000114b &lt;+22&gt;:    mov    $0x0,%eax
+   0x0000000000001150 &lt;+27&gt;:    callq  0x1030 &lt;__isoc99_scanf@plt&gt;
+   0x0000000000001155 &lt;+32&gt;:    mov    $0x0,%eax
+   0x000000000000115a &lt;+37&gt;:    leaveq 
+   0x000000000000115b &lt;+38&gt;:    retq   
+End of assembler dump.
+</code></pre></td></tr></table></div></div><h2 id=fortify>FORTIFY</h2><p>FORTIFY 的选项<code>-D_FORTIFY_SOURCE</code>往往和优化<code>-O</code>选项一起使用，以检测缓冲区溢出的问题。</p><p>下面是一个简单的例子：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#66d9ef>char</span> str[<span style=color:#ae81ff>3</span>];
+    strcpy(str, <span style=color:#e6db74>&#34;abcde&#34;</span>);
+}
+</code></pre></td></tr></table></div></div><p>编译</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ gcc -O2 fortify.c
+$ checksec --file=a.out
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH     Symbols          FORTIFY Fortified       Fortifiable     FILE
+Partial RELRO   No canary found   NX enabled    PIE enabled     No RPATH   No RUNPATH   62) Symbols       No    0               0               a.out
+
+$ gcc -O2 -D_FORTIFY_SOURCE=2 fortify.c 
+In file included from /usr/include/string.h:494,
+                 from fortify.c:1:
+In function ‘strcpy’,
+    inlined from ‘main’ at fortify.c:6:5:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:90:10: warning: ‘__builtin___memcpy_chk’ writing 6 bytes into a region of size 3 overflows the destination [-Wstringop-overflow=]
+   return __builtin___strcpy_chk (__dest, __src, __bos (__dest));
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ checksec --file=a.out
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified       Fortifiable     FILE
+Partial RELRO   No canary found   NX enabled    PIE enabled     No RPATH   No RUNPATH   64) Symbols       Yes   1               1               a.out
+</code></pre></td></tr></table></div></div><p>开启优化 -O2 后，编译没有检测出任何问题，checksec 后 FORTIFY 为 No。当配合 -D_FORTIFY_SOURCE=2（也可以 =1）使用时，提示存在溢出问题，checksec 后 FORTIFY 为 Yes。</p><h2 id=nx>NX</h2><p>No-eXecute，表示不可执行，其原理是将数据所在的内存页标识为不可执行，如果程序产生溢出转入执行 shellcode 时，CPU 会抛出异常。</p><p>在 Linux 中，当装载器将程序装载进内存空间后，将程序的 .text 段标记为可执行，而其余的数据段（.data、.bss 等）以及栈、堆均为不可执行。因此，传统利用方式中通过修改 GOT 来执行 shellcode 的方式不再可行。</p><p>但这种保护并不能阻止攻击者通过代码重用来进行攻击（ret2libc）。</p><h2 id=pie>PIE</h2><p>PIE（Position Independent Executable）需要配合 ASLR 来使用，以达到可执行文件的加载时地址随机化。简单来说，PIE 是编译时随机化，由编译器完成；ASLR 是加载时随机化，由操作系统完成。ASLR 将程序运行时的堆栈以及共享库的加载地址随机化，而 PIE 在编译时将程序编译为位置无关、即程序运行时各个段加载的虚拟地址在装载时确定。开启 PIE 时，编译生成的是动态库文件（Shared object）文件，而关闭 PIE 后生成可执行文件（Executable）。</p><p>我们通过实际例子来探索一下 PIE 和 ASLR：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>() {
+    printf(<span style=color:#e6db74>&#34;%p</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, main);
+}
+</code></pre></td></tr></table></div></div><p>编译</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ gcc -pie random.c -o open-pie
+$ readelf -h open-pie 
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2&#39;s complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Shared object file)
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x1050
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          14688 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         11
+  Size of section headers:           64 (bytes)
+  Number of section headers:         30
+  Section header string table index: 29
+</code></pre></td></tr></table></div></div><p>编译</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ gcc -m32 -no-pie random.c -o close-pie
+$ readelf -h close-pie 
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2&#39;s complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x401040
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          14552 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         11
+  Size of section headers:           64 (bytes)
+  Number of section headers:         29
+  Section header string table index: 28
+</code></pre></td></tr></table></div></div><p>可以看到两者的不同在 Type 和 Entry point address。</p><p>首先我们关闭 ASLR，使用 -pie 进行编译：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># echo 0 &gt; /proc/sys/kernel/randomize_va_space
+# gcc -pie random.c -o a.out
+# checksec --file=a.out
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified       Fortifiable     FILE
+Partial RELRO   No canary found   NX enabled    PIE enabled     No RPATH   No RUNPATH   64) Symbols       No    0 
+
+# ./a.out
+0x5655553d
+# ./a.out
+0x5655553d
+</code></pre></td></tr></table></div></div><p>我们虽然开启了 -pie，但是 ASLR 被关闭，入口地址不变。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ ldd a.out 
+        linux-vdso.so.1 (0x00007ffff7fd3000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007ffff7dfd000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007ffff7fd5000)
+$ ldd a.out 
+        linux-vdso.so.1 (0x00007ffff7fd3000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007ffff7dfd000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007ffff7fd5000)
+</code></pre></td></tr></table></div></div><p>可以看出动态链接库地址也不变。然后我们开启 ASLR：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># echo 2 &gt; /proc/sys/kernel/randomize_va_space
+$ ./a.out 
+0x55b2c7719135
+$ ./a.out 
+0x557cbfbb4135
+$ ldd a.out 
+        linux-vdso.so.1 (0x00007ffd76f97000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f7302bf5000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f7302dc8000)
+$ ldd a.out 
+        linux-vdso.so.1 (0x00007fffe13f3000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f3078465000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f3078638000)
+</code></pre></td></tr></table></div></div><p>入口地址和动态链接库地址都变得随机。
+接下来关闭 ASLR，并使用 -no-pie 进行编译：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># echo 0 &gt; /proc/sys/kernel/randomize_va_space
+# gcc -m32 -no-pie random.c -o b.out
+# checksec --file b.out
+RELRO STACK CANARY NX PIE RPATH RUNPATH FORTIFY Fortified Fortifiable FILE
+Partial RELRO No canary found NX enabled No PIE No RPATH No RUNPATH No 0 2 b.out
+
+# ./b.out
+0x8048406
+# ./b.out
+0x8048406
+# ldd b.out
+linux-gate.so.1 (0xf7fd7000)
+libc.so.6 =&gt; /usr/lib32/libc.so.6 (0xf7dd9000)
+/lib/ld-linux.so.2 (0xf7fd9000)
+# ldd b.out
+linux-gate.so.1 (0xf7fd7000)
+libc.so.6 =&gt; /usr/lib32/libc.so.6 (0xf7dd9000)
+/lib/ld-linux.so.2 (0xf7fd9000)
+</code></pre></td></tr></table></div></div><p>入口地址和动态库都是固定的。下面开启 ASLR：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># echo 2 &gt; /proc/sys/kernel/randomize_va_space
+# ./b.out
+0x8048406
+# ./b.out
+0x8048406
+# ldd b.out
+linux-gate.so.1 (0xf7797000)
+libc.so.6 =&gt; /usr/lib32/libc.so.6 (0xf7599000)
+/lib/ld-linux.so.2 (0xf7799000)
+# ldd b.out
+linux-gate.so.1 (0xf770a000)
+libc.so.6 =&gt; /usr/lib32/libc.so.6 (0xf750c000)
+/lib/ld-linux.so.2 (0xf770c000)
+</code></pre></td></tr></table></div></div><p>入口地址依然固定，但是动态库变为随机。</p><p>所以在分析一个 PIE 开启的二进制文件时，只需要关闭 ASLR，即可使 PIE 和 ASLR 都失效。</p><h2 id=aslraddress-space-layout-randomization>ASLR（Address Space Layout Randomization）</h2><ul><li>关闭：<code># echo 0 > /proc/sys/kernel/randomize_va_space</code></li><li>部分开启（将 mmap 的基址，stack 和 vdso 页面随机化）：<code># echo 1 > /proc/sys/kernel/randomize_va_space</code></li><li>完全开启（在部分开启的基础上增加 heap的随机化：<code># echo ２ > /proc/sys/kernel/randomize_va_space</code></li></ul><h2 id=relro>RELRO</h2><p>RELRO（ReLocation Read-Only）设置符号重定向表为只读或在程序启动时就解析并绑定所有动态符号，从而减少对 GOT（Global Offset Table）的攻击。</p><p>RELOR 有两种形式：</p><ul><li>Partial RELRO：一些段（包括 .dynamic）在初始化后将会被标记为只读。</li><li>Full RELRO：除了 Partial RELRO，延迟绑定将被禁止，所有的导入符号将在开始时被解析，.got.plt 段会被完全初始化为目标函数的最终地址，并被标记为只读。另外 link_map 和 _dl_runtime_resolve 的地址也不会被装入。</li></ul><h2 id=编译参数>编译参数</h2><p>各种安全技术的编译参数如下：</p><table><thead><tr><th>安全技术</th><th>完全开</th><th>部分开启</th><th>关闭</th></tr></thead><tbody><tr><td>Canary</td><td>-fstack-protector-all</td><td>-fstack-protector</td><td>-fno-stack-protector</td></tr><tr><td>NX</td><td>-z noexecstack</td><td></td><td>-z execstack</td></tr><tr><td>PIE</td><td>-pie</td><td></td><td>-no-pie</td></tr><tr><td>RELRO</td><td>-z now</td><td>-z lazy</td><td>-z norelro</td></tr></tbody></table><p>关闭所有保护：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>gcc hello.c -o hello -fno-stack-protector -z execstack -no-pie -z norelro
+</code></pre></td></tr></table></div></div><p>开启所有保护：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>gcc hello.c -o hello -fstack-protector-all -z noexecstack -pie -z now
+</code></pre></td></tr></table></div></div><p>FORTIFY</p><ul><li>-D_FORTIFY_SOURCE=1：仅在编译时检测溢出</li><li>-D_FORTIFY_SOURCE=2：在编译时和运行时检测溢出</li></ul><h2 id=保护机制检测>保护机制检测</h2><p>有许多工具可以检测二进制文件所使用的编译器安全技术。下面介绍常用的几种：</p><p><a href=https://github.com/slimm609/checksec.sh.git>checksec</a></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ checksec --file=/bin/ls
+RELRO STACK CANARY NX PIE RPATH RUNPATH    FORTIFY    Fortified Fortifiable FILE
+Partial RELRO Canary found NX enabled No PIE No RPATH No RUNPATH Yes    5        15    /bin/ls
+</code></pre></td></tr></table></div></div><p>peda 自带的 checksec(gdb插件)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ gdb /bin/ls
+gdb-peda$ checksec
+CANARY : ENABLED
+FORTIFY : ENABLED
+NX : ENABLED
+PIE : disabled
+RELRO : Partial
+</code></pre></td></tr></table></div></div><h2 id=地址空间布局随机化>地址空间布局随机化</h2><p>最后再说一下地址空间布局随机化（ASLR），该技术虽然不是由 GCC 编译时提供的，但对 PIE 还是有影响。该技术旨在将程序的内存布局随机化，使得攻击者不能轻易地得到数据区的地址来构造 payload。由于程序的堆栈分配与共享库的装载都是在运行时进行，系统在程序每次执行时，随机地分配程序堆栈的地址以及共享库装载的地址。使得攻击者无法预测自己写入的数据区的虚拟地址。</p><p>针对该保护机制的攻击，往往是通过信息泄漏来实现。由于同一模块中的所有代码和数据的相对偏移是固定的，攻击者只要泄漏出某个模块中的任一代码指针或数据指针，即可通过计算得到此模块中任意代码或数据的地址。</p></article></div></body><div><small>words: 2920 tags:</small>
+<small><code><a href=https://arair.net/tags/gcc>gcc</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

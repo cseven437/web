@@ -1,0 +1,148 @@
+<!doctype html><html><title>linux c动态库</title><meta name=description content="Linux下动态库文件的文件名形如 libxxx.so，其中so是 Shared Object 的缩写，即可以共享的目标文件。
+在链接动态库生成可执行文件时，并不会把动态库的代码复制到执行文件中，而是在执行文件中记录对动态库的引用。
+程序执行时，再去加载动态库文件。如果动态库已经加载，则不必重复加载，从而能节省内存空间。
+"><meta name=lastmod content="2021-03-07 21:14:22 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux c动态库</h1><p><small>2021-03-07</small></p></header><p>Linux下动态库文件的文件名形如 libxxx.so，其中so是 Shared Object 的缩写，即可以共享的目标文件。</p><p>在链接动态库生成可执行文件时，并不会把动态库的代码复制到执行文件中，而是在执行文件中记录对动态库的引用。</p><p>程序执行时，再去加载动态库文件。如果动态库已经加载，则不必重复加载，从而能节省内存空间。</p><h2 id=动态库编译方法>动态库编译方法</h2><p>示例程序</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>add</span>(<span style=color:#66d9ef>int</span> a, <span style=color:#66d9ef>int</span> b) { <span style=color:#66d9ef>return</span> a<span style=color:#f92672>+</span>b; };
+</code></pre></td></tr></table></div></div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>gcc -fPIC -shared -o libadd.so add.c
+</code></pre></td></tr></table></div></div><h2 id=动态库加载方式一>动态库加载方式一</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#include&lt;stdio.h&gt;
+
+int main(void)
+{
+    add(1,2);
+    return 0;
+}
+</code></pre></td></tr></table></div></div><p>编译时链接</p><blockquote><p>gcc -o main main.c -L . -ladd</p></blockquote><p>直接运行会报错</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>./a1.out: error while loading shared libraries: libadd.so: cannot open shared object file: No such file or directory
+</code></pre></td></tr></table></div></div><p>我们有两种方法解决这个问题：</p><ol><li>将libtest.so库放到系统路径下</li><li>指定当前进程动态库搜索路径</li></ol><p>第一种方法：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ cp libadd.so /usr/lib
+</code></pre></td></tr></table></div></div><p>第二种方法：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ export LD_LIBRARY_PATH=./
+</code></pre></td></tr></table></div></div><p>导入LD_LIBRARY_PATH环境变量，指定库搜索路径，使得a.out程序能够找到libadd.so。</p><h2 id=动态库加载方式二>动态库加载方式二</h2><p>采用<code>dlopen</code>、<code>dlsym</code>、<code>dlclose</code>加载动态链接库</p><h3 id=dlopen-dlclose>dlopen dlclose</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;dlfcn.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>dlopen</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>filename, <span style=color:#66d9ef>int</span> flags);
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>dlclose</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>handle);
+
+<span style=color:#75715e>#define _GNU_SOURCE
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;dlfcn.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>dlmopen</span> (Lmid_t lmid, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>filename, <span style=color:#66d9ef>int</span> flags);
+
+Link with <span style=color:#f92672>-</span>ldl.
+</code></pre></td></tr></table></div></div><h3 id=dlsym>dlsym</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;dlfcn.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>dlsym</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>handle, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>symbol);
+
+<span style=color:#75715e>#define _GNU_SOURCE
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;dlfcn.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>dlvsym</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>handle, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>symbol, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>version);
+
+Link with <span style=color:#f92672>-</span>ldl.
+</code></pre></td></tr></table></div></div><h3 id=dlerror>dlerror</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;dlfcn.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>dlerror</span>(<span style=color:#66d9ef>void</span>);
+
+Link with <span style=color:#f92672>-</span>ldl.
+</code></pre></td></tr></table></div></div><h3 id=示例>示例</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>// file : add.c
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>add</span>(<span style=color:#66d9ef>int</span> a, <span style=color:#66d9ef>int</span> b) { <span style=color:#66d9ef>return</span> a<span style=color:#f92672>+</span>b; };
+
+<span style=color:#75715e>// cmd: gcc -fPIC -shared -o libadd.so add.c
+</span><span style=color:#75715e>// 编译生成动态库文件
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>// file : demo.c
+</span><span style=color:#75715e></span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;  </span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;   // EXIT_FAILURE</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;dlfcn.h&gt;    // dlopen, dlerror, dlsym, dlclose</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>typedef</span> <span style=color:#a6e22e>int</span>(<span style=color:#f92672>*</span> FUNC_ADD)(<span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>int</span>); <span style=color:#75715e>// 定义函数指针类型的别名
+</span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> dllPath <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;./libadd.so&#34;</span>;
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+    <span style=color:#66d9ef>void</span><span style=color:#f92672>*</span> handle <span style=color:#f92672>=</span> dlopen( dllPath, RTLD_LAZY );
+
+    <span style=color:#66d9ef>if</span>( <span style=color:#f92672>!</span>handle )
+    {
+        fprintf( stderr, <span style=color:#e6db74>&#34;[%s](%d) dlopen get error: %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, __FILE__, __LINE__, dlerror() );
+        exit( EXIT_FAILURE );
+    }
+
+    <span style=color:#66d9ef>do</span>{ <span style=color:#75715e>// for resource handle
+</span><span style=color:#75715e></span>        FUNC_ADD add_func <span style=color:#f92672>=</span> (FUNC_ADD)dlsym( handle, <span style=color:#e6db74>&#34;add&#34;</span> );
+        printf( <span style=color:#e6db74>&#34;1 add 2 is %d </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, add_func(<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>) );
+    }<span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>0</span>); <span style=color:#75715e>// for resource handle
+</span><span style=color:#75715e></span>    dlclose( handle );
+}
+<span style=color:#75715e>// cmd   : gcc -o demo demo.c -ldl; ./demo
+</span><span style=color:#75715e>// output: 1 add 2 is 3
+</span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 654 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

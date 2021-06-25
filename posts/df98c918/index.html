@@ -1,0 +1,1180 @@
+<!doctype html><html><title>linux进程间通信--套接字 tcp</title><meta name=description content="linux下tcp函数实现示例
+包含ipv4与ipv6
+"><meta name=lastmod content="2021-02-04 10:00:53 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux进程间通信--套接字 tcp</h1><p><small>2021-02-04</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#双栈单独版本>双栈单独版本</a><ul><li><a href=#server>server</a></li><li><a href=#client>client</a></li></ul></li><li><a href=#ipv4与ipv6优化版本>ipv4与ipv6优化版本</a><ul><li><a href=#server-1>server</a></li><li><a href=#client-1>client</a></li></ul></li></ul></nav></aside><p>linux下tcp函数实现示例</p><p>包含ipv4与ipv6</p><h2 id=双栈单独版本>双栈单独版本</h2><h3 id=server>server</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/socket.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netinet/in.h&gt; //互联网地址族</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;arpa/inet.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netdb.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;time.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ctype.h&gt; //toupper （小写转化为大写）</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> port <span style=color:#f92672>=</span> <span style=color:#ae81ff>8000</span>;
+
+<span style=color:#75715e>/*服务端*/</span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>argv)
+{
+
+<span style=color:#75715e>#ifdef TCP_IPV6
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> sockaddr_in6 sin;
+    <span style=color:#66d9ef>struct</span> sockaddr_in6 pin;
+<span style=color:#75715e>#else
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> sockaddr_in6 sin; <span style=color:#75715e>//struct sockaddr和struct sockaddr_in这两个结构体用来处理网络通信的地址。
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> sockaddr_in6 pin;
+<span style=color:#75715e>#endif
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> sock_descriptor; <span style=color:#75715e>//  套接口描述字
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> temp_sock_descriptor;
+    <span style=color:#66d9ef>int</span> address_size;
+    <span style=color:#66d9ef>char</span> buf[<span style=color:#ae81ff>16384</span>]; <span style=color:#75715e>// 缓冲区大小
+</span><span style=color:#75715e></span>
+    <span style=color:#66d9ef>int</span> i, len;
+
+    <span style=color:#75715e>/*
+</span><span style=color:#75715e>     *int socket(int domain, int type, int protocol);
+</span><span style=color:#75715e>     * PF_INET, AF_INET： Ipv4网络协议
+</span><span style=color:#75715e>     * PF_INET6, AF_INET6： Ipv6网络协议。
+</span><span style=color:#75715e>     * type参数的作用是设置通信的协议类型，可能的取值如下所示：
+</span><span style=color:#75715e>　　      SOCK_STREAM： 提供面向连接的稳定数据传输，即TCP协议。
+</span><span style=color:#75715e>　　      OOB： 在所有数据传送前必须使用connect()来建立连接状态。
+</span><span style=color:#75715e>　      　SOCK_DGRAM： 使用不连续不可靠的数据包连接。
+</span><span style=color:#75715e>　　      SOCK_SEQPACKET： 提供连续可靠的数据包连接。
+</span><span style=color:#75715e>　      　SOCK_RAW： 提供原始网络协议存取。
+</span><span style=color:#75715e>　      　SOCK_RDM： 提供可靠的数据包连接。
+</span><span style=color:#75715e>　　      SOCK_PACKET： 与网络驱动程序直接通信。
+</span><span style=color:#75715e>     */</span>
+    <span style=color:#75715e>//socket函数，向系统申请一个通信端口
+</span><span style=color:#75715e></span><span style=color:#75715e>#ifdef TCP_IPV6
+</span><span style=color:#75715e></span>    sock_descriptor <span style=color:#f92672>=</span> socket(AF_INET6, SOCK_STREAM, <span style=color:#ae81ff>0</span>); 
+<span style=color:#75715e>#else
+</span><span style=color:#75715e></span>    sock_descriptor <span style=color:#f92672>=</span> socket(AF_INET, SOCK_STREAM, <span style=color:#ae81ff>0</span>); <span style=color:#75715e>//IPV4 TCP协议
+</span><span style=color:#75715e></span><span style=color:#75715e>#endif
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (sock_descriptor <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)                         <span style=color:#75715e>//申请失败
+</span><span style=color:#75715e></span>    {
+        perror(<span style=color:#e6db74>&#34;call to socket&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    bzero(<span style=color:#f92672>&amp;</span>sin, <span style=color:#66d9ef>sizeof</span>(sin));         <span style=color:#75715e>// 初始化 然后是设置套接字
+</span><span style=color:#75715e></span><span style=color:#75715e>#ifdef TCP_IPV6
+</span><span style=color:#75715e></span>    sin.sin6_family <span style=color:#f92672>=</span> AF_INET6;
+    sin.sin6_addr <span style=color:#f92672>=</span> (<span style=color:#66d9ef>struct</span> in6_addr)IN6ADDR_ANY_INIT;
+    sin.sin6_port <span style=color:#f92672>=</span> htons(port);
+<span style=color:#75715e>#else
+</span><span style=color:#75715e></span>    sin.sin_family <span style=color:#f92672>=</span> AF_INET;         <span style=color:#75715e>//协议族，在socket编程中只能是AF_INET(TCP/IP协议族)
+</span><span style=color:#75715e></span>    sin.sin_addr.s_addr <span style=color:#f92672>=</span> INADDR_ANY; <span style=color:#75715e>//sin_addr存储IP地址,使用in_addr这个数据结构
+</span><span style=color:#75715e></span>                                      <span style=color:#75715e>//s_addr按照网络字节顺序存储IP地址
+</span><span style=color:#75715e></span>                                      <span style=color:#75715e>//in_addr32位的IPv4地址
+</span><span style=color:#75715e></span>    sin.sin_port <span style=color:#f92672>=</span> htons(port);       <span style=color:#75715e>//存储端口号
+</span><span style=color:#75715e></span><span style=color:#75715e>#endif
+</span><span style=color:#75715e></span>    <span style=color:#75715e>//将套接字（sin） 跟端口（sock_descriptor）链接
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (bind(sock_descriptor, (<span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>)<span style=color:#f92672>&amp;</span>sin, <span style=color:#66d9ef>sizeof</span>(sin)) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;call to bind&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+    <span style=color:#75715e>/*int PASCAL FAR listen( SOCKET s, int backlog);
+</span><span style=color:#75715e>　　     S：用于标识一个已捆绑未连接套接口的描述字。
+</span><span style=color:#75715e>　　     backlog：等待连接队列的最大长度。
+</span><span style=color:#75715e>     * listen()仅适用于支持连接的套接口，如SOCK_STREAM类型的。
+</span><span style=color:#75715e>     */</span>
+    <span style=color:#66d9ef>if</span> (listen(sock_descriptor, <span style=color:#ae81ff>20</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) <span style=color:#75715e>//在端口sock_descriptor监听
+</span><span style=color:#75715e></span>    {
+        perror(<span style=color:#e6db74>&#34;call to listen&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    printf(<span style=color:#e6db74>&#34;accepting connections </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+
+    <span style=color:#66d9ef>while</span> (<span style=color:#ae81ff>1</span>)
+    { <span style=color:#75715e>//用来监听的端口sock_descriptor
+</span><span style=color:#75715e></span>        temp_sock_descriptor <span style=color:#f92672>=</span> accept(sock_descriptor, (<span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>)<span style=color:#f92672>&amp;</span>pin, <span style=color:#f92672>&amp;</span>address_size);
+        <span style=color:#66d9ef>if</span> (temp_sock_descriptor <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+        {
+            perror(<span style=color:#e6db74>&#34;call to accept&#34;</span>);
+            exit(<span style=color:#ae81ff>1</span>);
+        }
+
+        <span style=color:#75715e>/*int PASCAL FAR recv( SOCKET s, char FAR* buf, int len, int flags);
+</span><span style=color:#75715e>　　        s：一个标识已连接套接口的描述字。
+</span><span style=color:#75715e>　　        buf：用于接收数据的缓冲区。
+</span><span style=color:#75715e>　　        len：缓冲区长度。
+</span><span style=color:#75715e>　　        flags：指定调用方式。
+</span><span style=color:#75715e>         */</span>
+
+        printf(<span style=color:#e6db74>&#34;wait to recv message</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+
+        <span style=color:#66d9ef>struct</span> timeval tv;
+
+        <span style=color:#75715e>// Set up the struct timeval for the timeout.
+</span><span style=color:#75715e></span>        tv.tv_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>30</span>;
+        tv.tv_usec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+        
+        <span style=color:#75715e>// 添加socket延时
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// setsockopt(temp_sock_descriptor, SOL_SOCKET, SO_RCVTIMEO, (char *)&amp;tv, sizeof(struct timeval));
+</span><span style=color:#75715e></span>
+        <span style=color:#66d9ef>if</span> (recv(temp_sock_descriptor, buf, <span style=color:#ae81ff>16384</span>, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+        {
+            perror(<span style=color:#e6db74>&#34;call to recv&#34;</span>);
+            exit(<span style=color:#ae81ff>1</span>);
+        }
+
+        printf(<span style=color:#e6db74>&#34;received from client:%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, buf);
+
+        len <span style=color:#f92672>=</span> strlen(buf);
+        <span style=color:#66d9ef>for</span> (i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> len; i<span style=color:#f92672>++</span>)
+        {
+            buf[i] <span style=color:#f92672>=</span> toupper(buf[i]); <span style=color:#75715e>//将小写字母转化为大写字母
+</span><span style=color:#75715e></span>        }
+        <span style=color:#75715e>/*int PASCAL FAR send( SOCKET s, const char FAR* buf, int len, int flags);
+</span><span style=color:#75715e>　　        s：一个用于标识已连接套接口的描述字。
+</span><span style=color:#75715e>　　        buf：包含待发送数据的缓冲区。
+</span><span style=color:#75715e>　　        len：缓冲区中数据的长度。
+</span><span style=color:#75715e>　　        flags：调用执行方式。*/</span>
+
+        <span style=color:#75715e>/*send()   基于链接的发送 TCP
+</span><span style=color:#75715e>         *sendto() 基于无链接到   UDP
+</span><span style=color:#75715e>         */</span>
+
+        <span style=color:#66d9ef>if</span> (send(temp_sock_descriptor, buf, len, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+        {
+            perror(<span style=color:#e6db74>&#34;call to send&#34;</span>);
+            exit(<span style=color:#ae81ff>1</span>);
+        }
+
+        close(temp_sock_descriptor);
+    }
+
+    <span style=color:#66d9ef>return</span> (EXIT_SUCCESS);
+}
+</code></pre></td></tr></table></div></div><h3 id=client>client</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/select.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netinet/in.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;arpa/inet.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netdb.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#75715e>/*客户端*/</span>
+<span style=color:#75715e>#ifdef TCP_IPV6
+</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>host_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;::1&#34;</span>;
+<span style=color:#75715e>#else
+</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>host_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;127.0.0.1&#34;</span>; <span style=color:#75715e>//需要搜寻服务端IP地址
+</span><span style=color:#75715e></span><span style=color:#75715e>#endif
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> port <span style=color:#f92672>=</span> <span style=color:#ae81ff>8000</span>;
+
+<span style=color:#75715e>/*argc: 整数,用来统计你运行程序时送给main函数的命令行参数的个数
+</span><span style=color:#75715e> * argv: 字符串数组，用来存放指向你的字符串参数的指针数组，每一个元素指向一个参数
+</span><span style=color:#75715e>　　argv[0] 指向程序运行的全路径名
+</span><span style=color:#75715e>　　argv[1] 指向在DOS命令行中执行程序名后的第一个字符串
+</span><span style=color:#75715e>　　argv[2] 指向执行程序名后的第二个字符串
+</span><span style=color:#75715e>   */</span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>argv)
+{
+    <span style=color:#66d9ef>char</span> buf[<span style=color:#ae81ff>8192</span>];
+    <span style=color:#66d9ef>char</span> message[<span style=color:#ae81ff>256</span>];
+    <span style=color:#66d9ef>int</span> socket_descriptor;
+<span style=color:#75715e>#ifdef TCP_IPV6
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> sockaddr_in6 pin;
+<span style=color:#75715e>#else
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> sockaddr_in pin; <span style=color:#75715e>//处理网络通信的地址
+</span><span style=color:#75715e></span><span style=color:#75715e>#endif
+</span><span style=color:#75715e></span>    <span style=color:#75715e>/*
+</span><span style=color:#75715e>     * hostent记录主机的信息，包括主机名、别名、地址类型、地址长度和地址列表
+</span><span style=color:#75715e>     * struct hostent {
+</span><span style=color:#75715e>　　       char *h_name;地址的正式名称
+</span><span style=color:#75715e>　　       char **h_aliases;空字节-地址的预备名称的指针
+</span><span style=color:#75715e>　　       int h_addrtype;地址类型; 通常是AF_INET。
+</span><span style=color:#75715e>　       　int h_length;地址的比特长度。
+</span><span style=color:#75715e>　       　char **h_addr_list;零字节-主机网络地址指针。网络字节顺序。
+</span><span style=color:#75715e>　　    };
+</span><span style=color:#75715e>　　   #define h_addr h_addr_list[0] //h_addr_list中的第一地址
+</span><span style=color:#75715e>     */</span>
+    <span style=color:#66d9ef>struct</span> hostent <span style=color:#f92672>*</span>server_host_name;
+
+    <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;A default test string&#34;</span>;
+
+    <span style=color:#66d9ef>if</span> (argc <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>2</span>) <span style=color:#75715e>//运行程序时送给main函数到命令行参数个数
+</span><span style=color:#75715e></span>    {
+        printf(<span style=color:#e6db74>&#34;Usage:test </span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>Any test string</span><span style=color:#ae81ff>\&#34;\n</span><span style=color:#e6db74>&#34;</span>);
+        printf(<span style=color:#e6db74>&#34;we will send a default test string. </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+    }
+    <span style=color:#66d9ef>else</span>
+    {
+        str <span style=color:#f92672>=</span> argv[<span style=color:#ae81ff>1</span>];
+    }
+    <span style=color:#75715e>/*
+</span><span style=color:#75715e>     * gethostbyname()返回对应于给定主机名的包含主机名字和地址信息的
+</span><span style=color:#75715e>     * hostent结构指针。结构的声明与gethostaddr()中一致。*/</span>
+    <span style=color:#66d9ef>if</span> ((server_host_name <span style=color:#f92672>=</span> gethostbyname(host_name)) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error resolving local host </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    bzero(<span style=color:#f92672>&amp;</span>pin, <span style=color:#66d9ef>sizeof</span>(pin));
+<span style=color:#75715e>#ifdef TCP_IPV6
+</span><span style=color:#75715e></span>    pin.sin6_family <span style=color:#f92672>=</span> AF_INET6;
+    <span style=color:#66d9ef>if</span> (inet_pton(AF_INET6, host_name, <span style=color:#f92672>&amp;</span>pin.sin6_addr) <span style=color:#f92672>&lt;=</span> <span style=color:#ae81ff>0</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;pton&#34;</span>);
+        <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>2</span>;
+    }
+    pin.sin6_port <span style=color:#f92672>=</span> htons(port);
+    <span style=color:#66d9ef>if</span> ((socket_descriptor <span style=color:#f92672>=</span> socket(AF_INET6, SOCK_STREAM, <span style=color:#ae81ff>0</span>)) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error opening socket </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+<span style=color:#75715e>#else
+</span><span style=color:#75715e></span>    pin.sin_family <span style=color:#f92672>=</span> AF_INET;
+    <span style=color:#75715e>//htonl()将主机的无符号长整形数转换成网络字节顺序
+</span><span style=color:#75715e></span>    pin.sin_addr.s_addr <span style=color:#f92672>=</span> htonl(INADDR_ANY);                                      <span style=color:#75715e>//s_addr按照网络字节顺序存储IP地址
+</span><span style=color:#75715e></span>                                                                                  <span style=color:#75715e>//in_addr 32位的IPv4地址  h_addr_list中的第一地址
+</span><span style=color:#75715e></span>    pin.sin_addr.s_addr <span style=color:#f92672>=</span> ((<span style=color:#66d9ef>struct</span> in_addr <span style=color:#f92672>*</span>)(server_host_name<span style=color:#f92672>-&gt;</span>h_addr))<span style=color:#f92672>-&gt;</span>s_addr; <span style=color:#75715e>// 跟书上不一样 必须是h_addr
+</span><span style=color:#75715e></span>
+    pin.sin_port <span style=color:#f92672>=</span> htons(port);
+    <span style=color:#75715e>/*申请一个通信端口*/</span>
+    <span style=color:#66d9ef>if</span> ((socket_descriptor <span style=color:#f92672>=</span> socket(AF_INET, SOCK_STREAM, <span style=color:#ae81ff>0</span>)) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error opening socket </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+<span style=color:#75715e>#endif
+</span><span style=color:#75715e></span>    <span style=color:#75715e>//pin 定义跟服务端连接的 IP 端口
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (connect(socket_descriptor, (<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>)<span style=color:#f92672>&amp;</span>pin, <span style=color:#66d9ef>sizeof</span>(pin)) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error connecting to socket </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>); <span style=color:#75715e>////
+</span><span style=color:#75715e></span>        exit(<span style=color:#ae81ff>1</span>);
+    }
+    printf(<span style=color:#e6db74>&#34;Sending message %s to server </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, str);
+    <span style=color:#66d9ef>int</span> num1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    <span style=color:#66d9ef>while</span>(num1<span style=color:#f92672>++</span> <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>60</span>) {
+        printf(<span style=color:#e6db74>&#34;num1:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, num1);
+        sleep(<span style=color:#ae81ff>1</span>);
+    }
+
+    <span style=color:#66d9ef>if</span> (send(socket_descriptor, str, strlen(str), <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error in send</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    printf(<span style=color:#e6db74>&#34;..sent message.. wait for response...</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+
+    <span style=color:#66d9ef>if</span> (recv(socket_descriptor, buf, <span style=color:#ae81ff>8192</span>, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error in receiving response from server </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74> Response from server:</span><span style=color:#ae81ff>\n\n</span><span style=color:#e6db74>%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, buf);
+
+    close(socket_descriptor);
+
+    <span style=color:#66d9ef>return</span> (EXIT_SUCCESS);
+}
+</code></pre></td></tr></table></div></div><h2 id=ipv4与ipv6优化版本>ipv4与ipv6优化版本</h2><p>根据argv[1]输入的地址是ipv4 还是ipv6自行判断使用哪一个</p><h3 id=server-1>server</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">151
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">152
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">153
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">154
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">155
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">156
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">157
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">158
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">159
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">160
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">161
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">162
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">163
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">164
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">165
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">166
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">167
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">168
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">169
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">170
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">171
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">172
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">173
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">174
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">175
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">176
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">177
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">178
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">179
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">180
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">181
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">182
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">183
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">184
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">185
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">186
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">187
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">188
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">189
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">190
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">191
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/socket.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netinet/in.h&gt; //互联网地址族</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;arpa/inet.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netdb.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;time.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ctype.h&gt; //toupper （小写转化为大写）</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>// int port = 8000;
+</span><span style=color:#75715e>// char *server = &#34;localhost&#34;;
+</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>server <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;127.0.0.1&#34;</span>;
+
+
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>PrintSocketAddress</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>address, FILE <span style=color:#f92672>*</span>stream) {
+    <span style=color:#75715e>// Test for address and stream
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (address <span style=color:#f92672>==</span> NULL <span style=color:#f92672>||</span> stream <span style=color:#f92672>==</span> NULL)
+        <span style=color:#66d9ef>return</span>;
+
+    <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>numericAddress; <span style=color:#75715e>// Pointer to binary address
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// Buffer to contain result (IPv6 sufficient to hold IPv4)
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>char</span> addrBuffer[INET6_ADDRSTRLEN];
+    in_port_t port; <span style=color:#75715e>// Port to print
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// Set pointer to address based on address family
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>switch</span> (address<span style=color:#f92672>-&gt;</span>sa_family) {
+        <span style=color:#66d9ef>case</span> AF_INET:
+            numericAddress <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>((<span style=color:#66d9ef>struct</span> sockaddr_in <span style=color:#f92672>*</span>) address)<span style=color:#f92672>-&gt;</span>sin_addr;
+            port <span style=color:#f92672>=</span> ntohs(((<span style=color:#66d9ef>struct</span> sockaddr_in <span style=color:#f92672>*</span>) address)<span style=color:#f92672>-&gt;</span>sin_port);
+            <span style=color:#66d9ef>break</span>;
+        <span style=color:#66d9ef>case</span> AF_INET6:
+            numericAddress <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>((<span style=color:#66d9ef>struct</span> sockaddr_in6 <span style=color:#f92672>*</span>) address)<span style=color:#f92672>-&gt;</span>sin6_addr;
+            port <span style=color:#f92672>=</span> ntohs(((<span style=color:#66d9ef>struct</span> sockaddr_in6 <span style=color:#f92672>*</span>) address)<span style=color:#f92672>-&gt;</span>sin6_port);
+            <span style=color:#66d9ef>break</span>;
+        <span style=color:#66d9ef>default</span><span style=color:#f92672>:</span>
+            fputs(<span style=color:#e6db74>&#34;[unknown type]&#34;</span>, stream);    <span style=color:#75715e>// Unhandled type
+</span><span style=color:#75715e></span>            <span style=color:#66d9ef>return</span>;
+    }
+    <span style=color:#75715e>// Convert binary to printable address
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (inet_ntop(address<span style=color:#f92672>-&gt;</span>sa_family, numericAddress, addrBuffer,
+                <span style=color:#66d9ef>sizeof</span>(addrBuffer)) <span style=color:#f92672>==</span> NULL)
+        fputs(<span style=color:#e6db74>&#34;[invalid address]&#34;</span>, stream); <span style=color:#75715e>// Unable to convert
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>else</span> {
+        fprintf(stream, <span style=color:#e6db74>&#34;%s&#34;</span>, addrBuffer);
+        <span style=color:#66d9ef>if</span> (port <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span>)                <span style=color:#75715e>// Zero not valid in any socket addr
+</span><span style=color:#75715e></span>            fprintf(stream, <span style=color:#e6db74>&#34;-%u&#34;</span>, port);
+    }
+}
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>create_socket</span>(<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>servername, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>port)
+{
+    <span style=color:#66d9ef>int</span> sockfd <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+
+    <span style=color:#66d9ef>int</span> address_size;
+
+    <span style=color:#66d9ef>struct</span> addrinfo hints;
+    <span style=color:#66d9ef>struct</span> addrinfo <span style=color:#f92672>*</span>result;
+
+    <span style=color:#66d9ef>int</span> i, len;
+
+    memset(<span style=color:#f92672>&amp;</span>hints, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>sizeof</span>(hints));
+    hints.ai_family <span style=color:#f92672>=</span> AF_UNSPEC;    <span style=color:#75715e>/* Allow IPv4 or IPv6 */</span>
+    hints.ai_socktype <span style=color:#f92672>=</span> SOCK_STREAM; <span style=color:#75715e>/* Datagram socket */</span>
+    hints.ai_flags <span style=color:#f92672>=</span> AI_PASSIVE;    <span style=color:#75715e>/* For wildcard IP address */</span>
+    hints.ai_protocol <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;          <span style=color:#75715e>/* Any protocol */</span>
+    hints.ai_canonname <span style=color:#f92672>=</span> NULL;
+    hints.ai_addr <span style=color:#f92672>=</span> NULL;
+    hints.ai_next <span style=color:#f92672>=</span> NULL;
+
+    <span style=color:#66d9ef>int</span> s <span style=color:#f92672>=</span> getaddrinfo(servername, port, <span style=color:#f92672>&amp;</span>hints, <span style=color:#f92672>&amp;</span>result);
+    <span style=color:#66d9ef>if</span> (s <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span>) {
+        fprintf(stderr, <span style=color:#e6db74>&#34;getaddrinfo: %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, gai_strerror(s));
+        exit(EXIT_FAILURE);
+    }
+
+    <span style=color:#75715e>//socket函数，向系统申请一个通信端口
+</span><span style=color:#75715e></span>    sockfd <span style=color:#f92672>=</span> socket(result<span style=color:#f92672>-&gt;</span>ai_family, result<span style=color:#f92672>-&gt;</span>ai_socktype, <span style=color:#ae81ff>0</span>); <span style=color:#75715e>//IPV4 TCP协议
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (sockfd <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)                         <span style=color:#75715e>//申请失败
+</span><span style=color:#75715e></span>    {
+        perror(<span style=color:#e6db74>&#34;call to socket&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    <span style=color:#75715e>//将套接字（sin） 跟端口（sockfd）链接
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (bind(sockfd, result<span style=color:#f92672>-&gt;</span>ai_addr, result<span style=color:#f92672>-&gt;</span>ai_addrlen) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;call to bind&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+    <span style=color:#66d9ef>struct</span> sockaddr_storage local_addr;
+    socklen_t addr_size<span style=color:#f92672>=</span><span style=color:#66d9ef>sizeof</span>(local_addr);
+    <span style=color:#66d9ef>if</span>(getsockname(sockfd,(<span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>)<span style=color:#f92672>&amp;</span>local_addr,<span style=color:#f92672>&amp;</span>addr_size)<span style=color:#f92672>&lt;</span><span style=color:#ae81ff>0</span>)
+    {
+        <span style=color:#75715e>// DieWithSystemMessage(&#34;getsockname() failed!&#34;);
+</span><span style=color:#75715e></span>    }
+    fputs(<span style=color:#e6db74>&#34;Binding to &#34;</span>,stdout);
+    PrintSocketAddress((<span style=color:#66d9ef>struct</span> sockaddr<span style=color:#f92672>*</span>)<span style=color:#f92672>&amp;</span>local_addr,stdout);
+    freeaddrinfo(result);
+
+    <span style=color:#75715e>/*int PASCAL FAR listen( SOCKET s, int backlog);
+</span><span style=color:#75715e>　　     S：用于标识一个已捆绑未连接套接口的描述字。
+</span><span style=color:#75715e>　　     backlog：等待连接队列的最大长度。
+</span><span style=color:#75715e>     * listen()仅适用于支持连接的套接口，如SOCK_STREAM类型的。
+</span><span style=color:#75715e>     */</span>
+    <span style=color:#66d9ef>if</span> (listen(sockfd, <span style=color:#ae81ff>20</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) <span style=color:#75715e>//在端口sockfd监听
+</span><span style=color:#75715e></span>    {
+        perror(<span style=color:#e6db74>&#34;call to listen&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    printf(<span style=color:#e6db74>&#34;accepting connections </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+    <span style=color:#66d9ef>return</span> sockfd;
+}
+
+<span style=color:#75715e>/*服务端*/</span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>argv)
+{
+
+    <span style=color:#66d9ef>int</span> sock_descriptor <span style=color:#f92672>=</span> create_socket(argv[<span style=color:#ae81ff>1</span>], <span style=color:#e6db74>&#34;8000&#34;</span>);
+    <span style=color:#66d9ef>int</span> temp_sock_descriptor;
+    <span style=color:#66d9ef>int</span> address_size;
+    <span style=color:#66d9ef>char</span> buf[<span style=color:#ae81ff>16384</span>]; <span style=color:#75715e>// 缓冲区大小
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> sockaddr_storage pin;
+    address_size <span style=color:#f92672>=</span> <span style=color:#66d9ef>sizeof</span>(pin);
+
+    <span style=color:#66d9ef>int</span> i, len;
+
+    <span style=color:#66d9ef>while</span> (<span style=color:#ae81ff>1</span>)
+    { <span style=color:#75715e>//用来监听的端口sock_descriptor
+</span><span style=color:#75715e></span>        temp_sock_descriptor <span style=color:#f92672>=</span> accept(sock_descriptor, (<span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>)<span style=color:#f92672>&amp;</span>pin, <span style=color:#f92672>&amp;</span>address_size);
+        <span style=color:#66d9ef>if</span> (temp_sock_descriptor <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+        {
+            perror(<span style=color:#e6db74>&#34;call to accept&#34;</span>);
+            exit(<span style=color:#ae81ff>1</span>);
+        }
+
+        <span style=color:#75715e>/*int PASCAL FAR recv( SOCKET s, char FAR* buf, int len, int flags);
+</span><span style=color:#75715e>　　        s：一个标识已连接套接口的描述字。
+</span><span style=color:#75715e>　　        buf：用于接收数据的缓冲区。
+</span><span style=color:#75715e>　　        len：缓冲区长度。
+</span><span style=color:#75715e>　　        flags：指定调用方式。
+</span><span style=color:#75715e>         */</span>
+
+        printf(<span style=color:#e6db74>&#34;wait to recv message</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+
+        <span style=color:#66d9ef>struct</span> timeval tv;
+
+        <span style=color:#75715e>// Set up the struct timeval for the timeout.
+</span><span style=color:#75715e></span>        tv.tv_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>30</span>;
+        tv.tv_usec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+        
+        <span style=color:#75715e>// 添加socket延时
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// setsockopt(temp_sock_descriptor, SOL_SOCKET, SO_RCVTIMEO, (char *)&amp;tv, sizeof(struct timeval));
+</span><span style=color:#75715e></span>
+        <span style=color:#66d9ef>if</span> (recv(temp_sock_descriptor, buf, <span style=color:#ae81ff>16384</span>, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+        {
+            perror(<span style=color:#e6db74>&#34;call to recv&#34;</span>);
+            exit(<span style=color:#ae81ff>1</span>);
+        }
+
+        printf(<span style=color:#e6db74>&#34;received from client:%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, buf);
+
+        len <span style=color:#f92672>=</span> strlen(buf);
+        <span style=color:#66d9ef>for</span> (i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> len; i<span style=color:#f92672>++</span>)
+        {
+            buf[i] <span style=color:#f92672>=</span> toupper(buf[i]); <span style=color:#75715e>//将小写字母转化为大写字母
+</span><span style=color:#75715e></span>        }
+        <span style=color:#75715e>/*int PASCAL FAR send( SOCKET s, const char FAR* buf, int len, int flags);
+</span><span style=color:#75715e>　　        s：一个用于标识已连接套接口的描述字。
+</span><span style=color:#75715e>　　        buf：包含待发送数据的缓冲区。
+</span><span style=color:#75715e>　　        len：缓冲区中数据的长度。
+</span><span style=color:#75715e>　　        flags：调用执行方式。*/</span>
+
+        <span style=color:#75715e>/*send()   基于链接的发送 TCP
+</span><span style=color:#75715e>         *sendto() 基于无链接到   UDP
+</span><span style=color:#75715e>         */</span>
+
+        <span style=color:#66d9ef>if</span> (send(temp_sock_descriptor, buf, len, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+        {
+            perror(<span style=color:#e6db74>&#34;call to send&#34;</span>);
+            exit(<span style=color:#ae81ff>1</span>);
+        }
+
+        close(temp_sock_descriptor);
+    }
+
+    <span style=color:#66d9ef>return</span> (EXIT_SUCCESS);
+}
+</code></pre></td></tr></table></div></div><h3 id=client-1>client</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/select.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netinet/in.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;arpa/inet.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netdb.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#75715e>/*客户端*/</span>
+<span style=color:#75715e>// char *host_name = &#34;fe80::20c:29ff:fe09:2d36&#34;; //需要搜寻服务端IP地址
+</span><span style=color:#75715e>// char *host_name = &#34;::1&#34;; //需要搜寻服务端IP地址
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> port <span style=color:#f92672>=</span> <span style=color:#ae81ff>8000</span>;
+
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>create_sock</span>(<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>servername, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>port)
+{
+    <span style=color:#66d9ef>int</span> sockfd;
+
+    <span style=color:#66d9ef>struct</span> addrinfo hints;
+    <span style=color:#66d9ef>struct</span> addrinfo <span style=color:#f92672>*</span>result;
+
+    <span style=color:#66d9ef>int</span> i, len;
+
+    memset(<span style=color:#f92672>&amp;</span>hints, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>sizeof</span>(hints));
+    hints.ai_family <span style=color:#f92672>=</span> AF_UNSPEC;    <span style=color:#75715e>/* Allow IPv4 or IPv6 */</span>
+    hints.ai_socktype <span style=color:#f92672>=</span> SOCK_STREAM; <span style=color:#75715e>/* Datagram socket */</span>
+    hints.ai_flags <span style=color:#f92672>=</span> AI_PASSIVE;    <span style=color:#75715e>/* For wildcard IP address */</span>
+    hints.ai_protocol <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;          <span style=color:#75715e>/* Any protocol */</span>
+    hints.ai_canonname <span style=color:#f92672>=</span> NULL;
+    hints.ai_addr <span style=color:#f92672>=</span> NULL;
+    hints.ai_next <span style=color:#f92672>=</span> NULL;
+
+    <span style=color:#66d9ef>int</span> s <span style=color:#f92672>=</span> getaddrinfo(servername, port, <span style=color:#f92672>&amp;</span>hints, <span style=color:#f92672>&amp;</span>result);
+    <span style=color:#66d9ef>if</span> (s <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span>) {
+        fprintf(stderr, <span style=color:#e6db74>&#34;getaddrinfo: %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, gai_strerror(s));
+        exit(EXIT_FAILURE);
+    }
+
+    <span style=color:#75715e>//socket函数，向系统申请一个通信端口
+</span><span style=color:#75715e></span>    sockfd <span style=color:#f92672>=</span> socket(result<span style=color:#f92672>-&gt;</span>ai_family, result<span style=color:#f92672>-&gt;</span>ai_socktype, <span style=color:#ae81ff>0</span>); <span style=color:#75715e>//IPV4 TCP协议
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (sockfd <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)                         <span style=color:#75715e>//申请失败
+</span><span style=color:#75715e></span>    {
+        perror(<span style=color:#e6db74>&#34;call to socket&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    <span style=color:#75715e>//pin 定义跟服务端连接的 IP 端口
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (connect(sockfd, result<span style=color:#f92672>-&gt;</span>ai_addr, result<span style=color:#f92672>-&gt;</span>ai_addrlen) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error connecting to socket </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>); <span style=color:#75715e>////
+</span><span style=color:#75715e></span>        exit(<span style=color:#ae81ff>1</span>);
+    }
+    freeaddrinfo(result);
+    <span style=color:#66d9ef>return</span> sockfd;
+}
+
+<span style=color:#75715e>/*argc: 整数,用来统计你运行程序时送给main函数的命令行参数的个数
+</span><span style=color:#75715e> * argv: 字符串数组，用来存放指向你的字符串参数的指针数组，每一个元素指向一个参数
+</span><span style=color:#75715e>　　argv[0] 指向程序运行的全路径名
+</span><span style=color:#75715e>　　argv[1] 指向在DOS命令行中执行程序名后的第一个字符串
+</span><span style=color:#75715e>　　argv[2] 指向执行程序名后的第二个字符串
+</span><span style=color:#75715e>   */</span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>argv)
+{
+    <span style=color:#66d9ef>char</span> buf[<span style=color:#ae81ff>8192</span>];
+    <span style=color:#66d9ef>char</span> message[<span style=color:#ae81ff>256</span>];
+    <span style=color:#66d9ef>int</span> socket_descriptor;
+    <span style=color:#75715e>/*
+</span><span style=color:#75715e>     * hostent记录主机的信息，包括主机名、别名、地址类型、地址长度和地址列表
+</span><span style=color:#75715e>     * struct hostent {
+</span><span style=color:#75715e>　　       char *h_name;地址的正式名称
+</span><span style=color:#75715e>　　       char **h_aliases;空字节-地址的预备名称的指针
+</span><span style=color:#75715e>　　       int h_addrtype;地址类型; 通常是AF_INET。
+</span><span style=color:#75715e>　       　int h_length;地址的比特长度。
+</span><span style=color:#75715e>　       　char **h_addr_list;零字节-主机网络地址指针。网络字节顺序。
+</span><span style=color:#75715e>　　    };
+</span><span style=color:#75715e>　　   #define h_addr h_addr_list[0] //h_addr_list中的第一地址
+</span><span style=color:#75715e>     */</span>
+
+    <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;A default test string&#34;</span>;
+
+    <span style=color:#66d9ef>if</span> (argc <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>3</span>) <span style=color:#75715e>//运行程序时送给main函数到命令行参数个数
+</span><span style=color:#75715e></span>    {
+        printf(<span style=color:#e6db74>&#34;Usage:test </span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>Any test string</span><span style=color:#ae81ff>\&#34;\n</span><span style=color:#e6db74>&#34;</span>);
+        printf(<span style=color:#e6db74>&#34;we will send a default test string. </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+    }
+    <span style=color:#66d9ef>else</span>
+    {
+        str <span style=color:#f92672>=</span> argv[<span style=color:#ae81ff>2</span>];
+    }
+
+    socket_descriptor <span style=color:#f92672>=</span> create_sock(argv[<span style=color:#ae81ff>1</span>], <span style=color:#e6db74>&#34;8000&#34;</span>);
+
+    printf(<span style=color:#e6db74>&#34;Sending message %s to server </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, str);
+    <span style=color:#66d9ef>int</span> num1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    <span style=color:#66d9ef>while</span>(num1<span style=color:#f92672>++</span> <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>10</span>) {
+        printf(<span style=color:#e6db74>&#34;num1:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, num1);
+        sleep(<span style=color:#ae81ff>1</span>);
+    }
+
+    <span style=color:#66d9ef>if</span> (send(socket_descriptor, str, strlen(str), <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error in send</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    printf(<span style=color:#e6db74>&#34;..sent message.. wait for response...</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+
+    <span style=color:#66d9ef>if</span> (recv(socket_descriptor, buf, <span style=color:#ae81ff>8192</span>, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+    {
+        perror(<span style=color:#e6db74>&#34;Error in receiving response from server </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        exit(<span style=color:#ae81ff>1</span>);
+    }
+
+    printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74> Response from server:</span><span style=color:#ae81ff>\n\n</span><span style=color:#e6db74>%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, buf);
+
+    close(socket_descriptor);
+
+    <span style=color:#66d9ef>return</span> (EXIT_SUCCESS);
+}
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 4122 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/tcp>tcp</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

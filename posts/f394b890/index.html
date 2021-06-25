@@ -1,0 +1,134 @@
+<!doctype html><html><title>getifaddrs函数的用法</title><meta name=description content="getifaddrs
+获取linux ip地址方法，可以获取相应接口的ipv4和ipv6地址
+"><meta name=hash content="98a25f045e5faa0e35bf6c2d7e190717b14cea0c "><meta name=lastmod content="2021-02-04 20:08:57 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>getifaddrs函数的用法</h1><p><small>2021-02-04, updated 2021-02-04</small></p></header><p>getifaddrs</p><p>获取linux ip地址方法，可以获取相应接口的ipv4和ipv6地址</p><p>ifaddrs</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> ifaddrs {        
+    <span style=color:#66d9ef>struct</span> ifaddrs   <span style=color:#f92672>*</span>ifa_next;         <span style=color:#75715e>/* Pointer to next struct */</span>
+    <span style=color:#66d9ef>char</span>             <span style=color:#f92672>*</span>ifa_name;         <span style=color:#75715e>/* Interface name */</span>
+    u_int             ifa_flags;        <span style=color:#75715e>/* Interface flags */</span>
+    <span style=color:#66d9ef>struct</span> sockaddr  <span style=color:#f92672>*</span>ifa_addr;         <span style=color:#75715e>/* Interface address */</span>
+    <span style=color:#66d9ef>struct</span> sockaddr  <span style=color:#f92672>*</span>ifa_netmask;      <span style=color:#75715e>/* Interface netmask */</span>
+    <span style=color:#66d9ef>struct</span> sockaddr  <span style=color:#f92672>*</span>ifa_dstaddr;      <span style=color:#75715e>/* P2P interface destination */</span>
+    <span style=color:#66d9ef>void</span>             <span style=color:#f92672>*</span>ifa_data;         <span style=color:#75715e>/* Address specific data */</span>
+};
+</code></pre></td></tr></table></div></div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/socket.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ifaddrs.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;arpa/inet.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+    <span style=color:#66d9ef>struct</span> ifaddrs <span style=color:#f92672>*</span>ifaddr, <span style=color:#f92672>*</span>ifa;
+    <span style=color:#66d9ef>struct</span> sockaddr_in6 list;
+    <span style=color:#66d9ef>struct</span> sockaddr_in6 mask;
+    <span style=color:#66d9ef>struct</span> sockaddr_in6 prefix;
+    <span style=color:#66d9ef>char</span> ip_str[<span style=color:#ae81ff>64</span>];
+
+    <span style=color:#66d9ef>if</span>(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span> <span style=color:#f92672>==</span> getifaddrs(<span style=color:#f92672>&amp;</span>ifaddr)) {
+        printf(<span style=color:#e6db74>&#34;getifaddrs error</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
+    }
+
+    ifa <span style=color:#f92672>=</span> ifaddr;
+    <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+
+    <span style=color:#66d9ef>while</span>(ifa) {
+        <span style=color:#66d9ef>if</span>(strcmp(ifa<span style=color:#f92672>-&gt;</span>ifa_name, <span style=color:#e6db74>&#34;en0&#34;</span>) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>&amp;&amp;</span> ifa<span style=color:#f92672>-&gt;</span>ifa_addr<span style=color:#f92672>-&gt;</span>sa_family <span style=color:#f92672>==</span> AF_INET6) {
+            printf(<span style=color:#e6db74>&#34;ifa_name:%s ifa_flags:0x%x inet:%x</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ifa<span style=color:#f92672>-&gt;</span>ifa_name, ifa<span style=color:#f92672>-&gt;</span>ifa_flags, ifa<span style=color:#f92672>-&gt;</span>ifa_addr<span style=color:#f92672>-&gt;</span>sa_family);
+            memcpy(<span style=color:#f92672>&amp;</span>list, ifa<span style=color:#f92672>-&gt;</span>ifa_addr, <span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>struct</span> sockaddr_in6));
+            inet_ntop(AF_INET6, <span style=color:#f92672>&amp;</span>list.sin6_addr, ip_str, <span style=color:#66d9ef>sizeof</span>(ip_str));
+            printf(<span style=color:#e6db74>&#34;ip:%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ip_str);
+            <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>4</span>;i <span style=color:#f92672>++</span>) {
+                printf(<span style=color:#e6db74>&#34;%x &#34;</span>, list.sin6_addr.__u6_addr.__u6_addr32[i]);
+                <span style=color:#75715e>// printf(&#34;%x &#34;, list.sin6_addr.__in6_u.__u6_addr32[i]);
+</span><span style=color:#75715e></span>            }
+            printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+            memcpy(<span style=color:#f92672>&amp;</span>mask, ifa<span style=color:#f92672>-&gt;</span>ifa_netmask, <span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>struct</span> sockaddr_in6));
+            inet_ntop(AF_INET6, <span style=color:#f92672>&amp;</span>mask.sin6_addr, ip_str, <span style=color:#66d9ef>sizeof</span>(ip_str));
+            printf(<span style=color:#e6db74>&#34;mask:%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ip_str);
+
+            <span style=color:#66d9ef>for</span>(i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;i <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>16</span>;i <span style=color:#f92672>++</span>) {
+                prefix.sin6_addr.__u6_addr.__u6_addr8[i] <span style=color:#f92672>=</span> list.sin6_addr.__u6_addr.__u6_addr8[i] <span style=color:#f92672>&amp;</span> mask.sin6_addr.__u6_addr.__u6_addr8[i];
+                <span style=color:#75715e>// printf(&#34;prefix:%x list:%x mask:%x\n&#34;, prefix.sin6_addr.__u6_addr.__u6_addr8[i],list.sin6_addr.__u6_addr.__u6_addr8[i],mask.sin6_addr.__u6_addr.__u6_addr8[i]);
+</span><span style=color:#75715e></span>            }
+
+            <span style=color:#75715e>// memcpy(&amp;prefix, ifa-&gt;ifa_netmask, sizeof(struct sockaddr_in6));
+</span><span style=color:#75715e></span>            inet_ntop(AF_INET6, <span style=color:#f92672>&amp;</span>prefix.sin6_addr, ip_str, <span style=color:#66d9ef>sizeof</span>(ip_str));
+            printf(<span style=color:#e6db74>&#34;prefix:%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ip_str);
+            
+        }
+        ifa <span style=color:#f92672>=</span> ifa<span style=color:#f92672>-&gt;</span>ifa_next;
+    }
+
+
+    freeifaddrs(ifaddr);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 285 tags:</small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

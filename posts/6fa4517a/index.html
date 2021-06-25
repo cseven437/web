@@ -1,0 +1,1267 @@
+<!doctype html><html><title>Linux平台C语言记录</title><meta name=description content="用于记录linux平台下c语言的学习记录
+"><meta name=hash content="2982c9ccd01a886a7b503dd3423075bbecc2b1db "><meta name=lastmod content="2021-03-26 16:13:58 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>Linux平台C语言记录</h1><p><small>2021-02-04, updated 2021-03-26</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#volatile>volatile</a></li></ul><ul><li><a href=#strcmp>strcmp</a></li><li><a href=#strtol函数用法>strtol函数用法</a></li><li><a href=#strstr>strstr</a></li><li><a href=#sscanf>sscanf</a></li><li><a href=#ffs>ffs</a></li></ul><ul><li><a href=#malloc>malloc</a></li><li><a href=#free>free</a></li><li><a href=#calloc>calloc</a></li><li><a href=#realloc>realloc</a></li><li><a href=#alloca>alloca</a></li></ul><ul><li><a href=#offsetof>offsetof()</a></li><li><a href=#typeof>typeof</a></li></ul><ul><li><a href=#perror>perror</a></li><li><a href=#strerror>strerror</a></li><li><a href=#errno-的部分值>errno 的部分值</a></li><li><a href=#herror>herror</a></li></ul><ul><li><a href=#isalpha>isalpha</a></li><li><a href=#islower>islower</a></li><li><a href=#toupper>toupper</a></li></ul><ul><li><a href=#linux-多线程与信号>linux 多线程与信号</a></li></ul></nav></aside><p>用于记录linux平台下c语言的学习记录</p><h1 id=关键字>关键字</h1><h2 id=volatile>volatile</h2><p>定义为volatile的变量是说这变量可能会被意想不到地改变，这样，编译器就不会去假设这个变量的值了。精确的说就是，编译器在用到这个变量时必须每次都小心地重新读取这个变量的值，而不是使用保存在寄存器里的备份。</p><p><strong>作用</strong></p><p>就是防止编译器对代码进行优化</p><p><strong>使用volatile变量的例子</strong></p><ol><li>并行设备的硬件寄存器（如：状态寄存器）</li><li>一个中断服务子进程中会访问到的非自动变量（Non-automatic variables）</li><li>多线程应用中被几个任务共享的变量</li></ol><h1 id=stringh>string.h</h1><h2 id=strcmp>strcmp</h2><p>C 库函数 <code>int strcmp(const char _str1, const char _str2)</code> 把 str1 所指向的字符串和 str2 所指向的字符串进行比较。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> strcmp(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str1, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str2)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>str1 &ndash; 要进行比较的第一个字符串。</li><li>str2 &ndash; 要进行比较的第二个字符串。</li></ul><p>返回值</p><ul><li>如果返回值小于 0，则表示 str1 小于 str2。</li><li>如果返回值大于 0，则表示 str1 大于 str2。</li><li>如果返回值等于 0，则表示 str1 等于 str2。</li></ul><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span> 
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span> ()
+{
+   <span style=color:#66d9ef>char</span> str1[<span style=color:#ae81ff>15</span>];
+   <span style=color:#66d9ef>char</span> str2[<span style=color:#ae81ff>15</span>];
+   <span style=color:#66d9ef>int</span> ret;
+ 
+ 
+   strcpy(str1, <span style=color:#e6db74>&#34;abcdef&#34;</span>);
+   strcpy(str2, <span style=color:#e6db74>&#34;ABCDEF&#34;</span>);
+ 
+   ret <span style=color:#f92672>=</span> strcmp(str1, str2);
+ 
+   <span style=color:#66d9ef>if</span>(ret <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>)
+   {
+      printf(<span style=color:#e6db74>&#34;str1 小于 str2&#34;</span>);
+   }
+   <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span>(ret <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span>) 
+   {
+      printf(<span style=color:#e6db74>&#34;str1 大于 str2&#34;</span>);
+   }
+   <span style=color:#66d9ef>else</span> 
+   {
+      printf(<span style=color:#e6db74>&#34;str1 等于 str2&#34;</span>);
+   }
+   
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><h2 id=strtol函数用法>strtol函数用法</h2><p>C 库函数 <code>long int strtol(const char *str, char **endptr, int base)</code> 把参数 str 所指向的字符串根据给定的 base 转换为一个长整数（类型为 long int 型），base 必须介于 2 和 36（包含）之间，或者是特殊值 0。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>long</span> <span style=color:#66d9ef>int</span> strtol(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str, <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>endptr, <span style=color:#66d9ef>int</span> base)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>str &ndash; 要转换为长整数的字符串。</li><li>endptr &ndash; 对类型为 char* 的对象的引用，其值由函数设置为 str 中数值后的下一个字符。</li><li>base &ndash; 基数，必须介于 2 和 36（包含）之间，或者是特殊值 0。</li></ul><p>返回值</p><p>该函数返回转换后的长整数，如果没有执行有效的转换，则返回一个零值。</p><p>实例</p><p>下面的实例演示了 strtol() 函数的用法。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+   <span style=color:#66d9ef>char</span> str[<span style=color:#ae81ff>30</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;2030300 This is test&#34;</span>;
+   <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>ptr;
+   <span style=color:#66d9ef>long</span> ret;
+
+   ret <span style=color:#f92672>=</span> strtol(str, <span style=color:#f92672>&amp;</span>ptr, <span style=color:#ae81ff>10</span>);
+   printf(<span style=color:#e6db74>&#34;数字（无符号长整数）是 %ld</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ret);
+   printf(<span style=color:#e6db74>&#34;字符串部分是 |%s|&#34;</span>, ptr);
+
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><p>运行结果</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>数字（无符号长整数）是 2030300
+字符串部分是 | This is test|
+</code></pre></td></tr></table></div></div><h2 id=strstr>strstr</h2><p>在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>strstr</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>haystack, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>needle);
+</code></pre></td></tr></table></div></div><p><strong>参数</strong></p><ul><li>haystack &ndash; 要被检索的 C 字符串。</li><li>needle &ndash; 在 haystack 字符串内要搜索的小字符串。</li></ul><p><strong>返回值</strong></p><p>该函数返回在 haystack 中第一次出现 needle 字符串的位置，如果未找到则返回 null。</p><p><strong>示例</strong></p><p>下面的实例演示了 strstr() 函数的用法。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+   <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> haystack[<span style=color:#ae81ff>20</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;RUNOOB&#34;</span>;
+   <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> needle[<span style=color:#ae81ff>10</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;NOOB&#34;</span>;
+   <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>ret;
+
+   ret <span style=color:#f92672>=</span> strstr(haystack, needle);
+
+   printf(<span style=color:#e6db74>&#34;子字符串是： %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ret);
+
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><p>让我们编译并运行上面的程序，这将产生以下结果：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>子字符串是： NOOB
+</code></pre></td></tr></table></div></div><h2 id=sscanf>sscanf</h2><p>sscanf 读取格式化的字符串中的数据。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>scanf</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, ...);
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>fscanf</span>(FILE <span style=color:#f92672>*</span>stream, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, ...);
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sscanf</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, ...);
+</code></pre></td></tr></table></div></div><h2 id=ffs>ffs</h2><p>ffs()函数用于查找一个整数中的第一个置位值(也就是bit为1的位)。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;strings.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>ffs</span>(<span style=color:#66d9ef>int</span> i);
+</code></pre></td></tr></table></div></div><p>这个函数几乎没有使用的，很少见到。</p><h1 id=socket编程errno大全>socket编程errno大全</h1><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>0:Success
+1:Operation notpermitted
+2:No such fileor directory
+3:No suchprocess
+4:Interruptedsystem call
+5:Input/outputerror
+6:No such deviceor address
+7:Argument listtoo long
+8:Exec formaterror
+9:Bad filedescriptor
+10:No childprocesses
+11:Resourcetemporarily unavailable
+12:Cannot allocatememory
+13:Permissiondenied
+14:Bad address
+15:Block devicerequired
+16:Device orresource busy
+17:File exists
+18:Invalidcross-device link
+19:No suchdevice
+20:Not adirectory
+21:Is adirectory
+22:Invalidargument
+23:Too many openfiles in system
+24:Too many openfiles
+25:Inappropriateioctl for device
+26:Text filebusy
+27:File toolarge
+28:No space lefton device
+29:Illegal seek
+30:Read-onlyfile system
+31:Too manylinks
+32:Broken pipe
+33:Numericalargument out of domain
+34:Numericalresult out of range
+35:Resourcedeadlock avoided
+36:File name toolong
+37:No locksavailable
+38:Function notimplemented
+39:Directory notempty
+40:Too manylevels of symbolic links
+41:Unknown error41
+42:No message ofdesired type
+43:Identifierremoved
+44:Channelnumber out of range
+45:Level 2 notsynchronized
+46:Level 3halted
+47:Level 3 reset
+48:Link numberout of range
+49:Protocoldriver not attached
+50:No CSIstructure available
+51:Level 2halted
+52:Invalidexchange
+53:Invalidrequest descriptor
+54:Exchange full
+55:No anode
+56:Invalidrequest code
+57:Invalid slot
+58:Unknown error58
+59:Bad font fileformat
+60:Device not astream
+61:No dataavailable
+62:Timer expired
+63:Out ofstreams resources
+64:Machine isnot on the network
+65:Package notinstalled
+66:Object isremote
+67:Link has beensevered
+68:Advertiseerror
+69:Srmount error
+70:Communicationerror on send
+71:Protocolerror
+72:Multihopattempted
+73:RFS specificerror
+74:Bad message
+75:Value toolarge for defined data type
+76:Name notunique on network
+77:Filedescriptor in bad state
+78:Remoteaddress changed
+79:Can notaccess a needed shared library
+80:Accessing acorrupted shared library
+81:.lib sectionin a.out corrupted
+82:Attempting tolink in too many shared libraries
+83:Cannot exec ashared library directly
+84:Invalid orincomplete multibyte or wide character
+85:Interruptedsystem call should be restarted
+86:Streams pipeerror
+87:Too manyusers
+88:Socketoperation on non-socket
+89:Destinationaddress required
+90:Message toolong
+91:Protocolwrong type for socket
+92:Protocol notavailable
+93:Protocol notsupported
+94:Socket typenot supported
+95:Operation notsupported
+96:Protocolfamily not supported
+97:Addressfamily not supported by protocol
+98:Addressalready in use
+99:Cannot assignrequested address
+100:Network isdown
+101:Network isunreachable
+102:Networkdropped connection on reset
+103:Softwarecaused connection abort
+104:Connectionreset by peer
+105:No bufferspace available
+106:Transportendpoint is already connected
+107:Transportendpoint is not connected
+108:Cannot sendafter transport endpoint shutdown
+109:Too manyreferences: cannot splice
+110:Connectiontimed out
+111:Connectionrefused
+112:Host is down
+113:No route tohost
+114:Operationalready in progress
+115:Operationnow in progress
+116:Stale NFSfile handle
+117:Structureneeds cleaning
+118:Not a XENIXnamed type file
+119:No XENIXsemaphores available
+120:Is a namedtype file
+121:Remote I/Oerror
+122:Disk quotaexceeded
+123:No mediumfound
+124:Wrong mediumtype
+125:Operationcanceled
+126:Required keynot available
+127:Key hasexpired
+128:Key has beenrevoked
+129:Key wasrejected by service
+130:Owner died
+131:State notrecoverable
+132:Unknownerror 132
+133:Unknownerror 133
+134:Unknownerror 134
+135:Unknownerror 135
+136:Unknownerror 136
+137:Unknownerror 137
+138:Unknownerror 138
+139:Unknownerror 139
+140:Unknownerror 140
+141:Unknownerror 141
+142:Unknownerror 142
+143:Unknownerror 143
+144:Unknownerror 144
+145:Unknownerror 145
+146:Unknownerror 146
+147:Unknownerror 147
+148:Unknownerror 148
+149:Unknownerror 149
+</code></pre></td></tr></table></div></div><h1 id=printf>printf</h1><p>输出控制符</p><table><thead><tr><th>控制符</th><th>说明</th></tr></thead><tbody><tr><td>%d</td><td>按十进制整型数据的实际长度输出。</td></tr><tr><td>%ld</td><td>输出长整型数据。</td></tr><tr><td>%md</td><td>m 为指定的输出字段的宽度。如果数据的位数小于 m，则左端补以空格，若大于 m，则按实际位数输出。</td></tr><tr><td>%u</td><td>输出无符号整型（unsigned）。输出无符号整型时也可以用 %d，这时是将无符号转换成有符号数，然后输出。但编程的时候最好不要这么写，因为这样要进行一次转换，使 CPU 多做一次无用功。</td></tr><tr><td>%c</td><td>用来输出一个字符。</td></tr><tr><td>%f</td><td>用来输出实数，包括单精度和双精度，以小数形式输出。不指定字段宽度，由系统自动指定，整数部分全部输出，小数部分输出 6 位，超过 6 位的四舍五入。</td></tr><tr><td>%.mf</td><td>输出实数时小数点后保留 m 位，注意 m 前面有个点。</td></tr><tr><td>%o</td><td>以八进制整数形式输出，这个就用得很少了，了解一下就行了。</td></tr><tr><td>%s</td><td>用来输出字符串。用 %s 输出字符串同前面直接输出字符串是一样的。但是此时要先定义字符数组或字符指针存储或指向字符串，这个稍后再讲。</td></tr><tr><td>%x（或 %X 或 %#x 或 %#X）</td><td>以十六进制形式输出整数，这个很重要。</td></tr></tbody></table><p><strong>如何输出 %d、\ 和双引号</strong></p><p>printf 中有输出控制符<code>%d</code>，转义字符前面有反斜杠<code>\</code>，还有双引号。那么大家有没有想过这样一个问题：怎样将这三个符号通过 printf 输出到屏幕上呢？</p><p>要输出<code>%d</code>只需在前面再加上一个<code>%</code>，要输出<code>\</code>只需在前面再加上一个<code>\</code>，要输出双引号也只需在前面加上一个<code>\</code>即可。程序如下：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e># include &lt;stdio.h&gt;
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>void</span>){
+    printf(<span style=color:#e6db74>&#34;%%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+    printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\\n</span><span style=color:#e6db74>&#34;</span>);
+    printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\&#34;\&#34;\n</span><span style=color:#e6db74>&#34;</span>);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><h1 id=snprintf--sprintf>snprintf && sprintf</h1><p>C 库函数 **int snprintf(char <em>str, size_t size, const char <em>format, &mldr;)</em></em> 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>snprintf</span> ( <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> str, size_t size, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> format, ... );
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sprintf</span> ( <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> str, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> format, ... );
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li><strong>str</strong> &ndash; 目标字符串。</li><li><strong>size</strong> &ndash; 拷贝字节数(Bytes)。</li><li><strong>format</strong> &ndash; 格式化成字符串。</li><li><strong>&mldr;</strong> &ndash; 可变参数。</li></ul><p>返回值</p><ul><li>(1) 如果格式化后的字符串长度小于等于 size，则会把字符串全部复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>；</li><li>(2) 如果格式化后的字符串长度大于 size，超过 size 的部分会被截断，只将其中的 (size-1) 个字符复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>，返回值为欲写入的字符串长度。</li></ul><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span> 
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+    <span style=color:#66d9ef>char</span> buffer[<span style=color:#ae81ff>50</span>];
+    <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> s <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;runoobcom&#34;</span>;
+ 
+    <span style=color:#75715e>// 读取字符串并存储在 buffer 中
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> j <span style=color:#f92672>=</span> snprintf(buffer, <span style=color:#ae81ff>6</span>, <span style=color:#e6db74>&#34;%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, s);
+ 
+    <span style=color:#75715e>// 输出 buffer及字符数
+</span><span style=color:#75715e></span>    printf(<span style=color:#e6db74>&#34;string:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>character count = %d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, buffer, j);
+ 
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><h1 id=attribute-机制详解><strong>attribute</strong> 机制详解</h1><p>GNU C 的一大特色就是<strong>attribute</strong> 机制。attribute 可以设置函数属性（Function Attribute）、变量属性（Variable Attribute）和类型属性（Type Attribute）。</p><p>其位置约束为： 放于声明的尾部";" 之前</p><h1 id=内存分配>内存分配</h1><h2 id=malloc>malloc</h2><p>C 库函数 void *malloc(size_t size) 分配所需的内存空间，并返回一个指向它的指针。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>malloc(size_t size)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>size &ndash; 内存块的大小，以字节为单位。</li></ul><p>返回值</p><p>该函数返回一个指针 ，指向已分配大小的内存。如果请求失败，则返回 NULL。</p><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span> 
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+   <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str;
+ 
+   <span style=color:#75715e>/* 最初的内存分配 */</span>
+   str <span style=color:#f92672>=</span> (<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>) malloc(<span style=color:#ae81ff>15</span>);
+   strcpy(str, <span style=color:#e6db74>&#34;runoob&#34;</span>);
+   printf(<span style=color:#e6db74>&#34;String = %s,  Address = %u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, str, str);
+ 
+   <span style=color:#75715e>/* 重新分配内存 */</span>
+   str <span style=color:#f92672>=</span> (<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>) realloc(str, <span style=color:#ae81ff>25</span>);
+   strcat(str, <span style=color:#e6db74>&#34;.com&#34;</span>);
+   printf(<span style=color:#e6db74>&#34;String = %s,  Address = %u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, str, str);
+ 
+   free(str);
+ 
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><h2 id=free>free</h2><p>C 库函数 void free(void *ptr) 释放之前调用 calloc、malloc 或 realloc 所分配的内存空间。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> free(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>ptr)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>ptr &ndash; 指针指向一个要释放内存的内存块，该内存块之前是通过调用 malloc、calloc 或 realloc 进行分配内存的。如果传递的参数是一个空指针，则不会执行任何动作。</li></ul><h2 id=calloc>calloc</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>calloc</span>(size_t n, size_t size);
+</code></pre></td></tr></table></div></div><p>calloc会自动初始化分配的空间，置为0。malloc需要自行初始化。</p><ul><li>n 指size的个数</li><li>size 每一个空间的大小</li></ul><h2 id=realloc>realloc</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>realloc(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>ptr, size_t new_Size)
+</code></pre></td></tr></table></div></div><p>对动态内存进行扩容。ptr为原空间地址，new_Size为新增空间大小。</p><h2 id=alloca>alloca</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span>
+<span style=color:#75715e>void *alloca(size_t size);</span><span style=color:#75715e>
+</span></code></pre></td></tr></table></div></div><p>函数说明：alloca() 用来配置 size 个字节的内存空间，然而和 malloc、colloc 不同的是，
+alloca() 是从 栈空间(stack) 中分配内存的，因此在函数返回时会自动释放此空间。
+返回值：内存分配成功则返回首地址，失败则返回 NULL</p><h1 id=popen>popen</h1><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>FILE <span style=color:#f92672>*</span> <span style=color:#a6e22e>popen</span>( <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> command,<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> type);
+</code></pre></td></tr></table></div></div><p>popen()会调用fork()产生子进程，然后从子进程中调用/bin/sh -c来执行参数command的指令。参数type可使用“r”代表读取，“w”代表写入。依照此type值，popen()会建立管道连到子进程的标准输出设备或标准输入设备，然后返回一个文件指针。随后进程便可利用此文件指针来读取子进程的输出设备或是写入到子进程的标准输入设备中。此外，所有使用文件指针(FILE*)操作的函数也都可以使用，除了fclose()以外。</p><ul><li>如果 type 为 r，那么调用进程读进 command 的标准输出。</li><li>如果 type 为 w，那么调用进程写到 command 的标准输入。</li></ul><p>返回值</p><p>若成功则返回文件指针，否则返回NULL，错误原因存于errno中。</p><p>错误值</p><p>EINVAL参数type不合法。</p><p>示例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span> 
+main()
+{
+    FILE <span style=color:#f92672>*</span>fp;
+    <span style=color:#66d9ef>char</span> buffer[<span style=color:#ae81ff>80</span>];
+    fp <span style=color:#f92672>=</span> popen(<span style=color:#e6db74>&#34;cat /etc/passwd&#34;</span>, <span style=color:#e6db74>&#34;r&#34;</span>);
+    fgets(buffer, <span style=color:#66d9ef>sizeof</span>(buffer), fp);
+    printf(<span style=color:#e6db74>&#34;%s&#34;</span>, buffer);
+    pclose(fp);
+}
+</code></pre></td></tr></table></div></div><h1 id=pclose>pclose</h1><p>获取popen执行的命令，在pclose中获取到的main函数的返回值，返回的数字为256的倍数，使用WEXITSTATUS(retValue) 可以获取真实值。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>write_value_to_json</span>(<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>key, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>value, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>type)
+{
+    FILE <span style=color:#f92672>*</span>fp <span style=color:#f92672>=</span> NULL;
+    <span style=color:#66d9ef>char</span> buf[<span style=color:#ae81ff>128</span>] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>0</span>};
+    <span style=color:#66d9ef>char</span> cmd[<span style=color:#ae81ff>128</span>] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>0</span>};
+    snprintf(cmd, <span style=color:#e6db74>&#34;djsonutil get /tmp/config_nat_set %s %s&#34;</span>, key, type);
+    fp <span style=color:#f92672>=</span> popen(key, <span style=color:#e6db74>&#34;r&#34;</span>);
+    <span style=color:#66d9ef>if</span>(fp <span style=color:#f92672>!=</span> NULL) {
+
+        fread(buf, <span style=color:#66d9ef>sizeof</span>(buf), <span style=color:#ae81ff>1</span>, fp);
+
+        <span style=color:#66d9ef>int</span> ret <span style=color:#f92672>=</span> pclose(fp);
+        <span style=color:#66d9ef>if</span>(WEXITSTATUS(ret) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
+            strncpy(value, buf, strlen(buf));
+        } <span style=color:#66d9ef>else</span> {
+            retrun <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
+        }
+    }
+    <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
+}
+</code></pre></td></tr></table></div></div><h1 id=c-库宏>C 库宏</h1><h2 id=offsetof>offsetof()</h2><p>C 库宏 offsetof(type, member-designator) 会生成一个类型为 size_t 的整型常量，它是一个结构成员相对于结构开头的字节偏移量。成员是由 member-designator 给定的，结构的名称是在 type 中给定的。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>offsetof(type, member<span style=color:#f92672>-</span>designator)
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>type &ndash; 这是一个 class 类型，其中，member-designator 是一个有效的成员指示器。</li><li>member-designator &ndash; 这是一个 class 类型的成员指示器。</li></ul><p>返回值</p><p>该宏返回类型为 size_t 的值，表示 type 中成员的偏移量。</p><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stddef.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>struct</span> address {
+   <span style=color:#66d9ef>char</span> name[<span style=color:#ae81ff>50</span>];
+   <span style=color:#66d9ef>char</span> street[<span style=color:#ae81ff>50</span>];
+   <span style=color:#66d9ef>int</span> phone;
+};
+   
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+   printf(<span style=color:#e6db74>&#34;address 结构中的 name 偏移 = %d 字节。</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,
+   offsetof(<span style=color:#66d9ef>struct</span> address, name));
+   
+   printf(<span style=color:#e6db74>&#34;address 结构中的 street 偏移 = %d 字节。</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,
+   offsetof(<span style=color:#66d9ef>struct</span> address, street));
+   
+   printf(<span style=color:#e6db74>&#34;address 结构中的 phone 偏移 = %d 字节。</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,
+   offsetof(<span style=color:#66d9ef>struct</span> address, phone));
+
+   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
+}
+</code></pre></td></tr></table></div></div><p>执行结果</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>address 结构中的 name 偏移 = 0 字节。
+address 结构中的 street 偏移 = 50 字节。
+address 结构中的 phone 偏移 = 100 字节。
+</code></pre></td></tr></table></div></div><h2 id=typeof>typeof</h2><p>typeof关键字是C语言中的一个新扩展，这个特性在linux内核中应用非常广泛。</p><p>typeof()关键字常见用法一共有以下几种。</p><ol><li>不用知道函数返回什么类型，可以使用typeof()定义一个用于接收该函数返回值的变量</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>struct</span> apple{
+    <span style=color:#66d9ef>int</span> weight;
+    <span style=color:#66d9ef>int</span> color;
+};
+
+<span style=color:#66d9ef>struct</span> apple <span style=color:#f92672>*</span><span style=color:#a6e22e>get_apple_info</span>()
+{
+    <span style=color:#66d9ef>struct</span> apple <span style=color:#f92672>*</span>a1;
+    a1 <span style=color:#f92672>=</span> malloc(<span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>struct</span> apple));
+    <span style=color:#66d9ef>if</span>(a1 <span style=color:#f92672>==</span> NULL)
+    {
+        printf(<span style=color:#e6db74>&#34;malloc error.</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        <span style=color:#66d9ef>return</span>;
+    }
+
+    a1<span style=color:#f92672>-&gt;</span>weight <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span>;
+    a1<span style=color:#f92672>-&gt;</span>color <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+
+    <span style=color:#66d9ef>return</span> a1;
+}
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>argv[])
+{
+    typeof(get_apple_info()) r1;<span style=color:#75715e>//定义一个变量r1,用于接收函数get_apple_info()返回的值，由于该函数返回的类型是：struct apple *，所以变量r1也是该类型。注意，函数不会执行。
+</span><span style=color:#75715e></span>
+    r1 <span style=color:#f92672>=</span> get_apple_info();
+
+    printf(<span style=color:#e6db74>&#34;apple weight:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, r1<span style=color:#f92672>-&gt;</span>weight);
+    printf(<span style=color:#e6db74>&#34;apple color:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, r1<span style=color:#f92672>-&gt;</span>color);
+
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><ol start=2><li>在宏定义中动态获取相关结构体成员的类型
+如下代码，定义一个和变量x相同类型的临时变量_max1，定义一个和变量y相同类型的临时变量_max2，再判断两者类型是否一致，不一致给出一个警告，最后比较两者。</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#define max(x, y) ({                \
+</span><span style=color:#75715e>    typeof(x) _max1 = (x);          \
+</span><span style=color:#75715e>    typeof(y) _max2 = (y);          \
+</span><span style=color:#75715e>    (void) (&amp;_max1 == &amp;_max2);      \</span><span style=color:#75715e>//如果调用者传参时，两者类型不一致，在编译时就会发出警告。
+</span><span style=color:#75715e></span>    _max1 <span style=color:#f92672>&gt;</span> _max2 <span style=color:#f92672>?</span> _max1 : _max2; })
+</code></pre></td></tr></table></div></div><ol start=2><li>如下代码，传入的a和b不是同一类型。</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>argv[])
+{
+    <span style=color:#66d9ef>int</span> a<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span>;
+    <span style=color:#66d9ef>float</span> b <span style=color:#f92672>=</span> <span style=color:#ae81ff>4.0</span>;
+    <span style=color:#66d9ef>int</span> r <span style=color:#f92672>=</span> max(a, b);
+
+    printf(<span style=color:#e6db74>&#34;r:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, r);
+
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><ol start=2><li>此时编译就会出现警告</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[root@xx c_base]# gcc test.c
+test.c: 在函数‘main’中:
+test.c:43: 警告：比较不相关的指针时缺少类型转换
+</code></pre></td></tr></table></div></div><ol start=3><li>也可直接取得已知类型
+如下代码，定义了一个int类型的指针p，像这种用法主没什么太大的意义了。</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> a <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span>;
+typeof (<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>) p;
+p <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>a;
+printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, <span style=color:#f92672>*</span>p);
+</code></pre></td></tr></table></div></div><ol start=4><li>其它用法</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>//其它用法1
+</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>p1;
+typeof (<span style=color:#f92672>*</span>p1) ch <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;a&#39;</span>; <span style=color:#75715e>//ch为char类型，不是char *类型。
+</span><span style=color:#75715e></span>printf(<span style=color:#e6db74>&#34;%d, %c</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, <span style=color:#66d9ef>sizeof</span>(ch), ch);<span style=color:#75715e>//1, a
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>//其它用法2
+</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>p2;
+typeof (p2) p <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;hello world&#34;</span>;<span style=color:#75715e>//此时的p才是char *类型，由于在64位机器上，所以指针大小为8字节
+</span><span style=color:#75715e></span>printf(<span style=color:#e6db74>&#34;%d, %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, <span style=color:#66d9ef>sizeof</span>(p), p);<span style=color:#75715e>//8, hello world
+</span></code></pre></td></tr></table></div></div><h1 id=select函数>select函数</h1><p>select函数使用</p><p><strong>函数定义</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/select.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_CLR</span>(fd, fd_set <span style=color:#f92672>*</span>fdset);
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_COPY</span>(fd_set <span style=color:#f92672>*</span>fdset_orig, fd_set <span style=color:#f92672>*</span>fdset_copy);
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>FD_ISSET</span>(fd, fd_set <span style=color:#f92672>*</span>fdset);
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_SET</span>(fd, fd_set <span style=color:#f92672>*</span>fdset);
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_ZERO</span>(fd_set <span style=color:#f92672>*</span>fdset);
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>select</span>(<span style=color:#66d9ef>int</span> nfds, fd_set <span style=color:#f92672>*</span><span style=color:#66d9ef>restrict</span> readfds, fd_set <span style=color:#f92672>*</span><span style=color:#66d9ef>restrict</span> writefds, fd_set <span style=color:#f92672>*</span>exceptfds, <span style=color:#66d9ef>struct</span> timeval <span style=color:#f92672>*</span>timeout););
+</code></pre></td></tr></table></div></div><p><strong>函数说明</strong></p><p>select()用来等待文件描述词状态的改变。参数nfds代表最大的文件描述词加1，参数readfds、writefds和exceptfds 成为描述词组，是用来回传该描述词的读、写或例外的状况。底下的宏提供了处理这三种描述词组的方式：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_CLR</span>(fd, fd_set <span style=color:#f92672>*</span>fdset); <span style=color:#75715e>// 用来清除描述词组set中相关fd的位
+</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_COPY</span>(fd_set <span style=color:#f92672>*</span>fdset_orig, fd_set <span style=color:#f92672>*</span>fdset_copy);
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>FD_ISSET</span>(fd, fd_set <span style=color:#f92672>*</span>fdset); <span style=color:#75715e>// 用来测试描述词组set中相关fd的位是否位真
+</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_SET</span>(fd, fd_set <span style=color:#f92672>*</span>fdset); <span style=color:#75715e>// 用来设置描述词组set中相关fd的位
+</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_ZERO</span>(fd_set <span style=color:#f92672>*</span>fdset); <span style=color:#75715e>// 用来清除描述词组set的全部位
+</span></code></pre></td></tr></table></div></div><p>在使用FD_ISSET测试fd_set数据类型中的描述符后，描述符集内<strong>任何与未就绪描述符对应的位</strong>返回时均被<strong>清0</strong>，因此，每次重新调用select函数时，都需要将描述符集内所关心的位置为1<strong>描述符必须被初始化</strong>，因为作为自动变量分配的一个描述符如果没有被初始化，那么发生的后果不可预期</p><p>readset、writeset、exceptset三个参数中，若对其中任何参数条件不感兴趣，则可将其设为<strong>NULL</strong></p><p>timeout: 告知内核等待指定描述符中的任何一个就绪的时间限制</p><p>timeval结构：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> timeval{
+    <span style=color:#66d9ef>long</span> tv_sec;    <span style=color:#75715e>// 秒
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>long</span> tv_usec;   <span style=color:#75715e>// 微秒
+</span><span style=color:#75715e></span>}
+</code></pre></td></tr></table></div></div><p>timeout参数的三种可能：</p><ol><li>设为空指针：永远等待下去，仅在有描述符就绪时才返回</li><li>正常设置timeout，在不超过timeout设置的时间内，在有描述符就绪时返回</li><li>将timeout.tv_sec和timeout.tv_usec都设为0：检查描述符后立即返回(轮询)</li></ol><p>前两种情形的等待通常会被进程在<strong>等待期间捕获的信号中断</strong>，并<strong>从信号处理函数返回</strong>，因此在考虑可移植性的情况下，若我们在捕获信号，那必须做好<strong>select返回EINTR错误</strong>的准备</p><p><strong><em>描述符的就绪条件：</em></strong>
+<strong><em>可读条件：</em></strong></p><ol><li>该套接字接收缓冲区中的数据字节数大于等于套接字接收缓冲区低水位标记的当前大小</li><li>该连接的读半部关闭(即接收了FIN的TCP连接)</li><li>该套接字是一个监听套接字且已完成的连接数不为0</li><li>该套接字上有一个套接字错误待处理</li></ol><p><strong><em>可写条件：</em></strong></p><ol><li>该套接字发送缓冲区中的可用空间字节数大于等于套接字发送缓冲区低水位标记的当前大小</li><li>该连接的写半部关闭</li><li>使用非阻塞式connect的套接字已建立连接，或者connect已经以失败告终</li><li>该套接字上有一个套接字错误待处理</li></ol><p><strong><em>异常条件：</em></strong>
+a.该套接字存在带外数据或者仍处于带外标记</p><p>**接受缓冲区低水位标记(读)：**让select返回套接字接收缓冲区所需数据量
+**发送缓冲区低水位标记(写)：**让select返回套接字发送缓冲区可用空间</p><p><strong>返回值</strong></p><ul><li>负值：select错误</li><li>正值：某些文件可读写或出错 0：等待超时，没有可读写或错误的文件</li></ul><p>如果参数timeout设为NULL则表示select（）没有timeout。</p><p><strong>错误代码</strong></p><p>执行成功则返回文件描述词状态已改变的个数，如果返回0代表在描述词状态改变前已超过timeout时间，当有错误发生时则返回-1，错误原因存于errno，此时参数readfds，writefds，exceptfds和timeout的值变成不可预测。</p><ul><li>EBADF 文件描述词为无效的或该文件已关闭</li><li>EINTR 此调用被信号所中断</li><li>EINVAL 参数n为负值。</li><li>ENOMEM 核心内存不足</li></ul><h1 id=getopt>getopt</h1><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>       <span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>optarg;  <span style=color:#75715e>//选项的参数指针
+</span><span style=color:#75715e></span>       <span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>int</span> optind,   <span style=color:#75715e>//下一次调用getopt的时，从optind存储的位置处重新开始检查选项。 
+</span><span style=color:#75715e></span>       <span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>int</span> opterr,  <span style=color:#75715e>//当opterr=0时，getopt不向stderr输出错误信息。
+</span><span style=color:#75715e></span>       <span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>int</span> optopt;  <span style=color:#75715e>//当命令行选项字符不包括在optstring中或者选项缺少必要的参数时，该选项存储在optopt中，getopt返回&#39;？’、
+</span><span style=color:#75715e></span>       <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getopt</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>const</span> argv[], <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>optstring);
+</code></pre></td></tr></table></div></div><p>1.单个字符，表示选项，</p><p>2.单个字符后接一个冒号：表示该选项后必须跟一个参数。参数紧跟在选项后或者以空格隔开。该参数的指针赋给optarg。</p><p>3 单个字符后跟两个冒号，表示该选项后必须跟一个参数。参数必须紧跟在选项后不能以空格隔开。该参数的指针赋给optarg。（这个特性是GNU的扩张）。</p><p>getopt处理以'-’开头的命令行参数，如optstring=&ldquo;ab:c::d::",命令行为getopt.exe -a -b host -ckeke -d haha</p><p>在这个命令行参数中，-a和-h就是选项元素，去掉'-'，a,b,c就是选项。host是b的参数，keke是c的参数。但haha并不是d的参数，因为它们中间有空格隔开。</p><p>还要注意的是默认情况下getopt会重新排列命令行参数的顺序，所以到最后所有不包含选项的命令行参数都排到最后。</p><p>如getopt.exe -a ima -b host -ckeke -d haha, 都最后命令行参数的顺序是： -a -b host -ckeke -d ima haha</p><p>如果optstring中的字符串以'+&lsquo;加号开头或者环境变量POSIXLY_CORRE被设置。那么一遇到不包含选项的命令行参数，getopt就会停止，返回-1。</p><h1 id=daemon>daemon</h1><p>run in the background</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>daemon</span>(<span style=color:#66d9ef>int</span> nochdir, <span style=color:#66d9ef>int</span> noclose);
+</code></pre></td></tr></table></div></div><p>The daemon() function is for programs wishing to detach themselves from the controlling terminal and run in the background as system daemons.</p><p>If nochdir is zero, daemon() changes the calling process&rsquo;s current working directory to the root directory ("/"); otherwise, the current working directory is left unchanged.</p><p>If noclose is zero, daemon() redirects standard input, standard output and standard error to /dev/null; otherwise, no changes are made to these file descriptors.</p><p><strong>return value:</strong></p><p>(This function forks, and if the fork(2) succeeds, the parent calls _exit(2), so that further errors are seen by the child only.)  On success daemon() returns zero.  If an error occurs, daemon() returns -1 and sets errno to any of the errors specified for the fork(2) and setsid(2).</p><h1 id=errno>errno</h1><p>当linux中的 api函数发生异常时,一般会将errno变量(需include errno.h)赋一个整数值,不同的值表示不同的含义,可以通过查看该值推测出错的原因，在实际编程中用这一招解决了不少原本看来莫名其妙的问题。但是errno是一个数字，代表的具体含义还要到errno.h中去阅读宏定义，而每次查阅是一件很繁琐的事情。下面的几种方法可以方便的得到错误信息</p><h2 id=perror>perror</h2><p><code>perror ()</code>用来将上一个函数发生错误的原因输出到标准错误(stderr),参数s 所指的字符串会先打印出,后面再加上错误原因 字符串。此错误原因依照全局变量 <code>errno</code>的值来决定要输出的字符串。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;errno.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> perror(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>s)
+</code></pre></td></tr></table></div></div><h2 id=strerror>strerror</h2><p>将错误代码转换为字符串错误信息,可以将该字符串和其它的信息组合输出到用户界面</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;errno.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>strerror(<span style=color:#66d9ef>int</span> errno)
+</code></pre></td></tr></table></div></div><h2 id=errno-的部分值>errno 的部分值</h2><p>以下来自linux 2.4.20-18的内核代码中的/usr/include/asm/errno.h</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#ifndef _I386_ERRNO_H
+#define _I386_ERRNO_H
+#define EPERM 1 /* Operation not permitted /
+#define ENOENT 2 / No such file or directory /
+#define ESRCH 3 / No such process /
+#define EINTR 4 / Interrupted system call /
+#define EIO 5 / I/O error /
+#define ENXIO 6 / No such device or address /
+#define E2BIG 7 / Arg list too long /
+#define ENOEXEC 8 / Exec format error /
+#define EBADF 9 / Bad file number /
+#define ECHILD 10 / No child processes /
+#define EAGAIN 11 / Try again /
+#define ENOMEM 12 / Out of memory /
+#define EACCES 13 / Permission denied /
+#define EFAULT 14 / Bad address /
+#define ENOTBLK 15 / Block device required /
+#define EBUSY 16 / Device or resource busy /
+#define EEXIST 17 / File exists /
+#define EXDEV 18 / Cross-device link /
+#define ENODEV 19 / No such device /
+#define ENOTDIR 20 / Not a directory /
+#define EISDIR 21 / Is a directory /
+#define EINVAL 22 / Invalid argument /
+#define ENFILE 23 / File table overflow /
+#define EMFILE 24 / Too many open files /
+#define ENOTTY 25 / Not a typewriter /
+#define ETXTBSY 26 / Text file busy /
+#define EFBIG 27 / File too large /
+#define ENOSPC 28 / No space left on device /
+#define ESPIPE 29 / Illegal seek /
+#define EROFS 30 / Read-only file system /
+#define EMLINK 31 / Too many links /
+#define EPIPE 32 / Broken pipe /
+#define EDOM 33 / Math argument out of domain of func /
+#define ERANGE 34 / Math result not representable /
+#define EDEADLK 35 / Resource deadlock would occur /
+#define ENAMETOOLONG 36 / File name too long /
+#define ENOLCK 37 / No record locks available /
+#define ENOSYS 38 / Function not implemented /
+#define ENOTEMPTY 39 / Directory not empty /
+#define ELOOP 40 / Too many symbolic links encountered /
+#define EWOULDBLOCK EAGAIN / Operation would block /
+#define ENOMSG 42 / No message of desired type /
+#define EIDRM 43 / Identifier removed /
+#define ECHRNG 44 / Channel number out of range /
+#define EL2NSYNC 45 / Level 2 not synchronized /
+#define EL3HLT 46 / Level 3 halted /
+#define EL3RST 47 / Level 3 reset /
+#define ELNRNG 48 / Link number out of range /
+#define EUNATCH 49 / Protocol driver not attached /
+#define ENOCSI 50 / No CSI structure available /
+#define EL2HLT 51 / Level 2 halted /
+#define EBADE 52 / Invalid exchange /
+#define EBADR 53 / Invalid request descriptor /
+#define EXFULL 54 / Exchange full /
+#define ENOANO 55 / No anode /
+#define EBADRQC 56 / Invalid request code /
+#define EBADSLT 57 / Invalid slot /
+#define EDEADLOCK EDEADLK
+#define EBFONT 59 / Bad font file format /
+#define ENOSTR 60 / Device not a stream /
+#define ENODATA 61 / No data available /
+#define ETIME 62 / Timer expired /
+#define ENOSR 63 / Out of streams resources /
+#define ENONET 64 / Machine is not on the network /
+#define ENOPKG 65 / Package not installed /
+#define EREMOTE 66 / Object is remote /
+#define ENOLINK 67 / Link has been severed /
+#define EADV 68 / Advertise error /
+#define ESRMNT 69 / Srmount error /
+#define ECOMM 70 / Communication error on send /
+#define EPROTO 71 / Protocol error /
+#define EMULTIHOP 72 / Multihop attempted /
+#define EDOTDOT 73 / RFS specific error /
+#define EBADMSG 74 / Not a data message /
+#define EOVERFLOW 75 / Value too large for defined data type /
+#define ENOTUNIQ 76 / Name not unique on network /
+#define EBADFD 77 / File descriptor in bad state /
+#define EREMCHG 78 / Remote address changed /
+#define ELIBACC 79 / Can not access a needed shared library /
+#define ELIBBAD 80 / Accessing a corrupted shared library /
+#define ELIBSCN 81 / .lib section in a.out corrupted /
+#define ELIBMAX 82 / Attempting to link in too many shared libraries /
+#define ELIBEXEC 83 / Cannot exec a shared library directly /
+#define EILSEQ 84 / Illegal byte sequence /
+#define ERESTART 85 / Interrupted system call should be restarted /
+#define ESTRPIPE 86 / Streams pipe error /
+#define EUSERS 87 / Too many users /
+#define ENOTSOCK 88 / Socket operation on non-socket /
+#define EDESTADDRREQ 89 / Destination address required /
+#define EMSGSIZE 90 / Message too long /
+#define EPROTOTYPE 91 / Protocol wrong type for socket /
+#define ENOPROTOOPT 92 / Protocol not available /
+#define EPROTONOSUPPORT 93 / Protocol not supported /
+#define ESOCKTNOSUPPORT 94 / Socket type not supported /
+#define EOPNOTSUPP 95 / Operation not supported on transport endpoint /
+#define EPFNOSUPPORT 96 / Protocol family not supported /
+#define EAFNOSUPPORT 97 / Address family not supported by protocol /
+#define EADDRINUSE 98 / Address already in use /
+#define EADDRNOTAVAIL 99 / Cannot assign requested address /
+#define ENETDOWN 100 / Network is down /
+#define ENETUNREACH 101 / Network is unreachable /
+#define ENETRESET 102 / Network dropped connection because of reset /
+#define ECONNABORTED 103 / Software caused connection abort /
+#define ECONNRESET 104 / Connection reset by peer /
+#define ENOBUFS 105 / No buffer space available /
+#define EISCONN 106 / Transport endpoint is already connected /
+#define ENOTCONN 107 / Transport endpoint is not connected /
+#define ESHUTDOWN 108 / Cannot send after transport endpoint shutdown /
+#define ETOOMANYREFS 109 / Too many references: cannot splice /
+#define ETIMEDOUT 110 / Connection timed out /
+#define ECONNREFUSED 111 / Connection refused /
+#define EHOSTDOWN 112 / Host is down /
+#define EHOSTUNREACH 113 / No route to host /
+#define EALREADY 114 / Operation already in progress /
+#define EINPROGRESS 115 / Operation now in progress /
+#define ESTALE 116 / Stale NFS file handle /
+#define EUCLEAN 117 / Structure needs cleaning /
+#define ENOTNAM 118 / Not a XENIX named type file /
+#define ENAVAIL 119 / No XENIX semaphores available /
+#define EISNAM 120 / Is a named type file /
+#define EREMOTEIO 121 / Remote I/O error /
+#define EDQUOT 122 / Quota exceeded /
+#define ENOMEDIUM 123 / No medium found /
+#define EMEDIUMTYPE 124 / Wrong medium type */
+#endif
+</code></pre></td></tr></table></div></div><h2 id=herror>herror</h2><p>在使用 gethostbyname() 的时候，你不能用perror() 打印错误信息(因为 errno 没有使用)，你应该调用 herror()。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netdb.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>herror</span>( <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>s );
+</code></pre></td></tr></table></div></div><p>适用于以下函数</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>gethostbyaddr()
+gethostbyaddr_r()
+gethostbyname()
+gethostbyname2()
+gethostbyname_r()
+res_query()
+res_search()
+</code></pre></td></tr></table></div></div><p>会出现的错误信息</p><ul><li>HOST_NOT_FOUND
+Authoritative answer: Unknown host.</li><li>NETDB_INTERNAL
+You specified an invalid address family when calling  gethostbyname2().</li><li>NO_DATA
+Valid name, no data record of the requested type. The name is known to the name server, but has no IP address associated with it—this isn&rsquo;t a temporary error. Another type of request to the name server using this domain name will result in an answer (e.g. a mail-forwarder may be registered for this domain).</li><li>NO_RECOVERY
+Unknown server error. An unexpected server failure was encountered. This is a nonrecoverable network error.</li><li>TRY_AGAIN
+Nonauthoritative answer: Host name lookup failure. This is usually a temporary error and means that the local server didn&rsquo;t receive a response from an authoritative server. A retry at some later time may succeed.</li></ul><h1 id=ctype>ctype</h1><h2 id=isalpha>isalpha</h2><p>isalpha() 函数用来检测一个字符是否是字母。
+要检测的字符。它可以是一个有效的字符（被转换为 int 类型），也可以是 EOF（表示无效的字符）。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ctype.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>isalpha</span>(<span style=color:#66d9ef>int</span> c);
+</code></pre></td></tr></table></div></div><p><strong>返回值</strong></p><p>返回值为非零（真）表示c是字母，返回值为零（假）表示c不是字母。</p><h2 id=islower>islower</h2><p>islower() 函数用来检测一个字符是否是小写字母。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ctype.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>islower</span> (<span style=color:#66d9ef>int</span> c);
+</code></pre></td></tr></table></div></div><p>在默认情况下，小写字母包括：
+a b c d e f g h i j k l m n o p q r s t u v w x y z</p><p>标准 ASCII 编码共包含了 128 个字符，不同的字符属于不同的分类，我们在 &lt;ctype.h> 头文件中给出了详细的列表。
+参数</p><ul><li><strong>c</strong> &ndash;  要检测的字符。它可以是一个有效的字符（被转换为 int 类型），也可以是 EOF（表示无效的字符）。
+返回值</li></ul><p><strong>返回值</strong></p><p>为非零（真）表示c是小写字母，返回值为零（假）表示c不是小写字母。</p><h2 id=toupper>toupper</h2><p>toupper()将小写字母转换为大写字母</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ctype.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>toupper</span> (<span style=color:#66d9ef>int</span> c);
+</code></pre></td></tr></table></div></div><p>只有当参数 c 是一个小写字母，并且存在对应的大写字母时，这种转换才会发生。</p><p>在默认情况下，小写字母包括：
+a b c d e f g h i j k l m n o p q r s t u v w x y z</p><p>大写字母包括：
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p><p>参数</p><ul><li><strong>c</strong> &ndash; 要转换的字符。它可以是一个有效的字符（被转换为 int 类型），也可以是 EOF（表示无效的字符）。</li></ul><p><strong>返回值</strong></p><p>如果转换成功，那么返回与 c 对应的大写字母；如果转换失败，那么直接返回 c（值未变）。</p><p>注意，返回值为 int 类型，你可能需要隐式或者显式地将它转换为 char 类型。</p><h1 id=settimer>settimer</h1><p>在linux c编程中。setitimer是一个比較经常使用的函数。可用来实现延时和定时的功能，网上有各种零零散散的使用方法说明，都仅仅提到了个别使用方法，今天抽出时间实践整理了一份比較具体的：</p><p><strong>函数定义</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/time.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>setitimer</span>(<span style=color:#66d9ef>int</span> which, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> itimerval <span style=color:#f92672>*</span>new_value,
+            <span style=color:#66d9ef>struct</span> itimerval <span style=color:#f92672>*</span>old_value);
+</code></pre></td></tr></table></div></div><p>当中which參数表示类型。可选的值有：</p><p><strong>ITIMER_REAL</strong>：以系统真实的时间来计算，它送出SIGALRM信号。</p><p><strong>ITIMER_VIRTUAL</strong>：以该进程在用户态下花费的时间来计算，它送出SIGVTALRM信号。</p><p><strong>ITIMER_PROF</strong>：以该进程在用户态下和内核态下所费的时间来计算。它送出SIGPROF信号。</p><p>紧接着的new_value和old_value均为itimerval结构体，先看一下itimerval结构体定义：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> itimerval {
+    <span style=color:#66d9ef>struct</span> timeval it_interval; <span style=color:#75715e>/* next value */</span>
+    <span style=color:#66d9ef>struct</span> timeval it_value;    <span style=color:#75715e>/* current value */</span>
+};
+
+<span style=color:#66d9ef>struct</span> timeval {
+    time_t      tv_sec;         <span style=color:#75715e>/* seconds */</span>
+    suseconds_t tv_usec;        <span style=color:#75715e>/* microseconds */</span>
+};
+</code></pre></td></tr></table></div></div><p>itimeval又是由两个timeval结构体组成，timeval包括tv_sec和tv_usec两部分。当中tv_se为秒。tv_usec为微秒(即1/1000000秒)</p><p>当中的new_value參数用来对计时器进行设置，it_interval为计时间隔，it_value为延时时长，以下样例中表示的是在setitimer方法调用成功后，延时1微秒便触发一次SIGALRM信号，以后每隔200毫秒触发一次SIGALRM信号。</p><p><strong>settimer工作机制是，先对it_value倒计时，当it_value为零时触发信号。然后重置为it_interval。继续对it_value倒计时。一直这样循环下去。</strong></p><p>基于此机制。setitimer既能够用来延时运行，也可定时运行。</p><p><strong>假如it_value为0是不会触发信号的，所以要能触发信号，it_value得大于0；假设it_interval为零，仅仅会延时。不会定时（也就是说仅仅会触发一次信号)。</strong></p><p>old_value參数，通经常使用不上。设置为NULL，它是用来存储上一次setitimer调用时设置的new_value值。</p><p>下面是一个简单的使用样例：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/time.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>signalHandler</span>(<span style=color:#66d9ef>int</span> signo)
+{
+    <span style=color:#66d9ef>switch</span> (signo){
+        <span style=color:#66d9ef>case</span> SIGALRM:
+            printf(<span style=color:#e6db74>&#34;Caught the SIGALRM signal!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+            <span style=color:#66d9ef>break</span>;
+   }
+}
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>argv[])
+{
+    signal(SIGALRM, signalHandler);
+
+    <span style=color:#66d9ef>struct</span> itimerval new_value, old_value;
+    new_value.it_value.tv_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    new_value.it_value.tv_usec <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+    new_value.it_interval.tv_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    new_value.it_interval.tv_usec <span style=color:#f92672>=</span> <span style=color:#ae81ff>200000</span>;
+    setitimer(ITIMER_REAL, <span style=color:#f92672>&amp;</span>new_value, <span style=color:#f92672>&amp;</span>old_value);
+    
+    <span style=color:#66d9ef>for</span>(;;);
+     
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><h1 id=预置宏>预置宏</h1><p>可变参数宏__VA_ARGS__</p><p>使用方法</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#define my_print2(fmt,...)  printf(fmt,##__VA_ARGS__)  
+</span></code></pre></td></tr></table></div></div><h1 id=qa>Q/A</h1><h2 id=linux-多线程与信号>linux 多线程与信号</h2><p>接收到一个信号时，主进程会停止运行，直到信号处理完成后再继续。
+信号处理顺序：最后一个信号处理完再处理上一个，直到全部处理完成后再运行主进程</p></article></div></body><div><small>words: 10352 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

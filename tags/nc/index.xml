@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>nc on ARAIR</title><link>https://arair.net/tags/nc/</link><description>Recent content in nc on ARAIR</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Fri, 05 Mar 2021 11:22:12 +0800</lastBuildDate><atom:link href="https://arair.net/tags/nc/index.xml" rel="self" type="application/rss+xml"/><item><title>nc命令的使用</title><link>https://arair.net/posts/cf8e40bf/</link><pubDate>Fri, 05 Mar 2021 11:22:12 +0800</pubDate><guid>https://arair.net/posts/cf8e40bf/</guid><description>&lt;p>nc是&lt;code>netcat&lt;/code>的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具&lt;/p>
+&lt;p>&lt;strong>nc的作用&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口&lt;/li>
+&lt;li>端口的扫描，nc可以作为client发起TCP或UDP连接&lt;/li>
+&lt;li>机器之间传输文件&lt;/li>
+&lt;li>机器之间网络测速&lt;/li>
+&lt;/ol></description></item></channel></rss>

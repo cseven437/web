@@ -1,0 +1,51 @@
+<!doctype html><html><title>linux 线程</title><meta name=description content="pthread 相关函数
+"><meta name=hash content="4a2afdda1961f41380b5faedbb9aa4eb322a19e7 "><meta name=lastmod content="2021-03-08 21:06:05 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux 线程</h1><p><small>2021-03-06, updated 2021-03-08</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#pthread_sigmask>pthread_sigmask</a></li><li><a href=#pthread_detach>pthread_detach()</a></li><li><a href=#pthread_self>pthread_self</a></li><li><a href=#pthread_mutex>pthread_mutex</a></li><li><a href=#pthread遇到的问题>pthread遇到的问题</a></li></ul></nav></aside><p>pthread 相关函数</p><h2 id=pthread_sigmask>pthread_sigmask</h2><p>用作在主调线程里控制信号掩码。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>pthread_sigmask</span>(<span style=color:#66d9ef>int</span> how, <span style=color:#66d9ef>const</span> sigset_t <span style=color:#f92672>*</span>set, sigset_t <span style=color:#f92672>*</span>oldset);
+
+Compile and link with <span style=color:#f92672>-</span>pthread.
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>SIG_BLOCK:   结果集是当前集合参数集的并集（把参数set中的信号添加到信号屏蔽字中）</li><li>SIG_UNBLOCK: 结果集是当前集合参数集的差集（把信号屏蔽字设置为参数set中的信号）</li><li>SIG_SETMASK: 结果集是由参数集指向的集（从信号屏蔽字中删除参数set中的信号）</li></ul><p>返回值</p><ul><li>成功：0</li><li>失败：error number</li></ul><h2 id=pthread_detach>pthread_detach()</h2><p>pthread_detach - detach a thread</p><p>分离子线程，线程运行结束时自动回收资源</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;pthread.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>pthread_detach</span>(pthread_t <span style=color:#66d9ef>thread</span>);
+
+<span style=color:#75715e>// Compile and link with -pthread.
+</span></code></pre></td></tr></table></div></div><p><strong>return value:</strong>
+On success, pthread_detach() returns 0; on error, it returns an error number.</p><h2 id=pthread_self>pthread_self</h2><p>pthread_self - obtain ID of the calling thread</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;pthread.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+pthread_t <span style=color:#a6e22e>pthread_self</span>(<span style=color:#66d9ef>void</span>);
+</code></pre></td></tr></table></div></div><p>Compile and link with -pthread.</p><p><strong>return value</strong></p><p>This function always succeeds, returning the calling thread&rsquo;s ID.</p><h2 id=pthread_mutex>pthread_mutex</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/* Thread identifiers.  The structure of the attribute type is not
+</span><span style=color:#75715e>   exposed on purpose.  */</span>
+<span style=color:#75715e>// bits/pthreadtypes.h
+</span><span style=color:#75715e></span><span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>int</span> pthread_t;
+
+pthread_mutex_t  write_lock;
+pthread_mutex_init(<span style=color:#f92672>&amp;</span>write_lock, NULL);
+pthread_mutex_lock(<span style=color:#f92672>&amp;</span>write_lock);    
+pthread_mutex_unlock(<span style=color:#f92672>&amp;</span>write_lock);
+pthread_mutex_destroy(<span style=color:#f92672>&amp;</span>write_lock);
+</code></pre></td></tr></table></div></div><h2 id=pthread遇到的问题>pthread遇到的问题</h2><p>调用pthread_cancel函数请求后，等到响应请求时，代码调用了pthread_clean_push函数中的clean_fun1和clean_fun2,函数clean_fun2中的语句先被打印。</p></article></div></body><div><small>words: 402 tags:</small>
+<small><code><a href=https://arair.net/tags/pthread>pthread</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

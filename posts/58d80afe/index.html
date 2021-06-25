@@ -1,0 +1,71 @@
+<!doctype html><html><title>linux内核驱动初始化相关</title><meta name=description content="驱动初始化函数
+"><meta name=hash content="98a25f045e5faa0e35bf6c2d7e190717b14cea0c "><meta name=lastmod content="2021-02-04 20:08:57 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux内核驱动初始化相关</h1><p><small>2021-02-01, updated 2021-02-04</small></p></header><p>驱动初始化函数</p><h2 id=module_platform_driver>module_platform_driver</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>module_platform_driver(gpio_led_driver)
+<span style=color:#75715e>/* module_platform_driver() - Helper macro for drivers that don&#39;t do
+</span><span style=color:#75715e> * anything special in module init/exit.  This eliminates a lot of
+</span><span style=color:#75715e> * boilerplate.  Each module may only use this macro once, and
+</span><span style=color:#75715e> * calling it replaces module_init() and module_exit()
+</span><span style=color:#75715e> */</span>
+<span style=color:#75715e>#define module_platform_driver(__platform_driver) \
+</span><span style=color:#75715e>    module_driver(__platform_driver, platform_driver_register, \
+</span><span style=color:#75715e>            platform_driver_unregister)
+</span></code></pre></td></tr></table></div></div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/**
+</span><span style=color:#75715e> * module_driver() - Helper macro for drivers that don&#39;t do anything
+</span><span style=color:#75715e> * special in module init/exit. This eliminates a lot of boilerplate.
+</span><span style=color:#75715e> * Each module may only use this macro once, and calling it replaces
+</span><span style=color:#75715e> * module_init() and module_exit().
+</span><span style=color:#75715e> *
+</span><span style=color:#75715e> * @__driver: driver name
+</span><span style=color:#75715e> * @__register: register function for this driver type
+</span><span style=color:#75715e> * @__unregister: unregister function for this driver type
+</span><span style=color:#75715e> * @...: Additional arguments to be passed to __register and __unregister.
+</span><span style=color:#75715e> *
+</span><span style=color:#75715e> * Use this macro to construct bus specific macros for registering
+</span><span style=color:#75715e> * drivers, and do not use it on its own.
+</span><span style=color:#75715e> */</span>
+<span style=color:#75715e>#define module_driver(__driver, __register, __unregister, ...) \
+</span><span style=color:#75715e>static int __init __driver##_init(void) \
+</span><span style=color:#75715e>{ \
+</span><span style=color:#75715e>    return __register(&amp;(__driver) , ##__VA_ARGS__); \
+</span><span style=color:#75715e>} \
+</span><span style=color:#75715e>module_init(__driver##_init); \
+</span><span style=color:#75715e>static void __exit __driver##_exit(void) \
+</span><span style=color:#75715e>{ \
+</span><span style=color:#75715e>    __unregister(&amp;(__driver) , ##__VA_ARGS__); \
+</span><span style=color:#75715e>} \
+</span><span style=color:#75715e>module_exit(__driver##_exit);
+</span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 221 tags:</small>
+<small><code><a href=https://arair.net/tags/driver>driver</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

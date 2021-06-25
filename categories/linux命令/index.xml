@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>linux命令 on ARAIR</title><link>https://arair.net/categories/linux%E5%91%BD%E4%BB%A4/</link><description>Recent content in linux命令 on ARAIR</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Sun, 07 Feb 2021 20:21:10 +0800</lastBuildDate><atom:link href="https://arair.net/categories/linux%E5%91%BD%E4%BB%A4/index.xml" rel="self" type="application/rss+xml"/><item><title>iptables的使用</title><link>https://arair.net/posts/a2989e85/</link><pubDate>Sun, 07 Feb 2021 20:21:10 +0800</pubDate><guid>https://arair.net/posts/a2989e85/</guid><description>&lt;p>待续&lt;/p></description></item><item><title>cron服务使用</title><link>https://arair.net/posts/3ce8a8fe/</link><pubDate>Sun, 24 Jan 2021 11:50:41 +0800</pubDate><guid>https://arair.net/posts/3ce8a8fe/</guid><description>&lt;p>cron服务是一个定时执行的服务，守护进程为&lt;code>crond&lt;/code>可以通过crontab 命令添加或者编辑需要定时执行的任务：&lt;/p>
+&lt;ul>
+&lt;li>crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数&lt;/li>
+&lt;li>crontab -l //列出某个用户cron服务的详细内容&lt;/li>
+&lt;li>crontab -r //删除某个用户的cron服务&lt;/li>
+&lt;li>crontab -e //编辑某个用户的cron服务&lt;/li>
+&lt;/ul></description></item></channel></rss>

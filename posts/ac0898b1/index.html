@@ -1,0 +1,72 @@
+<!doctype html><html><title>c语言 strptime函数</title><meta name=description content="读取将格式化时间
+"><meta name=hash content="f0172ddd765f2f9d23f95b55e6a4e07a8a59ce9a "><meta name=lastmod content="2021-02-26 18:49:19 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>c语言 strptime函数</h1><p><small>2021-02-26, updated 2021-02-26</small></p></header><p>读取将格式化时间</p><p>原型</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;time.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>strptime</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>s, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, <span style=color:#66d9ef>struct</span> tm <span style=color:#f92672>*</span>tm);
+</code></pre></td></tr></table></div></div><p>参数</p><ul><li>s: 需要获取的时间字符串</li><li>tm: 存放时间的变量</li><li>format: 描述文件格式<ul><li>%d: The day of month (1-31).</li><li>%H: The hour (0-23).</li><li>%m: The month number (1-12).</li><li>%M: The minute (0-59).</li><li>%S: The second (0-60; 60 may occur for leap seconds; earlier also 61 was allowed).</li><li>%Y: The year, including century (for example, 1991).</li></ul></li></ul><p>相关结构体</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#include &lt;time.h&gt;
+
+struct tm {
+    int tm_sec;        /* seconds */
+    int tm_min;        /* minutes */
+    int tm_hour;       /* hours */
+    int tm_mday;       /* day of the month */
+    int tm_mon;        /* month */
+    int tm_year;       /* year */
+    int tm_wday;       /* day of the week */
+    int tm_yday;       /* day in the year */
+    int tm_isdst;      /* daylight saving time */
+};
+</code></pre></td></tr></table></div></div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;time.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#75715e>// #include &lt;sys/time.h&gt;
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+    <span style=color:#75715e>// char *str = &#34;Fri, 26 Feb 2021 02:22:08 GMT&#34;;
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;2021-2-26 02:22:08&#34;</span>;
+    <span style=color:#66d9ef>struct</span> tm time;
+    time_t tt;
+
+    strptime(str, <span style=color:#e6db74>&#34;%Y-%m-%d %H:%M:%S&#34;</span>, <span style=color:#f92672>&amp;</span>time);
+
+    tt <span style=color:#f92672>=</span> mktime(<span style=color:#f92672>&amp;</span>time);
+
+    printf(<span style=color:#e6db74>&#34;%lu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, tt);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 233 tags:</small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small>
+<small><code><a href=https://arair.net/tags/c%E5%BA%93%E5%87%BD%E6%95%B0>c库函数</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

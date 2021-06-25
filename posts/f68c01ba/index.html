@@ -1,0 +1,34 @@
+<!doctype html><html><title>linux Get Set Time函数</title><meta name=description content="gettimeofday与settimeofday函数说明
+"><meta name=hash content="e0a7df225ea2dd7acd91cd9248fe22fdee412e04 "><meta name=lastmod content="2021-03-22 18:06:43 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux Get Set Time函数</h1><p><small>2021-03-22, updated 2021-03-22</small></p></header><p>gettimeofday与settimeofday函数说明</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/time.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>gettimeofday</span>(<span style=color:#66d9ef>struct</span> timeval <span style=color:#f92672>*</span>tv, <span style=color:#66d9ef>struct</span> timezone <span style=color:#f92672>*</span>tz);
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>settimeofday</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> timeval <span style=color:#f92672>*</span>tv, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> timezone <span style=color:#f92672>*</span>tz);
+</code></pre></td></tr></table></div></div><p>The functions gettimeofday() and settimeofday() can get and set the time as well as a timezone. The tv argument is a struct timeval (as specified in &lt;sys/time.h>):</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> timeval {
+    time_t      tv_sec;     <span style=color:#75715e>/* seconds */</span>
+    suseconds_t tv_usec;    <span style=color:#75715e>/* microseconds */</span>
+};
+</code></pre></td></tr></table></div></div><p>and gives the number of seconds and microseconds since the Epoch (see time(2)). The tz argument is a struct timezone:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> timezone {
+    <span style=color:#66d9ef>int</span> tz_minuteswest;     <span style=color:#75715e>/* minutes west of Greenwich */</span>
+    <span style=color:#66d9ef>int</span> tz_dsttime;         <span style=color:#75715e>/* type of DST correction */</span>
+};
+</code></pre></td></tr></table></div></div><p>If either tv or tz is NULL, the corresponding structure is not set or returned. (However, compilation warnings will result if tv is NULL.)</p><p>The use of the timezone structure is obsolete; the tz argument should normally be specified as NULL. (See NOTES below.)</p><p>Under Linux there are some peculiar &ldquo;warp clock&rdquo; semantics associated with the settimeofday() system call if on the very first call (after booting) that has a non-NULL tz argument, the tv argument is NULL and the tz_minuteswest field is nonzero. (The tz_dsttime field should be zero for this case.) In such a case it is assumed that the CMOS clock is on local time, and that it has to be incremented by this amount to get UTC system time. No doubt it is a bad idea to use this feature.</p><p>RETURN VALUE</p><pre><code>gettimeofday() and settimeofday() return 0 for success, or -1 for failure (in which case errno is set appropriately).
+</code></pre><p>ERRORS</p><pre><code>- EFAULT One of tv or tz pointed outside the accessible address space.
+- EINVAL Timezone (or something else) is invalid.
+- EPERM  The calling process has insufficient privilege to call settimeofday(); under Linux the CAP_SYS_TIME capability is required.</code></pre></article></div></body><div><small>words: 335 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small>
+<small><code><a href=https://arair.net/tags/time>time</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

@@ -1,0 +1,635 @@
+<!doctype html><html><title>网络子系统初始化</title><meta name=description content="网络设备初始化 内核初始化代码(init/main.c &amp;ndash;&amp;gt; asmlinkage __visible void __init start_kernel(void))
+ ps：这里只介绍网络子系统的初始化流程。
+ 系统启动时会执行start_kernel对内核的各个子系统进行初始化。start_kernel会进行必要的初始化任务，比如init_IRQ和softirq_init进行硬中断和软中断初始化,在rest_init中会调用内核线程函数创建一个线程执行kernel_init继续进行其它初始化，start_kernel函数将会继续执行下去并退出。在kernel_init函数中的执行关系kernel_init_freeable()&amp;ndash;&amp;gt;do_basic_setup()&amp;ndash;&amp;gt;do_initcalls()，在do_initcalls函数中，会对调用各个子系统的初始化函数，类似subsys_initcall(net_dev_init)函数。其中net_dev_initnet/core/dev.c为网络设备的初始化函数
+内核子系统和编译到内核的驱动都是通过do_initcalls进行初始化的
+"><meta name=hash content="f80444b3e792f86b9c9780b24c437e3085589910 "><meta name=lastmod content="2021-02-16 12:54:29 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>网络子系统初始化</h1><p><small>2021-01-24, updated 2021-02-16</small></p></header><h1 id=网络设备初始化>网络设备初始化</h1><p>内核初始化代码(init/main.c &ndash;> asmlinkage __visible void __init start_kernel(void))</p><blockquote><p>ps：这里只介绍网络子系统的初始化流程。</p></blockquote><p>系统启动时会执行start_kernel对内核的各个子系统进行初始化。start_kernel会进行必要的初始化任务，比如init_IRQ和softirq_init进行硬中断和软中断初始化,在rest_init中会调用内核线程函数创建一个线程执行kernel_init继续进行其它初始化，start_kernel函数将会继续执行下去并退出。在kernel_init函数中的执行关系kernel_init_freeable()&ndash;>do_basic_setup()&ndash;>do_initcalls()，在do_initcalls函数中，会对调用各个子系统的初始化函数，类似subsys_initcall(net_dev_init)函数。其中net_dev_init<code>net/core/dev.c</code>为网络设备的初始化函数</p><p>内核子系统和编译到内核的驱动都是通过do_initcalls进行初始化的</p><p>以下为相关的部分代码
+linux-4.4.0</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">151
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">152
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">153
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">154
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">155
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">156
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">157
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">158
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">159
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">160
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">161
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">162
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">163
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">164
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">165
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">166
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">167
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">168
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">169
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">170
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">171
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">172
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">173
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">174
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">175
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">176
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">177
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">178
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">179
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">180
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">181
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">182
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">183
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">184
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">185
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">186
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">187
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">188
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">189
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">190
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">191
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">192
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">193
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">194
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">195
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">196
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">197
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">198
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">199
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">200
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">201
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">202
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">203
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">204
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">205
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">206
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">207
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">208
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">209
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">210
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">211
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">212
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">213
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">214
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">215
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">216
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">217
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">218
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">219
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">220
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">221
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">222
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">223
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>start_kernel()
+{
+    ...
+    boot_cpu_init();
+    page_address_init();
+    pr_notice(<span style=color:#e6db74>&#34;%s&#34;</span>, linux_banner);
+    setup_arch(<span style=color:#f92672>&amp;</span>command_line);
+    ...
+    early_irq_init();
+    <span style=color:#75715e>// 硬中断初始化
+</span><span style=color:#75715e></span>    init_IRQ();
+    tick_init();
+    rcu_init_nohz();
+    init_timers();
+    hrtimers_init();
+    <span style=color:#75715e>// 软中断初始化
+</span><span style=color:#75715e></span>    softirq_init();
+    ...
+    rest_init();
+    ...
+}
+
+<span style=color:#66d9ef>static</span> noinline <span style=color:#66d9ef>void</span> __ref rest_init(<span style=color:#66d9ef>void</span>)
+{
+	<span style=color:#66d9ef>struct</span> task_struct <span style=color:#f92672>*</span>tsk;
+	<span style=color:#66d9ef>int</span> pid;
+
+	rcu_scheduler_starting();
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * We need to spawn init first so that it obtains pid 1, however
+</span><span style=color:#75715e>	 * the init task will end up wanting to create kthreads, which, if
+</span><span style=color:#75715e>	 * we schedule it before we create kthreadd, will OOPS.
+</span><span style=color:#75715e>	 */</span>
+	pid <span style=color:#f92672>=</span> kernel_thread(kernel_init, NULL, CLONE_FS);
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * Pin init on the boot CPU. Task migration is not properly working
+</span><span style=color:#75715e>	 * until sched_init_smp() has been run. It will set the allowed
+</span><span style=color:#75715e>	 * CPUs for init to the non isolated CPUs.
+</span><span style=color:#75715e>	 */</span>
+	rcu_read_lock();
+	tsk <span style=color:#f92672>=</span> find_task_by_pid_ns(pid, <span style=color:#f92672>&amp;</span>init_pid_ns);
+	set_cpus_allowed_ptr(tsk, cpumask_of(smp_processor_id()));
+	rcu_read_unlock();
+
+	numa_default_policy();
+	pid <span style=color:#f92672>=</span> kernel_thread(kthreadd, NULL, CLONE_FS <span style=color:#f92672>|</span> CLONE_FILES);
+	rcu_read_lock();
+	kthreadd_task <span style=color:#f92672>=</span> find_task_by_pid_ns(pid, <span style=color:#f92672>&amp;</span>init_pid_ns);
+	rcu_read_unlock();
+
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * Enable might_sleep() and smp_processor_id() checks.
+</span><span style=color:#75715e>	 * They cannot be enabled earlier because with CONFIG_PREEMPT=y
+</span><span style=color:#75715e>	 * kernel_thread() would trigger might_sleep() splats. With
+</span><span style=color:#75715e>	 * CONFIG_PREEMPT_VOLUNTARY=y the init task might have scheduled
+</span><span style=color:#75715e>	 * already, but it&#39;s stuck on the kthreadd_done completion.
+</span><span style=color:#75715e>	 */</span>
+	system_state <span style=color:#f92672>=</span> SYSTEM_SCHEDULING;
+
+	complete(<span style=color:#f92672>&amp;</span>kthreadd_done);
+
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * The boot idle thread must execute schedule()
+</span><span style=color:#75715e>	 * at least once to get things moving:
+</span><span style=color:#75715e>	 */</span>
+	schedule_preempt_disabled();
+	<span style=color:#75715e>/* Call into cpu_idle with preempt disabled */</span>
+	cpu_startup_entry(CPUHP_ONLINE);
+}
+
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> __ref kernel_init(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>unused)
+{
+	<span style=color:#66d9ef>int</span> ret;
+
+	kernel_init_freeable();
+	<span style=color:#75715e>/* need to finish all async __init code before freeing the memory */</span>
+	async_synchronize_full();
+	ftrace_free_init_mem();
+	jump_label_invalidate_initmem();
+	free_initmem();
+	mark_readonly();
+
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * Kernel mappings are now finalized - update the userspace page-table
+</span><span style=color:#75715e>	 * to finalize PTI.
+</span><span style=color:#75715e>	 */</span>
+	pti_finalize();
+
+	system_state <span style=color:#f92672>=</span> SYSTEM_RUNNING;
+	numa_default_policy();
+
+	rcu_end_inkernel_boot();
+
+	<span style=color:#66d9ef>if</span> (ramdisk_execute_command) {
+		ret <span style=color:#f92672>=</span> run_init_process(ramdisk_execute_command);
+		<span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>ret)
+			<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+		pr_err(<span style=color:#e6db74>&#34;Failed to execute %s (error %d)</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,
+		       ramdisk_execute_command, ret);
+	}
+
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * We try each of these until one succeeds.
+</span><span style=color:#75715e>	 *
+</span><span style=color:#75715e>	 * The Bourne shell can be used instead of init if we are
+</span><span style=color:#75715e>	 * trying to recover a really broken machine.
+</span><span style=color:#75715e>	 */</span>
+	<span style=color:#66d9ef>if</span> (execute_command) {
+		ret <span style=color:#f92672>=</span> run_init_process(execute_command);
+		<span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>ret)
+			<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+		panic(<span style=color:#e6db74>&#34;Requested init %s failed (error %d).&#34;</span>,
+		      execute_command, ret);
+	}
+	<span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>try_to_run_init_process(<span style=color:#e6db74>&#34;/sbin/init&#34;</span>) <span style=color:#f92672>||</span>
+	    <span style=color:#f92672>!</span>try_to_run_init_process(<span style=color:#e6db74>&#34;/etc/init&#34;</span>) <span style=color:#f92672>||</span>
+	    <span style=color:#f92672>!</span>try_to_run_init_process(<span style=color:#e6db74>&#34;/bin/init&#34;</span>) <span style=color:#f92672>||</span>
+	    <span style=color:#f92672>!</span>try_to_run_init_process(<span style=color:#e6db74>&#34;/bin/sh&#34;</span>))
+		<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+
+	panic(<span style=color:#e6db74>&#34;No working init found.  Try passing init= option to kernel. &#34;</span>
+	      <span style=color:#e6db74>&#34;See Linux Documentation/admin-guide/init.rst for guidance.&#34;</span>);
+}
+
+
+<span style=color:#66d9ef>static</span> noinline <span style=color:#66d9ef>void</span> __init kernel_init_freeable(<span style=color:#66d9ef>void</span>)
+{
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * Wait until kthreadd is all set-up.
+</span><span style=color:#75715e>	 */</span>
+	wait_for_completion(<span style=color:#f92672>&amp;</span>kthreadd_done);
+
+	<span style=color:#75715e>/* Now the scheduler is fully set up and can do blocking allocations */</span>
+	gfp_allowed_mask <span style=color:#f92672>=</span> __GFP_BITS_MASK;
+
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * init can allocate pages on any node
+</span><span style=color:#75715e>	 */</span>
+	set_mems_allowed(node_states[N_MEMORY]);
+
+	cad_pid <span style=color:#f92672>=</span> task_pid(current);
+
+	smp_prepare_cpus(setup_max_cpus);
+
+	workqueue_init();
+
+	init_mm_internals();
+
+	do_pre_smp_initcalls();
+	lockup_detector_init();
+
+	smp_init();
+	sched_init_smp();
+
+	page_alloc_init_late();
+	<span style=color:#75715e>/* Initialize page ext after all struct pages are initialized. */</span>
+	page_ext_init();
+
+	do_basic_setup();
+
+	<span style=color:#75715e>/* Open the /dev/console on the rootfs, this should never fail */</span>
+	<span style=color:#66d9ef>if</span> (ksys_open((<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> __user <span style=color:#f92672>*</span>) <span style=color:#e6db74>&#34;/dev/console&#34;</span>, O_RDWR, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>)
+		pr_err(<span style=color:#e6db74>&#34;Warning: unable to open an initial console.</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+
+	(<span style=color:#66d9ef>void</span>) ksys_dup(<span style=color:#ae81ff>0</span>);
+	(<span style=color:#66d9ef>void</span>) ksys_dup(<span style=color:#ae81ff>0</span>);
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * check if there is an early userspace init.  If yes, let it do all
+</span><span style=color:#75715e>	 * the work
+</span><span style=color:#75715e>	 */</span>
+
+	<span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>ramdisk_execute_command)
+		ramdisk_execute_command <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;/init&#34;</span>;
+
+	<span style=color:#66d9ef>if</span> (ksys_access((<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> __user <span style=color:#f92672>*</span>)
+			ramdisk_execute_command, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span>) {
+		ramdisk_execute_command <span style=color:#f92672>=</span> NULL;
+		prepare_namespace();
+	}
+
+	<span style=color:#75715e>/*
+</span><span style=color:#75715e>	 * Ok, we have completed the initial bootup, and
+</span><span style=color:#75715e>	 * we&#39;re essentially up and running. Get rid of the
+</span><span style=color:#75715e>	 * initmem segments and start the user-mode stuff..
+</span><span style=color:#75715e>	 *
+</span><span style=color:#75715e>	 * rootfs is available now, try loading the public keys
+</span><span style=color:#75715e>	 * and default modules
+</span><span style=color:#75715e>	 */</span>
+
+	integrity_load_keys();
+	load_default_modules();
+}
+
+
+<span style=color:#75715e>/*
+</span><span style=color:#75715e> * Ok, the machine is now initialized. None of the devices
+</span><span style=color:#75715e> * have been touched yet, but the CPU subsystem is up and
+</span><span style=color:#75715e> * running, and memory and process management works.
+</span><span style=color:#75715e> *
+</span><span style=color:#75715e> * Now we can finally start doing some real work..
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> __init do_basic_setup(<span style=color:#66d9ef>void</span>)
+{
+	cpuset_init_smp();
+	shmem_init();
+	driver_init();
+	init_irq_proc();
+	do_ctors();
+	usermodehelper_enable();
+	do_initcalls();
+}
+
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> __init do_initcalls(<span style=color:#66d9ef>void</span>)
+{
+	<span style=color:#66d9ef>int</span> level;
+
+	<span style=color:#66d9ef>for</span> (level <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; level <span style=color:#f92672>&lt;</span> ARRAY_SIZE(initcall_levels) <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>; level<span style=color:#f92672>++</span>)
+		do_initcall_level(level);
+}
+
+subsys_initcall(net_dev_init);
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> __init <span style=color:#a6e22e>net_dev_init</span>(<span style=color:#66d9ef>void</span>);
+
+</code></pre></td></tr></table></div></div><h1 id=net_dev_init>net_dev_init</h1><p>部分代码注释
+linux-4.4.0</p><p>位置：<code>net/core/dev.c</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">90
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/*
+</span><span style=color:#75715e> *  Initialize the DEV module. At boot time this walks the device list and
+</span><span style=color:#75715e> *  unhooks any devices that fail to initialise (normally hardware not
+</span><span style=color:#75715e> *  present) and leaves us with a valid list of present and active devices.
+</span><span style=color:#75715e> *
+</span><span style=color:#75715e> */</span>
+
+<span style=color:#75715e>/*
+</span><span style=color:#75715e> *       This is called single threaded during boot, so no need
+</span><span style=color:#75715e> *       to take the rtnl semaphore.
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> __init <span style=color:#a6e22e>net_dev_init</span>(<span style=color:#66d9ef>void</span>)
+{
+    <span style=color:#66d9ef>int</span> i, rc <span style=color:#f92672>=</span> <span style=color:#f92672>-</span>ENOMEM;
+
+    BUG_ON(<span style=color:#f92672>!</span>dev_boot_phase);
+
+	<span style=color:#75715e>/* 初始化proc配置，创建部分文件
+</span><span style=color:#75715e>	* /proc/net/dev 
+</span><span style=color:#75715e>	* /proc/net/softnet_stat 
+</span><span style=color:#75715e>	* /proc/net/ptype 
+</span><span style=color:#75715e>	* /proc/net/dev_mcast
+</span><span style=color:#75715e>	*/</span>
+
+    <span style=color:#66d9ef>if</span> (dev_proc_init())
+        <span style=color:#66d9ef>goto</span> out;
+
+	<span style=color:#75715e>// 初始化namespace相关
+</span><span style=color:#75715e></span>
+    <span style=color:#66d9ef>if</span> (netdev_kobject_init())
+        <span style=color:#66d9ef>goto</span> out;
+
+    INIT_LIST_HEAD(<span style=color:#f92672>&amp;</span>ptype_all);
+    <span style=color:#66d9ef>for</span> (i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> PTYPE_HASH_SIZE; i<span style=color:#f92672>++</span>)
+        INIT_LIST_HEAD(<span style=color:#f92672>&amp;</span>ptype_base[i]);
+
+    INIT_LIST_HEAD(<span style=color:#f92672>&amp;</span>offload_base);
+    <span style=color:#66d9ef>if</span> (register_pernet_subsys(<span style=color:#f92672>&amp;</span>netdev_net_ops))
+        <span style=color:#66d9ef>goto</span> out;
+        
+    <span style=color:#75715e>/*  
+</span><span style=color:#75715e>     *  Initialise the packet receive queues.
+</span><span style=color:#75715e>     */</span>
+
+    for_each_possible_cpu(i) {
+        <span style=color:#66d9ef>struct</span> softnet_data <span style=color:#f92672>*</span>sd <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>per_cpu(softnet_data, i);
+        
+        skb_queue_head_init(<span style=color:#f92672>&amp;</span>sd<span style=color:#f92672>-&gt;</span>input_pkt_queue);
+        skb_queue_head_init(<span style=color:#f92672>&amp;</span>sd<span style=color:#f92672>-&gt;</span>process_queue);
+        INIT_LIST_HEAD(<span style=color:#f92672>&amp;</span>sd<span style=color:#f92672>-&gt;</span>poll_list);
+        sd<span style=color:#f92672>-&gt;</span>output_queue_tailp <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>sd<span style=color:#f92672>-&gt;</span>output_queue;
+<span style=color:#75715e>#ifdef CONFIG_RPS
+</span><span style=color:#75715e></span>        sd<span style=color:#f92672>-&gt;</span>csd.func <span style=color:#f92672>=</span> rps_trigger_softirq;
+        sd<span style=color:#f92672>-&gt;</span>csd.info <span style=color:#f92672>=</span> sd;
+        sd<span style=color:#f92672>-&gt;</span>cpu <span style=color:#f92672>=</span> i; 
+<span style=color:#75715e>#endif  
+</span><span style=color:#75715e></span>
+        sd<span style=color:#f92672>-&gt;</span>backlog.poll <span style=color:#f92672>=</span> process_backlog;
+        sd<span style=color:#f92672>-&gt;</span>backlog.weight <span style=color:#f92672>=</span> weight_p;
+    }   
+    
+    dev_boot_phase <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    
+    <span style=color:#75715e>/* The loopback device is special if any other network devices
+</span><span style=color:#75715e>     * is present in a network namespace the loopback device must
+</span><span style=color:#75715e>     * be present. Since we now dynamically allocate and free the
+</span><span style=color:#75715e>     * loopback device ensure this invariant is maintained by
+</span><span style=color:#75715e>     * keeping the loopback device as the first device on the
+</span><span style=color:#75715e>     * list of network devices.  Ensuring the loopback devices
+</span><span style=color:#75715e>     * is the first device that appears and the last network device
+</span><span style=color:#75715e>     * that disappears.
+</span><span style=color:#75715e>     */</span>
+    <span style=color:#66d9ef>if</span> (register_pernet_device(<span style=color:#f92672>&amp;</span>loopback_net_ops))
+        <span style=color:#66d9ef>goto</span> out;
+        
+    <span style=color:#66d9ef>if</span> (register_pernet_device(<span style=color:#f92672>&amp;</span>default_device_ops))
+        <span style=color:#66d9ef>goto</span> out;
+        
+    open_softirq(NET_TX_SOFTIRQ, net_tx_action);
+    open_softirq(NET_RX_SOFTIRQ, net_rx_action);
+    
+	<span style=color:#75715e>// 注册于cpu热插拔事件相关的通知链，处理cpu停止事件。
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 接收到消息时，CPU入口队列里的缓冲区出列，然后传给netif_rx。
+</span><span style=color:#75715e></span>		
+    hotcpu_notifier(dev_cpu_callback, <span style=color:#ae81ff>0</span>);
+    dst_subsys_init();
+    rc <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+out:
+    <span style=color:#66d9ef>return</span> rc;
+}   
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 1791 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/driver>driver</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

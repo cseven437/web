@@ -1,0 +1,87 @@
+<!doctype html><html><title>nc命令的使用</title><meta name=description content="nc是netcat的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具
+nc的作用
+ 实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口 端口的扫描，nc可以作为client发起TCP或UDP连接 机器之间传输文件 机器之间网络测速 "><meta name=hash content="e295cb4e5a0a019902cbca8de1a7711ef03369d9 "><meta name=lastmod content="2021-03-08 18:37:51 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>nc命令的使用</h1><p><small>2021-03-05, updated 2021-03-08</small></p></header><p>nc是<code>netcat</code>的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具</p><p><strong>nc的作用</strong></p><ol><li>实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口</li><li>端口的扫描，nc可以作为client发起TCP或UDP连接</li><li>机器之间传输文件</li><li>机器之间网络测速</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># nc -h
+OpenBSD netcat (Debian patchlevel 1.105-7ubuntu1)
+This is nc from the netcat-openbsd package. An alternative nc is available
+in the netcat-traditional package.
+usage: nc [-46bCDdhjklnrStUuvZz] [-I length] [-i interval] [-O length]
+          [-P proxy_username] [-p source_port] [-q seconds] [-s source]
+          [-T toskeyword] [-V rtable] [-w timeout] [-X proxy_protocol]
+          [-x proxy_address[:port]] [destination] [port]
+        Command Summary:
+                -4              Use IPv4
+                -6              Use IPv6
+                -b              Allow broadcast
+                -C              Send CRLF as line-ending
+                -D              Enable the debug socket option
+                -d              Detach from stdin
+                -h              This help text
+                -I length       TCP receive buffer length
+                -i secs         Delay interval for lines sent, ports scanned
+                -j              Use jumbo frame
+                -k              Keep inbound sockets open for multiple connects
+                -l              Listen mode, for inbound connects
+                -n              Suppress name/port resolutions
+                -O length       TCP send buffer length
+                -P proxyuser    Username for proxy authentication
+                -p port         Specify local port for remote connects
+                -q secs         quit after EOF on stdin and delay of secs
+                -r              Randomize remote ports
+                -S              Enable the TCP MD5 signature option
+                -s addr         Local source address
+                -T toskeyword   Set IP Type of Service
+                -t              Answer TELNET negotiation
+                -U              Use UNIX domain socket
+                -u              UDP mode
+                -V rtable       Specify alternate routing table
+                -v              Verbose
+                -w secs         Timeout for connects and final net reads
+                -X proto        Proxy protocol: &#34;4&#34;, &#34;5&#34; (SOCKS) or &#34;connect&#34;
+                -x addr[:port]  Specify proxy address and port
+                -Z              DCCP mode
+                -z              Zero-I/O mode [used for scanning]
+        Port numbers can be individual or ranges: lo-hi [inclusive]
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 428 tags:</small>
+<small><code><a href=https://arair.net/tags/nc>nc</a></code></small>
+<small><code><a href=https://arair.net/tags/network>network</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

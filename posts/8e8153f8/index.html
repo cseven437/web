@@ -1,0 +1,243 @@
+<!doctype html><html><title>proc文件子系统</title><meta name=description content="proc_create使用方法
+"><meta name=hash content="98a25f045e5faa0e35bf6c2d7e190717b14cea0c "><meta name=lastmod content="2021-02-04 20:08:57 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>proc文件子系统</h1><p><small>2021-01-24, updated 2021-02-04</small></p></header><p>proc_create使用方法</p><h1 id=函数原型>函数原型</h1><h2 id=proc_create>proc_create</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>inline</span> <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span><span style=color:#a6e22e>proc_create</span>(
+    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>name, umode_t mode, <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span>parent,
+    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> file_operations <span style=color:#f92672>*</span>proc_fops)
+{
+    <span style=color:#66d9ef>return</span> proc_create_data(name, mode, parent, proc_fops, NULL);
+}
+
+<span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span><span style=color:#a6e22e>proc_create_data</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>name, umode_t mode,
+                    <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span>parent,
+                    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> file_operations <span style=color:#f92672>*</span>proc_fops,
+                    <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>data)
+{
+    <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span>pde;
+    <span style=color:#66d9ef>if</span> ((mode <span style=color:#f92672>&amp;</span> S_IFMT) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>)
+        mode <span style=color:#f92672>|=</span> S_IFREG;
+                           
+    <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>S_ISREG(mode)) {  
+        WARN_ON(<span style=color:#ae81ff>1</span>); <span style=color:#75715e>/* use proc_mkdir() */</span>
+        <span style=color:#66d9ef>return</span> NULL;
+    }
+    
+    <span style=color:#66d9ef>if</span> ((mode <span style=color:#f92672>&amp;</span> S_IALLUGO) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) 
+        mode <span style=color:#f92672>|=</span> S_IRUGO;
+    pde <span style=color:#f92672>=</span> __proc_create(<span style=color:#f92672>&amp;</span>parent, name, mode, <span style=color:#ae81ff>1</span>);
+    <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>pde)
+        <span style=color:#66d9ef>goto</span> out;
+    pde<span style=color:#f92672>-&gt;</span>proc_fops <span style=color:#f92672>=</span> proc_fops;
+    pde<span style=color:#f92672>-&gt;</span>data <span style=color:#f92672>=</span> data;
+    <span style=color:#66d9ef>if</span> (proc_register(parent, pde) <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>)
+        <span style=color:#66d9ef>goto</span> out_free;
+    <span style=color:#66d9ef>return</span> pde;
+out_free:
+    kfree(pde);
+out:
+    <span style=color:#66d9ef>return</span> NULL;
+}
+EXPORT_SYMBOL(proc_create_data);
+</code></pre></td></tr></table></div></div><h2 id=remove_proc_entry>remove_proc_entry</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/*   
+</span><span style=color:#75715e> * Remove a /proc entry and free it if it&#39;s not currently in use.
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>remove_proc_entry</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>name, <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span>parent)
+{
+    <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>**</span>p;
+    <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span>de <span style=color:#f92672>=</span> NULL;
+    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>fn <span style=color:#f92672>=</span> name;
+    <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> len;
+
+    spin_lock(<span style=color:#f92672>&amp;</span>proc_subdir_lock);
+    <span style=color:#66d9ef>if</span> (__xlate_proc_name(name, <span style=color:#f92672>&amp;</span>parent, <span style=color:#f92672>&amp;</span>fn) <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span>) {
+        spin_unlock(<span style=color:#f92672>&amp;</span>proc_subdir_lock);
+        <span style=color:#66d9ef>return</span>;
+    }
+    len <span style=color:#f92672>=</span> strlen(fn);
+
+    <span style=color:#66d9ef>for</span> (p <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>parent<span style=color:#f92672>-&gt;</span>subdir; <span style=color:#f92672>*</span>p; p<span style=color:#f92672>=&amp;</span>(<span style=color:#f92672>*</span>p)<span style=color:#f92672>-&gt;</span>next ) {
+        <span style=color:#66d9ef>if</span> (proc_match(len, fn, <span style=color:#f92672>*</span>p)) {
+            de <span style=color:#f92672>=</span> <span style=color:#f92672>*</span>p;
+            <span style=color:#f92672>*</span>p <span style=color:#f92672>=</span> de<span style=color:#f92672>-&gt;</span>next;
+            de<span style=color:#f92672>-&gt;</span>next <span style=color:#f92672>=</span> NULL;
+            <span style=color:#66d9ef>break</span>;
+        }
+    }
+    spin_unlock(<span style=color:#f92672>&amp;</span>proc_subdir_lock);
+    <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>de) {
+        WARN(<span style=color:#ae81ff>1</span>, <span style=color:#e6db74>&#34;name &#39;%s&#39;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, name);
+        <span style=color:#66d9ef>return</span>;
+    }
+
+    proc_entry_rundown(de);
+
+    <span style=color:#66d9ef>if</span> (S_ISDIR(de<span style=color:#f92672>-&gt;</span>mode))
+        parent<span style=color:#f92672>-&gt;</span>nlink<span style=color:#f92672>--</span>;
+    de<span style=color:#f92672>-&gt;</span>nlink <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    WARN(de<span style=color:#f92672>-&gt;</span>subdir, <span style=color:#e6db74>&#34;%s: removing non-empty directory &#34;</span>
+             <span style=color:#e6db74>&#34;&#39;%s/%s&#39;, leaking at least &#39;%s&#39;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, __func__,
+             de<span style=color:#f92672>-&gt;</span>parent<span style=color:#f92672>-&gt;</span>name, de<span style=color:#f92672>-&gt;</span>name, de<span style=color:#f92672>-&gt;</span>subdir<span style=color:#f92672>-&gt;</span>name);
+    pde_put(de);
+}
+EXPORT_SYMBOL(remove_proc_entry);
+</code></pre></td></tr></table></div></div><p><strong>.open</strong> 查看相关proc文件时执行</p><h1 id=示例>示例</h1><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/init.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/module.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/proc_fs.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/seq_file.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+MODULE_LICENSE(<span style=color:#e6db74>&#34;GPL&#34;</span>);
+
+<span style=color:#75715e>#define MYTEST_PROC_DIR &#34;mytest&#34;
+</span><span style=color:#75715e>#define MYTEST_PROC_FILE &#34;mytest&#34;
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>zss_test_proc_show</span>(<span style=color:#66d9ef>struct</span> seq_file <span style=color:#f92672>*</span>m, <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>v)
+{
+        seq_printf(m,<span style=color:#e6db74>&#34;testttt&#34;</span>);
+        <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>zss_test_proc_open</span>(<span style=color:#66d9ef>struct</span> inode <span style=color:#f92672>*</span>inode, <span style=color:#66d9ef>struct</span> file <span style=color:#f92672>*</span>file)
+{
+        <span style=color:#66d9ef>return</span> single_open(file, zss_test_proc_show, NULL);
+}
+
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> file_operations zss_test_proc_fops <span style=color:#f92672>=</span> {
+        .open       <span style=color:#f92672>=</span> zss_test_proc_open,
+        .read       <span style=color:#f92672>=</span> seq_read,
+        .llseek     <span style=color:#f92672>=</span> seq_lseek,
+        .release    <span style=color:#f92672>=</span> single_release,
+};
+
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>hello_init</span>(<span style=color:#66d9ef>void</span>)
+{
+        printk(<span style=color:#e6db74>&#34;&lt;0&gt; hello world</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        proc_create(<span style=color:#e6db74>&#34;zss_test&#34;</span>, <span style=color:#ae81ff>0</span>, NULL, <span style=color:#f92672>&amp;</span>zss_test_proc_fops);
+        <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>hello_exit</span>(<span style=color:#66d9ef>void</span>)
+{
+        printk(<span style=color:#e6db74>&#34;&lt;0&gt; goodbye</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        remove_proc_entry(<span style=color:#e6db74>&#34;zss_test&#34;</span>, NULL);
+}
+module_init(hello_init); <span style=color:#75715e>//该宏在模块的目标代码中增加一个特殊的段，用于说明内核初始化函数所在的位置
+</span><span style=color:#75715e></span>module_exit(hello_exit); <span style=color:#75715e>//跟上面的宏对立
+</span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 507 tags:</small>
+<small><code><a href=https://arair.net/tags/proc>proc</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

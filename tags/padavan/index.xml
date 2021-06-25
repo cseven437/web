@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>padavan on ARAIR</title><link>https://arair.net/tags/padavan/</link><description>Recent content in padavan on ARAIR</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Sun, 07 Feb 2021 20:28:34 +0800</lastBuildDate><atom:link href="https://arair.net/tags/padavan/index.xml" rel="self" type="application/rss+xml"/><item><title>Padavan路由器安装timeMachine</title><link>https://arair.net/posts/703ded86/</link><pubDate>Sun, 07 Feb 2021 20:28:34 +0800</pubDate><guid>https://arair.net/posts/703ded86/</guid><description>&lt;h1 id="准备工作">准备工作&lt;/h1>
+&lt;p>刷了padavan软件的路由器一台&lt;/p>
+&lt;p>移动硬盘或u盘&lt;/p>
+&lt;p>移动硬盘格式化为ext4文件格式&lt;/p>
+&lt;p>挂载移动硬盘到路由器&lt;/p>
+&lt;p>安装opkg命令和其它设置&lt;/p>
+&lt;p>​ ssh进入后台执行&lt;code>opkg.sh&lt;/code>命令，等待执行完成&lt;/p>
+&lt;p>​ 修改用户名admin为root&lt;/p></description></item></channel></rss>

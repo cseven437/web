@@ -1,0 +1,57 @@
+<!doctype html><html><title>linux objdump命令</title><meta name=description content="objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。
+"><meta name=hash content="bb2b144cafdb911be43fda40755a65d74b106e23 "><meta name=lastmod content="2021-03-06 20:36:24 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux objdump命令</h1><p><small>2021-03-06, updated 2021-03-06</small></p></header><p>objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。</p><p>参数</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>  -a, --archive-headers    Display archive header information
+  -f, --file-headers       Display the contents of the overall file header
+  -p, --private-headers    Display object format specific file header contents
+  -P, --private=OPT,OPT... Display object format specific contents
+  -h, --[section-]headers  Display the contents of the section headers
+  -x, --all-headers        Display the contents of all headers
+  -d, --disassemble        Display assembler contents of executable sections
+  -D, --disassemble-all    Display assembler contents of all sections
+  -S, --source             Intermix source code with disassembly
+  -s, --full-contents      Display the full contents of all sections requested
+  -g, --debugging          Display debug information in object file
+  -e, --debugging-tags     Display debug information using ctags style
+  -G, --stabs              Display (in raw form) any STABS info in the file
+  -W[lLiaprmfFsoRtUuTgAckK] or
+  --dwarf[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,
+          =frames-interp,=str,=loc,=Ranges,=pubtypes,
+          =gdb_index,=trace_info,=trace_abbrev,=trace_aranges,
+          =addr,=cu_index,=links,=follow-links]
+                           Display DWARF info in the file
+  -t, --syms               Display the contents of the symbol table(s)
+  -T, --dynamic-syms       Display the contents of the dynamic symbol table
+  -r, --reloc              Display the relocation entries in the file
+  -R, --dynamic-reloc      Display the dynamic relocation entries in the file
+  @&lt;file&gt;                  Read options from &lt;file&gt;
+  -v, --version            Display this program&#39;s version number
+  -i, --info               List object formats and architectures supported
+  -H, --help               Display this information
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 281 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

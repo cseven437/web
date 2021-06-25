@@ -1,0 +1,55 @@
+<!doctype html><html><title>windows 网络配置命令行工具 netsh</title><meta name=description content="netsh(Network Shell) 是一个windows系统本身提供的功能强大的网络配置命令行工具
+"><meta name=hash content="a017c3b546c167d892403742df90d615f8099bb1 "><meta name=lastmod content="2021-05-25 14:41:28 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>windows 网络配置命令行工具 netsh</h1><p><small>2021-05-24, updated 2021-05-25</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#修改mtu>修改mtu</a></li><li><a href=#初始化网络状态命令>初始化网络状态命令</a></li></ul></nav></aside><p>netsh(Network Shell) 是一个windows系统本身提供的功能强大的网络配置命令行工具</p><h2 id=修改mtu>修改mtu</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>C:\WINDOWS\system32&gt;netsh
+netsh&gt;interface
+在将来的 Windows 版本中，Microsoft 可能会删除 TCP/IP 的 Netsh 功能。
+
+如果你当前使用 Netsh 配置和管理 TCP/IP，Microsoft 建议你转移到 Windows PowerShell。
+
+要查看用于管理 TCP/IP 的命令列表，请在 Windows PowerShell 提示符处键入 Get-Command -Module NetTCPIP。
+
+有关 TCP/IP 的 PowerShell 命令的其他信息，请访问 https://go.microsoft.com/fwlink/?LinkId=217627。
+netsh interface&gt;ipv4
+netsh interface ipv4&gt;show subinterface
+
+   MTU  MediaSenseState   传入字节  传出字节      接口
+------  ---------------  ---------  ---------  -------------
+4294967295                1          0    3412447  Loopback Pseudo-Interface 1
+  1500                1  3162790465  581193074  以太网 2
+
+netsh interface ipv4&gt;set subinterface &#34;以太网 2&#34; mtu=1400
+确定。
+
+netsh interface ipv4&gt;
+
+</code></pre></td></tr></table></div></div><p>也可以直接输入以下命令</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>netsh interface ipv4 set subinterface &#34;以太网 2&#34; mtu=1400
+
+</code></pre></td></tr></table></div></div><h2 id=初始化网络状态命令>初始化网络状态命令</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>netsh winsock reset
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 335 tags:</small>
+<small><code><a href=https://arair.net/tags/windows>windows</a></code></small>
+<small><code><a href=https://arair.net/tags/network>network</a></code></small>
+<small><code><a href=https://arair.net/tags/netsh>netsh</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>other on ARAIR</title><link>https://arair.net/categories/other/</link><description>Recent content in other on ARAIR</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Fri, 19 Feb 2021 10:35:17 +0800</lastBuildDate><atom:link href="https://arair.net/categories/other/index.xml" rel="self" type="application/rss+xml"/><item><title>tr069</title><link>https://arair.net/posts/44e8b28d/</link><pubDate>Fri, 19 Feb 2021 10:35:17 +0800</pubDate><guid>https://arair.net/posts/44e8b28d/</guid><description>&lt;p>TR069是 CPE 和 ACS之间沟通的通讯协定。CPE 可以借着这个协定完成服务开通、功能设定、档案上传下载、系统检测 等等初始化及营运管理的必须动作。&lt;/p></description></item><item><title>公网ip查询方法</title><link>https://arair.net/posts/bc580e49/</link><pubDate>Tue, 09 Feb 2021 14:13:27 +0800</pubDate><guid>https://arair.net/posts/bc580e49/</guid><description>&lt;p>公网ip查询&lt;/p></description></item><item><title>markdown</title><link>https://arair.net/posts/61e3efdb/</link><pubDate>Tue, 09 Feb 2021 12:52:41 +0800</pubDate><guid>https://arair.net/posts/61e3efdb/</guid><description>&lt;p>Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。&lt;/p>
+&lt;p>Markdown 语言在 2004 由约翰·格鲁伯（英语：John Gruber）创建。&lt;/p>
+&lt;p>Markdown 编写的文档可以导出 HTML 、Word、图像、PDF、Epub 等多种格式的文档。&lt;/p>
+&lt;p>Markdown 编写的文档后缀为 .md, .markdown。&lt;/p></description></item><item><title>gdb工具</title><link>https://arair.net/posts/c8b6b610/</link><pubDate>Tue, 09 Feb 2021 12:07:52 +0800</pubDate><guid>https://arair.net/posts/c8b6b610/</guid><description>&lt;p>GNU调试器（英语：GNU Debugger，缩写：GDB），是GNU软件系统中的标准调试器，此外GDB也是个具有移携性的调试器，经过移携需求的调修与重新编译，如今许多的类UNIX操作系统上都可以使用GDB，而现有GDB所能支持调试的编程语言有C、C++、Pascal以及FORTRAN。&lt;/p></description></item><item><title>Sqlite</title><link>https://arair.net/posts/4421402c/</link><pubDate>Sun, 07 Feb 2021 21:08:42 +0800</pubDate><guid>https://arair.net/posts/4421402c/</guid><description>&lt;p>sqlite 图形化工具&lt;/p>
+&lt;p>SQLite studio&lt;/p>
+&lt;p>&lt;a href="https://sqlitestudio.pl/">https://sqlitestudio.pl/&lt;/a>&lt;/p></description></item><item><title>Padavan路由器安装timeMachine</title><link>https://arair.net/posts/703ded86/</link><pubDate>Sun, 07 Feb 2021 20:28:34 +0800</pubDate><guid>https://arair.net/posts/703ded86/</guid><description>&lt;h1 id="准备工作">准备工作&lt;/h1>
+&lt;p>刷了padavan软件的路由器一台&lt;/p>
+&lt;p>移动硬盘或u盘&lt;/p>
+&lt;p>移动硬盘格式化为ext4文件格式&lt;/p>
+&lt;p>挂载移动硬盘到路由器&lt;/p>
+&lt;p>安装opkg命令和其它设置&lt;/p>
+&lt;p>​ ssh进入后台执行&lt;code>opkg.sh&lt;/code>命令，等待执行完成&lt;/p>
+&lt;p>​ 修改用户名admin为root&lt;/p></description></item><item><title>macbook使用</title><link>https://arair.net/posts/95e9e6a8/</link><pubDate>Sun, 07 Feb 2021 20:26:49 +0800</pubDate><guid>https://arair.net/posts/95e9e6a8/</guid><description>&lt;h2 id="macbook使用">macbook使用&lt;/h2>
+&lt;p>安装git等工具&lt;/p>
+&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">xcode-select --install
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

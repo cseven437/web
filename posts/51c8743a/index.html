@@ -1,0 +1,32 @@
+<!doctype html><html><title>linux c assert函数</title><meta name=description content="assert()是一个调试程序时经常使用的宏，在程序运行时它计算括号内的表达式，如果表达式为FALSE (0), 程序将报告错误，并终止执行。如果表达式不为0，则继续执行后面的语句，它的作用是终止程序以免导致严重后果，同时也便于查找错误。
+"><meta name=hash content="750df8400b5c5528ca6e4d7addf8315a65c2da8e "><meta name=lastmod content="2021-06-24 14:39:47 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux c assert函数</h1><p><small>2021-06-24, updated 2021-06-24</small></p></header><p>assert()是一个调试程序时经常使用的宏，在程序运行时它计算括号内的表达式，如果表达式为FALSE (0), 程序将报告错误，并终止执行。如果表达式不为0，则继续执行后面的语句，它的作用是终止程序以免导致严重后果，同时也便于查找错误。</p><p>所需头文件：<code>#include &lt;assert.h></code></p><p>使用 assert 的缺点是，频繁的调用会极大的影响程序的性能，增加额外的开销。</p><p>在调试结束后，可以通过在包含 #include 的语句之前插入 #define NDEBUG 来禁用 assert 调用，示例代码如下：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#define NDEBUG 
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;assert.h&gt;</span><span style=color:#75715e>
+</span></code></pre></td></tr></table></div></div><p>或者使用gcc -DNDEBUG来禁用assert</p><h2 id=何时需要使用断言>何时需要使用断言</h2><ol><li>可以在预计正常情况下程序不会到达的地方放置断言：ASSERT( FALSE );</li><li>断言可以用于检查传递给私有方法的参数。（对于公有方法，因为是提供给外部的接口，所以必须在方法中有相应的参数检验才能保证代码的健壮性）</li><li>使用断言测试方法执行的前置条件和后置条件</li><li>使用断言检查类的不变状态，确保任何情况下，某个变量的状态必须满足。（如age属性应大于0小于某个合适值）</li></ol><h2 id=什么地方不要使用断言>什么地方不要使用断言</h2><p>断言语句不是永远会执行，可以屏蔽也可以启用</p><p>因此：</p><ol><li>不要使用断言作为公共方法的参数检查，公共方法的参数永远都要执行</li><li>断言语句不可以有任何边界效应，不要使用断言语句去修改变量和改变方法的返回值</li></ol><h2 id=实例>实例</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;assert.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+{
+    assert(<span style=color:#ae81ff>1</span><span style=color:#f92672>&lt;</span><span style=color:#ae81ff>100</span>);
+    assert(<span style=color:#ae81ff>1</span><span style=color:#f92672>&gt;</span><span style=color:#ae81ff>100</span>);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+</code></pre></td></tr></table></div></div><p>运行结果</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>a.out: main.c:7: main: Assertion `1&gt;100&#39; failed.
+Aborted
+</code></pre></td></tr></table></div></div><h2 id=原文链接>原文链接</h2><p><a href=https://blog.csdn.net/zqixiao_09/article/details/51417555>https://blog.csdn.net/zqixiao_09/article/details/51417555</a></p></article></div></body><div><small>words: 553 tags:</small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small>
+<small><code><a href=https://arair.net/tags/linux-c>linux-c</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

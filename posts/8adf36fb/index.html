@@ -1,0 +1,121 @@
+<!doctype html><html><title>Genieacs</title><meta name=description content="genieacs
+用于tr069 服务器
+"><meta name=hash content="452be51e351687d7e006f394ad02bb9a27fc0f9e "><meta name=lastmod content="2021-06-05 11:28:50 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>Genieacs</h1><p><small>2021-02-01, updated 2021-06-05</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#环境搭建>环境搭建</a></li><li><a href=#docker搭建genieacs环境>docker搭建genieacs环境</a></li><li><a href=#genieacs-auth-config>genieacs auth config</a></li><li><a href=#tr111-环境搭建>tr111 环境搭建</a></li></ul></nav></aside><p>genieacs</p><p>用于tr069 服务器</p><p>acs url: <code>http://ip:7547/genieacs</code></p><p>管理界面: <code>http://ip:3000</code></p><p>默认登录用户名密码: <code>admin:amdin</code></p><h2 id=环境搭建>环境搭建</h2><p><a href=https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04>https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04</a></p><p>系统要求: ubuntu 16.04</p><p>脚本备份</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>First you should update all components and install the following perquisites
+
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo apt-get install redis-server mongodb build-essential ruby-bundler ruby-dev libsqlite3-dev
+cd ~
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt install nodejs
+sudo npm install libxmljs
+Install GenieACS itself
+sudo npm install -g genieacs
+**And now make some files to start and stop all files in a TMUX Session, don<span style=color:#e6db74>&#39;t forget to change the &#34;ui-jwt-secret&#34; from &#34;changeme&#34; to something else **
+</span><span style=color:#e6db74>
+</span><span style=color:#e6db74>cat &lt;&lt; EOF &gt; ./genieacs-start.sh
+</span><span style=color:#e6db74>#!/bin/sh
+</span><span style=color:#e6db74>if tmux has-session -t &#39;</span>genieacs<span style=color:#e6db74>&#39;; then
+</span><span style=color:#e6db74>  echo &#34;GenieACS is already running.&#34;
+</span><span style=color:#e6db74>  echo &#34;To stop it use: ./genieacs-stop.sh&#34;
+</span><span style=color:#e6db74>  echo &#34;To attach to it use: tmux attach -t genieacs&#34;
+</span><span style=color:#e6db74>else
+</span><span style=color:#e6db74>  tmux new-session -s &#39;</span>genieacs<span style=color:#e6db74>&#39; -d
+</span><span style=color:#e6db74>  tmux send-keys &#39;</span>genieacs-cwmp<span style=color:#e6db74>&#39; &#39;</span>C-m<span style=color:#e6db74>&#39;
+</span><span style=color:#e6db74>  tmux split-window
+</span><span style=color:#e6db74>  tmux send-keys &#39;</span>genieacs-nbi<span style=color:#e6db74>&#39; &#39;</span>C-m<span style=color:#e6db74>&#39;
+</span><span style=color:#e6db74>  tmux split-window
+</span><span style=color:#e6db74>  tmux send-keys &#39;</span>genieacs-fs<span style=color:#e6db74>&#39; &#39;</span>C-m<span style=color:#e6db74>&#39;
+</span><span style=color:#e6db74>  tmux split-window
+</span><span style=color:#e6db74>  tmux send-keys &#39;</span>genieacs-ui --ui-jwt-secret changeme<span style=color:#e6db74>&#39; &#39;</span>C-m <span style=color:#e6db74>&#39;
+</span><span style=color:#e6db74>  tmux select-layout tiled 2&gt;/dev/null
+</span><span style=color:#e6db74>  tmux rename-window &#39;</span>GenieACS<span style=color:#e6db74>&#39;
+</span><span style=color:#e6db74>
+</span><span style=color:#e6db74>  echo &#34;GenieACS has been started in tmux session &#39;</span>geneiacs<span style=color:#e6db74>&#39;&#34;
+</span><span style=color:#e6db74>  echo &#34;To attach to session, use: tmux attach -t genieacs&#34;
+</span><span style=color:#e6db74>  echo &#34;To switch between panes use Ctrl+B-ArrowKey&#34;
+</span><span style=color:#e6db74>  echo &#34;To deattach, press Ctrl+B-D&#34;
+</span><span style=color:#e6db74>  echo &#34;To stop GenieACS, use: ./genieacs-stop.sh&#34;
+</span><span style=color:#e6db74>fi
+</span><span style=color:#e6db74>EOF
+</span><span style=color:#e6db74>
+</span><span style=color:#e6db74>cat &lt;&lt; EOF &gt; ./genieacs-stop.sh
+</span><span style=color:#e6db74>#!/bin/sh
+</span><span style=color:#e6db74>if tmux has-session -t &#39;</span>genieacs<span style=color:#960050;background-color:#1e0010>&#39;</span> 2&gt;/dev/null; <span style=color:#66d9ef>then</span>
+  tmux kill-session -t genieacs 2&gt;/dev/null
+  echo <span style=color:#e6db74>&#34;GenieACS has been stopped.&#34;</span>
+<span style=color:#66d9ef>else</span>
+  echo <span style=color:#e6db74>&#34;GenieACS is not running!&#34;</span>
+<span style=color:#66d9ef>fi</span>
+EOF
+
+chmod +x genieacs-start.sh genieacs-stop.sh
+After all those steps GenieACS should be installed properly and is ready <span style=color:#66d9ef>for</span> the first start.
+
+./genieacs-start.sh
+tmux attach -t genieacs
+</code></pre></td></tr></table></div></div><h2 id=docker搭建genieacs环境>docker搭建genieacs环境</h2><p><a href=https://github.com/DrumSergio/GenieACS-Docker>GenieACS-Docker</a></p><h2 id=genieacs-auth-config>genieacs auth config</h2><p>选择标签页</p><p><code>Admin --> Config</code></p><p>点<code>New config</code>新增配置</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>key: cwmp.auth
+value: AUTH(&#34;acs-username&#34;, &#34;acs-password&#34;)
+</code></pre></td></tr></table></div></div><h2 id=tr111-环境搭建>tr111 环境搭建</h2><p>安装stun-server</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sudo apt install stun-server
+</code></pre></td></tr></table></div></div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>stun -h ip -m 11111
+</code></pre></td></tr></table></div></div><p>保证<code>cpe username</code>和<code>password</code>匹配</p><p><a href=https://forum.genieacs.com/t/stun-or-whatever-server-with-genieacs/83/13>https://forum.genieacs.com/t/stun-or-whatever-server-with-genieacs/83/13</a></p><p>使用<code>coturn</code>时，需要在服务器配置<code>cwmp.udpConnectionRequestPort 3478</code></p></article></div></body><div><small>words: 499 tags:</small>
+<small><code><a href=https://arair.net/tags/genieacs>genieacs</a></code></small>
+<small><code><a href=https://arair.net/tags/tr069>tr069</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

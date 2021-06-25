@@ -1,0 +1,119 @@
+<!doctype html><html><title>module代码示例</title><meta name=description content="Makefile编写 1 2 3 4 5 6 7 8 9 10 obj-m+=timer_test.o #SRC=&amp;#34;/lib/modules/$(shell uname -r)/build/&amp;#34; CROSS_COMPILE=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&amp;#34; SRC=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&amp;#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean 示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 #include &amp;lt;linux/module.h&amp;gt;#include &amp;lt;linux/kernel.h&amp;gt;#include &amp;lt;linux/init.h&amp;gt; static int __init hello_init (void) {"><meta name=hash content="98a25f045e5faa0e35bf6c2d7e190717b14cea0c "><meta name=lastmod content="2021-02-04 20:08:57 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>module代码示例</h1><p><small>2021-01-24, updated 2021-02-04</small></p></header><h2 id=makefile编写>Makefile编写</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-makefile data-lang=makefile>obj-m<span style=color:#f92672>+=</span>timer_test.o
+<span style=color:#75715e>#SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34;
+</span><span style=color:#75715e></span>
+CROSS_COMPILE<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34;</span>
+SRC<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34;</span>
+
+<span style=color:#a6e22e>all</span><span style=color:#f92672>:</span>
+    make -C <span style=color:#66d9ef>$(</span>SRC<span style=color:#66d9ef>)</span> M<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>PWD<span style=color:#66d9ef>)</span> modules
+<span style=color:#a6e22e>clean</span><span style=color:#f92672>:</span>
+    make -C <span style=color:#66d9ef>$(</span>SRC<span style=color:#66d9ef>)</span> M<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>PWD<span style=color:#66d9ef>)</span> clean
+</code></pre></td></tr></table></div></div><h2 id=示例>示例</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/module.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/kernel.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/init.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> __init <span style=color:#a6e22e>hello_init</span> (<span style=color:#66d9ef>void</span>)
+{
+    printk(<span style=color:#e6db74>&#34;hello,world</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> __exit <span style=color:#a6e22e>hello_exit</span> (<span style=color:#66d9ef>void</span>)
+
+{
+    printk(<span style=color:#e6db74>&#34;Hello module exit</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+}
+
+module_init(hello_init);
+module_exit(hello_exit);
+MODULE_AUTHOR(<span style=color:#e6db74>&#34;CXF&#34;</span>);
+MODULE_LICENSE(<span style=color:#e6db74>&#34;Dual BSD/GPL&#34;</span>);
+</code></pre></td></tr></table></div></div><h1 id=模块选项>模块选项</h1><p>内核模块是采用如module_param宏的方式定义其参数</p><p>原型</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>define module_param(name, type, perm)              \
+   module_param_named(name, name, type, perm)
+</code></pre></td></tr></table></div></div><p>详细内容查看内核文件<code>include/linux/moduleparam.h</code></p><p>参数说明</p><ul><li>name: 参数名称</li><li>type: 参数类型</li><li>perm: 参数作为文件输出到/sys时，分派给该文件的权限</li></ul><p>每个模块都在<code>/sys/modules</code>中被分派一个目录。子目录<code>/sys/modules/module/parameters</code>中的每个文件就是该模块所输出的每个参数</p><h2 id=示例代码>示例代码</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/init.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/module.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>MODULE_LICENSE(<span style=color:#e6db74>&#34;GPL&#34;</span>);
+<span style=color:#66d9ef>int</span> test_param <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>hello_init</span>(<span style=color:#66d9ef>void</span>)
+{
+    printk(<span style=color:#e6db74>&#34;test_param:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, test_param);
+    printk(<span style=color:#e6db74>&#34;&lt;0&gt; hello world</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+}
+<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>hello_exit</span>(<span style=color:#66d9ef>void</span>)
+{
+    printk(<span style=color:#e6db74>&#34;&lt;0&gt; goodbye</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+}
+
+module_param(test_param, <span style=color:#66d9ef>int</span>, <span style=color:#ae81ff>0644</span>);
+module_init(hello_init); <span style=color:#75715e>//该宏在模块的目标代码中增加一个特殊的段，用于说明内核初始化函数所在的位置
+</span><span style=color:#75715e></span>module_exit(hello_exit); <span style=color:#75715e>//跟上面的宏对立
+</span></code></pre></td></tr></table></div></div><p>加载模块</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>insmod hello_modele test_param=1
+</code></pre></td></tr></table></div></div><p>查看参数文件权限</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>ls /sys/module/hello_module/parameters/test_param -l
+-rw-r--r-- 1 root root 4096 Dec 28 10:24 /sys/module/hello_module/parameters/test_param
+</code></pre></td></tr></table></div></div><p>dmesg查看log</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[523196.784789] test_param:1
+[523196.784801] &lt;0&gt; hello world
+
+# 卸载模块时的log
+[523210.001052] &lt;0&gt; goodbye
+</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 455 tags:</small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>

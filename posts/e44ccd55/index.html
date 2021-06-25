@@ -1,0 +1,148 @@
+<!doctype html><html><title>linux进程间通信--套接字</title><meta name=description content="套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。
+套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。
+"><meta name=lastmod content="2021-02-28 10:41:34 +0800 +0800 "><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux进程间通信--套接字</h1><p><small>2021-02-28</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#socket>socket</a></li><li><a href=#getsockname和getpeername函数>getsockname和getpeername函数</a></li></ul></nav></aside><p>套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。</p><p>套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。</p><h2 id=socket>socket</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;          /* See NOTES */</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/socket.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>socket</span>(<span style=color:#66d9ef>int</span> domain, <span style=color:#66d9ef>int</span> type, <span style=color:#66d9ef>int</span> protocol);
+</code></pre></td></tr></table></div></div><p>参数说明:</p><ul><li>domain</li></ul><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Name                Purpose                          Man page
+AF_UNIX, AF_LOCAL   Local communication              unix(7)
+AF_INET             IPv4 Internet protocols          ip(7)
+AF_INET6            IPv6 Internet protocols          ipv6(7)
+AF_IPX              IPX - Novell protocols
+AF_NETLINK          Kernel user interface device     netlink(7)
+AF_X25              ITU-T X.25 / ISO-8208 protocol   x25(7)
+AF_AX25             Amateur radio AX.25 protocol
+AF_ATMPVC           Access to raw ATM PVCs
+AF_APPLETALK        Appletalk                        ddp(7)
+AF_PACKET           Low level packet interface       packet(7)
+</code></pre></td></tr></table></div></div><ul><li>type</li></ul><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>The socket has the indicated type, which specifies the communication semantics.  Currently defined types are:
+
+SOCK_STREAM     Provides sequenced, reliable, two-way, connection-based byte streams.  An out-of-band data transmission mechanism may be supported.
+
+SOCK_DGRAM      Supports datagrams (connectionless, unreliable messages of a fixed maximum length).
+
+SOCK_SEQPACKET  Provides a sequenced, reliable, two-way connection-based data transmission path for datagrams of fixed maximum length; a consumer is required to read an entire packet with each input system call.
+
+SOCK_RAW        Provides raw network protocol access.
+
+SOCK_RDM        Provides a reliable datagram layer that does not guarantee ordering.
+
+SOCK_PACKET     Obsolete and should not be used in new programs; see packet(7).
+
+Some socket types may not be implemented by all protocol families; for example, SOCK_SEQPACKET is not implemented for AF_INET.
+
+Since Linux 2.6.27, the type argument serves a second purpose: in addition to specifying a socket type, it may include the bitwise OR of any of the following values, to modify the behavior of socket():
+
+SOCK_NONBLOCK   Set the O_NONBLOCK file status flag on the new open file description.  Using this flag saves extra calls to fcntl(2) to achieve the same result.
+
+SOCK_CLOEXEC    Set the close-on-exec (FD_CLOEXEC) flag on the new file descriptor.  See the description of the O_CLOEXEC flag in open(2) for reasons why this may be useful.
+</code></pre></td></tr></table></div></div><ul><li>protocol</li></ul><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>protocol(最后一个参数)为0时，会自动选择type类型对应的默认协议。
+IPPROTO_TCP、IPPTOTO_UDP、IPPROTO_SCTP、IPPROTO_TIPC
+</code></pre></td></tr></table></div></div><p><strong>return value</strong></p><p>On success, a file descriptor for the new socket is returned.  On error, -1 is returned, and errno is set appropriately.</p><p>error number</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>EACCES Permission to create a socket of the specified type and/or protocol is denied.
+
+EAFNOSUPPORT
+       The implementation does not support the specified address family.
+
+EINVAL Unknown protocol, or protocol family not available.
+
+EINVAL Invalid flags in type.
+
+EMFILE Process file table overflow.
+
+ENFILE The system limit on the total number of open files has been reached.
+
+ENOBUFS or ENOMEM
+       Insufficient memory is available.  The socket cannot be created until sufficient resources are freed.
+
+EPROTONOSUPPORT
+       The protocol type or the specified protocol is not supported within this domain.
+
+Other errors may be generated by the underlying protocol modules.
+</code></pre></td></tr></table></div></div><p>INADDR_ANY: 0.0.0.0</p><h2 id=getsockname和getpeername函数>getsockname和getpeername函数</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/socket.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getsockname</span>(<span style=color:#66d9ef>int</span> sockfd, <span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>localaddr, socklen_t <span style=color:#f92672>*</span>addrlrn);
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getpeername</span>(<span style=color:#66d9ef>int</span> sockfd, <span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>peeraddr, socklen_t <span style=color:#f92672>*</span>addrlen);
+</code></pre></td></tr></table></div></div><p>返回：成功返回0，出错则为-1</p><ol><li><p>函数用途</p><ul><li>getsockname：获取与某个套接字关联的本地协议地址</li><li>getpeername：获取与某个套接字关联的外地协议地址</li></ul></li><li><p>需要这两个函数的原因</p><ul><li>在一个没有调用bind的TCP客户上，connect成功后，getsockname用于获取由内核赋予该连接的本地IP地址和本地端口号；</li><li>在以端口号0调用bind（告知内核去选择本地端口号）后，getsockname用于获取由内核赋予的本地端口号；</li><li>getsockname可以用于获取某个套接字的地址族　<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sockfd_to_family</span>(<span style=color:#66d9ef>int</span> sockfd) {
+    <span style=color:#66d9ef>struct</span> sockaddr_storage ss;
+    socklen_t len;
+
+    len <span style=color:#f92672>=</span> <span style=color:#66d9ef>sizeof</span>(ss);
+    <span style=color:#66d9ef>if</span> (getsockname(sockfd, (SA <span style=color:#f92672>*</span>) <span style=color:#f92672>&amp;</span>ss , <span style=color:#f92672>&amp;</span>len) <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>) {
+        <span style=color:#66d9ef>return</span> (<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>);
+    }
+    <span style=color:#66d9ef>return</span> (ss.ss_family);
+}
+</code></pre></td></tr></table></div></div></li><li>在一个以通配IP地址调用bind的TCP服务器上，与某个客户的连接一旦建立（accept成功返回），getsockname就可以用于获取由内核赋予该连接的本地IP地址；在这样的调用中，套接字描述符参数必须是已连接套接字的描述符，而不是监听套接字描述符；</li><li>当一个服务器 由调用过accept的某个进程通过调用exec来执行程序时，它能够获取客户身份的唯一途径是调用getpeername</li></ul></li></ol></article></div></body><div><small>words: 1174 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small>
+<small><code><a href=https://arair.net/tags/socket>socket</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>
