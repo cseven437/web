@@ -1,5 +1,17 @@
 <!doctype html><html><title>cron服务使用</title><meta name=description content="cron服务是一个定时执行的服务，守护进程为crond可以通过crontab 命令添加或者编辑需要定时执行的任务：
- crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数 crontab -l //列出某个用户cron服务的详细内容 crontab -r //删除某个用户的cron服务 crontab -e //编辑某个用户的cron服务 "><meta name=generator content="Hugo 0.84.3"><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>cron服务使用</h1><p><small>2021-01-24, updated 2021-06-24</small></p></header><p>cron服务是一个定时执行的服务，守护进程为<code>crond</code>可以通过crontab 命令添加或者编辑需要定时执行的任务：</p><ul><li>crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数</li><li>crontab -l //列出某个用户cron服务的详细内容</li><li>crontab -r //删除某个用户的cron服务</li><li>crontab -e //编辑某个用户的cron服务</li></ul><p>crontab 文件中的行由 6 个字段组成，不同字段间用空格或 tab 键分隔。前 5 个字段指定命令要运行的时间</p><h2 id=格式>格式</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+ crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数 crontab -l //列出某个用户cron服务的详细内容 crontab -r //删除某个用户的cron服务 crontab -e //编辑某个用户的cron服务 "><meta name=generator content="Hugo 0.84.3"><meta property="og:title" content="cron服务使用"><meta property="og:description" content="cron服务是一个定时执行的服务，守护进程为crond可以通过crontab 命令添加或者编辑需要定时执行的任务：
+
+crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数
+crontab -l //列出某个用户cron服务的详细内容
+crontab -r //删除某个用户的cron服务
+crontab -e //编辑某个用户的cron服务
+"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/3ce8a8fe/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-01-24T11:50:41+08:00"><meta property="article:modified_time" content="2021-06-24T14:39:47+08:00"><meta itemprop=name content="cron服务使用"><meta itemprop=description content="cron服务是一个定时执行的服务，守护进程为crond可以通过crontab 命令添加或者编辑需要定时执行的任务：
+
+crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数
+crontab -l //列出某个用户cron服务的详细内容
+crontab -r //删除某个用户的cron服务
+crontab -e //编辑某个用户的cron服务
+"><meta itemprop=datePublished content="2021-01-24T11:50:41+08:00"><meta itemprop=dateModified content="2021-06-24T14:39:47+08:00"><meta itemprop=wordCount content="584"><meta itemprop=keywords content="linux,command,crontab,"><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>cron服务使用</h1><p><small>2021-01-24, updated 2021-06-24</small></p></header><p>cron服务是一个定时执行的服务，守护进程为<code>crond</code>可以通过crontab 命令添加或者编辑需要定时执行的任务：</p><ul><li>crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数</li><li>crontab -l //列出某个用户cron服务的详细内容</li><li>crontab -r //删除某个用户的cron服务</li><li>crontab -e //编辑某个用户的cron服务</li></ul><p>crontab 文件中的行由 6 个字段组成，不同字段间用空格或 tab 键分隔。前 5 个字段指定命令要运行的时间</p><h2 id=格式>格式</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4

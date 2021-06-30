@@ -1,6 +1,20 @@
 <!doctype html><html><title>nc命令的使用</title><meta name=description content="nc是netcat的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具
 nc的作用
- 实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口 端口的扫描，nc可以作为client发起TCP或UDP连接 机器之间传输文件 机器之间网络测速 "><meta name=generator content="Hugo 0.84.3"><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>nc命令的使用</h1><p><small>2021-03-05, updated 2021-03-08</small></p></header><p>nc是<code>netcat</code>的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具</p><p><strong>nc的作用</strong></p><ol><li>实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口</li><li>端口的扫描，nc可以作为client发起TCP或UDP连接</li><li>机器之间传输文件</li><li>机器之间网络测速</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+ 实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口 端口的扫描，nc可以作为client发起TCP或UDP连接 机器之间传输文件 机器之间网络测速 "><meta name=generator content="Hugo 0.84.3"><meta property="og:title" content="nc命令的使用"><meta property="og:description" content="nc是netcat的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具
+nc的作用
+
+实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口
+端口的扫描，nc可以作为client发起TCP或UDP连接
+机器之间传输文件
+机器之间网络测速
+"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/cf8e40bf/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-03-05T11:22:12+08:00"><meta property="article:modified_time" content="2021-03-08T18:37:51+08:00"><meta itemprop=name content="nc命令的使用"><meta itemprop=description content="nc是netcat的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具
+nc的作用
+
+实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口
+端口的扫描，nc可以作为client发起TCP或UDP连接
+机器之间传输文件
+机器之间网络测速
+"><meta itemprop=datePublished content="2021-03-05T11:22:12+08:00"><meta itemprop=dateModified content="2021-03-08T18:37:51+08:00"><meta itemprop=wordCount content="428"><meta itemprop=keywords content="nc,network,"><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>nc命令的使用</h1><p><small>2021-03-05, updated 2021-03-08</small></p></header><p>nc是<code>netcat</code>的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具</p><p><strong>nc的作用</strong></p><ol><li>实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口</li><li>端口的扫描，nc可以作为client发起TCP或UDP连接</li><li>机器之间传输文件</li><li>机器之间网络测速</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
