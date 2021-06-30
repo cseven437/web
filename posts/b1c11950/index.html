@@ -1,0 +1,57 @@
+<!doctype html><html><title>linux c--文件IO</title><meta name=description content="系统通过文件描述符(file descriptor：一个非负的整型值)将各种IO类型统一起来。这些IO类型包括普通文件，终端，管道，FIFO，设备，套接字等等。有了文件描述符，就可以使用一套统一的IO函数：open/read/write/close等。
+"><meta name=generator content="Hugo 0.84.3"><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux c--文件IO</h1><p><small>2021-06-30</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#open函数>open函数</a></li><li><a href=#close函数>close函数</a></li><li><a href=#参考链接>参考链接</a></li></ul></nav></aside><p>系统通过文件描述符(file descriptor：一个非负的整型值)将各种IO类型统一起来。这些IO类型包括普通文件，终端，管道，FIFO，设备，套接字等等。有了文件描述符，就可以使用一套统一的IO函数：open/read/write/close等。</p><h2 id=open函数>open函数</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/stat.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;fcntl.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>open</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> pathname, <span style=color:#66d9ef>int</span> flags);
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>open</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> pathname, <span style=color:#66d9ef>int</span> flags, mode_t mode);
+</code></pre></td></tr></table></div></div><p>open函数说明：</p><p>参数:</p><ul><li>pathname 指向欲打开的文件路径字符串.</li><li>flags 所能使用的旗标:<ul><li>O_RDONLY 以只读方式打开文件</li><li>O_WRONLY 以只写方式打开文件</li><li>O_RDWR 以可读写方式打开文件. 上述三种旗标是互斥的, 也就是不可同时使用, 但可与下列的旗标利用OR(|)运算符组合.</li><li>O_CREAT 若欲打开的文件不存在则自动建立该文件.</li><li>O_EXCL 如果O_CREAT 也被设置, 此指令会去检查文件是否存在. 文件若不存在则建立该文件, 否则将导致打开文件错误. 此外, 若O_CREAT 与O_EXCL 同时设置, 并且欲打开的文件为符号连接, 则会打开文件失败.</li><li>O_NOCTTY 如果欲打开的文件为终端机设备时, 则不会将该终端机当成进程控制终端机.</li><li>O_TRUNC 若文件存在并且以可写的方式打开时, 此旗标会令文件长度清为0, 而原来存于该文件的资料也会消失.</li><li>O_APPEND 当读写文件时会从文件尾开始移动, 也就是所写入的数据会以附加的方式加入到文件后面.</li><li>O_NONBLOCK 以不可阻断的方式打开文件, 也就是无论有无数据读取或等待, 都会立即返回进程之中.</li><li>O_NDELAY 同O_NONBLOCK.</li><li>O_SYNC 以同步的方式打开文件.</li><li>O_NOFOLLOW 如果参数pathname 所指的文件为一符号连接, 则会令打开文件失败.</li><li>O_DIRECTORY 如果参数pathname 所指的文件并非为一目录, 则会令打开文件失败。注：此为Linux2. 2 以后特有的旗标, 以避免一些系统安全问题.</li></ul></li><li>mode 则有下列数种组合, 只有在建立新文件时才会生效, 此外真正建文件时的权限会受到umask 值所影响, 因此该文件权限应该为 (mode-umaks).<ul><li>S_IRWXU00700 权限, 代表该文件所有者具有可读、可写及可执行的权限.</li><li>S_IRUSR 或S_IREAD, 00400 权限, 代表该文件所有者具有可读取的权限.</li><li>S_IWUSR 或S_IWRITE, 00200 权限, 代表该文件所有者具有可写入的权限.</li><li>S_IXUSR 或S_IEXEC, 00100 权限, 代表该文件所有者具有可执行的权限.</li><li>S_IRWXG 00070 权限, 代表该文件用户组具有可读、可写及可执行的权限.</li><li>S_IRGRP 00040 权限, 代表该文件用户组具有可读的权限.</li><li>S_IWGRP 00020 权限, 代表该文件用户组具有可写入的权限.</li><li>S_IXGRP 00010 权限, 代表该文件用户组具有可执行的权限.</li><li>S_IRWXO 00007 权限, 代表其他用户具有可读、可写及可执行的权限.</li><li>S_IROTH 00004 权限, 代表其他用户具有可读的权限</li><li>S_IWOTH 00002 权限, 代表其他用户具有可写入的权限.</li><li>S_IXOTH 00001 权限, 代表其他用户具有可执行的权限.</li></ul></li></ul><p>返回值：若所有欲核查的权限都通过了检查则返回0 值, 表示成功, 只要有一个权限被禁止则返回-1.</p><p>错误代码：</p><ul><li>EEXIST 参数pathname 所指的文件已存在, 却使用了O_CREAT 和O_EXCL 旗标.</li><li>EACCESS 参数pathname 所指的文件不符合所要求测试的权限.</li><li>EROFS 欲测试写入权限的文件存在于只读文件系统内.</li><li>EFAULT 参数pathname 指针超出可存取内存空间.</li><li>EINVAL 参数mode 不正确.</li><li>ENAMETOOLONG 参数 pathname 太长.</li><li>ENOTDIR 参数pathname 不是目录.</li><li>ENOMEM 核心内存不足.</li><li>ELOOP 参数pathname 有过多符号连接问题.</li><li>EIO I/O 存取错误.</li></ul><p>附加说明：使用 access()作用户认证方面的判断要特别小心, 例如在access()后再作open()空文件可能会造成系统安全上的问题. 使用完记得使用close函数关闭文件描述符</p><p>范例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/stat.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;fcntl.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>main()
+{
+    <span style=color:#66d9ef>int</span> fd, size;
+    <span style=color:#66d9ef>char</span> s[] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Linux Programmer!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, buffer[<span style=color:#ae81ff>80</span>];
+    fd <span style=color:#f92672>=</span> open(<span style=color:#e6db74>&#34;/tmp/temp&#34;</span>, O_WRONLY<span style=color:#f92672>|</span>O_CREAT);
+    write(fd, s, <span style=color:#66d9ef>sizeof</span>(s));
+    close(fd);
+    fd <span style=color:#f92672>=</span> open(<span style=color:#e6db74>&#34;/tmp/temp&#34;</span>, O_RDONLY);
+    size <span style=color:#f92672>=</span> read(fd, buffer, <span style=color:#66d9ef>sizeof</span>(buffer));
+    close(fd);
+    printf(<span style=color:#e6db74>&#34;%s&#34;</span>, buffer);
+}
+</code></pre></td></tr></table></div></div><p>执行</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Linux Programmer!
+</code></pre></td></tr></table></div></div><h2 id=close函数>close函数</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>close</span>(<span style=color:#66d9ef>int</span> fd);
+</code></pre></td></tr></table></div></div><p>函数说明：当使用完文件后若已不再需要则可使用 close()关闭该文件, 二close()会让数据写回磁盘, 并释放该文件所占用的资源. 参数fd 为先前由open()或creat()所返回的文件描述词.</p><p>返回值：若文件顺利关闭则返回0, 发生错误时返回-1.</p><p>错误代码：EBADF 参数fd 非有效的文件描述词或该文件已关闭.</p><p>附加说明：虽然在进程结束时, 系统会自动关闭已打开的文件, 但仍建议自行关闭文件, 并确实检查返回值.</p><h2 id=参考链接>参考链接</h2><p><a href=http://c.biancheng.net/cpp/html/238.html>http://c.biancheng.net/cpp/html/238.html</a>
+<a href=http://c.biancheng.net/cpp/html/229.html>http://c.biancheng.net/cpp/html/229.html</a></p></article></div></body><div><small>words: 1640 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement("script"),a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body></html>
