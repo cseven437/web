@@ -2,7 +2,7 @@
  ps：这里只介绍网络子系统的初始化流程。
  系统启动时会执行start_kernel对内核的各个子系统进行初始化。start_kernel会进行必要的初始化任务，比如init_IRQ和softirq_init进行硬中断和软中断初始化,在rest_init中会调用内核线程函数创建一个线程执行kernel_init继续进行其它初始化，start_kernel函数将会继续执行下去并退出。在kernel_init函数中的执行关系kernel_init_freeable()&amp;ndash;&amp;gt;do_basic_setup()&amp;ndash;&amp;gt;do_initcalls()，在do_initcalls函数中，会对调用各个子系统的初始化函数，类似subsys_initcall(net_dev_init)函数。其中net_dev_initnet/core/dev.c为网络设备的初始化函数
 内核子系统和编译到内核的驱动都是通过do_initcalls进行初始化的
-"><meta name=generator content="Hugo 0.84.3"><meta property="og:title" content="网络子系统初始化"><meta property="og:description" content="网络设备初始化
+"><meta name=generator content="Hugo 0.84.4"><meta property="og:title" content="网络子系统初始化"><meta property="og:description" content="网络设备初始化
 内核初始化代码(init/main.c &ndash;> asmlinkage __visible void __init start_kernel(void))
 
 ps：这里只介绍网络子系统的初始化流程。
