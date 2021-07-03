@@ -1,15 +1,51 @@
 <!doctype html><html><title>css的学习记录</title><meta name=description content="css的学习记录
-"><meta name=generator content="Hugo 0.84.4"><meta property="og:title" content="css的学习记录"><meta property="og:description" content="css的学习记录"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/b438bfcb/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-01-22T16:52:07+08:00"><meta property="article:modified_time" content="2021-06-19T15:58:49+08:00"><meta itemprop=name content="css的学习记录"><meta itemprop=description content="css的学习记录"><meta itemprop=datePublished content="2021-01-22T16:52:07+08:00"><meta itemprop=dateModified content="2021-06-19T15:58:49+08:00"><meta itemprop=wordCount content="62"><meta itemprop=keywords content="css,"><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>css的学习记录</h1><p><small>2021-01-22, updated 2021-06-19</small></p></header><p>css的学习记录</p><p>修改鼠标经过所有链接时的样式</p><p>添加下划线</p><h2 id=css-hover>css hover</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+"><meta name=generator content="Hugo 0.84.4"><meta property="og:title" content="css的学习记录"><meta property="og:description" content="css的学习记录"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/b438bfcb/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-01-22T16:52:07+08:00"><meta property="article:modified_time" content="2021-07-03T14:53:31+08:00"><meta itemprop=name content="css的学习记录"><meta itemprop=description content="css的学习记录"><meta itemprop=datePublished content="2021-01-22T16:52:07+08:00"><meta itemprop=dateModified content="2021-07-03T14:53:31+08:00"><meta itemprop=wordCount content="319"><meta itemprop=keywords content="css,"><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>css的学习记录</h1><p><small>2021-01-22, updated 2021-07-03</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#css-hover>css hover</a></li><li><a href=#any-link>any-link</a></li><li><a href=#qa>Q/A</a><ul><li><a href=#div在浏览器屏幕居中>div在浏览器屏幕居中</a></li><li><a href=#最简单的dark-mode>最简单的dark mode</a></li></ul></li></ul></nav></aside><p>css的学习记录</p><p>修改鼠标经过所有链接时的样式</p><p>添加下划线</p><h2 id=css-hover>css hover</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#f92672>a</span>:<span style=color:#a6e22e>hover</span>{
   <span style=color:#66d9ef>border-bottom</span>: <span style=color:#ae81ff>1</span><span style=color:#66d9ef>px</span> <span style=color:#66d9ef>solid</span>;
 }
-</code></pre></td></tr></table></div></div><h2 id=qa>Q/A</h2><h3 id=div在浏览器屏幕居中>div在浏览器屏幕居中</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table></div></div><h2 id=any-link>any-link</h2><p><code>:any-link</code> CSS 伪类 选择器代表一个有链接锚点的元素，而不管它是否被访问过，也就是说，它会匹配每一个有 href 属性的 <code>&lt;a></code>、<code>&lt;area></code> 或 <code>&lt;link></code> 元素。因此，它会匹配到所有的 <code>:link</code> 或 <code>:visited</code>。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#75715e>/* 选中任意匹配 :link 和 :visited 元素*/</span>
+:<span style=color:#a6e22e>any-link</span> {
+  <span style=color:#66d9ef>color</span>: <span style=color:#66d9ef>green</span>;
+}
+</code></pre></td></tr></table></div></div><p><a href=https://developer.mozilla.org/zh-CN/docs/Web/CSS/:any-link>https://developer.mozilla.org/zh-CN/docs/Web/CSS/:any-link</a></p><h2 id=qa>Q/A</h2><p>这部分随时可能被移到其它页面</p><h3 id=div在浏览器屏幕居中>div在浏览器屏幕居中</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text-align: center;position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);&#34;</span>&gt;
   ...
 &lt;/<span style=color:#f92672>div</span>&gt;
-</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 62 tags:</small>
+</code></pre></td></tr></table></div></div><h3 id=最简单的dark-mode>最简单的dark mode</h3><p>添加以下的css就可以实现最简单的深色模式</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#f92672>body</span> {
+  <span style=color:#66d9ef>background-color</span>: <span style=color:#66d9ef>white</span>;
+  <span style=color:#66d9ef>color</span>: <span style=color:#66d9ef>black</span>;
+}
+@<span style=color:#66d9ef>media</span> <span style=color:#f92672>(</span><span style=color:#f92672>prefers-color-scheme</span><span style=color:#f92672>:</span> <span style=color:#f92672>dark</span><span style=color:#f92672>)</span> {
+  <span style=color:#75715e>/* 黑暗模式下的样式代码 */</span>
+  <span style=color:#f92672>body</span> {
+    <span style=color:#66d9ef>background-color</span>: rgb(<span style=color:#ae81ff>13</span>, <span style=color:#ae81ff>17</span>, <span style=color:#ae81ff>23</span>);
+    <span style=color:#66d9ef>color</span>: rgb(<span style=color:#ae81ff>201</span>, <span style=color:#ae81ff>209</span>, <span style=color:#ae81ff>217</span>);
+  }
+  :<span style=color:#a6e22e>any-link</span> {
+    <span style=color:#66d9ef>color</span>: rgb(<span style=color:#ae81ff>88</span>, <span style=color:#ae81ff>166</span>, <span style=color:#ae81ff>255</span>);
+  }
+}
+</code></pre></td></tr></table></div></div><p>这种方式存在一个问题，就是只能根据系统设置来改变模式，不能用户自定义。</p></article></div></body><div><small>words: 319 tags:</small>
 <small><code><a href=https://arair.net/tags/css>css</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
