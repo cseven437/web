@@ -1,6 +1,6 @@
 <!doctype html><html><title>linux进程间通信--信号</title><meta name=description content="概念：
  信号是在软件层次上对中断机制的一种模拟，是一种异步通信方式 信号可以直接进行用户空间进程和内核进程之间的交互，内核进程也可以利用它来通知用户空间进程发生了哪些系统事件。 如果该进程当前并未处于执行态，则该信号就由内核保存起来，直到该进程恢复执行再传递给它；如果一个信号被进程设置为阻塞，则该信号的传递被延迟，直到其阻塞被 取消时才被传递给进程。  用户进程对信号的响应方式：
- 忽略信号：对信号不做任何处理，但是有两个信号不能忽略：即SIGKILL及SIGSTOP。 捕捉信号：定义信号处理函数，当信号发生时，执行相应的处理函数。 执行缺省操作：Linux对每种信号都规定了默认操作 "><meta name=generator content="Hugo 0.84.4"><meta property="og:title" content="linux进程间通信--信号"><meta property="og:description" content="概念：
+ 忽略信号：对信号不做任何处理，但是有两个信号不能忽略：即SIGKILL及SIGSTOP。 捕捉信号：定义信号处理函数，当信号发生时，执行相应的处理函数。 执行缺省操作：Linux对每种信号都规定了默认操作 "><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="linux进程间通信--信号"><meta property="og:description" content="概念：
 
 信号是在软件层次上对中断机制的一种模拟，是一种异步通信方式
 信号可以直接进行用户空间进程和内核进程之间的交互，内核进程也可以利用它来通知用户空间进程发生了哪些系统事件。
