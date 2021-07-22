@@ -1,10 +1,60 @@
 <!doctype html><html><title>C语言标准库-atoi</title><meta name=description content="C 库函数 int atoi(const char *str) 把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。
-"><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="C语言标准库-atoi"><meta property="og:description" content="C 库函数 int atoi(const char *str) 把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/ca2b3d7e/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-07-07T22:26:07+08:00"><meta property="article:modified_time" content="2021-07-07T22:29:48+08:00"><meta itemprop=name content="C语言标准库-atoi"><meta itemprop=description content="C 库函数 int atoi(const char *str) 把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。"><meta itemprop=datePublished content="2021-07-07T22:26:07+08:00"><meta itemprop=dateModified content="2021-07-07T22:29:48+08:00"><meta itemprop=wordCount content="71"><meta itemprop=keywords content="C,C库函数,"><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>C语言标准库-atoi</h1><p><small>2021-07-07, updated 2021-07-07</small></p></header><p>C 库函数 int atoi(const char *str) 把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+"><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="C语言标准库-atoi">
+<meta property="og:description" content="C 库函数 int atoi(const char *str) 把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/ca2b3d7e/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-07-07T22:26:07+08:00">
+<meta property="article:modified_time" content="2021-07-07T22:29:48+08:00">
+<meta itemprop=name content="C语言标准库-atoi">
+<meta itemprop=description content="C 库函数 int atoi(const char *str) 把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。"><meta itemprop=datePublished content="2021-07-07T22:26:07+08:00">
+<meta itemprop=dateModified content="2021-07-07T22:29:48+08:00">
+<meta itemprop=wordCount content="71">
+<meta itemprop=keywords content="C,C库函数,">
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>C语言标准库-atoi</h1>
+<p>
+<small>
+2021-07-07, updated 2021-07-07
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>C 库函数 int atoi(const char *str) 把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
 <span style=color:#66d9ef>int</span> atoi(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str)
-</code></pre></td></tr></table></div></div><p>参数</p><p>str: 要转化的字符串</p><p>返回值</p><p>成功返回对应的整数，失败返回0</p></article></div></body><div><small>words: 71 tags:</small>
+</code></pre></td></tr></table>
+</div>
+</div><p>参数</p>
+<p>str: 要转化的字符串</p>
+<p>返回值</p>
+<p>成功返回对应的整数，失败返回0</p>
+</article>
+</div>
+</body>
+<div>
+<small> words: 71 tags:</small>
 <small><code><a href=https://arair.net/tags/c>C</a></code></small>
-<small><code><a href=https://arair.net/tags/c%E5%BA%93%E5%87%BD%E6%95%B0>C库函数</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
+<small><code><a href=https://arair.net/tags/c%E5%BA%93%E5%87%BD%E6%95%B0>C库函数</a></code></small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>

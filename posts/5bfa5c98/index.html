@@ -1,6 +1,8 @@
 <!doctype html><html><title>vim使用记录以及相关配置</title><meta name=description content="编译 获取代码并编译
 1 2 3 4 5  git clone https://github.com/vim/vim.git cd vim/src ./configure --prefix=~/opt/usr/local/ make make install   修改PATH
-1 2  ~/.bashrc export PATH=~/usr/local/bin:$PATH   "><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="vim使用记录以及相关配置"><meta property="og:description" content="编译
+1 2  ~/.bashrc export PATH=~/usr/local/bin:$PATH   "><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="vim使用记录以及相关配置">
+<meta property="og:description" content="编译
 获取代码并编译
 
 
@@ -29,7 +31,13 @@ make install
 export PATH=~/usr/local/bin:$PATH
 
 
-"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/5bfa5c98/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-01-23T20:08:30+08:00"><meta property="article:modified_time" content="2021-02-16T12:54:29+08:00"><meta itemprop=name content="vim使用记录以及相关配置"><meta itemprop=description content="编译
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/5bfa5c98/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-01-23T20:08:30+08:00">
+<meta property="article:modified_time" content="2021-02-16T12:54:29+08:00">
+<meta itemprop=name content="vim使用记录以及相关配置">
+<meta itemprop=description content="编译
 获取代码并编译
 
 
@@ -58,35 +66,141 @@ make install
 export PATH=~/usr/local/bin:$PATH
 
 
-"><meta itemprop=datePublished content="2021-01-23T20:08:30+08:00"><meta itemprop=dateModified content="2021-02-16T12:54:29+08:00"><meta itemprop=wordCount content="2405"><meta itemprop=keywords content="vim,"><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>vim使用记录以及相关配置</h1><p><small>2021-01-23, updated 2021-02-16</small></p></header><h2 id=编译>编译</h2><p>获取代码并编译</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+"><meta itemprop=datePublished content="2021-01-23T20:08:30+08:00">
+<meta itemprop=dateModified content="2021-02-16T12:54:29+08:00">
+<meta itemprop=wordCount content="2405">
+<meta itemprop=keywords content="vim,">
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>vim使用记录以及相关配置</h1>
+<p>
+<small>
+2021-01-23, updated 2021-02-16
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#编译>编译</a></li>
+<li><a href=#使用方法记录>使用方法记录</a>
+<ul>
+<li><a href=#查找与替换>查找与替换</a></li>
+<li><a href=#vimgrep的使用方法>vimgrep的使用方法</a></li>
+<li><a href=#vimdiff>vimdiff</a></li>
+<li><a href=#打开多个文件>打开多个文件</a></li>
+<li><a href=#其它命令>其它命令</a></li>
+</ul>
+</li>
+<li><a href=#问题及解决方法>问题及解决方法</a></li>
+<li><a href=#部分插件使用说明>部分插件使用说明</a>
+<ul>
+<li><a href=#vim-plug>vim-plug</a></li>
+</ul>
+</li>
+<li><a href=#自用配置>自用配置</a></li>
+</ul>
+</nav>
+</aside>
+<h2 id=编译>编译</h2>
+<p>获取代码并编译</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>git clone https://github.com/vim/vim.git
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>git clone https://github.com/vim/vim.git
 cd vim/src
 ./configure --prefix<span style=color:#f92672>=</span>~/opt/usr/local/
 make
 make install
-</code></pre></td></tr></table></div></div><p>修改PATH</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>修改PATH</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>~/.bashrc
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>~/.bashrc
 export PATH=~/usr/local/bin:$PATH
-</code></pre></td></tr></table></div></div><h2 id=使用方法记录>使用方法记录</h2><p>有注释时粘贴代码自动换行导致错乱问题</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=使用方法记录>使用方法记录</h2>
+<p>有注释时粘贴代码自动换行导致错乱问题</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>粘贴代码时对齐问题
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>粘贴代码时对齐问题
 set paste
 取消
 set nopaste
-</code></pre></td></tr></table></div></div><p>修改文件类型</p><blockquote><p>set fileformat=unix</p></blockquote><p>设置字符可见模式，以^I表示一个tab符，$表示一个回车符等</p><blockquote><p>set invlist</p></blockquote><p>回到正常模式</p><blockquote><p>set nolist</p></blockquote><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>修改文件类型</p>
+<blockquote>
+<p>set fileformat=unix</p>
+</blockquote>
+<p>设置字符可见模式，以^I表示一个tab符，$表示一个回车符等</p>
+<blockquote>
+<p>set invlist</p>
+</blockquote>
+<p>回到正常模式</p>
+<blockquote>
+<p>set nolist</p>
+</blockquote>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>:%!xxd    查看十六进制
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>:%!xxd    查看十六进制
 :set nolist	回到正常模式
 :set invist	^I 表示tab，$表示回车符
-</code></pre></td></tr></table></div></div><h3 id=查找与替换>查找与替换</h3><p>替换语法：<code>[addr]s/源字符串/目的字符串/[option]</code></p><ul><li>[addr]表示检索范围,如:<ul><li>&ldquo;1,n&rdquo;:表示从第1行到n行</li><li>&ldquo;%":表示整个文件,同"1,$&rdquo;</li><li>&ldquo;.,$":表示从当前行到文件尾</li><li>[addr]省略时表示当前行</li></ul></li><li>s:表示替换操作,其为substitute的缩写</li><li>[option] : 表示操作类型,如:<ul><li>g:globe,表示全局替换</li><li>c:confirm,表示进行确认</li><li>p:表示替代结果逐行显示(Ctrl + L恢复屏幕)</li><li>i:ignore,不区分大小写</li><li>[option]省略时仅对每行第一个匹配串进行替换</li></ul></li></ul><p>如果在源字符串和目的字符串中出现特殊字符,如'/','&lt;','>',',&lsquo;等需要前面加反斜杠\进行转义</p><p>常用命令示例:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=查找与替换>查找与替换</h3>
+<p>替换语法：<code>[addr]s/源字符串/目的字符串/[option]</code></p>
+<ul>
+<li>[addr]表示检索范围,如:
+<ul>
+<li>&ldquo;1,n&rdquo;:表示从第1行到n行</li>
+<li>&ldquo;%":表示整个文件,同"1,$&rdquo;</li>
+<li>&ldquo;.,$":表示从当前行到文件尾</li>
+<li>[addr]省略时表示当前行</li>
+</ul>
+</li>
+<li>s:表示替换操作,其为substitute的缩写</li>
+<li>[option] : 表示操作类型,如:
+<ul>
+<li>g:globe,表示全局替换</li>
+<li>c:confirm,表示进行确认</li>
+<li>p:表示替代结果逐行显示(Ctrl + L恢复屏幕)</li>
+<li>i:ignore,不区分大小写</li>
+<li>[option]省略时仅对每行第一个匹配串进行替换</li>
+</ul>
+</li>
+</ul>
+<p>如果在源字符串和目的字符串中出现特殊字符,如'/','&lt;','>',',&lsquo;等需要前面加反斜杠\进行转义</p>
+<p>常用命令示例:</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -121,7 +235,9 @@ set nopaste
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#将当前行第一个a替换为b
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#将当前行第一个a替换为b
 :s/a/b/
 
 #将当前行的所有a替换为b
@@ -156,50 +272,168 @@ set nopaste
 #在正则表达式中使用和和符号括起正则表达式,即可在后面使用\1,\2等变量来访问和和中的内容,如下
 将data1 data2修改为data2 data1
 :s/\w\+\w\+\s\+\w\+\w\+/\2\t\1
-</code></pre></td></tr></table></div></div><h3 id=vimgrep的使用方法>vimgrep的使用方法</h3><p>vimgrep /匹配模式/<code>[g][j]</code> 要搜索的文件/范围</p><p>默认使用vim作为vimgrep命令缩写</p><ul><li><p>匹配模式可以使用正则</p></li><li><p>g: 表示是否把每一行的多个匹配结果都加入</p></li><li><p>j: 表示是否搜索完后定位到第一个匹配位置</p></li><li><p><code>vimgrep /pattern/ %</code> 在当前打开文件中查找</p></li><li><p><code>vimgrep /pattern/ *</code> 在当前目录下查找所有</p></li><li><p><code>vimgrep /pattern/ **</code> 在当前目录及子目录下查找所有</p></li><li><p><code>vimgrep /pattern/ *.c</code> 查找当前目录下所有.c文件</p></li><li><p><code>vimgrep /pattern/ **/*</code> 只查找子目录</p></li><li><p>cn 查找下一个</p></li><li><p>cp 查找上一个</p></li><li><p>copen 打开quickfix</p></li><li><p>cw 打开quickfix</p></li><li><p>cclose 关闭quickfix</p></li><li><p>help 查看vimgrep帮助</p></li></ul><h3 id=vimdiff>vimdiff</h3><p>vimdiff 等同于 vim -d 命令，即 Vim 编辑器的 diff 模式。</p><p><strong>可以使用下列两种快捷键，在文件的各个差异点之间前后移动：</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=vimgrep的使用方法>vimgrep的使用方法</h3>
+<p>vimgrep /匹配模式/<code>[g][j]</code> 要搜索的文件/范围</p>
+<p>默认使用vim作为vimgrep命令缩写</p>
+<ul>
+<li>
+<p>匹配模式可以使用正则</p>
+</li>
+<li>
+<p>g: 表示是否把每一行的多个匹配结果都加入</p>
+</li>
+<li>
+<p>j: 表示是否搜索完后定位到第一个匹配位置</p>
+</li>
+<li>
+<p><code>vimgrep /pattern/ %</code> 在当前打开文件中查找</p>
+</li>
+<li>
+<p><code>vimgrep /pattern/ *</code> 在当前目录下查找所有</p>
+</li>
+<li>
+<p><code>vimgrep /pattern/ **</code> 在当前目录及子目录下查找所有</p>
+</li>
+<li>
+<p><code>vimgrep /pattern/ *.c</code> 查找当前目录下所有.c文件</p>
+</li>
+<li>
+<p><code>vimgrep /pattern/ **/*</code> 只查找子目录</p>
+</li>
+<li>
+<p>cn 查找下一个</p>
+</li>
+<li>
+<p>cp 查找上一个</p>
+</li>
+<li>
+<p>copen 打开quickfix</p>
+</li>
+<li>
+<p>cw 打开quickfix</p>
+</li>
+<li>
+<p>cclose 关闭quickfix</p>
+</li>
+<li>
+<p>help 查看vimgrep帮助</p>
+</li>
+</ul>
+<h3 id=vimdiff>vimdiff</h3>
+<p>vimdiff 等同于 vim -d 命令，即 Vim 编辑器的 diff 模式。</p>
+<p><strong>可以使用下列两种快捷键，在文件的各个差异点之间前后移动：</strong></p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>], c：跳转到下个差异点
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>], c：跳转到下个差异点
 [, c：跳转到上个差异点
-</code></pre></td></tr></table></div></div><p><strong>内容合并</strong></p><ul><li><strong><code>d, p</code></strong> （即 diff put）命令，将当前差异点中的内容覆盖到另一文件中的对应位置。
-如当光标位于左侧文件（file1）中的第一行时，依次按下 d、p 键，则 file1 中的 Line one 被推送到右侧，并替换掉 file2 中对应位置上的 Line 1 。</li><li><strong><code>d, o</code></strong> （即 diff obtain）命令可以将另一窗口中差异点处的内容拉取到当前位置并进行替换操作。</li></ul><h3 id=打开多个文件>打开多个文件</h3><p>vim -O2 file1 file2</p><p>多个窗口切换</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>内容合并</strong></p>
+<ul>
+<li><strong><code>d, p</code></strong> （即 diff put）命令，将当前差异点中的内容覆盖到另一文件中的对应位置。
+如当光标位于左侧文件（file1）中的第一行时，依次按下 d、p 键，则 file1 中的 Line one 被推送到右侧，并替换掉 file2 中对应位置上的 Line 1 。</li>
+<li><strong><code>d, o</code></strong> （即 diff obtain）命令可以将另一窗口中差异点处的内容拉取到当前位置并进行替换操作。</li>
+</ul>
+<h3 id=打开多个文件>打开多个文件</h3>
+<p>vim -O2 file1 file2</p>
+<p>多个窗口切换</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Ctrl-w, l：光标切换到右侧的窗口
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Ctrl-w, l：光标切换到右侧的窗口
 Ctrl-w, h：光标切换到左侧的窗口
 Ctrl-w, w：光标在两个窗口间彼此切换
-</code></pre></td></tr></table></div></div><h3 id=其它命令>其它命令</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=其它命令>其它命令</h3>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>:qa：退出所有文件
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>:qa：退出所有文件
 :wa：保存所有文件
 :wqa：保存并退出所有文件
 qa!：强制退出（不保存）所有文件
 z o：查看被折叠的内容
 z c：重新折叠
-</code></pre></td></tr></table></div></div><h2 id=问题及解决方法>问题及解决方法</h2><ol><li>vim 光标停留在上次退出位置 需要确保~/.viminfo 权限没有问题，并查看以下配置是否添加</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=问题及解决方法>问题及解决方法</h2>
+<ol>
+<li>vim 光标停留在上次退出位置 需要确保~/.viminfo 权限没有问题，并查看以下配置是否添加</li>
+</ol>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vimrc data-lang=vimrc><span style=color:#66d9ef>if</span> <span style=color:#a6e22e>has</span>(<span style=color:#e6db74>&#34;autocmd&#34;</span>)<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vimrc data-lang=vimrc><span style=color:#66d9ef>if</span> <span style=color:#a6e22e>has</span>(<span style=color:#e6db74>&#34;autocmd&#34;</span>)<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span>  <span style=color:#a6e22e>au</span> <span style=color:#a6e22e>BufReadPost</span> * <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;&#39;\&#34;&#34;</span>) &gt; <span style=color:#ae81ff>1</span> &amp;&amp; <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;&#39;\&#34;&#34;</span>) &lt;= <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;$&#34;</span>) | <span style=color:#a6e22e>exe</span> <span style=color:#e6db74>&#34;normal! g&#39;\&#34;&#34;</span> | <span style=color:#66d9ef>endif</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>endif</span><span style=color:#960050;background-color:#1e0010>
-</span></code></pre></td></tr></table></div></div><ol start=2><li>使用tagbar插件时需要安装ctags</li></ol><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td></tr></table>
+</div>
+</div><ol start=2>
+<li>使用tagbar插件时需要安装ctags</li>
+</ol>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># debian系
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># debian系
 sudo apt install ctags
-</code></pre></td></tr></table></div></div><h2 id=部分插件使用说明>部分插件使用说明</h2><h3 id=vim-plug>vim-plug</h3><p>用于管理插件的插件</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=部分插件使用说明>部分插件使用说明</h2>
+<h3 id=vim-plug>vim-plug</h3>
+<p>用于管理插件的插件</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>:PlugInstall    安装插件
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>:PlugInstall    安装插件
 :PlugUpdate     更新插件
 :PlugUpgrade    升级vim-plug
-</code></pre></td></tr></table></div></div><h2 id=自用配置>自用配置</h2><p><a href=https://github.com/junegunn/vim-plug>vim-plug</a>下载</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=自用配置>自用配置</h2>
+<p><a href=https://github.com/junegunn/vim-plug>vim-plug</a>下载</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-</code></pre></td></tr></table></div></div><p>详细配置，自用备份</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</code></pre></td></tr></table>
+</div>
+</div><p>详细配置，自用备份</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
@@ -339,7 +573,9 @@ sudo apt install ctags
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vimrc data-lang=vimrc><span style=color:#a6e22e>syntax</span> <span style=color:#a6e22e>on</span><span style=color:#960050;background-color:#1e0010>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vimrc data-lang=vimrc><span style=color:#a6e22e>syntax</span> <span style=color:#a6e22e>on</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>number</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>tags</span>=<span style=color:#a6e22e>tags</span>;<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>map</span> &lt;<span style=color:#a6e22e>c</span>-]&gt; <span style=color:#a6e22e>g</span>&lt;<span style=color:#a6e22e>c</span>-]&gt;<span style=color:#960050;background-color:#1e0010>
@@ -479,17 +715,39 @@ sudo apt install ctags
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
 </span><span style=color:#75715e>&#34; Initialize plugin system</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>call</span> <span style=color:#a6e22e>plug</span>#<span style=color:#a6e22e>end</span>()<span style=color:#960050;background-color:#1e0010>
-</span></code></pre></td></tr></table></div></div><p>.ctags</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td></tr></table>
+</div>
+</div><p>.ctags</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>--regex-make=/^([^# \t]*):/\1/t,target/
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>--regex-make=/^([^# \t]*):/\1/t,target/
 --langdef=markdown
 --langmap=markdown:.mkd
 --regex-markdown=/^#[ \t]+(.*)/\1/h,Heading_L1/
 --regex-markdown=/^##[ \t]+(.*)/\1/i,Heading_L2/
 --regex-markdown=/^###[ \t]+(.*)/\1/k,Heading_L3/
-</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 2405 tags:</small>
-<small><code><a href=https://arair.net/tags/vim>vim</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
+</code></pre></td></tr></table>
+</div>
+</div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 2405 tags:</small>
+<small><code><a href=https://arair.net/tags/vim>vim</a></code></small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>

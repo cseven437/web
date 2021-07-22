@@ -1,12 +1,54 @@
 <!doctype html><html><title>javascript</title><meta name=description content="JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。
-"><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="javascript"><meta property="og:description" content="JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/116a6053/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-02-09T12:50:56+08:00"><meta property="article:modified_time" content="2021-03-01T20:27:14+08:00"><meta itemprop=name content="javascript"><meta itemprop=description content="JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。"><meta itemprop=datePublished content="2021-02-09T12:50:56+08:00"><meta itemprop=dateModified content="2021-03-01T20:27:14+08:00"><meta itemprop=wordCount content="1251"><meta itemprop=keywords content="javascript,"><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>javascript</h1><p><small>2021-02-09, updated 2021-03-01</small></p></header><p>JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。</p><h2 id=setinterval>setInterval</h2><p>定义和用法
-setInterval() 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。</p><p>setInterval() 方法会不停地调用函数，直到 clearInterval() 被调用或窗口被关闭。由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。</p><p>语法
+"><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="javascript">
+<meta property="og:description" content="JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/116a6053/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-02-09T12:50:56+08:00">
+<meta property="article:modified_time" content="2021-03-01T20:27:14+08:00">
+<meta itemprop=name content="javascript">
+<meta itemprop=description content="JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。"><meta itemprop=datePublished content="2021-02-09T12:50:56+08:00">
+<meta itemprop=dateModified content="2021-03-01T20:27:14+08:00">
+<meta itemprop=wordCount content="1251">
+<meta itemprop=keywords content="javascript,">
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>javascript</h1>
+<p>
+<small>
+2021-02-09, updated 2021-03-01
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#setinterval>setInterval</a></li>
+<li><a href=#sleep>sleep</a></li>
+<li><a href=#split>split</a></li>
+<li><a href=#获取当前系统时间>获取当前系统时间</a></li>
+</ul>
+</nav>
+</aside>
+<p>JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。</p>
+<h2 id=setinterval>setInterval</h2>
+<p>定义和用法
+setInterval() 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。</p>
+<p>setInterval() 方法会不停地调用函数，直到 clearInterval() 被调用或窗口被关闭。由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。</p>
+<p>语法
 setInterval(code,millisec[,&ldquo;lang&rdquo;])
 参数 描述
 code 必需。要调用的函数或要执行的代码串。
 millisec 必须。周期性执行或调用 code 之间的时间间隔，以毫秒计。
 返回值
-一个可以传递给 Window.clearInterval() 从而取消对 code 的周期性执行的值。</p><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+一个可以传递给 Window.clearInterval() 从而取消对 code 的周期性执行的值。</p>
+<p>实例</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -24,7 +66,9 @@ millisec 必须。周期性执行或调用 code 之间的时间间隔，以毫�
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#f92672>&lt;</span><span style=color:#a6e22e>html</span><span style=color:#f92672>&gt;</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#f92672>&lt;</span><span style=color:#a6e22e>html</span><span style=color:#f92672>&gt;</span>
 <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>body</span><span style=color:#f92672>&gt;</span>
 
 <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text&#34;</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;clock&#34;</span> <span style=color:#a6e22e>size</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;35&#34;</span> <span style=color:#f92672>/&gt;</span>
@@ -42,52 +86,172 @@ millisec 必须。周期性执行或调用 code 之间的时间间隔，以毫�
 
 <span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/body&gt;</span>
 <span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/html&gt;</span>
-</code></pre></td></tr></table></div></div><h2 id=sleep>sleep</h2><p>很多编程语言里都有sleep()，delay()等方法，它能让我们的程序不那么着急的去执行下一步操作，而是延迟、等待一段时间。软件开发中经常会遇到需要这样的函数，比如等待几分钟去检查某一事件是否发生。JavaScript里有setTimeout()方法来实现设定一段时间后执行某个任务，但写法很丑陋，需要提供回调函数：</p><p>setTimeout(function(){ alert(&ldquo;Hello&rdquo;); }, 3000);
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=sleep>sleep</h2>
+<p>很多编程语言里都有sleep()，delay()等方法，它能让我们的程序不那么着急的去执行下一步操作，而是延迟、等待一段时间。软件开发中经常会遇到需要这样的函数，比如等待几分钟去检查某一事件是否发生。JavaScript里有setTimeout()方法来实现设定一段时间后执行某个任务，但写法很丑陋，需要提供回调函数：</p>
+<p>setTimeout(function(){ alert(&ldquo;Hello&rdquo;); }, 3000);
 复制代码
-JavaScript Promise API是新出现了一个API，借助 Promise，我们可以对setTimeout函数进行改良，下面就是把setTimeout()封装成一个返回Promise的sleep()函数。</p><p>function sleep (time) {
+JavaScript Promise API是新出现了一个API，借助 Promise，我们可以对setTimeout函数进行改良，下面就是把setTimeout()封装成一个返回Promise的sleep()函数。</p>
+<p>function sleep (time) {
 return new Promise((resolve) => setTimeout(resolve, time));
-}</p><p>// 用法
+}</p>
+<p>// 用法
 sleep(500).then(() => {
 // 这里写sleep之后需要去做的事情
 })
 复制代码
-你会发现，这种写法很优雅，很像其它编程语言里的延迟、等待函数。Promise API使我们避免传入回调函数，我们在实现中还使用了ES6中的箭头(arrow)函数。</p><p>这里需要提到的一个问题是，这个sleep()在执行的时候是“block”程序的继续执行的。它不是同步的。如果想让它同步执行，不妨碍执行之后的代码，我们可以使用 async/await 关键字。</p><p>function sleep (time) {
+你会发现，这种写法很优雅，很像其它编程语言里的延迟、等待函数。Promise API使我们避免传入回调函数，我们在实现中还使用了ES6中的箭头(arrow)函数。</p>
+<p>这里需要提到的一个问题是，这个sleep()在执行的时候是“block”程序的继续执行的。它不是同步的。如果想让它同步执行，不妨碍执行之后的代码，我们可以使用 async/await 关键字。</p>
+<p>function sleep (time) {
 return new Promise((resolve) => setTimeout(resolve, time));
-}</p><p>(async function() {
+}</p>
+<p>(async function() {
 console.log(&lsquo;Do some thing, ' + new Date());
 await sleep(3000);
 console.log(&lsquo;Do other things, ' + new Date());
 })();
 复制代码
-慢慢更新</p><h2 id=split>split</h2><p>split() 方法用于把一个字符串分割成字符串数组。</p><blockquote><p>提示： 如果把空字符串 ("") 用作 separator，那么 stringObject 中的每个字符之间都会被分割。</p><p>split() 方法不改变原始字符串。</p></blockquote><p>语法</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#a6e22e>string</span>.<span style=color:#a6e22e>split</span>(<span style=color:#a6e22e>separator</span>,<span style=color:#a6e22e>limit</span>)
-</code></pre></td></tr></table></div></div><p><strong>参数值</strong></p><ul><li>separator 可选。字符串或正则表达式，从该参数指定的地方分割 string Object。</li><li>limit 可选。该参数可指定返回的数组的最大长度。如果设置了该参数，返回的子串不会多于这个参数指定的数组。如果没有设置该参数，整个字符串都会被分割，不考虑它的长度。</li></ul><p><strong>返回值</strong></p><ul><li>Array 一个字符串数组。该数组是通过在 separator 指定的边界处将字符串 string Object 分割成子串创建的。返回的数组中的字串不包括 separator 自身。</li></ul><p><strong>示例</strong></p><ol><li><p>省略分割参数：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+慢慢更新</p>
+<h2 id=split>split</h2>
+<p>split() 方法用于把一个字符串分割成字符串数组。</p>
+<blockquote>
+<p>提示： 如果把空字符串 ("") 用作 separator，那么 stringObject 中的每个字符之间都会被分割。</p>
+<p>split() 方法不改变原始字符串。</p>
+</blockquote>
+<p>语法</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#a6e22e>string</span>.<span style=color:#a6e22e>split</span>(<span style=color:#a6e22e>separator</span>,<span style=color:#a6e22e>limit</span>)
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>参数值</strong></p>
+<ul>
+<li>separator 可选。字符串或正则表达式，从该参数指定的地方分割 string Object。</li>
+<li>limit 可选。该参数可指定返回的数组的最大长度。如果设置了该参数，返回的子串不会多于这个参数指定的数组。如果没有设置该参数，整个字符串都会被分割，不考虑它的长度。</li>
+</ul>
+<p><strong>返回值</strong></p>
+<ul>
+<li>Array 一个字符串数组。该数组是通过在 separator 指定的边界处将字符串 string Object 分割成子串创建的。返回的数组中的字串不包括 separator 自身。</li>
+</ul>
+<p><strong>示例</strong></p>
+<ol>
+<li>
+<p>省略分割参数：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
 <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>=</span><span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>split</span>();
-</code></pre></td></tr></table></div></div><p>输出数组值得结果:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>How are you doing today?
-</code></pre></td></tr></table></div></div><p>``</p></li><li><p>分割每个字符，包括空格:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>输出数组值得结果:</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>How are you doing today?
+</code></pre></td></tr></table>
+</div>
+</div><p>``</p>
+</li>
+<li>
+<p>分割每个字符，包括空格:</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
 <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>=</span><span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#34;&#34;</span>);
-</code></pre></td></tr></table></div></div><p>输出结果</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>H,o,w, ,a,r,e, ,y,o,u, ,d,o,i,n,g, ,t,o,d,a,y,?
-</code></pre></td></tr></table></div></div></li><li><p>使用 limit 参数</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>输出结果</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>H,o,w, ,a,r,e, ,y,o,u, ,d,o,i,n,g, ,t,o,d,a,y,?
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用 limit 参数</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
 <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>=</span><span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#34; &#34;</span>,<span style=color:#ae81ff>3</span>);
-</code></pre></td></tr></table></div></div><p>将输出3个数组的值</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>How,are,you
-</code></pre></td></tr></table></div></div></li><li><p>使用一个字符作为分隔符</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>将输出3个数组的值</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>How,are,you
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用一个字符作为分隔符</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
 <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>=</span><span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#34;o&#34;</span>);
-</code></pre></td></tr></table></div></div><p>输出数组值得结果</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>H,w are y,u d,ing t,day?
-</code></pre></td></tr></table></div></div></li></ol><h2 id=获取当前系统时间>获取当前系统时间</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>输出数组值得结果</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>H,w are y,u d,ing t,day?
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id=获取当前系统时间>获取当前系统时间</h2>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>now</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Date(); <span style=color:#75715e>// 单位毫秒
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>now</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Date(); <span style=color:#75715e>// 单位毫秒
 </span><span style=color:#75715e></span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>timestamp</span> <span style=color:#f92672>=</span> parseInt(<span style=color:#66d9ef>new</span> Date().<span style=color:#a6e22e>getTime</span>()<span style=color:#f92672>/</span><span style=color:#ae81ff>1000</span>);  <span style=color:#75715e>// 单位秒
-</span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 1251 tags:</small>
-<small><code><a href=https://arair.net/tags/javascript>javascript</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
+</span></code></pre></td></tr></table>
+</div>
+</div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 1251 tags:</small>
+<small><code><a href=https://arair.net/tags/javascript>javascript</a></code></small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>

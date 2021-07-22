@@ -1,5 +1,36 @@
 <!doctype html><html><title>sqlite3 C相关函数</title><meta name=description content="sqlite3 c相关函数
-"><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="sqlite3 C相关函数"><meta property="og:description" content="sqlite3 c相关函数"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/1a131392/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-06-16T15:52:54+08:00"><meta property="article:modified_time" content="2021-06-16T23:23:22+08:00"><meta itemprop=name content="sqlite3 C相关函数"><meta itemprop=description content="sqlite3 c相关函数"><meta itemprop=datePublished content="2021-06-16T15:52:54+08:00"><meta itemprop=dateModified content="2021-06-16T23:23:22+08:00"><meta itemprop=wordCount content="1691"><meta itemprop=keywords content="c,sqlite3,"><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>sqlite3 C相关函数</h1><p><small>2021-06-16, updated 2021-06-16</small></p></header><aside><nav id=TableOfContents></nav></aside><p>sqlite3 c相关函数</p><p>sqlite3的C/C++接口API主要有3个重要函数，分别为</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+"><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="sqlite3 C相关函数">
+<meta property="og:description" content="sqlite3 c相关函数">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/1a131392/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-06-16T15:52:54+08:00">
+<meta property="article:modified_time" content="2021-06-16T23:23:22+08:00">
+<meta itemprop=name content="sqlite3 C相关函数">
+<meta itemprop=description content="sqlite3 c相关函数"><meta itemprop=datePublished content="2021-06-16T15:52:54+08:00">
+<meta itemprop=dateModified content="2021-06-16T23:23:22+08:00">
+<meta itemprop=wordCount content="1691">
+<meta itemprop=keywords content="c,sqlite3,">
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>sqlite3 C相关函数</h1>
+<p>
+<small>
+2021-06-16, updated 2021-06-16
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>sqlite3 c相关函数</p>
+<p>sqlite3的C/C++接口API主要有3个重要函数，分别为</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -9,7 +40,9 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>sqlite3_open(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> filename, sqlite3 <span style=color:#f92672>**</span>ppDb);
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>sqlite3_open(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> filename, sqlite3 <span style=color:#f92672>**</span>ppDb);
 <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sqlite3_exec</span>(
       sqlite3<span style=color:#f92672>*</span>,                                  <span style=color:#75715e>/* An open database */</span>
       <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>sql,                           <span style=color:#75715e>/* SQL to be evaluated */</span>
@@ -19,21 +52,53 @@
    );
  
 sqlite3_close(sqlite3<span style=color:#f92672>*</span>)
-</code></pre></td></tr></table></div></div><p>sqlite3_open和sqlite3_close是很好理解的，分别是打开和关闭对应的数据库。而sqlite3_exec函数是sqlite3的API函数，可以实现各种功能，所以理解sqlite3_exec对于实际的 编程十分有必要，我们来详细分析sqlite3_exec函数，</p><p>1、sqlite3_exec函数 形参</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>sqlite3_open和sqlite3_close是很好理解的，分别是打开和关闭对应的数据库。而sqlite3_exec函数是sqlite3的API函数，可以实现各种功能，所以理解sqlite3_exec对于实际的 编程十分有必要，我们来详细分析sqlite3_exec函数，</p>
+<p>1、sqlite3_exec函数 形参</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sqlite3*                      : open 打开的数据库
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sqlite3*                      : open 打开的数据库
 const char* sql,              : 执行的sql功能语句
 *callback,                    : sql语句对应的回调函数
 void* data,                   : 传递给回调函数的 指针参数
 char **errmsq                 : 错误信息
-</code></pre></td></tr></table></div></div><p>其中 const char* sql表示 相应的 sql语句，如果我们直接在linux下，使用shell是可以实现所有的sqlite功能的，但是如果进行C或C++ 开发程序时，很明显是没有shell可用的，所以这个 *sql就是对应sqlite功能命令的 “字符串”，后面我们举例来分析。回调函数指针callback则是 *sql功能命令对应的 回调函数，所谓 回调函数的意思是，会先执行*sql对应的功能命令，然后将结果传递给回调函数，回调函数根据结果再进一步执行。这代表着，这个 “回调函数”才是最有意义的，我们要讲我们需要的功能，通过回调函数来实现，不管是获取数据库表中有效信息，还是其他动作。</p><p>2、sqlite3_exec的回调函数 callback</p><p>我们还是来先看下回调函数的参数：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>typedef int(*sqlite_callback)(void* para, int columenCount, char** columnValue, char** columnName);
-</code></pre></td></tr></table></div></div><p>参数：</p><ul><li>para : 由sqlite3_exec传入的参数指针，或者说是指针参数</li><li>columnCount: 查询到的这一条记录由多少个字段（多少列）</li><li>columnValue : 该参数是双指针，查询出来的数据都保存在这里，它是一个1维数组，每一个元素都是一
+</code></pre></td></tr></table>
+</div>
+</div><p>其中 const char* sql表示 相应的 sql语句，如果我们直接在linux下，使用shell是可以实现所有的sqlite功能的，但是如果进行C或C++ 开发程序时，很明显是没有shell可用的，所以这个 *sql就是对应sqlite功能命令的 “字符串”，后面我们举例来分析。回调函数指针callback则是 *sql功能命令对应的 回调函数，所谓 回调函数的意思是，会先执行*sql对应的功能命令，然后将结果传递给回调函数，回调函数根据结果再进一步执行。这代表着，这个 “回调函数”才是最有意义的，我们要讲我们需要的功能，通过回调函数来实现，不管是获取数据库表中有效信息，还是其他动作。</p>
+<p>2、sqlite3_exec的回调函数 callback</p>
+<p>我们还是来先看下回调函数的参数：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>typedef int(*sqlite_callback)(void* para, int columenCount, char** columnValue, char** columnName);
+</code></pre></td></tr></table>
+</div>
+</div><p>参数：</p>
+<ul>
+<li>para : 由sqlite3_exec传入的参数指针，或者说是指针参数</li>
+<li>columnCount: 查询到的这一条记录由多少个字段（多少列）</li>
+<li>columnValue : 该参数是双指针，查询出来的数据都保存在这里，它是一个1维数组，每一个元素都是一
 个char*,是一个字段内容，所以这个参数就可以不是单字节，而是可以为字符串等不定
-长度的数值，用字符串表示，以'\0&rsquo;结尾。</li><li>columnName : 该参数是双指针，语columnValue是对应的，表示这个字段的字段名称，</li></ul><p>返回 : 执行成果则返回SQLITE_OK，否则返回其他值</p><p>这里面有几个地方容易理解错，回调函数的参数一定是 sql功能命令执行结果的进一步处理，其中para好理解，就是sqlite3_exec传递的参数，</p><p>columnCount：表示sql功能结果的“字段”，也就是“列”的个数，没错，就是“列”的个数。</p><p>另外需要特别注意的是：回调函数多数时候不是执行1次，而是会循环执行n次，当我们使用select进行sql功能时，往往输出的结果会是 多行，那么 有n行，就会执行n次的 回调函数。举例如下：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+长度的数值，用字符串表示，以'\0&rsquo;结尾。</li>
+<li>columnName : 该参数是双指针，语columnValue是对应的，表示这个字段的字段名称，</li>
+</ul>
+<p>返回 : 执行成果则返回SQLITE_OK，否则返回其他值</p>
+<p>这里面有几个地方容易理解错，回调函数的参数一定是 sql功能命令执行结果的进一步处理，其中para好理解，就是sqlite3_exec传递的参数，</p>
+<p>columnCount：表示sql功能结果的“字段”，也就是“列”的个数，没错，就是“列”的个数。</p>
+<p>另外需要特别注意的是：回调函数多数时候不是执行1次，而是会循环执行n次，当我们使用select进行sql功能时，往往输出的结果会是 多行，那么 有n行，就会执行n次的 回调函数。举例如下：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -78,7 +143,9 @@ char **errmsq                 : 错误信息
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#include &lt;stdio.h&gt;
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;sqlite3.h&gt;
  
@@ -123,7 +190,12 @@ int main(int argc, char* argv[])
    sqlite3_close(db);
    return 0;
 }
-</code></pre></td></tr></table></div></div><p>这个数据库中表的内容如下（这里照搬了https://www.runoob.com/sqlite/sqlite-c-cpp.html 中的例子）：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>这个数据库中表的内容如下（这里照搬了https://www.runoob.com/sqlite/sqlite-c-cpp.html 中的例子）：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
@@ -131,7 +203,9 @@ int main(int argc, char* argv[])
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>&#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) &#34;  \
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>&#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) &#34;  \
          &#34;VALUES (1, &#39;Paul&#39;, 32, &#39;California&#39;, 20000.00 ); &#34; \
          &#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) &#34;  \
          &#34;VALUES (2, &#39;Allen&#39;, 25, &#39;Texas&#39;, 15000.00 ); &#34;     \
@@ -139,7 +213,12 @@ int main(int argc, char* argv[])
          &#34;VALUES (3, &#39;Teddy&#39;, 23, &#39;Norway&#39;, 20000.00 );&#34; \
          &#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)&#34; \
          &#34;VALUES (4, &#39;Mark&#39;, 25, &#39;Rich-Mond &#39;, 65000.00 );&#34;;
-</code></pre></td></tr></table></div></div><p>所以执行的结果：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><p>所以执行的结果：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -165,7 +244,9 @@ int main(int argc, char* argv[])
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Opened database successfully
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Opened database successfully
 Callback function called: ID = 1
 NAME = Paul
 AGE = 32
@@ -191,6 +272,22 @@ ADDRESS = Rich-Mond
 SALARY = 65000.0
  
 Operation done successfully
-</code></pre></td></tr></table></div></div><p>以看出来，由于sql命令行为 select* from COMPANY，该命令会将表中所有信息都输出，总共5个字段（列），包含4条信息（行），所以这个回调函数会被执行4次，理解这个逻辑，非常重要。</p><p>而且回调函数的后两个参数是 双指针 ，也就是 指针的指针，包含了2层的指向，里层的 指向是 对应具体的数据指针，外层的指向则是 数据指针序号，也可以理解成 “列”索引。我们通过这两个指针能够进一步 编写 自定义功能代码。</p></article></div></body><div><small>words: 1691 tags:</small>
+</code></pre></td></tr></table>
+</div>
+</div><p>以看出来，由于sql命令行为 select* from COMPANY，该命令会将表中所有信息都输出，总共5个字段（列），包含4条信息（行），所以这个回调函数会被执行4次，理解这个逻辑，非常重要。</p>
+<p>而且回调函数的后两个参数是 双指针 ，也就是 指针的指针，包含了2层的指向，里层的 指向是 对应具体的数据指针，外层的指向则是 数据指针序号，也可以理解成 “列”索引。我们通过这两个指针能够进一步 编写 自定义功能代码。</p>
+</article>
+</div>
+</body>
+<div>
+<small> words: 1691 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
-<small><code><a href=https://arair.net/tags/sqlite3>sqlite3</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
+<small><code><a href=https://arair.net/tags/sqlite3>sqlite3</a></code></small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>

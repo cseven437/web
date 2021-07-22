@@ -1,20 +1,84 @@
 <!doctype html><html><title>Create Hugo Site</title><meta name=description content="记录站点建立方法
 环境：hugo+github+vercel
-"><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="Create Hugo Site"><meta property="og:description" content="记录站点建立方法
-环境：hugo+github+vercel"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/a31866b3/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-01-20T10:48:02+08:00"><meta property="article:modified_time" content="2021-06-19T15:58:49+08:00"><meta itemprop=name content="Create Hugo Site"><meta itemprop=description content="记录站点建立方法
-环境：hugo+github+vercel"><meta itemprop=datePublished content="2021-01-20T10:48:02+08:00"><meta itemprop=dateModified content="2021-06-19T15:58:49+08:00"><meta itemprop=wordCount content="728"><meta itemprop=keywords content="hugo,"><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>Create Hugo Site</h1><p><small>2021-01-20, updated 2021-06-19</small></p></header><p>记录站点建立方法</p><p>环境：<a href=https://gohugo.io>hugo</a>+<a href=https://github.com>github</a>+<a href=https://vercel.com>vercel</a></p><h2 id=hugo>hugo</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+"><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="Create Hugo Site">
+<meta property="og:description" content="记录站点建立方法
+环境：hugo+github+vercel">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/a31866b3/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-01-20T10:48:02+08:00">
+<meta property="article:modified_time" content="2021-06-19T15:58:49+08:00">
+<meta itemprop=name content="Create Hugo Site">
+<meta itemprop=description content="记录站点建立方法
+环境：hugo+github+vercel"><meta itemprop=datePublished content="2021-01-20T10:48:02+08:00">
+<meta itemprop=dateModified content="2021-06-19T15:58:49+08:00">
+<meta itemprop=wordCount content="728">
+<meta itemprop=keywords content="hugo,">
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>Create Hugo Site</h1>
+<p>
+<small>
+2021-01-20, updated 2021-06-19
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#hugo>hugo</a>
+<ul>
+<li><a href=#帮助>帮助</a></li>
+<li><a href=#查看文章列表>查看文章列表</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</aside>
+<p>记录站点建立方法</p>
+<p>环境：<a href=https://gohugo.io>hugo</a>+<a href=https://github.com>github</a>+<a href=https://vercel.com>vercel</a></p>
+<h2 id=hugo>hugo</h2>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo new site blog
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo new site blog
 cd blog
 git clone https://github.com/funkydan2/hugo-kiera.git themes/kiera
 cp themes/kiera/exampleSite/config.toml .
-</code></pre></td></tr></table></div></div><p>新建文章</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo new posts/test.md
-</code></pre></td></tr></table></div></div><p>开启本地服务可以访问<code>localhost:1313</code>预览效果</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo server
-</code></pre></td></tr></table></div></div><p>首页只显示一部分内容</p><p>在文章中插入<code>&lt;!--more--></code></p><h3 id=帮助>帮助</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><p>新建文章</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo new posts/test.md
+</code></pre></td></tr></table>
+</div>
+</div><p>开启本地服务可以访问<code>localhost:1313</code>预览效果</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo server
+</code></pre></td></tr></table>
+</div>
+</div><p>首页只显示一部分内容</p>
+<p>在文章中插入<code>&lt;!--more--></code></p>
+<h3 id=帮助>帮助</h3>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -86,7 +150,9 @@ cp themes/kiera/exampleSite/config.toml .
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ hugo help
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ hugo help
 hugo is the main command, used to build your Hugo site.
 
 Hugo is a Fast and Flexible Static Site Generator
@@ -158,7 +224,12 @@ Additional help topics:
   hugo check   Contains some verification checks
 
 Use &#34;hugo [command] --help&#34; for more information about a command.
-</code></pre></td></tr></table></div></div><h3 id=查看文章列表>查看文章列表</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=查看文章列表>查看文章列表</h3>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -171,7 +242,9 @@ Use &#34;hugo [command] --help&#34; for more information about a command.
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo list
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo list
 Listing out various types of content.
 
 List requires a subcommand, e.g. `hugo list drafts`.
@@ -184,9 +257,38 @@ Available Commands:
   drafts      List all drafts
   expired     List all posts already expired
   future      List all posts dated in the future
-</code></pre></td></tr></table></div></div><p>查看所有posts</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo list all
-</code></pre></td></tr></table></div></div><p>查看drafts</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo list drafts
-</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 728 tags:</small>
-<small><code><a href=https://arair.net/tags/hugo>hugo</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
+</code></pre></td></tr></table>
+</div>
+</div><p>查看所有posts</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo list all
+</code></pre></td></tr></table>
+</div>
+</div><p>查看drafts</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hugo list drafts
+</code></pre></td></tr></table>
+</div>
+</div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 728 tags:</small>
+<small><code><a href=https://arair.net/tags/hugo>hugo</a></code></small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>

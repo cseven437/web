@@ -1,0 +1,156 @@
+<!doctype html><html><title>clock_gettime函数</title><meta name=description content="1 2 3 4 5 6 7 #include &amp;lt;time.h&amp;gt; int clock_getres(clockid_t clk_id, struct timespec *res); int clock_gettime(clockid_t clk_id, struct timespec *tp); int clock_settime(clockid_t clk_id, const struct timespec *tp); // Link with -lrt. 参数 clk_id a、CLOCK_REALTIME:系统实时时间,随系统实时时间改变而改"><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="clock_gettime函数">
+<meta property="og:description" content="1 2 3 4 5 6 7 #include <time.h> int clock_getres(clockid_t clk_id, struct timespec *res); int clock_gettime(clockid_t clk_id, struct timespec *tp); int clock_settime(clockid_t clk_id, const struct timespec *tp); // Link with -lrt. 参数 clk_id a、CLOCK_REALTIME:系统实时时间,随系统实时时间改变而改">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/dbdc72e8/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-07-21T13:12:48+08:00">
+<meta property="article:modified_time" content="2021-07-22T16:27:12+08:00">
+<meta itemprop=name content="clock_gettime函数">
+<meta itemprop=description content="1 2 3 4 5 6 7 #include <time.h> int clock_getres(clockid_t clk_id, struct timespec *res); int clock_gettime(clockid_t clk_id, struct timespec *tp); int clock_settime(clockid_t clk_id, const struct timespec *tp); // Link with -lrt. 参数 clk_id a、CLOCK_REALTIME:系统实时时间,随系统实时时间改变而改"><meta itemprop=datePublished content="2021-07-21T13:12:48+08:00">
+<meta itemprop=dateModified content="2021-07-22T16:27:12+08:00">
+<meta itemprop=wordCount content="424">
+<meta itemprop=keywords content="language,c,">
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>clock_gettime函数</h1>
+<p>
+<small>
+2021-07-21, updated 2021-07-22
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#参数>参数</a></li>
+<li><a href=#示例>示例</a></li>
+<li><a href=#问题>问题</a>
+<ul>
+<li><a href=#undefined-reference-to-clock_gettime>undefined reference to clock_gettime</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</aside>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;time.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>clock_getres</span>(clockid_t clk_id, <span style=color:#66d9ef>struct</span> timespec <span style=color:#f92672>*</span>res);
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>clock_gettime</span>(clockid_t clk_id, <span style=color:#66d9ef>struct</span> timespec <span style=color:#f92672>*</span>tp);
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>clock_settime</span>(clockid_t clk_id, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> timespec <span style=color:#f92672>*</span>tp);
+
+<span style=color:#75715e>// Link with -lrt.
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id=参数>参数</h2>
+<ul>
+<li>clk_id
+<ul>
+<li>a、CLOCK_REALTIME:系统实时时间,随系统实时时间改变而改变</li>
+<li>b、CLOCK_MONOTONIC,从系统启动这一刻起开始计时,不受系统时间被用户改变的影响</li>
+<li>c、CLOCK_PROCESS_CPUTIME_ID,本进程到当前代码系统CPU花费的时间</li>
+<li>d、CLOCK_THREAD_CPUTIME_ID,本线程到当前代码系统CPU花费的时间</li>
+</ul>
+</li>
+<li>tp</li>
+</ul>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> timespec {
+    time_t   tv_sec;        <span style=color:#75715e>/* seconds */</span>
+    <span style=color:#66d9ef>long</span>     tv_nsec;       <span style=color:#75715e>/* nanoseconds */</span>
+};
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=示例>示例</h2>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>oalTms_get</span>(CmsTimestamp <span style=color:#f92672>*</span>tms)
+{
+   <span style=color:#66d9ef>struct</span> timespec ts;
+   SINT32 rc;
+
+   <span style=color:#66d9ef>if</span> (tms <span style=color:#f92672>==</span> NULL)
+   {
+      <span style=color:#66d9ef>return</span>;
+   }
+
+   rc <span style=color:#f92672>=</span> clock_gettime(CLOCK_MONOTONIC, <span style=color:#f92672>&amp;</span>ts);
+   <span style=color:#66d9ef>if</span> (rc <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>)
+   {
+      tms<span style=color:#f92672>-&gt;</span>sec <span style=color:#f92672>=</span> ts.tv_sec;
+      tms<span style=color:#f92672>-&gt;</span>nsec <span style=color:#f92672>=</span> ts.tv_nsec;
+   }
+   <span style=color:#66d9ef>else</span>
+   {
+      cwmp_log_error(<span style=color:#e6db74>&#34;clock_gettime failed, set timestamp to 0&#34;</span>);
+      tms<span style=color:#f92672>-&gt;</span>sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+      tms<span style=color:#f92672>-&gt;</span>nsec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+   }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=问题>问题</h2>
+<h3 id=undefined-reference-to-clock_gettime>undefined reference to clock_gettime</h3>
+<p>发现是在链接的时候出错。经过查找发现clock_gettime在实时库librt（real time）里面，由于链接的时候没有链接这个库导致报错。</p>
+<p>解决思路：</p>
+<p>只需在我们运行的Makefile文件里面添加动态链接库librt ( -lrt ) ，重新编译即可。</p>
+</article>
+</div>
+</body>
+<div>
+<small> words: 424 tags:</small>
+<small><code><a href=https://arair.net/tags/language>language</a></code></small>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>

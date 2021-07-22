@@ -1,5 +1,7 @@
 <!doctype html><html><title>内核计时器代码例子</title><meta name=description content="Makefile编写
-1 2 3 4 5 6 7 8 9 10  obj-m+=timer_test.o #SRC=&amp;#34;/lib/modules/$(shell uname -r)/build/&amp;#34;  CROSS_COMPILE=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&amp;#34; SRC=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&amp;#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean   "><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="内核计时器代码例子"><meta property="og:description" content="Makefile编写
+1 2 3 4 5 6 7 8 9 10  obj-m+=timer_test.o #SRC=&amp;#34;/lib/modules/$(shell uname -r)/build/&amp;#34;  CROSS_COMPILE=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&amp;#34; SRC=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&amp;#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean   "><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="内核计时器代码例子">
+<meta property="og:description" content="Makefile编写
 
 
  1
@@ -26,7 +28,13 @@ clean:
     make -C $(SRC) M=$(PWD) clean
 
 
-"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/fbff8079/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-01-24T11:47:57+08:00"><meta property="article:modified_time" content="2021-02-04T20:08:57+08:00"><meta itemprop=name content="内核计时器代码例子"><meta itemprop=description content="Makefile编写
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/fbff8079/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-01-24T11:47:57+08:00">
+<meta property="article:modified_time" content="2021-02-04T20:08:57+08:00">
+<meta itemprop=name content="内核计时器代码例子">
+<meta itemprop=description content="Makefile编写
 
 
  1
@@ -53,7 +61,29 @@ clean:
     make -C $(SRC) M=$(PWD) clean
 
 
-"><meta itemprop=datePublished content="2021-01-24T11:47:57+08:00"><meta itemprop=dateModified content="2021-02-04T20:08:57+08:00"><meta itemprop=wordCount content="757"><meta itemprop=keywords content><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>内核计时器代码例子</h1><p><small>2021-01-24, updated 2021-02-04</small></p></header><p>Makefile编写</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+"><meta itemprop=datePublished content="2021-01-24T11:47:57+08:00">
+<meta itemprop=dateModified content="2021-02-04T20:08:57+08:00">
+<meta itemprop=wordCount content="757">
+<meta itemprop=keywords content>
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>内核计时器代码例子</h1>
+<p>
+<small>
+2021-01-24, updated 2021-02-04
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>Makefile编写</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -63,7 +93,9 @@ clean:
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-makefile data-lang=makefile>obj-m<span style=color:#f92672>+=</span>timer_test.o
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-makefile data-lang=makefile>obj-m<span style=color:#f92672>+=</span>timer_test.o
 <span style=color:#75715e>#SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34;
 </span><span style=color:#75715e></span>
 CROSS_COMPILE<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34;</span>
@@ -73,7 +105,12 @@ SRC<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduse
     make -C <span style=color:#66d9ef>$(</span>SRC<span style=color:#66d9ef>)</span> M<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>PWD<span style=color:#66d9ef>)</span> modules
 <span style=color:#a6e22e>clean</span><span style=color:#f92672>:</span>
     make -C <span style=color:#66d9ef>$(</span>SRC<span style=color:#66d9ef>)</span> M<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>PWD<span style=color:#66d9ef>)</span> clean
-</code></pre></td></tr></table></div></div><p>计时器相关结构体</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><p>计时器相关结构体</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -96,7 +133,9 @@ SRC<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduse
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> timer_list {
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> timer_list {
     <span style=color:#75715e>/*
 </span><span style=color:#75715e>     * All fields that change during normal runtime grouped to the
 </span><span style=color:#75715e>     * same cacheline
@@ -119,15 +158,57 @@ SRC<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduse
 </span><span style=color:#75715e></span>    <span style=color:#66d9ef>struct</span> lockdep_map lockdep_map;
 <span style=color:#75715e>#endif
 </span><span style=color:#75715e></span>};
-</code></pre></td></tr></table></div></div><h1 id=相关api>相关api</h1><p>初始化定时器：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>init_timer</span>(<span style=color:#66d9ef>struct</span> timer_list <span style=color:#f92672>*</span> timer);
-</code></pre></td></tr></table></div></div><p>增加定时器，重复调用会挂掉：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>add_timer</span>(<span style=color:#66d9ef>struct</span> timer_list <span style=color:#f92672>*</span> timer);
-</code></pre></td></tr></table></div></div><p>删除定时器：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>del_timer</span>(<span style=color:#66d9ef>struct</span> timer_list <span style=color:#f92672>*</span> timer);
-</code></pre></td></tr></table></div></div><p>修改定时器的expire：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>mod_timer</span>(<span style=color:#66d9ef>struct</span> timer_list <span style=color:#f92672>*</span>timer, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>long</span> expires);
-</code></pre></td></tr></table></div></div><h1 id=计时器使用>计时器使用</h1><ol><li>创建timer、编写超时定时器处理函数function；</li><li>为timer的expires、data、function赋值；</li><li>调用add_timer将timer加入列表&mdash;-添加一个定时器；</li><li>在定时器到期时，function被执行；</li><li>在程序中涉及timer控制的地方适当地调用del_timer、mod_timer删除timer或修改timer的expires。</li></ol><h1 id=示例>示例</h1><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=相关api>相关api</h1>
+<p>初始化定时器：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>init_timer</span>(<span style=color:#66d9ef>struct</span> timer_list <span style=color:#f92672>*</span> timer);
+</code></pre></td></tr></table>
+</div>
+</div><p>增加定时器，重复调用会挂掉：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>add_timer</span>(<span style=color:#66d9ef>struct</span> timer_list <span style=color:#f92672>*</span> timer);
+</code></pre></td></tr></table>
+</div>
+</div><p>删除定时器：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>del_timer</span>(<span style=color:#66d9ef>struct</span> timer_list <span style=color:#f92672>*</span> timer);
+</code></pre></td></tr></table>
+</div>
+</div><p>修改定时器的expire：</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>mod_timer</span>(<span style=color:#66d9ef>struct</span> timer_list <span style=color:#f92672>*</span>timer, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>long</span> expires);
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=计时器使用>计时器使用</h1>
+<ol>
+<li>创建timer、编写超时定时器处理函数function；</li>
+<li>为timer的expires、data、function赋值；</li>
+<li>调用add_timer将timer加入列表&mdash;-添加一个定时器；</li>
+<li>在定时器到期时，function被执行；</li>
+<li>在程序中涉及timer控制的地方适当地调用del_timer、mod_timer删除timer或修改timer的expires。</li>
+</ol>
+<h1 id=示例>示例</h1>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -168,7 +249,9 @@ SRC<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduse
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/module.h&gt;</span><span style=color:#75715e>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/module.h&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/kernel.h&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/init.h&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/sched.h&gt;//jiffies在此头文件中定义</span><span style=color:#75715e>
@@ -209,4 +292,19 @@ module_init(hello_init);
 module_exit(hello_exit);
 MODULE_AUTHOR(<span style=color:#e6db74>&#34;CXF&#34;</span>);
 MODULE_LICENSE(<span style=color:#e6db74>&#34;Dual BSD/GPL&#34;</span>);
-</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 757 tags:</small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
+</code></pre></td></tr></table>
+</div>
+</div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 757 tags:</small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>

@@ -1,5 +1,36 @@
 <!doctype html><html><title>linux readelf工具使用</title><meta name=description content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。
-"><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="linux readelf工具使用"><meta property="og:description" content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/282ce5b6/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-03-17T16:50:50+08:00"><meta property="article:modified_time" content="2021-03-17T19:45:12+08:00"><meta itemprop=name content="linux readelf工具使用"><meta itemprop=description content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。"><meta itemprop=datePublished content="2021-03-17T16:50:50+08:00"><meta itemprop=dateModified content="2021-03-17T19:45:12+08:00"><meta itemprop=wordCount content="416"><meta itemprop=keywords content="linux,"><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>linux readelf工具使用</h1><p><small>2021-03-17, updated 2021-03-17</small></p></header><p>readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(<em>.so)或者静态库(</em>.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。</p><p>参数</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+"><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="linux readelf工具使用">
+<meta property="og:description" content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/282ce5b6/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-03-17T16:50:50+08:00">
+<meta property="article:modified_time" content="2021-03-17T19:45:12+08:00">
+<meta itemprop=name content="linux readelf工具使用">
+<meta itemprop=description content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。"><meta itemprop=datePublished content="2021-03-17T16:50:50+08:00">
+<meta itemprop=dateModified content="2021-03-17T19:45:12+08:00">
+<meta itemprop=wordCount content="416">
+<meta itemprop=keywords content="linux,">
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>linux readelf工具使用</h1>
+<p>
+<small>
+2021-03-17, updated 2021-03-17
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(<em>.so)或者静态库(</em>.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。</p>
+<p>参数</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -43,7 +74,9 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ readelf
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ readelf
 Usage: readelf &lt;option(s)&gt; elf-file(s)
  Display information about the contents of ELF format files
  Options are:
@@ -87,5 +120,20 @@ Usage: readelf &lt;option(s)&gt; elf-file(s)
   @&lt;file&gt;                Read options from &lt;file&gt;
   -H --help              Display this information
   -v --version           Display the version number of readelf
-</code></pre></td></tr></table></div></div></article></div></body><div><small>words: 416 tags:</small>
-<small><code><a href=https://arair.net/tags/linux>linux</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
+</code></pre></td></tr></table>
+</div>
+</div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 416 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>

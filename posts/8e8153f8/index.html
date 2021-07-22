@@ -1,5 +1,42 @@
 <!doctype html><html><title>proc文件子系统</title><meta name=description content="proc_create使用方法
-"><meta name=generator content="Hugo 0.85.0"><meta property="og:title" content="proc文件子系统"><meta property="og:description" content="proc_create使用方法"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/posts/8e8153f8/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-01-24T11:25:18+08:00"><meta property="article:modified_time" content="2021-02-04T20:08:57+08:00"><meta itemprop=name content="proc文件子系统"><meta itemprop=description content="proc_create使用方法"><meta itemprop=datePublished content="2021-01-24T11:25:18+08:00"><meta itemprop=dateModified content="2021-02-04T20:08:57+08:00"><meta itemprop=wordCount content="507"><meta itemprop=keywords content="proc,"><style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content><body><div id=post class=post><article><header><h1 class=post-title>proc文件子系统</h1><p><small>2021-01-24, updated 2021-02-04</small></p></header><p>proc_create使用方法</p><h1 id=函数原型>函数原型</h1><h2 id=proc_create>proc_create</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+"><meta name=generator content="Hugo 0.86.0">
+<meta property="og:title" content="proc文件子系统">
+<meta property="og:description" content="proc_create使用方法">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/posts/8e8153f8/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-01-24T11:25:18+08:00">
+<meta property="article:modified_time" content="2021-02-04T20:08:57+08:00">
+<meta itemprop=name content="proc文件子系统">
+<meta itemprop=description content="proc_create使用方法"><meta itemprop=datePublished content="2021-01-24T11:25:18+08:00">
+<meta itemprop=dateModified content="2021-02-04T20:08:57+08:00">
+<meta itemprop=wordCount content="507">
+<meta itemprop=keywords content="proc,">
+<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>proc文件子系统</h1>
+<p>
+<small>
+2021-01-24, updated 2021-02-04
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#proc_create>proc_create</a></li>
+<li><a href=#remove_proc_entry>remove_proc_entry</a></li>
+</ul>
+</nav>
+</aside>
+<p>proc_create使用方法</p>
+<h1 id=函数原型>函数原型</h1>
+<h2 id=proc_create>proc_create</h2>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -36,7 +73,9 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>inline</span> <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span><span style=color:#a6e22e>proc_create</span>(
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>inline</span> <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span><span style=color:#a6e22e>proc_create</span>(
     <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>name, umode_t mode, <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span>parent,
     <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> file_operations <span style=color:#f92672>*</span>proc_fops)
 {
@@ -73,7 +112,12 @@ out:
     <span style=color:#66d9ef>return</span> NULL;
 }
 EXPORT_SYMBOL(proc_create_data);
-</code></pre></td></tr></table></div></div><h2 id=remove_proc_entry>remove_proc_entry</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=remove_proc_entry>remove_proc_entry</h2>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -115,7 +159,9 @@ EXPORT_SYMBOL(proc_create_data);
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/*   
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/*   
 </span><span style=color:#75715e> * Remove a /proc entry and free it if it&#39;s not currently in use.
 </span><span style=color:#75715e> */</span>
 <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>remove_proc_entry</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>name, <span style=color:#66d9ef>struct</span> proc_dir_entry <span style=color:#f92672>*</span>parent)
@@ -157,7 +203,13 @@ EXPORT_SYMBOL(proc_create_data);
     pde_put(de);
 }
 EXPORT_SYMBOL(remove_proc_entry);
-</code></pre></td></tr></table></div></div><p><strong>.open</strong> 查看相关proc文件时执行</p><h1 id=示例>示例</h1><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>.open</strong> 查看相关proc文件时执行</p>
+<h1 id=示例>示例</h1>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -198,7 +250,9 @@ EXPORT_SYMBOL(remove_proc_entry);
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/init.h&gt;</span><span style=color:#75715e>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/init.h&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/module.h&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/proc_fs.h&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/seq_file.h&gt;</span><span style=color:#75715e>
@@ -239,5 +293,20 @@ MODULE_LICENSE(<span style=color:#e6db74>&#34;GPL&#34;</span>);
 }
 module_init(hello_init); <span style=color:#75715e>//该宏在模块的目标代码中增加一个特殊的段，用于说明内核初始化函数所在的位置
 </span><span style=color:#75715e></span>module_exit(hello_exit); <span style=color:#75715e>//跟上面的宏对立
-</span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 507 tags:</small>
-<small><code><a href=https://arair.net/tags/proc>proc</a></code></small></div></html></div><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script><script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></body></html>
+</span></code></pre></td></tr></table>
+</div>
+</div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 507 tags:</small>
+<small><code><a href=https://arair.net/tags/proc>proc</a></code></small>
+</div>
+</html>
+</div>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+</body>
+</html>
