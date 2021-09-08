@@ -1,5 +1,5 @@
 <!doctype html><html><title>pppd - 点对点协议守护进程</title><meta name=description content="pppd - 点对点协议守护进程
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="pppd - 点对点协议守护进程">
 <meta property="og:description" content="pppd - 点对点协议守护进程">
 <meta property="og:type" content="article">
@@ -9,7 +9,7 @@
 <meta itemprop=name content="pppd - 点对点协议守护进程">
 <meta itemprop=description content="pppd - 点对点协议守护进程"><meta itemprop=datePublished content="2021-06-09T10:27:14+08:00">
 <meta itemprop=dateModified content="2021-06-11T10:04:32+08:00">
-<meta itemprop=wordCount content="852">
+<meta itemprop=wordCount content="851">
 <meta itemprop=keywords content="pppd,linux,command,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -39,15 +39,8 @@
 </aside>
 <p>pppd - 点对点协议守护进程</p>
 <h2 id=用法概要>用法概要</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>pppd [tty_name] [speed] [options]
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=描述>描述</h2>
+<pre tabindex=0><code>pppd [tty_name] [speed] [options]
+</code></pre><h2 id=描述>描述</h2>
 <p>点对点协议 (Point-to-Point Protocol, PPP) 提供了通过串行点对点链路传输数据报的方法。PPP 包括三个组件：一个用于封装基于串行链路的数据报的工具、一个可扩展的链路控制协议 (link control protocol, LCP) 和一个用于设立和配置不同的网络层协议的网络控制协议 (network control protocol, NCP) 族。</p>
 <p>封装方案是由内核中的驱动程序代码提供的。pppd 提供了用于设立和配置 Internet 协议（称为 IP 控制协议或 “IPCP”）和 IPv6 (IPV6CP) 的基本 LCP 验证支持和多个 NCP。</p>
 <h2 id=选项>选项</h2>
@@ -72,7 +65,7 @@
 </div>
 </body>
 <div>
-<small> words: 852 tags:</small>
+<small> words: 851 tags:</small>
 <small><code><a href=https://arair.net/tags/pppd>pppd</a></code></small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/command>command</a></code></small>
@@ -82,5 +75,6 @@
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

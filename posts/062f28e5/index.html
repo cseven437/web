@@ -1,5 +1,5 @@
 <!doctype html><html><title>linux进程间通信-消息队列</title><meta name=description content="简介 消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 msgget用于创建一个新队列或打开一个现存的队列。 msgsnd用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给msgsnd。msgrcv用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="linux进程间通信-消息队列">
 <meta property="og:description" content="简介
 消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 msgget用于创建一个新队列或打开一个现存的队列。 msgsnd用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给msgsnd。msgrcv用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。">
@@ -11,7 +11,7 @@
 <meta itemprop=description content="简介
 消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 msgget用于创建一个新队列或打开一个现存的队列。 msgsnd用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给msgsnd。msgrcv用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。"><meta itemprop=datePublished content="2021-03-14T10:41:23+08:00">
 <meta itemprop=dateModified content="2021-03-14T10:41:23+08:00">
-<meta itemprop=wordCount content="1174">
+<meta itemprop=wordCount content="1162">
 <meta itemprop=keywords content="linux进程间通信,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -311,23 +311,7 @@ msgctl(msgid,IPC_RMID<span style=color:#960050;background-color:#1e0010>，</spa
 }
 </code></pre></td></tr></table>
 </div>
-</div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ ./snd
+</div><pre tabindex=0><code>$ ./snd
 key:36012dbf
 please input your type name age:
 3
@@ -339,16 +323,14 @@ key:36012dbf
 please input type you want!
 3
 rcv--name:1 age:2
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=其它>其它</h2>
+</code></pre><h2 id=其它>其它</h2>
 <p><code>ipcs -q</code> 查看消息队列</p>
 <p>参考: <a href=https://www.cnblogs.com/liudw-0215/p/8978945.html>https://www.cnblogs.com/liudw-0215/p/8978945.html</a></p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 1174 tags:</small>
+<small> words: 1162 tags:</small>
 <small><code><a href=https://arair.net/tags/linux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1>linux进程间通信</a></code></small>
 </div>
 </html>
@@ -356,5 +338,6 @@ rcv--name:1 age:2
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

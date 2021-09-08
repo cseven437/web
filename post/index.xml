@@ -68,15 +68,8 @@ adb reboot recovery　命令行进recovery模式&lt;/p></description></item><ite
 &lt;p>​ ssh进入后台执行&lt;code>opkg.sh&lt;/code>命令，等待执行完成&lt;/p>
 &lt;p>​ 修改用户名admin为root&lt;/p></description></item><item><title>macbook使用</title><link>https://arair.net/posts/95e9e6a8/</link><pubDate>Sun, 07 Feb 2021 20:26:49 +0800</pubDate><guid>https://arair.net/posts/95e9e6a8/</guid><description>&lt;h2 id="macbook使用">macbook使用&lt;/h2>
 &lt;p>安装git等工具&lt;/p>
-&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">xcode-select --install
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>pppoe Server安装</title><link>https://arair.net/posts/a38a3663/</link><pubDate>Sun, 07 Feb 2021 20:24:04 +0800</pubDate><guid>https://arair.net/posts/a38a3663/</guid><description>&lt;p>环境：ubuntu 16.04&lt;/p></description></item><item><title>iptables的使用</title><link>https://arair.net/posts/a2989e85/</link><pubDate>Sun, 07 Feb 2021 20:21:10 +0800</pubDate><guid>https://arair.net/posts/a2989e85/</guid><description>&lt;p>待续&lt;/p></description></item><item><title>利用random与urandom生成随机数</title><link>https://arair.net/posts/cad5c2bd/</link><pubDate>Sun, 07 Feb 2021 20:18:22 +0800</pubDate><guid>https://arair.net/posts/cad5c2bd/</guid><description>&lt;ol>
+&lt;pre tabindex="0">&lt;code>xcode-select --install
+&lt;/code>&lt;/pre></description></item><item><title>pppoe Server安装</title><link>https://arair.net/posts/a38a3663/</link><pubDate>Sun, 07 Feb 2021 20:24:04 +0800</pubDate><guid>https://arair.net/posts/a38a3663/</guid><description>&lt;p>环境：ubuntu 16.04&lt;/p></description></item><item><title>iptables的使用</title><link>https://arair.net/posts/a2989e85/</link><pubDate>Sun, 07 Feb 2021 20:21:10 +0800</pubDate><guid>https://arair.net/posts/a2989e85/</guid><description>iptables 流向图 graph LR NETWORK --&amp;gt; prerouting(RPEROUTING) prerouting --raw mangle nat--&amp;gt; route(route) route --&amp;gt; input(INPUT) input --mangle filter--&amp;gt; local(local process) local --&amp;gt; output(OUTPUT) output --raw mangle nat filter--&amp;gt; postrouting(POSTROUTING) route --&amp;gt; forward(forward) forward --mangle filter--&amp;gt; postrouting postrouting --mangle nat--&amp;gt; NETWORK2(NETWORK) netfilter hooks +-----------&amp;gt; local +-----------+ | process | | | | | | | | v MANGLE +-------------+--------+ FILTER | | +----------------------+ RAW SECURITY | input | |</description></item><item><title>利用random与urandom生成随机数</title><link>https://arair.net/posts/cad5c2bd/</link><pubDate>Sun, 07 Feb 2021 20:18:22 +0800</pubDate><guid>https://arair.net/posts/cad5c2bd/</guid><description>&lt;ol>
 &lt;li>介绍&lt;br>
 &lt;code>/dev/random&lt;/code>和&lt;code>/dev/urandom&lt;/code>是Linux系统中提供的随机伪设备，这两个设备的任务，是提供永不为空的随机字节数据流。很多解密程序与安全应用程序（如SSH Keys,SSL Keys等）需要它们提供的随机数据流。&lt;/li>
 &lt;li>区别&lt;br>
@@ -103,19 +96,11 @@ adb reboot recovery　命令行进recovery模式&lt;/p></description></item><ite
 &lt;p>用于tr069 服务器&lt;/p></description></item><item><title>shell使用方法</title><link>https://arair.net/posts/db983129/</link><pubDate>Mon, 01 Feb 2021 14:07:09 +0800</pubDate><guid>https://arair.net/posts/db983129/</guid><description>&lt;p>记录shell使用方法&lt;/p></description></item><item><title>Iperf使用方法与参数说明</title><link>https://arair.net/posts/462ee551/</link><pubDate>Sun, 31 Jan 2021 19:43:34 +0800</pubDate><guid>https://arair.net/posts/462ee551/</guid><description>&lt;p>&lt;a href="https://iperf.fr/">https://iperf.fr/&lt;/a>&lt;/p>
 &lt;p>iperf是一个网络性能测试工具。可以测试TCP和UDP带宽质量，可以测量最大TCP带宽，具有多种参数和UDP特性，可以报告带宽，延迟抖动和数据包丢失。Iperf在linux和windows平台均有二进制版本供自由使用。&lt;/p>
 &lt;p>iperf was developed by NLANRDAST as a modern alternative for measuring maximum TCP and UDP bandwidth performance. Iperf allows the tuning of various parameters and UDP characteristics. Iperf reports bandwidth, delay jitter, datagram loss.&lt;/p></description></item><item><title>linux watch命令</title><link>https://arair.net/posts/d430e865/</link><pubDate>Sun, 31 Jan 2021 19:34:24 +0800</pubDate><guid>https://arair.net/posts/d430e865/</guid><description>&lt;p>watch可以帮你监测一个命令的运行结果，来监测你想要的一切命令的结果变化&lt;/p></description></item><item><title>Security</title><link>https://arair.net/posts/f68bca17/</link><pubDate>Sun, 31 Jan 2021 17:46:10 +0800</pubDate><guid>https://arair.net/posts/f68bca17/</guid><description>&lt;p>环境&lt;/p>
-&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">debian: 10
+&lt;pre tabindex="0">&lt;code>debian: 10
 gcc: 8.3.0
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="技术简介">技术简介&lt;/h2>
+&lt;/code>&lt;/pre>&lt;h2 id="技术简介">技术简介&lt;/h2>
 &lt;p>Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。&lt;/p></description></item><item><title>Mysql</title><link>https://arair.net/posts/7c363cc6/</link><pubDate>Sun, 31 Jan 2021 17:24:19 +0800</pubDate><guid>https://arair.net/posts/7c363cc6/</guid><description>&lt;p>用于记录sql语句等信息&lt;/p></description></item><item><title>inittab文件详解</title><link>https://arair.net/posts/4c7c2a48/</link><pubDate>Sun, 31 Jan 2021 17:06:19 +0800</pubDate><guid>https://arair.net/posts/4c7c2a48/</guid><description>&lt;p>记录老系统，最新版本可能已经不适用。&lt;/p>
-&lt;p>linux在完成内核内引导（已经被载入内存，开始运行，并已初始化所有的设备驱动程序和数据结构等）之后，就通过启动一个用户级程序init的方式来启动其他用户级的进程或服务。所以，init始终是第一个进程，其PID始终为1（ps -aux | less），它是系统所有进程的父进程。&lt;/p></description></item><item><title>Debian</title><link>https://arair.net/posts/5cd12c61/</link><pubDate>Sat, 30 Jan 2021 23:05:53 +0800</pubDate><guid>https://arair.net/posts/5cd12c61/</guid><description>debian 10 默认最小安装没有man命令，需要安装man-db 1 sudo apt install man-db</description></item><item><title>echo命令</title><link>https://arair.net/posts/4f9e4f76/</link><pubDate>Thu, 28 Jan 2021 17:17:28 +0800</pubDate><guid>https://arair.net/posts/4f9e4f76/</guid><description>&lt;p>参数&lt;/p>
+&lt;p>linux在完成内核内引导（已经被载入内存，开始运行，并已初始化所有的设备驱动程序和数据结构等）之后，就通过启动一个用户级程序init的方式来启动其他用户级的进程或服务。所以，init始终是第一个进程，其PID始终为1（ps -aux | less），它是系统所有进程的父进程。&lt;/p></description></item><item><title>Debian</title><link>https://arair.net/posts/5cd12c61/</link><pubDate>Sat, 30 Jan 2021 23:05:53 +0800</pubDate><guid>https://arair.net/posts/5cd12c61/</guid><description>debian 10 默认最小安装没有man命令，需要安装man-db sudo apt install man-db</description></item><item><title>echo命令</title><link>https://arair.net/posts/4f9e4f76/</link><pubDate>Thu, 28 Jan 2021 17:17:28 +0800</pubDate><guid>https://arair.net/posts/4f9e4f76/</guid><description>&lt;p>参数&lt;/p>
 &lt;ul>
 &lt;li>-n: 不自动换行&lt;/li>
 &lt;li>-e: 输出转义字符&lt;/li>
@@ -127,25 +112,13 @@ gcc: 8.3.0
 &lt;li>crontab -r //删除某个用户的cron服务&lt;/li>
 &lt;li>crontab -e //编辑某个用户的cron服务&lt;/li>
 &lt;/ul></description></item><item><title>Kernel_panic</title><link>https://arair.net/posts/648acfa6/</link><pubDate>Sun, 24 Jan 2021 11:49:21 +0800</pubDate><guid>https://arair.net/posts/648acfa6/</guid><description>&lt;p>需要打开以下项，保证有足够的调试信息&lt;/p>
-&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">CONFIG_DEBUG_KERNEL=y
+&lt;pre tabindex="0">&lt;code>CONFIG_DEBUG_KERNEL=y
 CONFIG_DEBUG_INFO=y
 CONFIG_KALLSYMS=y
 CONFIG_KALLSYMS_ALL=y
 CONFIG_DEBUG_BUGVERBOSE=y
 CONFIG_STACKTRACE=y
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>内核计时器代码例子</title><link>https://arair.net/posts/fbff8079/</link><pubDate>Sun, 24 Jan 2021 11:47:57 +0800</pubDate><guid>https://arair.net/posts/fbff8079/</guid><description>&lt;p>Makefile编写&lt;/p>
+&lt;/code>&lt;/pre></description></item><item><title>内核计时器代码例子</title><link>https://arair.net/posts/fbff8079/</link><pubDate>Sun, 24 Jan 2021 11:47:57 +0800</pubDate><guid>https://arair.net/posts/fbff8079/</guid><description>&lt;p>Makefile编写&lt;/p>
 &lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 &lt;table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
 &lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -180,7 +153,7 @@ make -C &lt;span style="color:#66d9ef">$(&lt;/span>SRC&lt;span style="color:#66d
 &lt;p>ps：这里只介绍网络子系统的初始化流程。&lt;/p>
 &lt;/blockquote>
 &lt;p>系统启动时会执行start_kernel对内核的各个子系统进行初始化。start_kernel会进行必要的初始化任务，比如init_IRQ和softirq_init进行硬中断和软中断初始化,在rest_init中会调用内核线程函数创建一个线程执行kernel_init继续进行其它初始化，start_kernel函数将会继续执行下去并退出。在kernel_init函数中的执行关系kernel_init_freeable()&amp;ndash;&amp;gt;do_basic_setup()&amp;ndash;&amp;gt;do_initcalls()，在do_initcalls函数中，会对调用各个子系统的初始化函数，类似subsys_initcall(net_dev_init)函数。其中net_dev_init&lt;code>net/core/dev.c&lt;/code>为网络设备的初始化函数&lt;/p>
-&lt;p>内核子系统和编译到内核的驱动都是通过do_initcalls进行初始化的&lt;/p></description></item><item><title>Makefile使用记录</title><link>https://arair.net/posts/ddeb0201/</link><pubDate>Sun, 24 Jan 2021 11:15:04 +0800</pubDate><guid>https://arair.net/posts/ddeb0201/</guid><description>1 2 3 4 = 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前</description></item><item><title>gcc使用问题及解决方法</title><link>https://arair.net/posts/b65ebc97/</link><pubDate>Sat, 23 Jan 2021 20:09:44 +0800</pubDate><guid>https://arair.net/posts/b65ebc97/</guid><description>C++11 error: unable to find string literal operator &amp;lsquo;operator&amp;quot; 一个简单的宏 1 #define LOG_INFORMATION(x, ...) LOG_ME(&amp;#34;%s:%d, &amp;#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell 1 error: unable to find string literal operator &amp;#39;operator&amp;#34;&amp;#34;x&amp;#39; 网上搜了</description></item><item><title>vim使用记录以及相关配置</title><link>https://arair.net/posts/5bfa5c98/</link><pubDate>Sat, 23 Jan 2021 20:08:30 +0800</pubDate><guid>https://arair.net/posts/5bfa5c98/</guid><description>&lt;h2 id="编译">编译&lt;/h2>
+&lt;p>内核子系统和编译到内核的驱动都是通过do_initcalls进行初始化的&lt;/p></description></item><item><title>Makefile使用记录</title><link>https://arair.net/posts/ddeb0201/</link><pubDate>Sun, 24 Jan 2021 11:15:04 +0800</pubDate><guid>https://arair.net/posts/ddeb0201/</guid><description>= 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前make</description></item><item><title>gcc使用问题及解决方法</title><link>https://arair.net/posts/b65ebc97/</link><pubDate>Sat, 23 Jan 2021 20:09:44 +0800</pubDate><guid>https://arair.net/posts/b65ebc97/</guid><description>C++11 error: unable to find string literal operator &amp;lsquo;operator&amp;quot; 一个简单的宏 1 #define LOG_INFORMATION(x, ...) LOG_ME(&amp;#34;%s:%d, &amp;#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell error: unable to find string literal operator 'operator&amp;quot;&amp;quot;x' 网上搜了一</description></item><item><title>vim使用记录以及相关配置</title><link>https://arair.net/posts/5bfa5c98/</link><pubDate>Sat, 23 Jan 2021 20:08:30 +0800</pubDate><guid>https://arair.net/posts/5bfa5c98/</guid><description>&lt;h2 id="编译">编译&lt;/h2>
 &lt;p>获取代码并编译&lt;/p>
 &lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 &lt;table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -199,15 +172,7 @@ make install
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>修改PATH&lt;/p>
-&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">~/.bashrc
+&lt;pre tabindex="0">&lt;code>~/.bashrc
 export PATH=~/usr/local/bin:$PATH
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>css的学习记录</title><link>https://arair.net/posts/b438bfcb/</link><pubDate>Fri, 22 Jan 2021 16:52:07 +0800</pubDate><guid>https://arair.net/posts/b438bfcb/</guid><description>&lt;p>css的学习记录&lt;/p></description></item><item><title>git的使用记录</title><link>https://arair.net/posts/c02e41ad/</link><pubDate>Thu, 21 Jan 2021 10:39:15 +0800</pubDate><guid>https://arair.net/posts/c02e41ad/</guid><description>&lt;p>记录git的使用方法&lt;/p></description></item><item><title>让socket端口不被子进程继承</title><link>https://arair.net/posts/be1ae228/</link><pubDate>Wed, 20 Jan 2021 14:01:25 +0800</pubDate><guid>https://arair.net/posts/be1ae228/</guid><description>&lt;p>有两个程序A,B&lt;/p></description></item><item><title>Create Hugo Site</title><link>https://arair.net/posts/a31866b3/</link><pubDate>Wed, 20 Jan 2021 10:48:02 +0800</pubDate><guid>https://arair.net/posts/a31866b3/</guid><description>&lt;p>记录站点建立方法&lt;/p>
+&lt;/code>&lt;/pre></description></item><item><title>css的学习记录</title><link>https://arair.net/posts/b438bfcb/</link><pubDate>Fri, 22 Jan 2021 16:52:07 +0800</pubDate><guid>https://arair.net/posts/b438bfcb/</guid><description>&lt;p>css的学习记录&lt;/p></description></item><item><title>git的使用记录</title><link>https://arair.net/posts/c02e41ad/</link><pubDate>Thu, 21 Jan 2021 10:39:15 +0800</pubDate><guid>https://arair.net/posts/c02e41ad/</guid><description>&lt;p>记录git的使用方法&lt;/p></description></item><item><title>让socket端口不被子进程继承</title><link>https://arair.net/posts/be1ae228/</link><pubDate>Wed, 20 Jan 2021 14:01:25 +0800</pubDate><guid>https://arair.net/posts/be1ae228/</guid><description>&lt;p>有两个程序A,B&lt;/p></description></item><item><title>Create Hugo Site</title><link>https://arair.net/posts/a31866b3/</link><pubDate>Wed, 20 Jan 2021 10:48:02 +0800</pubDate><guid>https://arair.net/posts/a31866b3/</guid><description>&lt;p>记录站点建立方法&lt;/p>
 &lt;p>环境：&lt;a href="https://gohugo.io">hugo&lt;/a>+&lt;a href="https://github.com">github&lt;/a>+&lt;a href="https://vercel.com">vercel&lt;/a>&lt;/p></description></item></channel></rss>

@@ -1,5 +1,5 @@
 <!doctype html><html><title>ffmpeg使用方法</title><meta name=description content="ffmpeg 是领先的多媒体框架，能够解码、编码、转码、混合、解密、流媒体、过滤和播放人类和机器创造的几乎所有东西。它支持最晦涩的古老格式，直到最尖端的格式。无论它们是由某个标准委员会、社区还是公司设计的。它还具有高度的便携性。
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="ffmpeg使用方法">
 <meta property="og:description" content="ffmpeg 是领先的多媒体框架，能够解码、编码、转码、混合、解密、流媒体、过滤和播放人类和机器创造的几乎所有东西。它支持最晦涩的古老格式，直到最尖端的格式。无论它们是由某个标准委员会、社区还是公司设计的。它还具有高度的便携性。">
 <meta property="og:type" content="article">
@@ -9,7 +9,7 @@
 <meta itemprop=name content="ffmpeg使用方法">
 <meta itemprop=description content="ffmpeg 是领先的多媒体框架，能够解码、编码、转码、混合、解密、流媒体、过滤和播放人类和机器创造的几乎所有东西。它支持最晦涩的古老格式，直到最尖端的格式。无论它们是由某个标准委员会、社区还是公司设计的。它还具有高度的便携性。"><meta itemprop=datePublished content="2021-05-21T22:53:08+08:00">
 <meta itemprop=dateModified content="2021-05-21T23:01:31+08:00">
-<meta itemprop=wordCount content="165">
+<meta itemprop=wordCount content="164">
 <meta itemprop=keywords content="ffmpeg,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -41,20 +41,13 @@
 </li>
 </ul>
 <h2 id=树莓派使用ffmpeg推流>树莓派使用ffmpeg推流</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>ffmpeg -re -i /dev/video0 -vcodec h264_omx -acodec aac -strict -2 -f flv -r 30 -b:v 6000k -bufsize 6000k -vf &#34;transpose=2,transpose=2&#34;  rtmp://192.168.1.8:1955/live
-</code></pre></td></tr></table>
-</div>
-</div>
+<pre tabindex=0><code>ffmpeg -re -i /dev/video0 -vcodec h264_omx -acodec aac -strict -2 -f flv -r 30 -b:v 6000k -bufsize 6000k -vf &quot;transpose=2,transpose=2&quot;  rtmp://192.168.1.8:1955/live
+</code></pre>
 </article>
 </div>
 </body>
 <div>
-<small> words: 165 tags:</small>
+<small> words: 164 tags:</small>
 <small><code><a href=https://arair.net/tags/ffmpeg>ffmpeg</a></code></small>
 </div>
 </html>
@@ -62,5 +55,6 @@
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

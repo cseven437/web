@@ -1,7 +1,7 @@
 <!doctype html><html><title>linux进程间通信--管道</title><meta name=description content="管道分为有名管道和无名管道
 无名管道是一种半双工的通信方式,数据只能单向流动,而且只能在具有亲缘关系的进程间使用。进程的亲缘关系一般指的是父子关系。无明管道一般用于两个不同进程之间的通信。当一个进程创建了一个管道,并调用fork创建自己的一个子进程后,父进程关闭读管道端,子进程关闭写管道端,这样提供了两个进程之间数据流动的一种方式。
 有名管道也是一种半双工的通信方式,但是它允许无亲缘关系进程间的通信。
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="linux进程间通信--管道">
 <meta property="og:description" content="管道分为有名管道和无名管道
 无名管道是一种半双工的通信方式,数据只能单向流动,而且只能在具有亲缘关系的进程间使用。进程的亲缘关系一般指的是父子关系。无明管道一般用于两个不同进程之间的通信。当一个进程创建了一个管道,并调用fork创建自己的一个子进程后,父进程关闭读管道端,子进程关闭写管道端,这样提供了两个进程之间数据流动的一种方式。
@@ -15,7 +15,7 @@
 无名管道是一种半双工的通信方式,数据只能单向流动,而且只能在具有亲缘关系的进程间使用。进程的亲缘关系一般指的是父子关系。无明管道一般用于两个不同进程之间的通信。当一个进程创建了一个管道,并调用fork创建自己的一个子进程后,父进程关闭读管道端,子进程关闭写管道端,这样提供了两个进程之间数据流动的一种方式。
 有名管道也是一种半双工的通信方式,但是它允许无亲缘关系进程间的通信。"><meta itemprop=datePublished content="2021-02-28T10:41:04+08:00">
 <meta itemprop=dateModified content="2021-02-28T10:41:04+08:00">
-<meta itemprop=wordCount content="1507">
+<meta itemprop=wordCount content="1497">
 <meta itemprop=keywords content="linux进程间通信,linux,c,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -209,20 +209,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>执行结果: 每隔2秒打印一次i am child，共打印5次</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ ./a.out 
+<pre tabindex=0><code>$ ./a.out 
 main process:844
 father process:844
 child process:845
@@ -231,9 +218,7 @@ i am child!
 i am child!
 i am child!
 i am child!
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=管道大的一些问题>管道大的一些问题</h3>
+</code></pre><h3 id=管道大的一些问题>管道大的一些问题</h3>
 <ol>
 <li>读端不读，写端一直写。写端会一直写下去，写满后会导致阻塞，直到有空闲空间才能再次写入。</li>
 <li>读端一直读，写端不写。管道中的剩余数据读完后，会等到管道中有数据读取时才会继续执行read</li>
@@ -440,20 +425,13 @@ i am child!
 <li>dev: 表示该文件对应的设备文件的设备号。只有当文件类型为 S_IFCHR 或 S_IFBLK 的时候该文件才有设备号，创建普通文件时传入0即可。</li>
 </ul>
 <p>该函数最主要的用途就是创建FIFO文件，比如你的代码：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>mknod(FIFO_FILE,S_IFIFO|0666,0);
-</code></pre></td></tr></table>
-</div>
-</div><p>FIFO_FILE是一个字符指针，指向文件名，S_IFIFO表示要创建一个FIFO文件，0666表示该文件的权限是所有人可读可写，0表示该文件不是一个设备文件。</p>
+<pre tabindex=0><code>mknod(FIFO_FILE,S_IFIFO|0666,0);
+</code></pre><p>FIFO_FILE是一个字符指针，指向文件名，S_IFIFO表示要创建一个FIFO文件，0666表示该文件的权限是所有人可读可写，0表示该文件不是一个设备文件。</p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 1507 tags:</small>
+<small> words: 1497 tags:</small>
 <small><code><a href=https://arair.net/tags/linux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1>linux进程间通信</a></code></small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
@@ -463,5 +441,6 @@ i am child!
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

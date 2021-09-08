@@ -1,5 +1,5 @@
 <!doctype html><html><title>linux c assert函数</title><meta name=description content="assert()是一个调试程序时经常使用的宏，在程序运行时它计算括号内的表达式，如果表达式为FALSE (0), 程序将报告错误，并终止执行。如果表达式不为0，则继续执行后面的语句，它的作用是终止程序以免导致严重后果，同时也便于查找错误。
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="linux c assert函数">
 <meta property="og:description" content="assert()是一个调试程序时经常使用的宏，在程序运行时它计算括号内的表达式，如果表达式为FALSE (0), 程序将报告错误，并终止执行。如果表达式不为0，则继续执行后面的语句，它的作用是终止程序以免导致严重后果，同时也便于查找错误。">
 <meta property="og:type" content="article">
@@ -9,7 +9,7 @@
 <meta itemprop=name content="linux c assert函数">
 <meta itemprop=description content="assert()是一个调试程序时经常使用的宏，在程序运行时它计算括号内的表达式，如果表达式为FALSE (0), 程序将报告错误，并终止执行。如果表达式不为0，则继续执行后面的语句，它的作用是终止程序以免导致严重后果，同时也便于查找错误。"><meta itemprop=datePublished content="2021-06-24T11:37:59+08:00">
 <meta itemprop=dateModified content="2021-06-24T14:39:47+08:00">
-<meta itemprop=wordCount content="553">
+<meta itemprop=wordCount content="551">
 <meta itemprop=keywords content="c,linux-c,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -90,23 +90,15 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>运行结果</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>a.out: main.c:7: main: Assertion `1&gt;100&#39; failed.
+<pre tabindex=0><code>a.out: main.c:7: main: Assertion `1&gt;100' failed.
 Aborted
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=原文链接>原文链接</h2>
+</code></pre><h2 id=原文链接>原文链接</h2>
 <p><a href=https://blog.csdn.net/zqixiao_09/article/details/51417555>https://blog.csdn.net/zqixiao_09/article/details/51417555</a></p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 553 tags:</small>
+<small> words: 551 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 <small><code><a href=https://arair.net/tags/linux-c>linux-c</a></code></small>
 </div>
@@ -115,5 +107,6 @@ Aborted
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

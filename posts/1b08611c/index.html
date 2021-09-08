@@ -1,7 +1,7 @@
 <!doctype html><html><title>scp命令</title><meta name=description content="Linux scp 命令用于 Linux 之间复制文件和目录。
 scp 是 secure copy 的缩写, scp 是 linux 系统下基于 ssh 登陆进行安全的远程文件拷贝命令。
 scp 是加密的，rcp 是不加密的，scp 是 rcp 的加强版。
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="scp命令">
 <meta property="og:description" content="Linux scp 命令用于 Linux 之间复制文件和目录。
 scp 是 secure copy 的缩写, scp 是 linux 系统下基于 ssh 登陆进行安全的远程文件拷贝命令。
@@ -15,7 +15,7 @@ scp 是加密的，rcp 是不加密的，scp 是 rcp 的加强版。">
 scp 是 secure copy 的缩写, scp 是 linux 系统下基于 ssh 登陆进行安全的远程文件拷贝命令。
 scp 是加密的，rcp 是不加密的，scp 是 rcp 的加强版。"><meta itemprop=datePublished content="2021-04-12T17:30:43+08:00">
 <meta itemprop=dateModified content="2021-04-12T17:44:46+08:00">
-<meta itemprop=wordCount content="1089">
+<meta itemprop=wordCount content="1066">
 <meta itemprop=keywords content="linux-command,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -36,28 +36,12 @@ scp 是加密的，rcp 是不加密的，scp 是 rcp 的加强版。"><meta item
 <p>scp 是 secure copy 的缩写, scp 是 linux 系统下基于 ssh 登陆进行安全的远程文件拷贝命令。</p>
 <p>scp 是加密的，<a href=https://www.runoob.com/linux/linux-comm-rcp.html>rcp</a> 是不加密的，scp 是 rcp 的加强版。</p>
 <p><strong>语法</strong></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>scp [-1246BCpqrv] [-c cipher] [-F ssh_config] [-i identity_file]
+<pre tabindex=0><code>scp [-1246BCpqrv] [-c cipher] [-F ssh_config] [-i identity_file]
 [-l limit] [-o ssh_option] [-P port] [-S program]
 [[user@]host1:]file1 [...] [[user@]host2:]file2
-</code></pre></td></tr></table>
-</div>
-</div><p>简易写法:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>scp [可选参数] file_source file_target
-</code></pre></td></tr></table>
-</div>
-</div><p><strong>参数说明：</strong></p>
+</code></pre><p>简易写法:</p>
+<pre tabindex=0><code>scp [可选参数] file_source file_target
+</code></pre><p><strong>参数说明：</strong></p>
 <ul>
 <li>-1： 强制scp命令使用协议ssh1</li>
 <li>-2： 强制scp命令使用协议ssh2</li>
@@ -82,112 +66,51 @@ scp 是加密的，rcp 是不加密的，scp 是 rcp 的加强版。"><meta item
 <li>从本地复制到远程</li>
 </ol>
 <p>命令格式：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>scp local_file remote_username@remote_ip:remote_folder 
+<pre tabindex=0><code>scp local_file remote_username@remote_ip:remote_folder 
 # 或者 
 scp local_file remote_username@remote_ip:remote_file 
 # 或者
 scp local_file remote_ip:remote_folder
 # 或者 
 scp local_file remote_ip:remote_file
-</code></pre></td></tr></table>
-</div>
-</div><ul>
+</code></pre><ul>
 <li>第1,2个指定了用户名，命令执行后需要再输入密码，第1个仅指定了远程的目录，文件名字不变，第2个指定了文件名；</li>
 <li>第3,4个没有指定用户名，命令执行后需要输入用户名和密码，第3个仅指定了远程的目录，文件名字不变，第4个指定了文件名；</li>
 </ul>
 <p>应用实例：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>scp /home/space/music/1.mp3 root@www.runoob.com:/home/root/others/music 
+<pre tabindex=0><code>scp /home/space/music/1.mp3 root@www.runoob.com:/home/root/others/music 
 scp /home/space/music/1.mp3 root@www.runoob.com:/home/root/others/music/001.mp3 
 scp /home/space/music/1.mp3 www.runoob.com:/home/root/others/music 
 scp /home/space/music/1.mp3 www.runoob.com:/home/root/others/music/001.mp3
-</code></pre></td></tr></table>
-</div>
-</div><p>复制目录命令格式：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>scp -r local_folder remote_username@remote_ip:remote_folder
-</code></pre></td></tr></table>
-</div>
-</div><p>或者</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>scp -r local_folder remote_ip:remote_folder
-</code></pre></td></tr></table>
-</div>
-</div><ul>
+</code></pre><p>复制目录命令格式：</p>
+<pre tabindex=0><code>scp -r local_folder remote_username@remote_ip:remote_folder
+</code></pre><p>或者</p>
+<pre tabindex=0><code>scp -r local_folder remote_ip:remote_folder
+</code></pre><ul>
 <li>第1个指定了用户名，命令执行后需要再输入密码；</li>
 <li>第2个没有指定用户名，命令执行后需要输入用户名和密码；</li>
 </ul>
 <p>应用实例：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>scp -r /home/space/music/ root@www.runoob.com:/home/root/others/ 
+<pre tabindex=0><code>scp -r /home/space/music/ root@www.runoob.com:/home/root/others/ 
 scp -r /home/space/music/ www.runoob.com:/home/root/others/
-</code></pre></td></tr></table>
-</div>
-</div><p>上面命令将本地 music 目录复制到远程 others 目录下。</p>
+</code></pre><p>上面命令将本地 music 目录复制到远程 others 目录下。</p>
 <ol start=2>
 <li>从远程复制到本地</li>
 </ol>
 <p>从远程复制到本地，只要将从本地复制到远程的命令的后2个参数调换顺序即可，如下实例</p>
 <p>应用实例：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>scp root@www.runoob.com:/home/root/others/music /home/space/music/1.mp3 
+<pre tabindex=0><code>scp root@www.runoob.com:/home/root/others/music /home/space/music/1.mp3 
 scp -r www.runoob.com:/home/root/others/ /home/space/music/
-</code></pre></td></tr></table>
-</div>
-</div><p><strong>说明</strong></p>
+</code></pre><p><strong>说明</strong></p>
 <p>1.如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号，命令格式如下：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#scp 命令使用端口号 4588
+<pre tabindex=0><code>#scp 命令使用端口号 4588
 scp -P 4588 remote@www.runoob.com:/usr/local/sin.sh /home/administrator
-</code></pre></td></tr></table>
-</div>
-</div><p>2.使用scp命令要确保使用的用户具有可读取远程服务器相应文件的权限，否则scp命令是无法起作用的。</p>
+</code></pre><p>2.使用scp命令要确保使用的用户具有可读取远程服务器相应文件的权限，否则scp命令是无法起作用的。</p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 1089 tags:</small>
+<small> words: 1066 tags:</small>
 <small><code><a href=https://arair.net/tags/linux-command>linux-command</a></code></small>
 </div>
 </html>
@@ -195,5 +118,6 @@ scp -P 4588 remote@www.runoob.com:/usr/local/sin.sh /home/administrator
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html><html><title>wsl使用记录</title><meta name=description content="适用于 Linux 的 Windows 子系统可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="wsl使用记录">
 <meta property="og:description" content="适用于 Linux 的 Windows 子系统可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。">
 <meta property="og:type" content="article">
@@ -9,7 +9,7 @@
 <meta itemprop=name content="wsl使用记录">
 <meta itemprop=description content="适用于 Linux 的 Windows 子系统可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。"><meta itemprop=datePublished content="2021-02-16T11:32:44+08:00">
 <meta itemprop=dateModified content="2021-06-03T22:41:48+08:00">
-<meta itemprop=wordCount content="385">
+<meta itemprop=wordCount content="378">
 <meta itemprop=keywords content="wsl,windows,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -32,53 +32,22 @@
 </aside>
 <p>适用于 Linux 的 Windows 子系统可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。</p>
 <p>将 WSL 2 设置为默认版本</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>wsl --set-default-version 2
-</code></pre></td></tr></table>
-</div>
-</div><p>查看已经安装的分发版的版本</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>wsl -l -v
-</code></pre></td></tr></table>
-</div>
-</div><p>设置分发版的版本</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>wsl --set-version ubuntu 2
-</code></pre></td></tr></table>
-</div>
-</div><p><a href=https://docs.microsoft.com/zh-cn/windows/wsl/install-win10>微软官方安装wsl文档</a></p>
+<pre tabindex=0><code>wsl --set-default-version 2
+</code></pre><p>查看已经安装的分发版的版本</p>
+<pre tabindex=0><code>wsl -l -v
+</code></pre><p>设置分发版的版本</p>
+<pre tabindex=0><code>wsl --set-version ubuntu 2
+</code></pre><p><a href=https://docs.microsoft.com/zh-cn/windows/wsl/install-win10>微软官方安装wsl文档</a></p>
 <h2 id=为wsl2-添加全局配置文件来限制内存用量>为wsl2 添加全局配置文件来限制内存用量</h2>
 <p>在使用过程中，发现<code>Vmmem</code>进程占用的内容比较多，接近5GB了，这个是运行wsl2 VM 子系统的进程。</p>
 <p>从官方文档可以查看到，添加一个配置文件，可以对其进行限制。<a href=https://docs.microsoft.com/zh-cn/windows/wsl/wsl-config#configure-global-options-with-wslconfig>点击查看</a>。建议看<a href=https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig>英文页面</a>，因为机翻，导致部分key被翻译了。</p>
 <p>在用户文件夹的根目录新增一个文件<code>.wslconfig</code>: <code>C:\Users\&lt;yourUserName>\.wslconfig</code>来配置全局WSL选项。 然后使用<code>wsl --shutdown</code>命令来关闭VM，再重新启动，就可以生效。
 这是我的配置：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[wsl2] 
+<pre tabindex=0><code>[wsl2] 
 memory=1GB
 processors=2
 swap=512MB
-</code></pre></td></tr></table>
-</div>
-</div><p>参考连接</p>
+</code></pre><p>参考连接</p>
 <ul>
 <li><a href=https://docs.microsoft.com/zh-cn/windows/wsl/install-win10>https://docs.microsoft.com/zh-cn/windows/wsl/install-win10</a></li>
 <li><a href=https://docs.microsoft.com/zh-cn/windows/wsl/wsl-config#configure-global-options-with-wslconfig>https://docs.microsoft.com/zh-cn/windows/wsl/wsl-config#configure-global-options-with-wslconfig</a></li>
@@ -89,7 +58,7 @@ swap=512MB
 </div>
 </body>
 <div>
-<small> words: 385 tags:</small>
+<small> words: 378 tags:</small>
 <small><code><a href=https://arair.net/tags/wsl>wsl</a></code></small>
 <small><code><a href=https://arair.net/tags/windows>windows</a></code></small>
 </div>
@@ -98,5 +67,6 @@ swap=512MB
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

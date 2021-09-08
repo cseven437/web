@@ -5,7 +5,7 @@
 安装opkg命令和其它设置
 ​	ssh进入后台执行opkg.sh命令，等待执行完成
 ​	修改用户名admin为root
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="Padavan路由器安装timeMachine">
 <meta property="og:description" content="准备工作
 刷了padavan软件的路由器一台
@@ -29,7 +29,7 @@
 ​	ssh进入后台执行opkg.sh命令，等待执行完成
 ​	修改用户名admin为root"><meta itemprop=datePublished content="2021-02-07T20:28:34+08:00">
 <meta itemprop=dateModified content="2021-02-07T20:28:34+08:00">
-<meta itemprop=wordCount content="516">
+<meta itemprop=wordCount content="497">
 <meta itemprop=keywords content="linux,padavan,route,timemachine,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -131,30 +131,7 @@
 </li>
 <li>
 <p>把下面的内容贴进去，并按照你的环境修改配置</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[Global]
+<pre tabindex=0><code>[Global]
 afp listen = 192.168.123.1
 ; 你路由器的 hostname ，执行 hostname 命令查看
 hostname = hostname 
@@ -173,9 +150,7 @@ time machine = yes
 cnid scheme = dbd
 ea = auto
 file perm = 0664 directory perm = 0775
-</code></pre></td></tr></table>
-</div>
-</div></li>
+</code></pre></li>
 <li>
 <p>重启afpd</p>
 <p><code>/opt/etc/init.d/S27afpd restart</code></p>
@@ -199,7 +174,7 @@ file perm = 0664 directory perm = 0775
 </div>
 </body>
 <div>
-<small> words: 516 tags:</small>
+<small> words: 497 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/padavan>padavan</a></code></small>
 <small><code><a href=https://arair.net/tags/route>route</a></code></small>
@@ -210,5 +185,6 @@ file perm = 0664 directory perm = 0775
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

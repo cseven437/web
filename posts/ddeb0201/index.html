@@ -1,14 +1,14 @@
-<!doctype html><html><title>Makefile使用记录</title><meta name=description content="1 2 3 4 = 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前"><meta name=generator content="Hugo 0.86.0">
+<!doctype html><html><title>Makefile使用记录</title><meta name=description content="= 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前make"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="Makefile使用记录">
-<meta property="og:description" content="1 2 3 4 = 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前">
+<meta property="og:description" content="= 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前make">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://arair.net/posts/ddeb0201/"><meta property="article:section" content="post">
 <meta property="article:published_time" content="2021-01-24T11:15:04+08:00">
 <meta property="article:modified_time" content="2021-02-06T22:46:10+08:00">
 <meta itemprop=name content="Makefile使用记录">
-<meta itemprop=description content="1 2 3 4 = 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前"><meta itemprop=datePublished content="2021-01-24T11:15:04+08:00">
+<meta itemprop=description content="= 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前make"><meta itemprop=datePublished content="2021-01-24T11:15:04+08:00">
 <meta itemprop=dateModified content="2021-02-06T22:46:10+08:00">
-<meta itemprop=wordCount content="111">
+<meta itemprop=wordCount content="107">
 <meta itemprop=keywords content="makefile,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -25,27 +25,17 @@
 <aside>
 <nav id=TableOfContents></nav>
 </aside>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>= 是最基本的赋值
+<pre tabindex=0><code>= 是最基本的赋值
 := 是覆盖之前的值
 ?= 是如果没有被赋值过就赋予等号后面的值
 += 是添加等号后面的值
-</code></pre></td></tr></table>
-</div>
-</div><p>$(MAKELEVEL) makefile的内置变量，用于查看当前makefile的level</p>
+</code></pre><p>$(MAKELEVEL) makefile的内置变量，用于查看当前makefile的level</p>
 <p>export 将变量导出到全局变量，可以共其它makefile使用</p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 111 tags:</small>
+<small> words: 107 tags:</small>
 <small><code><a href=https://arair.net/tags/makefile>makefile</a></code></small>
 </div>
 </html>
@@ -53,5 +43,6 @@
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

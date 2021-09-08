@@ -1,5 +1,5 @@
 <!doctype html><html><title>linux watch命令</title><meta name=description content="watch可以帮你监测一个命令的运行结果，来监测你想要的一切命令的结果变化
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="linux watch命令">
 <meta property="og:description" content="watch可以帮你监测一个命令的运行结果，来监测你想要的一切命令的结果变化">
 <meta property="og:type" content="article">
@@ -9,7 +9,7 @@
 <meta itemprop=name content="linux watch命令">
 <meta itemprop=description content="watch可以帮你监测一个命令的运行结果，来监测你想要的一切命令的结果变化"><meta itemprop=datePublished content="2021-01-31T19:34:24+08:00">
 <meta itemprop=dateModified content="2021-02-04T20:08:57+08:00">
-<meta itemprop=wordCount content="318">
+<meta itemprop=wordCount content="300">
 <meta itemprop=keywords content="linux,command,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -28,90 +28,36 @@
 </aside>
 <p>watch可以帮你监测一个命令的运行结果，来监测你想要的一切命令的结果变化</p>
 <p>参数</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Usage: watch [-dhntv] [--differences[=cumulative]] [--help] [--interval=&lt;n&gt;] [--no-title] [--version] &lt;command&gt;
+<pre tabindex=0><code>Usage: watch [-dhntv] [--differences[=cumulative]] [--help] [--interval=&lt;n&gt;] [--no-title] [--version] &lt;command&gt;
   -d, --differences[=cumulative]        highlight changes between updates
                 (cumulative means highlighting is cumulative)
   -h, --help                            print a summary of the options
   -n, --interval=&lt;seconds&gt;              seconds to wait between updates
   -v, --version                         print the version number
   -t, --no-title                        turns off showing the header
-</code></pre></td></tr></table>
-</div>
-</div><p>示例</p>
+</code></pre><p>示例</p>
 <p>每隔一秒高亮显示网络链接数的变化情况</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>watch -n 1 -d netstat -ant 【-n 设置间隔，-d,difference，高亮显示不同】
+<pre tabindex=0><code>watch -n 1 -d netstat -ant 【-n 设置间隔，-d,difference，高亮显示不同】
  
-   watch -d &#39;ls /home/omd&#39;       【-d 高亮显示】
+   watch -d 'ls /home/omd'       【-d 高亮显示】
  
-   watch -t &#39;ls /home/omd&#39;       【-t会关闭watch命令在顶部的时间间隔】
+   watch -t 'ls /home/omd'       【-t会关闭watch命令在顶部的时间间隔】
    
 说明： 切换终端： Ctrl+x     退出watch：Ctrl+g
-</code></pre></td></tr></table>
-</div>
-</div><p>每隔一秒高亮显示http链接数的变化情况</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>watch -n 1 -d &#39;pstree|grep http&#39;
-</code></pre></td></tr></table>
-</div>
-</div><p>实时查看模拟攻击客户机建立起来的连接数</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>watch -n 1 -d &#39;netstat -an | grep &#34;21&#34; | egrep &#34;192.168.25.100&#34;| wc -l&#39;
-</code></pre></td></tr></table>
-</div>
-</div><p>监测当前目录中 scf' 的文件的变化</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>watch -d &#39;ls -l|grep scf&#39;
-</code></pre></td></tr></table>
-</div>
-</div><p>10秒一次输出系统的平均负载</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>watch -n 1 -d &#34;uptime&#34;
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre><p>每隔一秒高亮显示http链接数的变化情况</p>
+<pre tabindex=0><code>watch -n 1 -d 'pstree|grep http'
+</code></pre><p>实时查看模拟攻击客户机建立起来的连接数</p>
+<pre tabindex=0><code>watch -n 1 -d 'netstat -an | grep &quot;21&quot; | egrep &quot;192.168.25.100&quot;| wc -l'
+</code></pre><p>监测当前目录中 scf' 的文件的变化</p>
+<pre tabindex=0><code>watch -d 'ls -l|grep scf'
+</code></pre><p>10秒一次输出系统的平均负载</p>
+<pre tabindex=0><code>watch -n 1 -d &quot;uptime&quot;
+</code></pre>
 </article>
 </div>
 </body>
 <div>
-<small> words: 318 tags:</small>
+<small> words: 300 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/command>command</a></code></small>
 </div>
@@ -120,5 +66,6 @@
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

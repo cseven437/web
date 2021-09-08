@@ -1,5 +1,5 @@
 <!doctype html><html><title>fastboot</title><meta name=description content="adb reboot bootloader 命令进入bootloader/fastboot模式，才可以使用fastboot进行烧写 adb reboot recovery　命令行进recovery模式
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="fastboot">
 <meta property="og:description" content="adb reboot bootloader   命令进入bootloader/fastboot模式，才可以使用fastboot进行烧写
 adb reboot recovery　命令行进recovery模式">
@@ -11,7 +11,7 @@ adb reboot recovery　命令行进recovery模式">
 <meta itemprop=description content="adb reboot bootloader   命令进入bootloader/fastboot模式，才可以使用fastboot进行烧写
 adb reboot recovery　命令行进recovery模式"><meta itemprop=datePublished content="2021-02-07T21:41:17+08:00">
 <meta itemprop=dateModified content="2021-02-07T21:46:43+08:00">
-<meta itemprop=wordCount content="962">
+<meta itemprop=wordCount content="880">
 <meta itemprop=keywords content="fastboot,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -30,34 +30,11 @@ adb reboot recovery　命令行进recovery模式"><meta itemprop=datePublished c
 </aside>
 <p>adb reboot bootloader 命令进入bootloader/fastboot模式，才可以使用fastboot进行烧写
 adb reboot recovery　命令行进recovery模式</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>usage: fastboot [ &lt;option&gt; ] &lt;command&gt;  
+<pre tabindex=0><code>usage: fastboot [ &lt;option&gt; ] &lt;command&gt;  
 
 commands:  
 update &lt;filename&gt;   reflash device from update.zip  
-flashall    &#34;flash boot&#34; + &#34;flash system&#34;  
+flashall    &quot;flash boot&quot; + &quot;flash system&quot;  
 flash &lt;partition&gt; [ &lt;filename&gt; ] write a file to a flash partition  
 erase &lt;partition&gt;   erase a flash partition  
 getvar &lt;variable&gt;   display a bootloader variable  
@@ -72,24 +49,8 @@ options:
 -p &lt;product&gt;    specify product name  
 -c &lt;cmdline&gt;    override kernel commandline  
 -i &lt;vendor id&gt;    specify a custom USB vendor id 
-</code></pre></td></tr></table>
-</div>
-</div><p>1 升级系统</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>fastboot flash bootloader u-boot.bin
+</code></pre><p>1 升级系统</p>
+<pre tabindex=0><code>fastboot flash bootloader u-boot.bin
 fastboot flash kernel uImage
 fastboot flash system system.img
 fastboot flash userdata userdata.img
@@ -99,9 +60,7 @@ fastboot erase cache
 fastboot flash {partition} {*.img}   例：fastboot flash boot boot.img或fastboot flash system system.img等。
 
 fastboot flashall   注意：此命令会在当前目录中查找所有img文件，将这些img文件烧写到所有对应的分区中，并重新启动手机。
-</code></pre></td></tr></table>
-</div>
-</div><p>一次烧写boot，system，recovery分区：</p>
+</code></pre><p>一次烧写boot，system，recovery分区：</p>
 <pre><code>（1）创建包含boot.img，system.img，recovery.img文件的zip包。
 
 （2）执行：fastboot update {*.zip}
@@ -111,58 +70,17 @@ fastboot flashall   注意：此命令会在当前目录中查找所有img文件
 <p>fastboot flash splash1 开机画面</p>
 </blockquote>
 <p>2 重启系统</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>fastboot reboot
-</code></pre></td></tr></table>
-</div>
-</div><p>3 不烧写flash情况下调试</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>fastboot boot uImage 或者u-boot.bin
-</code></pre></td></tr></table>
-</div>
-</div><p>4 查看版本号</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>fastboot getver:version
-</code></pre></td></tr></table>
-</div>
-</div><p>5 复位到bootloader</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>fastboot reboot-bootloader
-</code></pre></td></tr></table>
-</div>
-</div><p>6 命令格式</p>
+<pre tabindex=0><code>fastboot reboot
+</code></pre><p>3 不烧写flash情况下调试</p>
+<pre tabindex=0><code>fastboot boot uImage 或者u-boot.bin
+</code></pre><p>4 查看版本号</p>
+<pre tabindex=0><code>fastboot getver:version
+</code></pre><p>5 复位到bootloader</p>
+<pre tabindex=0><code>fastboot reboot-bootloader
+</code></pre><p>6 命令格式</p>
 <p>主机端发送字符串的命令，字符串小于等于64个字节，客户端首先返回四个字节的内容，是OKAY、FAIL、DATA、INFO之一，随后跟着是信息或数数据。</p>
 <p>7 清空分区</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>fastboot erase {partition}   例：fastboot erase boot或fastboot erase system等。
+<pre tabindex=0><code>fastboot erase {partition}   例：fastboot erase boot或fastboot erase system等。
 
 fastboot erase boot
 
@@ -171,27 +89,11 @@ fastboot erase system
 fastboot erase data
 
 fastboot erase cache
-</code></pre></td></tr></table>
-</div>
-</div><p>上面的命令也可以简化成一条命令</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>fastboot erase system -w
-</code></pre></td></tr></table>
-</div>
-</div><p>8 获取客户端(手机端)变量信息</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>fastboot getvar version:version-bootloader:version-baseband:product:serialno:secure 
-</code></pre></td></tr></table>
-</div>
-</div><ul>
+</code></pre><p>上面的命令也可以简化成一条命令</p>
+<pre tabindex=0><code>fastboot erase system -w
+</code></pre><p>8 获取客户端(手机端)变量信息</p>
+<pre tabindex=0><code>fastboot getvar version:version-bootloader:version-baseband:product:serialno:secure 
+</code></pre><ul>
 <li>version 客户端支持的fastboot协议版本</li>
 <li>version-bootloader Bootloader的版本号</li>
 <li>version-baseband 基带版本</li>
@@ -199,49 +101,7 @@ fastboot erase cache
 <li>serialno 产品序列号</li>
 <li>secure 返回yes 表示在刷机时需要获取签名</li>
 </ul>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>/ # df
+<pre tabindex=0><code>/ # df
 df
 Filesystem           1K-blocks      Used Available Use% Mounted on
 ubi0:rootfs              57800     34888     22912  60% /
@@ -257,36 +117,34 @@ ubi0:usrfs               44036        24     44012   0% /data
 /dev/ubi4_0              55048     10484     44564  19% /bmdefsys
 / # cat /pr     mt
 / # cat /proc/mt
-cat: can&#39;t open &#39;/proc/mt&#39;: No such file or directory
+cat: can't open '/proc/mt': No such file or directory
 / # cat /pr     mtd
 / # cat /proc/mtd
 dev:    size   erasesize  name
-mtd0: 00140000 00020000 &#34;sbl&#34;
-mtd1: 00140000 00020000 &#34;mibib&#34;
-mtd2: 00c00000 00020000 &#34;efs2&#34;
-mtd3: 000c0000 00020000 &#34;tz&#34;
-mtd4: 00060000 00020000 &#34;rpm&#34;
-mtd5: 00100000 00020000 &#34;aboot&#34;
-mtd6: 00940000 00020000 &#34;boot&#34;
-mtd7: 01040000 00020000 &#34;scrub&#34;
-mtd8: 037c0000 00020000 &#34;modem&#34;
-mtd9: 01420000 00020000 &#34;misc&#34;
-mtd10: 00940000 00020000 &#34;recovery&#34;
-mtd11: 05040000 00020000 &#34;fota&#34;
-mtd12: 01980000 00020000 &#34;recoveryfs&#34;
-mtd13: 01420000 00020000 &#34;cdrom&#34;
-mtd14: 04c00000 00020000 &#34;bmdefsys&#34;
-mtd15: 00040000 00020000 &#34;sec&#34;
-mtd16: 0b6a0000 00020000 &#34;system&#34;
+mtd0: 00140000 00020000 &quot;sbl&quot;
+mtd1: 00140000 00020000 &quot;mibib&quot;
+mtd2: 00c00000 00020000 &quot;efs2&quot;
+mtd3: 000c0000 00020000 &quot;tz&quot;
+mtd4: 00060000 00020000 &quot;rpm&quot;
+mtd5: 00100000 00020000 &quot;aboot&quot;
+mtd6: 00940000 00020000 &quot;boot&quot;
+mtd7: 01040000 00020000 &quot;scrub&quot;
+mtd8: 037c0000 00020000 &quot;modem&quot;
+mtd9: 01420000 00020000 &quot;misc&quot;
+mtd10: 00940000 00020000 &quot;recovery&quot;
+mtd11: 05040000 00020000 &quot;fota&quot;
+mtd12: 01980000 00020000 &quot;recoveryfs&quot;
+mtd13: 01420000 00020000 &quot;cdrom&quot;
+mtd14: 04c00000 00020000 &quot;bmdefsys&quot;
+mtd15: 00040000 00020000 &quot;sec&quot;
+mtd16: 0b6a0000 00020000 &quot;system&quot;
 / #
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre>
 </article>
 </div>
 </body>
 <div>
-<small> words: 962 tags:</small>
+<small> words: 880 tags:</small>
 <small><code><a href=https://arair.net/tags/fastboot>fastboot</a></code></small>
 </div>
 </html>
@@ -294,5 +152,6 @@ mtd16: 0b6a0000 00020000 &#34;system&#34;
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

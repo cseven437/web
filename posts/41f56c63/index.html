@@ -1,5 +1,5 @@
 <!doctype html><html><title>编解码工具-base64</title><meta name=description content="base64是一种常用的简单的编解码方式
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="编解码工具-base64">
 <meta property="og:description" content="base64是一种常用的简单的编解码方式">
 <meta property="og:type" content="article">
@@ -9,7 +9,7 @@
 <meta itemprop=name content="编解码工具-base64">
 <meta itemprop=description content="base64是一种常用的简单的编解码方式"><meta itemprop=datePublished content="2021-07-04T18:52:44+08:00">
 <meta itemprop=dateModified content="2021-07-04T18:56:42+08:00">
-<meta itemprop=wordCount content="75">
+<meta itemprop=wordCount content="71">
 <meta itemprop=keywords content="decode,base64,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -34,34 +34,18 @@
 <p>base64是一种常用的简单的编解码方式</p>
 <h2 id=编码>编码</h2>
 <p>将"hello, world!&ldquo;编码</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ echo &#34;hello, world!&#34; | base64
+<pre tabindex=0><code>$ echo &quot;hello, world!&quot; | base64
 aGVsbG8sIHdvcmxkIQo=
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=解码>解码</h2>
+</code></pre><h2 id=解码>解码</h2>
 <p>解码命令</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ echo &#34;aGVsbG8sIHdvcmxkIQo=&#34; | base64 -d
+<pre tabindex=0><code>$ echo &quot;aGVsbG8sIHdvcmxkIQo=&quot; | base64 -d
 hello, world!
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre>
 </article>
 </div>
 </body>
 <div>
-<small> words: 75 tags:</small>
+<small> words: 71 tags:</small>
 <small><code><a href=https://arair.net/tags/decode>decode</a></code></small>
 <small><code><a href=https://arair.net/tags/base64>base64</a></code></small>
 </div>
@@ -70,5 +54,6 @@ hello, world!
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

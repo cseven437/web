@@ -2,7 +2,7 @@
 /dev/random和/dev/urandom是Linux系统中提供的随机伪设备，这两个设备的任务，是提供永不为空的随机字节数据流。很多解密程序与安全应用程序（如SSH Keys,SSL Keys等）需要它们提供的随机数据流。 区别
 这两个设备的差异在于：/dev/random的random依赖于系统中断，因此在系统的中断数不足时，/dev/random设备会一直封锁，尝试读取的进程就会进入等待状态，直到系统的中断数充分够用, /dev/random设备可以保证数据的随机性。
 /dev/urandom不依赖系统的中断，也就不会造成进程忙等待，但是数据的随机性也不高。 使用方式
-字符设备文件的打开方式和其它文件一样，都是使用open函数打开设备，然后从文件描述符中获取数据即可。 "><meta name=generator content="Hugo 0.86.0">
+字符设备文件的打开方式和其它文件一样，都是使用open函数打开设备，然后从文件描述符中获取数据即可。 "><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="利用random与urandom生成随机数">
 <meta property="og:description" content="
 介绍
@@ -110,5 +110,6 @@
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

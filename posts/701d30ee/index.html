@@ -1,6 +1,6 @@
 <!doctype html><html><title>netfilter 连接跟踪的命令-conntrack</title><meta name=description content="conntrack 实用程序为 Netfilter 连接跟踪系统提供了一个功能齐全的用户空间界面，旨在取代旧的 /proc/net/ip_conntrack 界面。 该工具可用于搜索、列出、检查和维护 Linux 内核的连接跟踪子系统。 使用 conntrack，您可以转储所有（或筛选出的）当前跟踪连接的列表，从状态表中删除连接，甚至添加新连接。
 此外，您还可以监控连接跟踪事件，例如 每个新建立的连接显示一个事件消息（一行）。
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="netfilter 连接跟踪的命令-conntrack">
 <meta property="og:description" content="conntrack 实用程序为 Netfilter 连接跟踪系统提供了一个功能齐全的用户空间界面，旨在取代旧的 /proc/net/ip_conntrack 界面。 该工具可用于搜索、列出、检查和维护 Linux 内核的连接跟踪子系统。
 使用 conntrack，您可以转储所有（或筛选出的）当前跟踪连接的列表，从状态表中删除连接，甚至添加新连接。
@@ -14,7 +14,7 @@
 使用 conntrack，您可以转储所有（或筛选出的）当前跟踪连接的列表，从状态表中删除连接，甚至添加新连接。
 此外，您还可以监控连接跟踪事件，例如 每个新建立的连接显示一个事件消息（一行）。"><meta itemprop=datePublished content="2021-07-01T10:18:21+08:00">
 <meta itemprop=dateModified content="2021-07-01T20:19:37+08:00">
-<meta itemprop=wordCount content="585">
+<meta itemprop=wordCount content="555">
 <meta itemprop=keywords content="netfilter,command,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -40,41 +40,7 @@
 使用 conntrack，您可以转储所有（或筛选出的）当前跟踪连接的列表，从状态表中删除连接，甚至添加新连接。</p>
 <p>此外，您还可以监控连接跟踪事件，例如 每个新建立的连接显示一个事件消息（一行）。</p>
 <h2 id=查看连接跟踪>查看连接跟踪</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># conntrack -L
+<pre tabindex=0><code># conntrack -L
 udp      17 59 src=192.168.1.55 dst=192.168.1.255 sport=137 dport=137 [UNREPLIED] src=192.168.1.255 dst=192.168.1.55 sport=137 dport=137 mark=0 use=1
 udp      17 20 src=192.168.1.55 dst=192.168.1.1 sport=63254 dport=53 src=192.168.1.1 dst=192.168.1.55 sport=53 dport=63254 mark=0 use=1
 tcp      6 80 TIME_WAIT src=192.168.1.55 dst=192.168.1.1 sport=1148 dport=53 src=192.168.1.1 dst=192.168.1.55 sport=53 dport=1148 [ASSURED] mark=0 use=1
@@ -104,15 +70,13 @@ tcp      6 80 TIME_WAIT src=192.168.1.55 dst=192.168.1.1 sport=32936 dport=53 sr
 udp      17 20 src=192.168.1.55 dst=192.168.1.1 sport=50469 dport=53 src=192.168.1.1 dst=192.168.1.55 sport=53 dport=50469 mark=0 use=1
 udp      17 22 src=192.168.1.55 dst=192.168.1.1 sport=61658 dport=53 src=192.168.1.1 dst=192.168.1.55 sport=53 dport=61658 mark=0 use=1
 conntrack v1.0.1 (conntrack-tools): 28 flow entries have been shown.
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=参考链接>参考链接</h2>
+</code></pre><h2 id=参考链接>参考链接</h2>
 <p><a href=https://www.systutorials.com/docs/linux/man/8-conntrack/>https://www.systutorials.com/docs/linux/man/8-conntrack/</a></p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 585 tags:</small>
+<small> words: 555 tags:</small>
 <small><code><a href=https://arair.net/tags/netfilter>netfilter</a></code></small>
 <small><code><a href=https://arair.net/tags/command>command</a></code></small>
 </div>
@@ -121,5 +85,6 @@ conntrack v1.0.1 (conntrack-tools): 28 flow entries have been shown.
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

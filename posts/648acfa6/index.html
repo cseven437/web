@@ -1,25 +1,13 @@
 <!doctype html><html><title>Kernel_panic</title><meta name=description content="需要打开以下项，保证有足够的调试信息
-1 2 3 4 5 6  CONFIG_DEBUG_KERNEL=y CONFIG_DEBUG_INFO=y CONFIG_KALLSYMS=y CONFIG_KALLSYMS_ALL=y CONFIG_DEBUG_BUGVERBOSE=y CONFIG_STACKTRACE=y   "><meta name=generator content="Hugo 0.86.0">
+CONFIG_DEBUG_KERNEL=y CONFIG_DEBUG_INFO=y CONFIG_KALLSYMS=y CONFIG_KALLSYMS_ALL=y CONFIG_DEBUG_BUGVERBOSE=y CONFIG_STACKTRACE=y "><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="Kernel_panic">
 <meta property="og:description" content="需要打开以下项，保证有足够的调试信息
-
-
-1
-2
-3
-4
-5
-6
-
-
 CONFIG_DEBUG_KERNEL=y
 CONFIG_DEBUG_INFO=y
 CONFIG_KALLSYMS=y
 CONFIG_KALLSYMS_ALL=y
 CONFIG_DEBUG_BUGVERBOSE=y
 CONFIG_STACKTRACE=y
-
-
 ">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://arair.net/posts/648acfa6/"><meta property="article:section" content="post">
@@ -27,27 +15,15 @@ CONFIG_STACKTRACE=y
 <meta property="article:modified_time" content="2021-02-04T20:08:57+08:00">
 <meta itemprop=name content="Kernel_panic">
 <meta itemprop=description content="需要打开以下项，保证有足够的调试信息
-
-
-1
-2
-3
-4
-5
-6
-
-
 CONFIG_DEBUG_KERNEL=y
 CONFIG_DEBUG_INFO=y
 CONFIG_KALLSYMS=y
 CONFIG_KALLSYMS_ALL=y
 CONFIG_DEBUG_BUGVERBOSE=y
 CONFIG_STACKTRACE=y
-
-
 "><meta itemprop=datePublished content="2021-01-24T11:49:21+08:00">
 <meta itemprop=dateModified content="2021-02-04T20:08:57+08:00">
-<meta itemprop=wordCount content="564">
+<meta itemprop=wordCount content="490">
 <meta itemprop=keywords content>
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -65,70 +41,14 @@ CONFIG_STACKTRACE=y
 <nav id=TableOfContents></nav>
 </aside>
 <p>需要打开以下项，保证有足够的调试信息</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>CONFIG_DEBUG_KERNEL=y
+<pre tabindex=0><code>CONFIG_DEBUG_KERNEL=y
 CONFIG_DEBUG_INFO=y
 CONFIG_KALLSYMS=y
 CONFIG_KALLSYMS_ALL=y
 CONFIG_DEBUG_BUGVERBOSE=y
 CONFIG_STACKTRACE=y
-</code></pre></td></tr></table>
-</div>
-</div><p>panic 信息</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[  201.500000] hello,world
+</code></pre><p>panic 信息</p>
+<pre tabindex=0><code>[  201.500000] hello,world
 [  201.510000] Kernel bug detected[#1]:
 [  201.510000] CPU: 0 PID: 2491 Comm: insmod Not tainted 3.10.90 #10
 [  201.510000] task: 871732a0 ti: 84248000 task.ti: 84248000
@@ -168,56 +88,22 @@ CONFIG_STACKTRACE=y
 Code: 00402021  8c820000  0002102b &lt;00020336&gt; 0800bc71  8c850008  27bdffd8  afbf0024  afb30020 
 [  201.510000] c0_compare_interrupt 64
 
-</code></pre></td></tr></table>
-</div>
-</div><p>可以使用gdb来查看错误位置</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ gdb vmlinux 
+</code></pre><p>可以使用gdb来查看错误位置</p>
+<pre tabindex=0><code>$ gdb vmlinux 
 GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1
 Copyright (C) 2014 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
 This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type &#34;show copying&#34;
-and &#34;show warranty&#34; for details.
-This GDB was configured as &#34;x86_64-linux-gnu&#34;.
-Type &#34;show configuration&#34; for configuration details.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;x86_64-linux-gnu&quot;.
+Type &quot;show configuration&quot; for configuration details.
 For bug reporting instructions, please see:
 &lt;http://www.gnu.org/software/gdb/bugs/&gt;.
 Find the GDB manual and other documentation resources online at:
 &lt;http://www.gnu.org/software/gdb/documentation/&gt;.
-For help, type &#34;help&#34;.
-Type &#34;apropos word&#34; to search for commands related to &#34;word&#34;...
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
 Reading symbols from vmlinux...done.
 (gdb) l *add_timer+0x8
 0x8002f3e8 is in add_timer (/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10/arch/mips-ori/include/asm/bug.h:29).
@@ -226,24 +112,23 @@ Reading symbols from vmlinux...done.
 26                      else
 27                              return;
 28              }
-29              __asm__ __volatile__(&#34;tne $0, %0, %1&#34;
-30                                   : : &#34;r&#34; (condition), &#34;i&#34; (BRK_BUG));
+29              __asm__ __volatile__(&quot;tne $0, %0, %1&quot;
+30                                   : : &quot;r&quot; (condition), &quot;i&quot; (BRK_BUG));
 31      }
 32
 33      #define BUG_ON(C) __BUG_ON((unsigned long)(C))
-</code></pre></td></tr></table>
-</div>
-</div><p>需要有Reading symbols from vmlinux&mldr;done.才能调试，如果没有会显示Reading symbols from vmlinux&mldr;(no debugging symbols found)&mldr;done.</p>
+</code></pre><p>需要有Reading symbols from vmlinux&mldr;done.才能调试，如果没有会显示Reading symbols from vmlinux&mldr;(no debugging symbols found)&mldr;done.</p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 564 tags:</small>
+<small> words: 490 tags:</small>
 </div>
 </html>
 </div>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

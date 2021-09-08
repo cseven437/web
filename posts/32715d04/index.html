@@ -1,5 +1,5 @@
 <!doctype html><html><title>文件系统挂载命令-mount</title><meta name=description content="Linux mount命令是经常会使用到的命令，它用于挂载Linux系统外的文件。
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="文件系统挂载命令-mount">
 <meta property="og:description" content="Linux mount命令是经常会使用到的命令，它用于挂载Linux系统外的文件。">
 <meta property="og:type" content="article">
@@ -9,7 +9,7 @@
 <meta itemprop=name content="文件系统挂载命令-mount">
 <meta itemprop=description content="Linux mount命令是经常会使用到的命令，它用于挂载Linux系统外的文件。"><meta itemprop=datePublished content="2021-07-01T10:27:45+08:00">
 <meta itemprop=dateModified content="2021-07-01T20:19:37+08:00">
-<meta itemprop=wordCount content="946">
+<meta itemprop=wordCount content="938">
 <meta itemprop=keywords content="mount,filesystem,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -36,21 +36,11 @@
 </aside>
 <p>Linux mount命令是经常会使用到的命令，它用于挂载Linux系统外的文件。</p>
 <h2 id=语法>语法</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>mount [-hV]
+<pre tabindex=0><code>mount [-hV]
 mount -a [-fFnrsvw] [-t vfstype]
 mount [-fnrsvw] [-o options [,...]] device | dir
 mount [-fnrsvw] [-t vfstype] [-o options] device dir
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=参数说明>参数说明</h2>
+</code></pre><h2 id=参数说明>参数说明</h2>
 <ul>
 <li>-V：显示程序版本</li>
 <li>-h：显示辅助讯息</li>
@@ -84,48 +74,20 @@ mount [-fnrsvw] [-t vfstype] [-o options] device dir
 <ol>
 <li>
 <p>重新挂在<code>/</code>为可读写</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>mount -o remount,rw /
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<pre tabindex=0><code>mount -o remount,rw /
+</code></pre></li>
 <li>
 <p>将 /dev/hda1 挂在 /mnt 之下。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#mount /dev/hda1 /mnt
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<pre tabindex=0><code>#mount /dev/hda1 /mnt
+</code></pre></li>
 <li>
 <p>将 /dev/hda1 用唯读模式挂在 /mnt 之下。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#mount -o ro /dev/hda1 /mnt
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<pre tabindex=0><code>#mount -o ro /dev/hda1 /mnt
+</code></pre></li>
 <li>
 <p>将 /tmp/image.iso 这个光碟的 image 档使用 loop 模式挂在 /mnt/cdrom之下。用这种方法可以将一般网络上可以找到的 Linux 光 碟 ISO 档在不烧录成光碟的情况下检视其内容。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#mount -o loop /tmp/image.iso /mnt/cdrom
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<pre tabindex=0><code>#mount -o loop /tmp/image.iso /mnt/cdrom
+</code></pre></li>
 </ol>
 <h2 id=qa>Q/A</h2>
 <p>光驱使用的结点<code>/dev/cdrom</code></p>
@@ -135,7 +97,7 @@ mount [-fnrsvw] [-t vfstype] [-o options] device dir
 </div>
 </body>
 <div>
-<small> words: 946 tags:</small>
+<small> words: 938 tags:</small>
 <small><code><a href=https://arair.net/tags/mount>mount</a></code></small>
 <small><code><a href=https://arair.net/tags/filesystem>filesystem</a></code></small>
 </div>
@@ -144,5 +106,6 @@ mount [-fnrsvw] [-t vfstype] [-o options] device dir
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>

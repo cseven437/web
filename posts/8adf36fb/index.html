@@ -1,6 +1,6 @@
 <!doctype html><html><title>Genieacs</title><meta name=description content="genieacs
 用于tr069 服务器
-"><meta name=generator content="Hugo 0.86.0">
+"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="Genieacs">
 <meta property="og:description" content="genieacs
 用于tr069 服务器">
@@ -12,7 +12,7 @@
 <meta itemprop=description content="genieacs
 用于tr069 服务器"><meta itemprop=datePublished content="2021-02-01T14:11:43+08:00">
 <meta itemprop=dateModified content="2021-06-05T11:28:50+08:00">
-<meta itemprop=wordCount content="499">
+<meta itemprop=wordCount content="495">
 <meta itemprop=keywords content="genieacs,tr069,">
 <style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
 <body>
@@ -165,42 +165,20 @@ tmux attach -t genieacs
 <p>选择标签页</p>
 <p><code>Admin --> Config</code></p>
 <p>点<code>New config</code>新增配置</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>key: cwmp.auth
-value: AUTH(&#34;acs-username&#34;, &#34;acs-password&#34;)
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=tr111-环境搭建>tr111 环境搭建</h2>
+<pre tabindex=0><code>key: cwmp.auth
+value: AUTH(&quot;acs-username&quot;, &quot;acs-password&quot;)
+</code></pre><h2 id=tr111-环境搭建>tr111 环境搭建</h2>
 <p>安装stun-server</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sudo apt install stun-server
-</code></pre></td></tr></table>
-</div>
-</div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>stun -h ip -m 11111
-</code></pre></td></tr></table>
-</div>
-</div><p>保证<code>cpe username</code>和<code>password</code>匹配</p>
+<pre tabindex=0><code>sudo apt install stun-server
+</code></pre><pre tabindex=0><code>stun -h ip -m 11111
+</code></pre><p>保证<code>cpe username</code>和<code>password</code>匹配</p>
 <p><a href=https://forum.genieacs.com/t/stun-or-whatever-server-with-genieacs/83/13>https://forum.genieacs.com/t/stun-or-whatever-server-with-genieacs/83/13</a></p>
 <p>使用<code>coturn</code>时，需要在服务器配置<code>cwmp.udpConnectionRequestPort 3478</code></p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 499 tags:</small>
+<small> words: 495 tags:</small>
 <small><code><a href=https://arair.net/tags/genieacs>genieacs</a></code></small>
 <small><code><a href=https://arair.net/tags/tr069>tr069</a></code></small>
 </div>
@@ -209,5 +187,6 @@ value: AUTH(&#34;acs-username&#34;, &#34;acs-password&#34;)
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-</body>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
 </html>
