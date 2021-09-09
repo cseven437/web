@@ -11,9 +11,11 @@ C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符�
 <meta itemprop=description content="描述
 C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。"><meta itemprop=datePublished content="2021-01-24T19:03:53+08:00">
 <meta itemprop=dateModified content="2021-02-04T20:08:57+08:00">
-<meta itemprop=wordCount content="261">
+<meta itemprop=wordCount content="244">
 <meta itemprop=keywords content="C,C库函数,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -32,15 +34,8 @@ C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符�
 <p>C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。</p>
 <h1 id=声明>声明</h1>
 <p>下面是 strstr() 函数的声明。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>strstr(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>haystack, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>needle)
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=参数>参数</h1>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>char</span> <span class=o>*</span><span class=n>strstr</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>haystack</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>needle</span><span class=p>)</span>
+</code></pre></div><h1 id=参数>参数</h1>
 <ul>
 <li>haystack &ndash; 要被检索的 C 字符串。</li>
 <li>needle &ndash; 在 haystack 字符串内要搜索的小字符串。</li>
@@ -49,60 +44,40 @@ C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符�
 <p>该函数返回在 haystack 中第一次出现 needle 字符串的位置，如果未找到则返回 null。</p>
 <h1 id=实例>实例</h1>
 <p>下面的实例演示了 strstr() 函数的用法。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp></span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-   <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> haystack[<span style=color:#ae81ff>20</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;RUNOOB&#34;</span>;
-   <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> needle[<span style=color:#ae81ff>10</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;NOOB&#34;</span>;
-   <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>ret;
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+   <span class=k>const</span> <span class=kt>char</span> <span class=n>haystack</span><span class=p>[</span><span class=mi>20</span><span class=p>]</span> <span class=o>=</span> <span class=s>&#34;RUNOOB&#34;</span><span class=p>;</span>
+   <span class=k>const</span> <span class=kt>char</span> <span class=n>needle</span><span class=p>[</span><span class=mi>10</span><span class=p>]</span> <span class=o>=</span> <span class=s>&#34;NOOB&#34;</span><span class=p>;</span>
+   <span class=kt>char</span> <span class=o>*</span><span class=n>ret</span><span class=p>;</span>
 
-   ret <span style=color:#f92672>=</span> strstr(haystack, needle);
+   <span class=n>ret</span> <span class=o>=</span> <span class=n>strstr</span><span class=p>(</span><span class=n>haystack</span><span class=p>,</span> <span class=n>needle</span><span class=p>);</span>
 
-   printf(<span style=color:#e6db74>&#34;子字符串是： %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ret);
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;子字符串是： %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ret</span><span class=p>);</span>
 
-   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>让我们编译并运行上面的程序，这将产生以下结果：</p>
+   <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>让我们编译并运行上面的程序，这将产生以下结果：</p>
 <pre tabindex=0><code>子字符串是： NOOB
 </code></pre>
 </article>
 </div>
 </body>
 <div>
-<small> words: 261 tags:</small>
+<small> words: 244 tags:</small>
 <small><code><a href=https://arair.net/tags/c>C</a></code></small>
 <small><code><a href=https://arair.net/tags/c%E5%BA%93%E5%87%BD%E6%95%B0>C库函数</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

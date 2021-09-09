@@ -9,9 +9,11 @@
 <meta itemprop=name content="linux 线程">
 <meta itemprop=description content="pthread 相关函数"><meta itemprop=datePublished content="2021-03-06T11:17:46+08:00">
 <meta itemprop=dateModified content="2021-03-08T21:06:05+08:00">
-<meta itemprop=wordCount content="402">
+<meta itemprop=wordCount content="379">
 <meta itemprop=keywords content="pthread,c,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -37,23 +39,12 @@
 <p>pthread 相关函数</p>
 <h2 id=pthread_sigmask>pthread_sigmask</h2>
 <p>用作在主调线程里控制信号掩码。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>pthread_sigmask</span>(<span style=color:#66d9ef>int</span> how, <span style=color:#66d9ef>const</span> sigset_t <span style=color:#f92672>*</span>set, sigset_t <span style=color:#f92672>*</span>oldset);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>pthread_sigmask</span><span class=p>(</span><span class=kt>int</span> <span class=n>how</span><span class=p>,</span> <span class=k>const</span> <span class=n>sigset_t</span> <span class=o>*</span><span class=n>set</span><span class=p>,</span> <span class=n>sigset_t</span> <span class=o>*</span><span class=n>oldset</span><span class=p>);</span>
 
-Compile and link with <span style=color:#f92672>-</span>pthread.
-</code></pre></td></tr></table>
-</div>
-</div><p>参数</p>
+<span class=n>Compile</span> <span class=n>and</span> <span class=n>link</span> <span class=n>with</span> <span class=o>-</span><span class=n>pthread</span><span class=p>.</span>
+</code></pre></div><p>参数</p>
 <ul>
 <li>SIG_BLOCK:   结果集是当前集合参数集的并集（把参数set中的信号添加到信号屏蔽字中）</li>
 <li>SIG_UNBLOCK: 结果集是当前集合参数集的差集（把信号屏蔽字设置为参数set中的信号）</li>
@@ -67,83 +58,49 @@ Compile and link with <span style=color:#f92672>-</span>pthread.
 <h2 id=pthread_detach>pthread_detach()</h2>
 <p>pthread_detach - detach a thread</p>
 <p>分离子线程，线程运行结束时自动回收资源</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;pthread.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>pthread_detach</span>(pthread_t <span style=color:#66d9ef>thread</span>);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;pthread.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>pthread_detach</span><span class=p>(</span><span class=n>pthread_t</span> <span class=kr>thread</span><span class=p>);</span>
 
-<span style=color:#75715e>// Compile and link with -pthread.
-</span></code></pre></td></tr></table>
-</div>
-</div><p><strong>return value:</strong>
+<span class=c1>// Compile and link with -pthread.
+</span></code></pre></div><p><strong>return value:</strong>
 On success, pthread_detach() returns 0; on error, it returns an error number.</p>
 <h2 id=pthread_self>pthread_self</h2>
 <p>pthread_self - obtain ID of the calling thread</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;pthread.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-pthread_t <span style=color:#a6e22e>pthread_self</span>(<span style=color:#66d9ef>void</span>);
-</code></pre></td></tr></table>
-</div>
-</div><p>Compile and link with -pthread.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;pthread.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=n>pthread_t</span> <span class=nf>pthread_self</span><span class=p>(</span><span class=kt>void</span><span class=p>);</span>
+</code></pre></div><p>Compile and link with -pthread.</p>
 <p><strong>return value</strong></p>
 <p>This function always succeeds, returning the calling thread&rsquo;s ID.</p>
 <h2 id=pthread_mutex>pthread_mutex</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/* Thread identifiers.  The structure of the attribute type is not
-</span><span style=color:#75715e>   exposed on purpose.  */</span>
-<span style=color:#75715e>// bits/pthreadtypes.h
-</span><span style=color:#75715e></span><span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>int</span> pthread_t;
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cm>/* Thread identifiers.  The structure of the attribute type is not
+</span><span class=cm>   exposed on purpose.  */</span>
+<span class=c1>// bits/pthreadtypes.h
+</span><span class=c1></span><span class=k>typedef</span> <span class=kt>unsigned</span> <span class=kt>long</span> <span class=kt>int</span> <span class=n>pthread_t</span><span class=p>;</span>
 
-pthread_mutex_t  write_lock;
-pthread_mutex_init(<span style=color:#f92672>&amp;</span>write_lock, NULL);
-pthread_mutex_lock(<span style=color:#f92672>&amp;</span>write_lock);    
-pthread_mutex_unlock(<span style=color:#f92672>&amp;</span>write_lock);
-pthread_mutex_destroy(<span style=color:#f92672>&amp;</span>write_lock);
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=pthread遇到的问题>pthread遇到的问题</h2>
+<span class=n>pthread_mutex_t</span>  <span class=n>write_lock</span><span class=p>;</span>
+<span class=n>pthread_mutex_init</span><span class=p>(</span><span class=o>&amp;</span><span class=n>write_lock</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+<span class=n>pthread_mutex_lock</span><span class=p>(</span><span class=o>&amp;</span><span class=n>write_lock</span><span class=p>);</span>    
+<span class=n>pthread_mutex_unlock</span><span class=p>(</span><span class=o>&amp;</span><span class=n>write_lock</span><span class=p>);</span>
+<span class=n>pthread_mutex_destroy</span><span class=p>(</span><span class=o>&amp;</span><span class=n>write_lock</span><span class=p>);</span>
+</code></pre></div><h2 id=pthread遇到的问题>pthread遇到的问题</h2>
 <p>调用pthread_cancel函数请求后，等到响应请求时，代码调用了pthread_clean_push函数中的clean_fun1和clean_fun2,函数clean_fun2中的语句先被打印。</p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 402 tags:</small>
+<small> words: 379 tags:</small>
 <small><code><a href=https://arair.net/tags/pthread>pthread</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

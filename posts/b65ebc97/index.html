@@ -1,16 +1,18 @@
-<!doctype html><html><title>gcc使用问题及解决方法</title><meta name=description content="C++11 error: unable to find string literal operator &amp;lsquo;operator&amp;quot; 一个简单的宏 1 #define LOG_INFORMATION(x, ...) LOG_ME(&amp;#34;%s:%d, &amp;#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell error: unable to find string literal operator 'operator&amp;quot;&amp;quot;x' 网上搜了一"><meta name=generator content="Hugo 0.88.1">
+<!doctype html><html><title>gcc使用问题及解决方法</title><meta name=description content="C++11 error: unable to find string literal operator &amp;lsquo;operator&amp;quot; 一个简单的宏 #define LOG_INFORMATION(x, ...) LOG_ME(&amp;#34;%s:%d, &amp;#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell error: unable to find string literal operator 'operator&amp;quot;&amp;quot;x' 网上搜了一下"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="gcc使用问题及解决方法">
-<meta property="og:description" content="C++11 error: unable to find string literal operator &lsquo;operator&#34; 一个简单的宏 1 #define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell error: unable to find string literal operator 'operator&#34;&#34;x' 网上搜了一">
+<meta property="og:description" content="C++11 error: unable to find string literal operator &lsquo;operator&#34; 一个简单的宏 #define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell error: unable to find string literal operator 'operator&#34;&#34;x' 网上搜了一下">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://arair.net/posts/b65ebc97/"><meta property="article:section" content="post">
 <meta property="article:published_time" content="2021-01-23T20:09:44+08:00">
 <meta property="article:modified_time" content="2021-06-09T21:22:33+08:00">
 <meta itemprop=name content="gcc使用问题及解决方法">
-<meta itemprop=description content="C++11 error: unable to find string literal operator &lsquo;operator&#34; 一个简单的宏 1 #define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell error: unable to find string literal operator 'operator&#34;&#34;x' 网上搜了一"><meta itemprop=datePublished content="2021-01-23T20:09:44+08:00">
+<meta itemprop=description content="C++11 error: unable to find string literal operator &lsquo;operator&#34; 一个简单的宏 #define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell error: unable to find string literal operator 'operator&#34;&#34;x' 网上搜了一下"><meta itemprop=datePublished content="2021-01-23T20:09:44+08:00">
 <meta itemprop=dateModified content="2021-06-09T21:22:33+08:00">
-<meta itemprop=wordCount content="668">
+<meta itemprop=wordCount content="662">
 <meta itemprop=keywords content="gcc,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -33,35 +35,17 @@
 </aside>
 <h2 id=c11-error-unable-to-find-string-literal-operator-operator>C++11 error: unable to find string literal operator &lsquo;operator"</h2>
 <p>一个简单的宏</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__)
-</span></code></pre></td></tr></table>
-</div>
-</div><p>一直都可以正常编译，但是当启用C++11的时候，报告编译错误</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__)
+</span></code></pre></div><p>一直都可以正常编译，但是当启用C++11的时候，报告编译错误</p>
 <p>C++ 11 Complier ErrorShell</p>
 <pre tabindex=0><code>error: unable to find string literal operator 'operator&quot;&quot;x'
 </code></pre><p>网上搜了一下，说是C++11要求，当字符串跟变量连接的时候，必须增加一个空格才行。因此简单修改如下即可。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#if __cplusplus &lt; 201103L
-</span><span style=color:#75715e>#define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__)
-</span><span style=color:#75715e>#else
-</span><span style=color:#75715e>#define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34; x, __FUNCTION__,__LINE__, ##__VA_ARGS__)
-</span><span style=color:#75715e>#endif
-</span></code></pre></td></tr></table>
-</div>
-</div><p>注意：在“android-ndk-r10e”中使用的GCC版本，GCC-4.9之前的版本都存在"__cplusplus"宏定义错误的问题，需要参考“NDK下GCC定义__cplusplus不正确的问题”，把GCC升级到4.9</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#if __cplusplus &lt; 201103L
+</span><span class=cp>#define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__)
+</span><span class=cp>#else
+</span><span class=cp>#define LOG_INFORMATION(x, ...) LOG_ME(&#34;%s:%d, &#34; x, __FUNCTION__,__LINE__, ##__VA_ARGS__)
+</span><span class=cp>#endif
+</span></code></pre></div><p>注意：在“android-ndk-r10e”中使用的GCC版本，GCC-4.9之前的版本都存在"__cplusplus"宏定义错误的问题，需要参考“NDK下GCC定义__cplusplus不正确的问题”，把GCC升级到4.9</p>
 <h2 id=error-stray--in-program错误原因及解决方法>error: stray ‘\×××’ in program错误原因及解决方法</h2>
 <p>网上down了一个C++的程序，内容很简单，但g++编译时报错，报错内容如下</p>
 <pre tabindex=0><code> error: stray ‘\342’ in program
@@ -95,14 +79,16 @@ tx2opencv.cpp:21:7: error: stray ‘\235’ in program
 </div>
 </body>
 <div>
-<small> words: 668 tags:</small>
+<small> words: 662 tags:</small>
 <small><code><a href=https://arair.net/tags/gcc>gcc</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

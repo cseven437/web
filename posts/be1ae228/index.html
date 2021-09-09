@@ -9,9 +9,11 @@
 <meta itemprop=name content="让socket端口不被子进程继承">
 <meta itemprop=description content="有两个程序A,B"><meta itemprop=datePublished content="2021-01-20T14:01:25+08:00">
 <meta itemprop=dateModified content="2021-02-22T14:01:25+08:00">
-<meta itemprop=wordCount content="152">
+<meta itemprop=wordCount content="151">
 <meta itemprop=keywords content="C,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -29,28 +31,23 @@
 <p>有两个程序A,B</p>
 <p>A绑定端口8000,然后用system函数启动程序B，然后再把A杀掉，这个时候再重启A的时候会发现绑定端口失败，</p>
 <p>原因是端口被B绑定了，实际上是被继承了，为了避免这种情况，需要对主socket设置如下</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>fcntl(mainSocket, F_SETFD, FD_CLOEXEC);
-</code></pre></td></tr></table>
-</div>
-</div><p>使用FD_CLOEXEC实现close-on-exec，关闭子进程无用文件描述符</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=n>fcntl</span><span class=p>(</span><span class=n>mainSocket</span><span class=p>,</span> <span class=n>F_SETFD</span><span class=p>,</span> <span class=n>FD_CLOEXEC</span><span class=p>);</span>
+</code></pre></div><p>使用FD_CLOEXEC实现close-on-exec，关闭子进程无用文件描述符</p>
 <p><a href=https://www.cnblogs.com/yuandaozhe/p/10730752.html>https://www.cnblogs.com/yuandaozhe/p/10730752.html</a></p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 152 tags:</small>
+<small> words: 151 tags:</small>
 <small><code><a href=https://arair.net/tags/c>C</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

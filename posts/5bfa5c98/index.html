@@ -1,25 +1,14 @@
 <!doctype html><html><title>vim使用记录以及相关配置</title><meta name=description content="编译 获取代码并编译
-1 2 3 4 5  git clone https://github.com/vim/vim.git cd vim/src ./configure --prefix=~/opt/usr/local/ make make install   修改PATH
+git clone https://github.com/vim/vim.git cd vim/src ./configure --prefix=~/opt/usr/local/ make make install 修改PATH
 ~/.bashrc export PATH=~/usr/local/bin:$PATH "><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="vim使用记录以及相关配置">
 <meta property="og:description" content="编译
 获取代码并编译
-
-
-1
-2
-3
-4
-5
-
-
 git clone https://github.com/vim/vim.git
 cd vim/src
 ./configure --prefix=~/opt/usr/local/
 make
 make install
-
-
 修改PATH
 ~/.bashrc
 export PATH=~/usr/local/bin:$PATH
@@ -31,30 +20,21 @@ export PATH=~/usr/local/bin:$PATH
 <meta itemprop=name content="vim使用记录以及相关配置">
 <meta itemprop=description content="编译
 获取代码并编译
-
-
-1
-2
-3
-4
-5
-
-
 git clone https://github.com/vim/vim.git
 cd vim/src
 ./configure --prefix=~/opt/usr/local/
 make
 make install
-
-
 修改PATH
 ~/.bashrc
 export PATH=~/usr/local/bin:$PATH
 "><meta itemprop=datePublished content="2021-01-23T20:08:30+08:00">
 <meta itemprop=dateModified content="2021-02-16T12:54:29+08:00">
-<meta itemprop=wordCount content="2341">
+<meta itemprop=wordCount content="2201">
 <meta itemprop=keywords content="vim,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -91,23 +71,12 @@ export PATH=~/usr/local/bin:$PATH
 </aside>
 <h2 id=编译>编译</h2>
 <p>获取代码并编译</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>git clone https://github.com/vim/vim.git
-cd vim/src
-./configure --prefix<span style=color:#f92672>=</span>~/opt/usr/local/
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>git clone https://github.com/vim/vim.git
+<span class=nb>cd</span> vim/src
+./configure --prefix<span class=o>=</span>~/opt/usr/local/
 make
 make install
-</code></pre></td></tr></table>
-</div>
-</div><p>修改PATH</p>
+</code></pre></div><p>修改PATH</p>
 <pre tabindex=0><code>~/.bashrc
 export PATH=~/usr/local/bin:$PATH
 </code></pre><h2 id=使用方法记录>使用方法记录</h2>
@@ -265,19 +234,10 @@ z c：重新折叠
 <ol>
 <li>vim 光标停留在上次退出位置 需要确保~/.viminfo 权限没有问题，并查看以下配置是否添加</li>
 </ol>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vimrc data-lang=vimrc><span style=color:#66d9ef>if</span> <span style=color:#a6e22e>has</span>(<span style=color:#e6db74>&#34;autocmd&#34;</span>)<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>  <span style=color:#a6e22e>au</span> <span style=color:#a6e22e>BufReadPost</span> * <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;&#39;\&#34;&#34;</span>) &gt; <span style=color:#ae81ff>1</span> &amp;&amp; <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;&#39;\&#34;&#34;</span>) &lt;= <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;$&#34;</span>) | <span style=color:#a6e22e>exe</span> <span style=color:#e6db74>&#34;normal! g&#39;\&#34;&#34;</span> | <span style=color:#66d9ef>endif</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>endif</span><span style=color:#960050;background-color:#1e0010>
-</span></code></pre></td></tr></table>
-</div>
-</div><ol start=2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-vimrc data-lang=vimrc><span class=k>if</span> <span class=nx>has</span><span class=p>(</span><span class=s2>&#34;autocmd&#34;</span><span class=p>)</span><span class=err>
+</span><span class=err></span>  <span class=nx>au</span> <span class=nx>BufReadPost</span> * <span class=k>if</span> <span class=nx>line</span><span class=p>(</span><span class=s2>&#34;&#39;\&#34;&#34;</span><span class=p>)</span> <span class=p>&gt;</span> <span class=m>1</span> &amp;&amp; <span class=nx>line</span><span class=p>(</span><span class=s2>&#34;&#39;\&#34;&#34;</span><span class=p>)</span> <span class=p>&lt;=</span> <span class=nx>line</span><span class=p>(</span><span class=s2>&#34;$&#34;</span><span class=p>)</span> <span class=p>|</span> <span class=nx>exe</span> <span class=s2>&#34;normal! g&#39;\&#34;&#34;</span> <span class=p>|</span> <span class=k>endif</span><span class=err>
+</span><span class=err></span><span class=k>endif</span><span class=err>
+</span></code></pre></div><ol start=2>
 <li>使用tagbar插件时需要安装ctags</li>
 </ol>
 <pre tabindex=0><code># debian系
@@ -293,293 +253,147 @@ sudo apt install ctags
 <pre tabindex=0><code>curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 </code></pre><p>详细配置，自用备份</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vimrc data-lang=vimrc><span style=color:#a6e22e>syntax</span> <span style=color:#a6e22e>on</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>number</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>tags</span>=<span style=color:#a6e22e>tags</span>;<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>map</span> &lt;<span style=color:#a6e22e>c</span>-]&gt; <span style=color:#a6e22e>g</span>&lt;<span style=color:#a6e22e>c</span>-]&gt;<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>smartindent</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>tabstop</span>=<span style=color:#ae81ff>4</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>shiftwidth</span>=<span style=color:#ae81ff>4</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>expandtab</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>softtabstop</span>=<span style=color:#ae81ff>4</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; 高亮搜索内容</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>hlsearch</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; 忽略搜索大小写</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>ignorecase</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; 智能搜索</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>smartcase</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; 输入时显示搜索内容</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>incsearch</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>source</span> $<span style=color:#a6e22e>VIMRUNTIME</span><span style=color:#e6db74>/ftplugin/</span><span style=color:#a6e22e>man</span>.<span style=color:#a6e22e>vim</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>wildmenu</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; 显示所有匹配的命令或文件名</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>wildmode</span>=<span style=color:#a6e22e>list</span>:<span style=color:#a6e22e>longest</span>,<span style=color:#a6e22e>full</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>fileencodings</span>=<span style=color:#a6e22e>utf</span><span style=color:#ae81ff>-8</span>,<span style=color:#a6e22e>ucs</span>-<span style=color:#a6e22e>bom</span>,<span style=color:#a6e22e>gb18030</span>,<span style=color:#a6e22e>gbk</span>,<span style=color:#a6e22e>gb2312</span>,<span style=color:#a6e22e>cp936</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>termencoding</span>=<span style=color:#a6e22e>utf</span><span style=color:#ae81ff>-8</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>encoding</span>=<span style=color:#a6e22e>utf</span><span style=color:#ae81ff>-8</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; 解决插入模式下delete/backspce键失效问题</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>backspace</span>=<span style=color:#ae81ff>2</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>laststatus</span>=<span style=color:#ae81ff>2</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>if</span> !<span style=color:#a6e22e>has</span>(<span style=color:#e6db74>&#39;gui_running&#39;</span>)<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>  <span style=color:#a6e22e>set</span> <span style=color:#a6e22e>t_Co</span>=<span style=color:#ae81ff>256</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>endif</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; let Tlist_Show_One_File=1     &#34;不同时显示多个文件的tag，只显示当前文件的</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let Tlist_Exit_OnlyWindow=1   &#34;如果taglist窗口是最后一个窗口，则退出vim</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let Tlist_Use_Right_Window=1</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let Tlist_Ctags_Cmd=&#34;/usr/bin/ctags&#34; &#34;将taglist与ctags关联</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34;让vim记忆上次编辑的位置</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>if</span> <span style=color:#a6e22e>has</span>(<span style=color:#e6db74>&#34;autocmd&#34;</span>)<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>  <span style=color:#a6e22e>au</span> <span style=color:#a6e22e>BufReadPost</span> * <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;&#39;\&#34;&#34;</span>) &gt; <span style=color:#ae81ff>1</span> &amp;&amp; <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;&#39;\&#34;&#34;</span>) &lt;= <span style=color:#a6e22e>line</span>(<span style=color:#e6db74>&#34;$&#34;</span>) | <span style=color:#a6e22e>exe</span> <span style=color:#e6db74>&#34;normal! g&#39;\&#34;&#34;</span> | <span style=color:#66d9ef>endif</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>endif</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nmap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; &lt;<span style=color:#a6e22e>F8</span>&gt; &lt;<span style=color:#a6e22e>Plug</span>&gt;<span style=color:#a6e22e>MarkdownPreview</span>        <span style=color:#75715e>&#34; 普通模式</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>imap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; &lt;<span style=color:#a6e22e>F8</span>&gt; &lt;<span style=color:#a6e22e>Plug</span>&gt;<span style=color:#a6e22e>MarkdownPreview</span>        <span style=color:#75715e>&#34; 插入模式</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nmap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; &lt;<span style=color:#a6e22e>F9</span>&gt; &lt;<span style=color:#a6e22e>Plug</span>&gt;<span style=color:#a6e22e>StopMarkdownPreview</span>    <span style=color:#75715e>&#34; 普通模式</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>imap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; &lt;<span style=color:#a6e22e>F9</span>&gt; &lt;<span style=color:#a6e22e>Plug</span>&gt;<span style=color:#a6e22e>StopMarkdownPreview</span>    <span style=color:#75715e>&#34; 插入模式</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; open NERDTree with Ctrl+n</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>map</span> &lt;<span style=color:#a6e22e>C</span>-<span style=color:#a6e22e>n</span>&gt; :<span style=color:#a6e22e>NERDTreeToggle</span>&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; map &lt;F4&gt; :Tlist&lt;CR&gt;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; tagbar config</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>map</span> &lt;<span style=color:#a6e22e>F4</span>&gt; :<span style=color:#a6e22e>Tagbar</span>&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>g</span>:<span style=color:#a6e22e>tagbar_autofocus</span> = <span style=color:#ae81ff>1</span> <span style=color:#75715e>&#34;这是tagbar一打开，光标即在tagbar页面内，默认在vim打开的文件内</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>g</span>:<span style=color:#a6e22e>tagbar_sort</span> = <span style=color:#ae81ff>0</span>                                         <span style=color:#75715e>&#34;设置标签不排序，默认排序</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>g</span>:<span style=color:#a6e22e>tagbar_type_make</span> = {<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>            \ <span style=color:#e6db74>&#39;kinds&#39;</span>:[<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>                \ <span style=color:#e6db74>&#39;m:macros&#39;</span>,<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>                \ <span style=color:#e6db74>&#39;t:targets&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>            \ ]<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>\}<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>g</span>:<span style=color:#a6e22e>tagbar_type_markdown</span> = {<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>    \ <span style=color:#e6db74>&#39;ctagstype&#39;</span> : <span style=color:#e6db74>&#39;markdown&#39;</span>,<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>    \ <span style=color:#e6db74>&#39;kinds&#39;</span> : [<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>        \ <span style=color:#e6db74>&#39;h:Heading_L1&#39;</span>,<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>        \ <span style=color:#e6db74>&#39;i:Heading_L2&#39;</span>,<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>        \ <span style=color:#e6db74>&#39;k:Heading_L3&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>    \ ]<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>\ }<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; end</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; vim-markdown</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let g:markdown_enable_spell_checking = 0</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let g:markdown_enable_input_abbreviations = 0</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let g:markdown_enable_conceal = 0</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>g</span>:<span style=color:#a6e22e>vim_markdown_folding_disabled</span> = <span style=color:#ae81ff>1</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>g</span>:<span style=color:#a6e22e>vim_markdown_frontmatter</span>=<span style=color:#ae81ff>1</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>g</span>:<span style=color:#a6e22e>vim_markdown_math</span> = <span style=color:#ae81ff>1</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let g:vim_markdown_toml_frontmatter = 1</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let g:vim_markdown_json_frontmatter = 1</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; let g:vim_markdown_strikethrough = 1</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; end</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Specify a directory for plugins</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; - For Neovim: ~/.local/share/nvim/plugged</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; - Avoid using standard Vim directory names like &#39;plugin&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>call</span> <span style=color:#a6e22e>plug</span>#<span style=color:#a6e22e>begin</span>(<span style=color:#e6db74>&#39;~/.vim/plugged&#39;</span>)<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Make sure you use single quotes</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Shorthand notation; fetches https://github.com/junegunn/vim-easy-align</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;junegunn/vim-easy-align&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;itchyny/lightline.vim&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;kien/ctrlp.vim&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;scrooloose/nerdtree&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;Xuyuanp/nerdtree-git-plugin&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;vim-scripts/taglist.vim&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;majutsushi/tagbar&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;ervandew/supertab&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;iamcco/mathjax-support-for-mkdp&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;godlygeek/tabular&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;plasticboy/vim-markdown&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;iamcco/markdown-preview.vim&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;rust-lang/rust.vim&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;fatih/vim-go&#39;, { &#39;do&#39;: &#39;:GoUpdateBinaries&#39; }</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;vim-scripts/OmniCppComplete&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;vim-scripts/winmanager&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Any valid git URL is allowed</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;https://github.com/junegunn/vim-github-dashboard.git&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Multiple Plug commands can be written in a single line using | separators</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;SirVer/ultisnips&#39; | Plug &#39;honza/vim-snippets&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; On-demand loading</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;scrooloose/nerdtree&#39;, { &#39;on&#39;:  &#39;NERDTreeToggle&#39; }</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;tpope/vim-fireplace&#39;, { &#39;for&#39;: &#39;clojure&#39; }</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Using a non-master branch</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;rdnetto/YCM-Generator&#39;, { &#39;branch&#39;: &#39;stable&#39; }</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Using a tagged release; wildcard allowed (requires git 1.9.2 or above)</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;fatih/vim-go&#39;, { &#39;tag&#39;: &#39;*&#39; }</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Plugin options</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;nsf/gocode&#39;, { &#39;tag&#39;: &#39;v.20150303&#39;, &#39;rtp&#39;: &#39;vim&#39; }</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Plugin outside ~/.vim/plugged with post-update hook</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;junegunn/fzf&#39;, { &#39;dir&#39;: &#39;~/.fzf&#39;, &#39;do&#39;: &#39;./install --all&#39; }</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Unmanaged plugin (manually installed and updated)</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;~/my-prototype-plugin&#39;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Initialize plugin system</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>call</span> <span style=color:#a6e22e>plug</span>#<span style=color:#a6e22e>end</span>()<span style=color:#960050;background-color:#1e0010>
-</span></code></pre></td></tr></table>
-</div>
-</div><p>.ctags</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-vimrc data-lang=vimrc><span class=nx>syntax</span> <span class=nx>on</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>number</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>tags</span><span class=p>=</span><span class=nx>tags</span>;<span class=err>
+</span><span class=err></span><span class=nx>map</span> <span class=p>&lt;</span><span class=nx>c</span><span class=p>-</span>]<span class=p>&gt;</span> <span class=nx>g</span><span class=p>&lt;</span><span class=nx>c</span><span class=p>-</span>]<span class=p>&gt;</span><span class=err>
+</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>smartindent</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>tabstop</span><span class=p>=</span><span class=m>4</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>shiftwidth</span><span class=p>=</span><span class=m>4</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>expandtab</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>softtabstop</span><span class=p>=</span><span class=m>4</span><span class=err>
+</span><span class=err></span><span class=c>&#34; 高亮搜索内容</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>hlsearch</span><span class=err>
+</span><span class=err></span><span class=c>&#34; 忽略搜索大小写</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>ignorecase</span><span class=err>
+</span><span class=err></span><span class=c>&#34; 智能搜索</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>smartcase</span><span class=err>
+</span><span class=err></span><span class=c>&#34; 输入时显示搜索内容</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>incsearch</span><span class=err>
+</span><span class=err>
+</span><span class=err></span><span class=nx>source</span> $<span class=nx>VIMRUNTIME</span><span class=sr>/ftplugin/</span><span class=nx>man</span>.<span class=nx>vim</span><span class=err>
+</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>wildmenu</span><span class=err>
+</span><span class=err></span><span class=c>&#34; 显示所有匹配的命令或文件名</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>wildmode</span><span class=p>=</span><span class=nx>list</span>:<span class=nx>longest</span><span class=p>,</span><span class=nx>full</span><span class=err>
+</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>fileencodings</span><span class=p>=</span><span class=nx>utf</span><span class=m>-8</span><span class=p>,</span><span class=nx>ucs</span><span class=p>-</span><span class=nx>bom</span><span class=p>,</span><span class=nx>gb18030</span><span class=p>,</span><span class=nx>gbk</span><span class=p>,</span><span class=nx>gb2312</span><span class=p>,</span><span class=nx>cp936</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>termencoding</span><span class=p>=</span><span class=nx>utf</span><span class=m>-8</span><span class=err>
+</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>encoding</span><span class=p>=</span><span class=nx>utf</span><span class=m>-8</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; 解决插入模式下delete/backspce键失效问题</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>backspace</span><span class=p>=</span><span class=m>2</span><span class=err>
+</span><span class=err></span><span class=nx>set</span> <span class=nx>laststatus</span><span class=p>=</span><span class=m>2</span><span class=err>
+</span><span class=err></span><span class=k>if</span> <span class=p>!</span><span class=nx>has</span><span class=p>(</span><span class=s1>&#39;gui_running&#39;</span><span class=p>)</span><span class=err>
+</span><span class=err></span>  <span class=nx>set</span> <span class=nx>t_Co</span><span class=p>=</span><span class=m>256</span><span class=err>
+</span><span class=err></span><span class=k>endif</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; let Tlist_Show_One_File=1     &#34;不同时显示多个文件的tag，只显示当前文件的</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let Tlist_Exit_OnlyWindow=1   &#34;如果taglist窗口是最后一个窗口，则退出vim</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let Tlist_Use_Right_Window=1</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let Tlist_Ctags_Cmd=&#34;/usr/bin/ctags&#34; &#34;将taglist与ctags关联</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34;让vim记忆上次编辑的位置</span><span class=err>
+</span><span class=err></span><span class=k>if</span> <span class=nx>has</span><span class=p>(</span><span class=s2>&#34;autocmd&#34;</span><span class=p>)</span><span class=err>
+</span><span class=err></span>  <span class=nx>au</span> <span class=nx>BufReadPost</span> * <span class=k>if</span> <span class=nx>line</span><span class=p>(</span><span class=s2>&#34;&#39;\&#34;&#34;</span><span class=p>)</span> <span class=p>&gt;</span> <span class=m>1</span> &amp;&amp; <span class=nx>line</span><span class=p>(</span><span class=s2>&#34;&#39;\&#34;&#34;</span><span class=p>)</span> <span class=p>&lt;=</span> <span class=nx>line</span><span class=p>(</span><span class=s2>&#34;$&#34;</span><span class=p>)</span> <span class=p>|</span> <span class=nx>exe</span> <span class=s2>&#34;normal! g&#39;\&#34;&#34;</span> <span class=p>|</span> <span class=k>endif</span><span class=err>
+</span><span class=err></span><span class=k>endif</span><span class=err>
+</span><span class=err>
+</span><span class=err></span><span class=nx>nmap</span> <span class=p>&lt;</span><span class=nx>silent</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>F8</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>Plug</span><span class=p>&gt;</span><span class=nx>MarkdownPreview</span>        <span class=c>&#34; 普通模式</span><span class=err>
+</span><span class=err></span><span class=nx>imap</span> <span class=p>&lt;</span><span class=nx>silent</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>F8</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>Plug</span><span class=p>&gt;</span><span class=nx>MarkdownPreview</span>        <span class=c>&#34; 插入模式</span><span class=err>
+</span><span class=err></span><span class=nx>nmap</span> <span class=p>&lt;</span><span class=nx>silent</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>F9</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>Plug</span><span class=p>&gt;</span><span class=nx>StopMarkdownPreview</span>    <span class=c>&#34; 普通模式</span><span class=err>
+</span><span class=err></span><span class=nx>imap</span> <span class=p>&lt;</span><span class=nx>silent</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>F9</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>Plug</span><span class=p>&gt;</span><span class=nx>StopMarkdownPreview</span>    <span class=c>&#34; 插入模式</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; open NERDTree with Ctrl+n</span><span class=err>
+</span><span class=err></span><span class=nx>map</span> <span class=p>&lt;</span><span class=nx>C</span><span class=p>-</span><span class=nx>n</span><span class=p>&gt;</span> :<span class=nx>NERDTreeToggle</span><span class=p>&lt;</span><span class=nx>CR</span><span class=p>&gt;</span><span class=err>
+</span><span class=err></span><span class=c>&#34; map &lt;F4&gt; :Tlist&lt;CR&gt;</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; tagbar config</span><span class=err>
+</span><span class=err></span><span class=nx>map</span> <span class=p>&lt;</span><span class=nx>F4</span><span class=p>&gt;</span> :<span class=nx>Tagbar</span><span class=p>&lt;</span><span class=nx>CR</span><span class=p>&gt;</span><span class=err>
+</span><span class=err></span><span class=k>let</span> <span class=nx>g</span>:<span class=nx>tagbar_autofocus</span> <span class=p>=</span> <span class=m>1</span> <span class=c>&#34;这是tagbar一打开，光标即在tagbar页面内，默认在vim打开的文件内</span><span class=err>
+</span><span class=err></span><span class=k>let</span> <span class=nx>g</span>:<span class=nx>tagbar_sort</span> <span class=p>=</span> <span class=m>0</span>                                         <span class=c>&#34;设置标签不排序，默认排序</span><span class=err>
+</span><span class=err></span><span class=k>let</span> <span class=nx>g</span>:<span class=nx>tagbar_type_make</span> <span class=p>=</span> {<span class=err>
+</span><span class=err></span>            \ <span class=s1>&#39;kinds&#39;</span>:[<span class=err>
+</span><span class=err></span>                \ <span class=s1>&#39;m:macros&#39;</span><span class=p>,</span><span class=err>
+</span><span class=err></span>                \ <span class=s1>&#39;t:targets&#39;</span><span class=err>
+</span><span class=err></span>            \ ]<span class=err>
+</span><span class=err></span>\}<span class=err>
+</span><span class=err></span><span class=k>let</span> <span class=nx>g</span>:<span class=nx>tagbar_type_markdown</span> <span class=p>=</span> {<span class=err>
+</span><span class=err></span>    \ <span class=s1>&#39;ctagstype&#39;</span> : <span class=s1>&#39;markdown&#39;</span><span class=p>,</span><span class=err>
+</span><span class=err></span>    \ <span class=s1>&#39;kinds&#39;</span> : [<span class=err>
+</span><span class=err></span>        \ <span class=s1>&#39;h:Heading_L1&#39;</span><span class=p>,</span><span class=err>
+</span><span class=err></span>        \ <span class=s1>&#39;i:Heading_L2&#39;</span><span class=p>,</span><span class=err>
+</span><span class=err></span>        \ <span class=s1>&#39;k:Heading_L3&#39;</span><span class=err>
+</span><span class=err></span>    \ ]<span class=err>
+</span><span class=err></span>\ }<span class=err>
+</span><span class=err></span><span class=c>&#34; end</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; vim-markdown</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let g:markdown_enable_spell_checking = 0</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let g:markdown_enable_input_abbreviations = 0</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let g:markdown_enable_conceal = 0</span><span class=err>
+</span><span class=err></span><span class=k>let</span> <span class=nx>g</span>:<span class=nx>vim_markdown_folding_disabled</span> <span class=p>=</span> <span class=m>1</span><span class=err>
+</span><span class=err></span><span class=k>let</span> <span class=nx>g</span>:<span class=nx>vim_markdown_frontmatter</span><span class=p>=</span><span class=m>1</span><span class=err>
+</span><span class=err></span><span class=k>let</span> <span class=nx>g</span>:<span class=nx>vim_markdown_math</span> <span class=p>=</span> <span class=m>1</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let g:vim_markdown_toml_frontmatter = 1</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let g:vim_markdown_json_frontmatter = 1</span><span class=err>
+</span><span class=err></span><span class=c>&#34; let g:vim_markdown_strikethrough = 1</span><span class=err>
+</span><span class=err></span><span class=c>&#34; end</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Specify a directory for plugins</span><span class=err>
+</span><span class=err></span><span class=c>&#34; - For Neovim: ~/.local/share/nvim/plugged</span><span class=err>
+</span><span class=err></span><span class=c>&#34; - Avoid using standard Vim directory names like &#39;plugin&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>call</span> <span class=nx>plug</span>#<span class=nx>begin</span><span class=p>(</span><span class=s1>&#39;~/.vim/plugged&#39;</span><span class=p>)</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Make sure you use single quotes</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Shorthand notation; fetches https://github.com/junegunn/vim-easy-align</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;junegunn/vim-easy-align&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;itchyny/lightline.vim&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;kien/ctrlp.vim&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;scrooloose/nerdtree&#39;</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;Xuyuanp/nerdtree-git-plugin&#39;</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;vim-scripts/taglist.vim&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;majutsushi/tagbar&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;ervandew/supertab&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;iamcco/mathjax-support-for-mkdp&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;godlygeek/tabular&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;plasticboy/vim-markdown&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;iamcco/markdown-preview.vim&#39;</span><span class=err>
+</span><span class=err></span><span class=nx>Plug</span> <span class=s1>&#39;rust-lang/rust.vim&#39;</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;fatih/vim-go&#39;, { &#39;do&#39;: &#39;:GoUpdateBinaries&#39; }</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;vim-scripts/OmniCppComplete&#39;</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;vim-scripts/winmanager&#39;</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Any valid git URL is allowed</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;https://github.com/junegunn/vim-github-dashboard.git&#39;</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Multiple Plug commands can be written in a single line using | separators</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;SirVer/ultisnips&#39; | Plug &#39;honza/vim-snippets&#39;</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; On-demand loading</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;scrooloose/nerdtree&#39;, { &#39;on&#39;:  &#39;NERDTreeToggle&#39; }</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;tpope/vim-fireplace&#39;, { &#39;for&#39;: &#39;clojure&#39; }</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Using a non-master branch</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;rdnetto/YCM-Generator&#39;, { &#39;branch&#39;: &#39;stable&#39; }</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Using a tagged release; wildcard allowed (requires git 1.9.2 or above)</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;fatih/vim-go&#39;, { &#39;tag&#39;: &#39;*&#39; }</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Plugin options</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;nsf/gocode&#39;, { &#39;tag&#39;: &#39;v.20150303&#39;, &#39;rtp&#39;: &#39;vim&#39; }</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Plugin outside ~/.vim/plugged with post-update hook</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;junegunn/fzf&#39;, { &#39;dir&#39;: &#39;~/.fzf&#39;, &#39;do&#39;: &#39;./install --all&#39; }</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Unmanaged plugin (manually installed and updated)</span><span class=err>
+</span><span class=err></span><span class=c>&#34; Plug &#39;~/my-prototype-plugin&#39;</span><span class=err>
+</span><span class=err></span><span class=c>
+</span><span class=c>&#34; Initialize plugin system</span><span class=err>
+</span><span class=err></span><span class=nx>call</span> <span class=nx>plug</span>#<span class=nx>end</span><span class=p>()</span><span class=err>
+</span></code></pre></div><p>.ctags</p>
 <pre tabindex=0><code>--regex-make=/^([^# \t]*):/\1/t,target/
 --langdef=markdown
 --langmap=markdown:.mkd
@@ -591,14 +405,16 @@ sudo apt install ctags
 </div>
 </body>
 <div>
-<small> words: 2341 tags:</small>
+<small> words: 2201 tags:</small>
 <small><code><a href=https://arair.net/tags/vim>vim</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

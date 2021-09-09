@@ -32,9 +32,11 @@
 执行缺省操作：Linux对每种信号都规定了默认操作
 "><meta itemprop=datePublished content="2021-03-08T10:41:17+08:00">
 <meta itemprop=dateModified content="2021-03-08T10:41:17+08:00">
-<meta itemprop=wordCount content="2390">
+<meta itemprop=wordCount content="2219">
 <meta itemprop=keywords content="linux,c,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -72,19 +74,10 @@
 </ol>
 <h2 id=signal>signal</h2>
 <p>设置信号处理方式</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>typedef</span> <span style=color:#a6e22e>void</span> (<span style=color:#f92672>*</span>sighandler_t)(<span style=color:#66d9ef>int</span>);
-sighandler_t <span style=color:#a6e22e>signal</span>(<span style=color:#66d9ef>int</span> signum, sighandler_t handler);
-</code></pre></td></tr></table>
-</div>
-</div><p>参数说明：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=k>typedef</span> <span class=nf>void</span> <span class=p>(</span><span class=o>*</span><span class=n>sighandler_t</span><span class=p>)(</span><span class=kt>int</span><span class=p>);</span>
+<span class=n>sighandler_t</span> <span class=nf>signal</span><span class=p>(</span><span class=kt>int</span> <span class=n>signum</span><span class=p>,</span> <span class=n>sighandler_t</span> <span class=n>handler</span><span class=p>);</span>
+</code></pre></div><p>参数说明：</p>
 <ul>
 <li>signum：信号编号</li>
 <li>handler：</li>
@@ -102,69 +95,35 @@ sighandler_t <span style=color:#a6e22e>signal</span>(<span style=color:#66d9ef>i
 <li>失败：SIG_ERR(-1)</li>
 </ul>
 <p><strong>示例</strong></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/time.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>signalHandler</span>(<span style=color:#66d9ef>int</span> signo)
-{
-    <span style=color:#66d9ef>switch</span> (signo){
-        <span style=color:#66d9ef>case</span> SIGALRM:
-            printf(<span style=color:#e6db74>&#34;Caught the SIGALRM signal!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-            <span style=color:#66d9ef>break</span>;
-   }
-}
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/time.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>void</span> <span class=nf>signalHandler</span><span class=p>(</span><span class=kt>int</span> <span class=n>signo</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=k>switch</span> <span class=p>(</span><span class=n>signo</span><span class=p>){</span>
+        <span class=k>case</span> <span class=nl>SIGALRM</span><span class=p>:</span>
+            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;Caught the SIGALRM signal!</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+            <span class=k>break</span><span class=p>;</span>
+   <span class=p>}</span>
+<span class=p>}</span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>argv[])
-{
-    signal(SIGALRM, signalHandler);
+<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span>
+<span class=p>{</span>
+    <span class=n>signal</span><span class=p>(</span><span class=n>SIGALRM</span><span class=p>,</span> <span class=n>signalHandler</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>struct</span> itimerval new_value, old_value;
-    new_value.it_value.tv_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-    new_value.it_value.tv_usec <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-    new_value.it_interval.tv_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-    new_value.it_interval.tv_usec <span style=color:#f92672>=</span> <span style=color:#ae81ff>200000</span>;
-    setitimer(ITIMER_REAL, <span style=color:#f92672>&amp;</span>new_value, <span style=color:#f92672>&amp;</span>old_value);
+    <span class=k>struct</span> <span class=n>itimerval</span> <span class=n>new_value</span><span class=p>,</span> <span class=n>old_value</span><span class=p>;</span>
+    <span class=n>new_value</span><span class=p>.</span><span class=n>it_value</span><span class=p>.</span><span class=n>tv_sec</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+    <span class=n>new_value</span><span class=p>.</span><span class=n>it_value</span><span class=p>.</span><span class=n>tv_usec</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+    <span class=n>new_value</span><span class=p>.</span><span class=n>it_interval</span><span class=p>.</span><span class=n>tv_sec</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+    <span class=n>new_value</span><span class=p>.</span><span class=n>it_interval</span><span class=p>.</span><span class=n>tv_usec</span> <span class=o>=</span> <span class=mi>200000</span><span class=p>;</span>
+    <span class=n>setitimer</span><span class=p>(</span><span class=n>ITIMER_REAL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>new_value</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>old_value</span><span class=p>);</span>
     
-    <span style=color:#66d9ef>for</span>(;;);
+    <span class=k>for</span><span class=p>(;;);</span>
      
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=常用信号列表>常用信号列表</h2>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=常用信号列表>常用信号列表</h2>
 <pre tabindex=0><code>SIGABRT     由调用abort函数产生，进程非正常退出
 SIGALRM     用alarm函数设置的timer超时或setitimer函数设置的interval timer超时
 SIGBUS      某种特定的硬件异常，通常由内存访问引起
@@ -209,75 +168,34 @@ SIGXRES     Solaris专用，进程超过资源限制的时候发送
 </code></pre><h2 id=sigemptyset>sigemptyset</h2>
 <p>将信号集初始化为空。</p>
 <p>glibc中的实现</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/* A `sigset_t&#39; has a bit for each signal.  */</span>
-<span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>int</span> __sigset_t;         
-<span style=color:#75715e>/* A set of signals to be blocked, unblocked, or waited for.  */</span>
-<span style=color:#66d9ef>typedef</span> __sigset_t sigset_t;                                    
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cm>/* A `sigset_t&#39; has a bit for each signal.  */</span>
+<span class=k>typedef</span> <span class=kt>unsigned</span> <span class=kt>long</span> <span class=kt>int</span> <span class=n>__sigset_t</span><span class=p>;</span>         
+<span class=cm>/* A set of signals to be blocked, unblocked, or waited for.  */</span>
+<span class=k>typedef</span> <span class=n>__sigset_t</span> <span class=n>sigset_t</span><span class=p>;</span>                                    
 
-<span style=color:#75715e>/* Clear all signals from SET.  */</span>
-<span style=color:#66d9ef>int</span>                                  
-<span style=color:#a6e22e>sigemptyset</span> (sigset_t <span style=color:#f92672>*</span>set)          
-{                                    
-  <span style=color:#66d9ef>if</span> (set <span style=color:#f92672>==</span> NULL)                   
-    {                                
-      __set_errno (EINVAL);          
-      <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;                     
-    }                                
+<span class=cm>/* Clear all signals from SET.  */</span>
+<span class=kt>int</span>                                  
+<span class=nf>sigemptyset</span> <span class=p>(</span><span class=n>sigset_t</span> <span class=o>*</span><span class=n>set</span><span class=p>)</span>          
+<span class=p>{</span>                                    
+  <span class=k>if</span> <span class=p>(</span><span class=n>set</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span>                   
+    <span class=p>{</span>                                
+      <span class=n>__set_errno</span> <span class=p>(</span><span class=n>EINVAL</span><span class=p>);</span>          
+      <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>                     
+    <span class=p>}</span>                                
                                      
-  memset (set, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>sizeof</span> (sigset_t));
+  <span class=n>memset</span> <span class=p>(</span><span class=n>set</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=k>sizeof</span> <span class=p>(</span><span class=n>sigset_t</span><span class=p>));</span>
                                      
-  <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;                          
-}
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=sigaddset>sigaddset</h2>
+  <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>                          
+<span class=p>}</span>
+</code></pre></div><h2 id=sigaddset>sigaddset</h2>
 <p>将指定信号加入到信号集合中去</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sigaddset</span>(sigset_t <span style=color:#f92672>*</span>set, <span style=color:#66d9ef>int</span> signum);
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=sigaction>sigaction</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>sigaddset</span><span class=p>(</span><span class=n>sigset_t</span> <span class=o>*</span><span class=n>set</span><span class=p>,</span> <span class=kt>int</span> <span class=n>signum</span><span class=p>);</span>
+</code></pre></div><h2 id=sigaction>sigaction</h2>
 <p>sigaction函数的功能是检查或修改与指定信号相关联的处理动作</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sigaction</span>(<span style=color:#66d9ef>int</span> signum, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> sigaction <span style=color:#f92672>*</span>act,
-                     <span style=color:#66d9ef>struct</span> sigaction <span style=color:#f92672>*</span>oldact);
-</code></pre></td></tr></table>
-</div>
-</div><p>参数：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>sigaction</span><span class=p>(</span><span class=kt>int</span> <span class=n>signum</span><span class=p>,</span> <span class=k>const</span> <span class=k>struct</span> <span class=n>sigaction</span> <span class=o>*</span><span class=n>act</span><span class=p>,</span>
+                     <span class=k>struct</span> <span class=n>sigaction</span> <span class=o>*</span><span class=n>oldact</span><span class=p>);</span>
+</code></pre></div><p>参数：</p>
 <ul>
 <li>signum：信号id</li>
 <li>act：对信号的处理</li>
@@ -285,288 +203,149 @@ SIGXRES     Solaris专用，进程超过资源限制的时候发送
 </ul>
 <p>act与oldact为NULL时，用于检测信号的有效性</p>
 <p>相关结构体</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> sigaction {
-    <span style=color:#66d9ef>void</span>     (<span style=color:#f92672>*</span>sa_handler)(<span style=color:#66d9ef>int</span>);
-    <span style=color:#66d9ef>void</span>     (<span style=color:#f92672>*</span>sa_sigaction)(<span style=color:#66d9ef>int</span>, siginfo_t <span style=color:#f92672>*</span>, <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>);
-    sigset_t   sa_mask;
-    <span style=color:#66d9ef>int</span>        sa_flags;
-    <span style=color:#66d9ef>void</span>     (<span style=color:#f92672>*</span>sa_restorer)(<span style=color:#66d9ef>void</span>);
-};
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>sigaction</span> <span class=p>{</span>
+    <span class=kt>void</span>     <span class=p>(</span><span class=o>*</span><span class=n>sa_handler</span><span class=p>)(</span><span class=kt>int</span><span class=p>);</span>
+    <span class=kt>void</span>     <span class=p>(</span><span class=o>*</span><span class=n>sa_sigaction</span><span class=p>)(</span><span class=kt>int</span><span class=p>,</span> <span class=n>siginfo_t</span> <span class=o>*</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=p>);</span>
+    <span class=n>sigset_t</span>   <span class=n>sa_mask</span><span class=p>;</span>
+    <span class=kt>int</span>        <span class=n>sa_flags</span><span class=p>;</span>
+    <span class=kt>void</span>     <span class=p>(</span><span class=o>*</span><span class=n>sa_restorer</span><span class=p>)(</span><span class=kt>void</span><span class=p>);</span>
+<span class=p>};</span>
 
-siginfo_t {
-    <span style=color:#66d9ef>int</span>      si_signo;    <span style=color:#75715e>/* Signal number */</span>
-    <span style=color:#66d9ef>int</span>      si_errno;    <span style=color:#75715e>/* An errno value */</span>
-    <span style=color:#66d9ef>int</span>      si_code;     <span style=color:#75715e>/* Signal code */</span>
-    <span style=color:#66d9ef>int</span>      si_trapno;   <span style=color:#75715e>/* Trap number that caused
-</span><span style=color:#75715e>                             hardware-generated signal
-</span><span style=color:#75715e>                             (unused on most architectures) */</span>
-    pid_t    si_pid;      <span style=color:#75715e>/* Sending process ID */</span>
-    uid_t    si_uid;      <span style=color:#75715e>/* Real user ID of sending process */</span>
-    <span style=color:#66d9ef>int</span>      si_status;   <span style=color:#75715e>/* Exit value or signal */</span>
-    clock_t  si_utime;    <span style=color:#75715e>/* User time consumed */</span>
-    clock_t  si_stime;    <span style=color:#75715e>/* System time consumed */</span>
-    sigval_t si_value;    <span style=color:#75715e>/* Signal value */</span>
-    <span style=color:#66d9ef>int</span>      si_int;      <span style=color:#75715e>/* POSIX.1b signal */</span>
-    <span style=color:#66d9ef>void</span>    <span style=color:#f92672>*</span>si_ptr;      <span style=color:#75715e>/* POSIX.1b signal */</span>
-    <span style=color:#66d9ef>int</span>      si_overrun;  <span style=color:#75715e>/* Timer overrun count; POSIX.1b timers */</span>
-    <span style=color:#66d9ef>int</span>      si_timerid;  <span style=color:#75715e>/* Timer ID; POSIX.1b timers */</span>
-    <span style=color:#66d9ef>void</span>    <span style=color:#f92672>*</span>si_addr;     <span style=color:#75715e>/* Memory location which caused fault */</span>
-    <span style=color:#66d9ef>long</span>     si_band;     <span style=color:#75715e>/* Band event (was int in
-</span><span style=color:#75715e>                             glibc 2.3.2 and earlier) */</span>
-    <span style=color:#66d9ef>int</span>      si_fd;       <span style=color:#75715e>/* File descriptor */</span>
-    <span style=color:#66d9ef>short</span>    si_addr_lsb; <span style=color:#75715e>/* Least significant bit of address
-</span><span style=color:#75715e>                             (since Linux 2.6.32) */</span>
-}
+<span class=n>siginfo_t</span> <span class=p>{</span>
+    <span class=kt>int</span>      <span class=n>si_signo</span><span class=p>;</span>    <span class=cm>/* Signal number */</span>
+    <span class=kt>int</span>      <span class=n>si_errno</span><span class=p>;</span>    <span class=cm>/* An errno value */</span>
+    <span class=kt>int</span>      <span class=n>si_code</span><span class=p>;</span>     <span class=cm>/* Signal code */</span>
+    <span class=kt>int</span>      <span class=n>si_trapno</span><span class=p>;</span>   <span class=cm>/* Trap number that caused
+</span><span class=cm>                             hardware-generated signal
+</span><span class=cm>                             (unused on most architectures) */</span>
+    <span class=n>pid_t</span>    <span class=n>si_pid</span><span class=p>;</span>      <span class=cm>/* Sending process ID */</span>
+    <span class=n>uid_t</span>    <span class=n>si_uid</span><span class=p>;</span>      <span class=cm>/* Real user ID of sending process */</span>
+    <span class=kt>int</span>      <span class=n>si_status</span><span class=p>;</span>   <span class=cm>/* Exit value or signal */</span>
+    <span class=n>clock_t</span>  <span class=n>si_utime</span><span class=p>;</span>    <span class=cm>/* User time consumed */</span>
+    <span class=n>clock_t</span>  <span class=n>si_stime</span><span class=p>;</span>    <span class=cm>/* System time consumed */</span>
+    <span class=n>sigval_t</span> <span class=n>si_value</span><span class=p>;</span>    <span class=cm>/* Signal value */</span>
+    <span class=kt>int</span>      <span class=n>si_int</span><span class=p>;</span>      <span class=cm>/* POSIX.1b signal */</span>
+    <span class=kt>void</span>    <span class=o>*</span><span class=n>si_ptr</span><span class=p>;</span>      <span class=cm>/* POSIX.1b signal */</span>
+    <span class=kt>int</span>      <span class=n>si_overrun</span><span class=p>;</span>  <span class=cm>/* Timer overrun count; POSIX.1b timers */</span>
+    <span class=kt>int</span>      <span class=n>si_timerid</span><span class=p>;</span>  <span class=cm>/* Timer ID; POSIX.1b timers */</span>
+    <span class=kt>void</span>    <span class=o>*</span><span class=n>si_addr</span><span class=p>;</span>     <span class=cm>/* Memory location which caused fault */</span>
+    <span class=kt>long</span>     <span class=n>si_band</span><span class=p>;</span>     <span class=cm>/* Band event (was int in
+</span><span class=cm>                             glibc 2.3.2 and earlier) */</span>
+    <span class=kt>int</span>      <span class=n>si_fd</span><span class=p>;</span>       <span class=cm>/* File descriptor */</span>
+    <span class=kt>short</span>    <span class=n>si_addr_lsb</span><span class=p>;</span> <span class=cm>/* Least significant bit of address
+</span><span class=cm>                             (since Linux 2.6.32) */</span>
+<span class=p>}</span>
 
-<span style=color:#75715e>#ifdef __USE_POSIX199309
-</span><span style=color:#75715e></span><span style=color:#66d9ef>union</span> sigval
-{
-  <span style=color:#66d9ef>int</span> sival_int;
-  <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>sival_ptr;
-};
+<span class=cp>#ifdef __USE_POSIX199309
+</span><span class=cp></span><span class=k>union</span> <span class=n>sigval</span>
+<span class=p>{</span>
+  <span class=kt>int</span> <span class=n>sival_int</span><span class=p>;</span>
+  <span class=kt>void</span> <span class=o>*</span><span class=n>sival_ptr</span><span class=p>;</span>
+<span class=p>};</span>
 
-<span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>union</span> sigval __sigval_t;
-<span style=color:#75715e>#else
-</span><span style=color:#75715e></span><span style=color:#66d9ef>union</span> __sigval
-{
-  <span style=color:#66d9ef>int</span> __sival_int;
-  <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>__sival_ptr;
-};
+<span class=k>typedef</span> <span class=k>union</span> <span class=n>sigval</span> <span class=n>__sigval_t</span><span class=p>;</span>
+<span class=cp>#else
+</span><span class=cp></span><span class=k>union</span> <span class=n>__sigval</span>
+<span class=p>{</span>
+  <span class=kt>int</span> <span class=n>__sival_int</span><span class=p>;</span>
+  <span class=kt>void</span> <span class=o>*</span><span class=n>__sival_ptr</span><span class=p>;</span>
+<span class=p>};</span>
 
-<span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>union</span> __sigval __sigval_t;
-<span style=color:#75715e>#endif
-</span></code></pre></td></tr></table>
-</div>
-</div><p>示例(发送信号函数在<code>sigqueue</code>函数的例子中，需要两个配合测试)：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>handle_sigaction</span>(<span style=color:#66d9ef>int</span> signum, siginfo_t <span style=color:#f92672>*</span>info, <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>context)
-{
-    printf(<span style=color:#e6db74>&#34;signal:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, signum);
-    printf(<span style=color:#e6db74>&#34;info:%x</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, info<span style=color:#f92672>-&gt;</span>si_int);
-}
+<span class=k>typedef</span> <span class=k>union</span> <span class=n>__sigval</span> <span class=n>__sigval_t</span><span class=p>;</span>
+<span class=cp>#endif
+</span></code></pre></div><p>示例(发送信号函数在<code>sigqueue</code>函数的例子中，需要两个配合测试)：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>void</span> <span class=nf>handle_sigaction</span><span class=p>(</span><span class=kt>int</span> <span class=n>signum</span><span class=p>,</span> <span class=n>siginfo_t</span> <span class=o>*</span><span class=n>info</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=n>context</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;signal:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>signum</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;info:%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>info</span><span class=o>-&gt;</span><span class=n>si_int</span><span class=p>);</span>
+<span class=p>}</span>
 
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-    <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-    <span style=color:#66d9ef>struct</span> sigaction act;
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>sigaction</span> <span class=n>act</span><span class=p>;</span>
 
-    sigemptyset(<span style=color:#f92672>&amp;</span>act.sa_mask);
-    act.sa_sigaction <span style=color:#f92672>=</span> handle_sigaction;
-    act.sa_flags <span style=color:#f92672>=</span> SA_SIGINFO<span style=color:#f92672>|</span>SA_RESTART;
-    sigaction(SIGRTMIN<span style=color:#f92672>+</span><span style=color:#ae81ff>9</span>, <span style=color:#f92672>&amp;</span>act, NULL);
+    <span class=n>sigemptyset</span><span class=p>(</span><span class=o>&amp;</span><span class=n>act</span><span class=p>.</span><span class=n>sa_mask</span><span class=p>);</span>
+    <span class=n>act</span><span class=p>.</span><span class=n>sa_sigaction</span> <span class=o>=</span> <span class=n>handle_sigaction</span><span class=p>;</span>
+    <span class=n>act</span><span class=p>.</span><span class=n>sa_flags</span> <span class=o>=</span> <span class=n>SA_SIGINFO</span><span class=o>|</span><span class=n>SA_RESTART</span><span class=p>;</span>
+    <span class=n>sigaction</span><span class=p>(</span><span class=n>SIGRTMIN</span><span class=o>+</span><span class=mi>9</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>act</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>)
-    {
-        sleep(<span style=color:#ae81ff>1</span>);
-        printf(<span style=color:#e6db74>&#34;sleeping %d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i);
-        i<span style=color:#f92672>++</span>;
-    }
+    <span class=k>while</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;sleeping %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>);</span>
+        <span class=n>i</span><span class=o>++</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=sigqueue>sigqueue</h2>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=sigqueue>sigqueue</h2>
 <p>用于给指定进程发送信号，并附带一些参数</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> sigqueue(pid_t pid, <span style=color:#66d9ef>int</span> sig, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>union</span> sigval val)
-</code></pre></td></tr></table>
-</div>
-</div><p>参数：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=n>sigqueue</span><span class=p>(</span><span class=n>pid_t</span> <span class=n>pid</span><span class=p>,</span> <span class=kt>int</span> <span class=n>sig</span><span class=p>,</span> <span class=k>const</span> <span class=k>union</span> <span class=n>sigval</span> <span class=n>val</span><span class=p>)</span>
+</code></pre></div><p>参数：</p>
 <ul>
 <li>pid：进程pid</li>
 <li>sig：发送的信号</li>
 <li>val：发送信号时附带的参数</li>
 </ul>
 <p>示例（对应<code>sigaction</code>函数的信号处理示例）：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;                                                                      </span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;                                                                     </span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;                                                                     </span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;                                                                     </span><span style=color:#75715e>
-</span><span style=color:#75715e></span>                                                                                        
-<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>send_signal</span>(<span style=color:#66d9ef>int</span> flag)                                           
-{                                                                                       
-    FILE <span style=color:#f92672>*</span> fp;                                                                          
-    <span style=color:#66d9ef>char</span> buffer[<span style=color:#ae81ff>80</span>];                                                                    
-    pid_t pid;                                                                          
-    <span style=color:#66d9ef>union</span> sigval sival_data;                                                            
-    <span style=color:#66d9ef>int</span> ret;                                                                            
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;                                                                      </span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;                                                                     </span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;                                                                     </span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;                                                                     </span><span class=cp>
+</span><span class=cp></span>                                                                                        
+<span class=k>static</span> <span class=kt>void</span> <span class=nf>send_signal</span><span class=p>(</span><span class=kt>int</span> <span class=n>flag</span><span class=p>)</span>                                           
+<span class=p>{</span>                                                                                       
+    <span class=n>FILE</span> <span class=o>*</span> <span class=n>fp</span><span class=p>;</span>                                                                          
+    <span class=kt>char</span> <span class=n>buffer</span><span class=p>[</span><span class=mi>80</span><span class=p>];</span>                                                                    
+    <span class=n>pid_t</span> <span class=n>pid</span><span class=p>;</span>                                                                          
+    <span class=k>union</span> <span class=n>sigval</span> <span class=n>sival_data</span><span class=p>;</span>                                                            
+    <span class=kt>int</span> <span class=n>ret</span><span class=p>;</span>                                                                            
                                                                                         
-    fp <span style=color:#f92672>=</span> popen(<span style=color:#e6db74>&#34;pidof signal_process&#34;</span>,<span style=color:#e6db74>&#34;r&#34;</span>);                                             
-    <span style=color:#66d9ef>if</span>(fp <span style=color:#f92672>!=</span> NULL){                                                                     
-        memset(buffer,<span style=color:#ae81ff>0x00</span>,<span style=color:#66d9ef>sizeof</span>(buffer));                                             
-        <span style=color:#66d9ef>if</span> ((fgets(buffer,<span style=color:#66d9ef>sizeof</span>(buffer),fp) <span style=color:#f92672>==</span> NULL) <span style=color:#f92672>||</span> (buffer[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;\0&#39;</span>)){          
-            pclose(fp);                                                                 
-            <span style=color:#66d9ef>return</span>;                                                                     
-        }                                                                               
-    }<span style=color:#66d9ef>else</span>{                                                                              
-        <span style=color:#66d9ef>return</span>;                                                                         
-    }                                                                                   
-    pclose(fp);                                                                         
+    <span class=n>fp</span> <span class=o>=</span> <span class=n>popen</span><span class=p>(</span><span class=s>&#34;pidof signal_process&#34;</span><span class=p>,</span><span class=s>&#34;r&#34;</span><span class=p>);</span>                                             
+    <span class=k>if</span><span class=p>(</span><span class=n>fp</span> <span class=o>!=</span> <span class=nb>NULL</span><span class=p>){</span>                                                                     
+        <span class=n>memset</span><span class=p>(</span><span class=n>buffer</span><span class=p>,</span><span class=mh>0x00</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>buffer</span><span class=p>));</span>                                             
+        <span class=k>if</span> <span class=p>((</span><span class=n>fgets</span><span class=p>(</span><span class=n>buffer</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>buffer</span><span class=p>),</span><span class=n>fp</span><span class=p>)</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span> <span class=o>||</span> <span class=p>(</span><span class=n>buffer</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>==</span> <span class=sc>&#39;\0&#39;</span><span class=p>)){</span>          
+            <span class=n>pclose</span><span class=p>(</span><span class=n>fp</span><span class=p>);</span>                                                                 
+            <span class=k>return</span><span class=p>;</span>                                                                     
+        <span class=p>}</span>                                                                               
+    <span class=p>}</span><span class=k>else</span><span class=p>{</span>                                                                              
+        <span class=k>return</span><span class=p>;</span>                                                                         
+    <span class=p>}</span>                                                                                   
+    <span class=n>pclose</span><span class=p>(</span><span class=n>fp</span><span class=p>);</span>                                                                         
                                                                                         
-    pid <span style=color:#f92672>=</span> atoi(buffer);                                                                 
-    sival_data.sival_int <span style=color:#f92672>=</span> flag;                                                        
-    ret <span style=color:#f92672>=</span> sigqueue(pid, SIGRTMIN<span style=color:#f92672>+</span><span style=color:#ae81ff>9</span>, sival_data);                                        
-    <span style=color:#66d9ef>return</span>;                                                                             
-}                                                                                       
+    <span class=n>pid</span> <span class=o>=</span> <span class=n>atoi</span><span class=p>(</span><span class=n>buffer</span><span class=p>);</span>                                                                 
+    <span class=n>sival_data</span><span class=p>.</span><span class=n>sival_int</span> <span class=o>=</span> <span class=n>flag</span><span class=p>;</span>                                                        
+    <span class=n>ret</span> <span class=o>=</span> <span class=n>sigqueue</span><span class=p>(</span><span class=n>pid</span><span class=p>,</span> <span class=n>SIGRTMIN</span><span class=o>+</span><span class=mi>9</span><span class=p>,</span> <span class=n>sival_data</span><span class=p>);</span>                                        
+    <span class=k>return</span><span class=p>;</span>                                                                             
+<span class=p>}</span>                                                                                       
                                                                                         
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()                                                                              
-{                                                                                       
-    send_signal(<span style=color:#ae81ff>8</span>);                                                         
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;                                                                           
-}                                                                                       
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>                                                                              
+<span class=p>{</span>                                                                                       
+    <span class=n>send_signal</span><span class=p>(</span><span class=mi>8</span><span class=p>);</span>                                                         
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>                                                                           
+<span class=p>}</span>                                                                                       
                                                                                         
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
 </article>
 </div>
 </body>
 <div>
-<small> words: 2390 tags:</small>
+<small> words: 2219 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

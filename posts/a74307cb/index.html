@@ -9,9 +9,11 @@
 <meta itemprop=name content="linux c syslog函数">
 <meta itemprop=description content="openlog， syslog， closelog是一套系统日志写入接口。"><meta itemprop=datePublished content="2021-06-03T21:31:26+08:00">
 <meta itemprop=dateModified content="2021-06-03T22:41:48+08:00">
-<meta itemprop=wordCount content="1134">
+<meta itemprop=wordCount content="1118">
 <meta itemprop=keywords content="linux,c,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -27,54 +29,26 @@
 <nav id=TableOfContents></nav>
 </aside>
 <p>openlog， syslog， closelog是一套系统日志写入接口。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;syslog.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>openlog</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>ident, <span style=color:#66d9ef>int</span> option, <span style=color:#66d9ef>int</span> facility);
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>syslog</span>(<span style=color:#66d9ef>int</span> priority, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, ...);
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>closelog</span>(<span style=color:#66d9ef>void</span>);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;syslog.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>void</span> <span class=nf>openlog</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>ident</span><span class=p>,</span> <span class=kt>int</span> <span class=n>option</span><span class=p>,</span> <span class=kt>int</span> <span class=n>facility</span><span class=p>);</span>
+<span class=kt>void</span> <span class=nf>syslog</span><span class=p>(</span><span class=kt>int</span> <span class=n>priority</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>format</span><span class=p>,</span> <span class=p>...);</span>
+<span class=kt>void</span> <span class=nf>closelog</span><span class=p>(</span><span class=kt>void</span><span class=p>);</span>
 
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>vsyslog</span>(<span style=color:#66d9ef>int</span> priority, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, va_list ap);
-</code></pre></td></tr></table>
-</div>
-</div><p><code>openlog()</code>是一个可选项，如果没有使用openlog()，会在使用syslog()时自动调用，ident将会是<code>NULL</code></p>
+<span class=kt>void</span> <span class=nf>vsyslog</span><span class=p>(</span><span class=kt>int</span> <span class=n>priority</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>format</span><span class=p>,</span> <span class=n>va_list</span> <span class=n>ap</span><span class=p>);</span>
+</code></pre></div><p><code>openlog()</code>是一个可选项，如果没有使用openlog()，会在使用syslog()时自动调用，ident将会是<code>NULL</code></p>
 <p><code>syslog()</code>是用来生成log，使用这个log由<code>syslogd</code>管理</p>
 <p><code>closelog()</code>用来关闭用来写syslog的文件描述符，是一个可选项。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;syslog.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>argv) {
-    openlog(<span style=color:#e6db74>&#34;zooyo&#34;</span>, LOG_CONS <span style=color:#f92672>|</span> LOG_PID, <span style=color:#ae81ff>0</span>);
-    syslog(LOG_INFO,
-            <span style=color:#e6db74>&#34;This is a syslog test message generated by program %sn&#34;</span>,
-            argv[<span style=color:#ae81ff>0</span>]);
-    closelog();
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>编译生成可执行程序后，运行一次程序将向/var/log/message文件添加一行信息如下：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;syslog.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>**</span><span class=n>argv</span><span class=p>)</span> <span class=p>{</span>
+    <span class=n>openlog</span><span class=p>(</span><span class=s>&#34;zooyo&#34;</span><span class=p>,</span> <span class=n>LOG_CONS</span> <span class=o>|</span> <span class=n>LOG_PID</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+    <span class=n>syslog</span><span class=p>(</span><span class=n>LOG_INFO</span><span class=p>,</span>
+            <span class=s>&#34;This is a syslog test message generated by program %sn&#34;</span><span class=p>,</span>
+            <span class=n>argv</span><span class=p>[</span><span class=mi>0</span><span class=p>]);</span>
+    <span class=n>closelog</span><span class=p>();</span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>编译生成可执行程序后，运行一次程序将向/var/log/message文件添加一行信息如下：</p>
 <pre tabindex=0><code>Mar  2 16:17:52 ubuntu zooyo[1380]: This is a syslog test message generated by program ./a.out
 </code></pre><p>openlog函数：</p>
 <p>参数</p>
@@ -129,15 +103,17 @@
 </div>
 </body>
 <div>
-<small> words: 1134 tags:</small>
+<small> words: 1118 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

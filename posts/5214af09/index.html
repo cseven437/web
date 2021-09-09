@@ -9,9 +9,11 @@
 <meta itemprop=name content="getaddrinfo函数">
 <meta itemprop=description content="getaddrinfo, freeaddrinfo, gai_strerror - network address and service translation"><meta itemprop=datePublished content="2021-03-01T20:23:57+08:00">
 <meta itemprop=dateModified content="2021-03-01T20:27:14+08:00">
-<meta itemprop=wordCount content="264">
+<meta itemprop=wordCount content="178">
 <meta itemprop=keywords content="c,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -28,211 +30,109 @@
 </aside>
 <p>getaddrinfo, freeaddrinfo, gai_strerror - network address and service translation</p>
 <p>函数声明</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/socket.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netdb.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getaddrinfo</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>node, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>service,
-               <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> addrinfo <span style=color:#f92672>*</span>hints,
-               <span style=color:#66d9ef>struct</span> addrinfo <span style=color:#f92672>**</span>res);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;netdb.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>getaddrinfo</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>node</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>service</span><span class=p>,</span>
+               <span class=k>const</span> <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>hints</span><span class=p>,</span>
+               <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>**</span><span class=n>res</span><span class=p>);</span>
 
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>freeaddrinfo</span>(<span style=color:#66d9ef>struct</span> addrinfo <span style=color:#f92672>*</span>res);
+<span class=kt>void</span> <span class=nf>freeaddrinfo</span><span class=p>(</span><span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>res</span><span class=p>);</span>
 
-<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>gai_strerror</span>(<span style=color:#66d9ef>int</span> errcode);
-</code></pre></td></tr></table>
-</div>
-</div><p>addrinfo 结构体</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> addrinfo {
-    <span style=color:#66d9ef>int</span>              ai_flags;
-    <span style=color:#66d9ef>int</span>              ai_family;
-    <span style=color:#66d9ef>int</span>              ai_socktype;
-    <span style=color:#66d9ef>int</span>              ai_protocol;
-    socklen_t        ai_addrlen;
-    <span style=color:#66d9ef>struct</span> sockaddr <span style=color:#f92672>*</span>ai_addr;
-    <span style=color:#66d9ef>char</span>            <span style=color:#f92672>*</span>ai_canonname;
-    <span style=color:#66d9ef>struct</span> addrinfo <span style=color:#f92672>*</span>ai_next;
-};
-</code></pre></td></tr></table>
-</div>
-</div><p>示例</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/socket.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netdb.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;error.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;arpa/inet.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
+<span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=nf>gai_strerror</span><span class=p>(</span><span class=kt>int</span> <span class=n>errcode</span><span class=p>);</span>
+</code></pre></div><p>addrinfo 结构体</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>addrinfo</span> <span class=p>{</span>
+    <span class=kt>int</span>              <span class=n>ai_flags</span><span class=p>;</span>
+    <span class=kt>int</span>              <span class=n>ai_family</span><span class=p>;</span>
+    <span class=kt>int</span>              <span class=n>ai_socktype</span><span class=p>;</span>
+    <span class=kt>int</span>              <span class=n>ai_protocol</span><span class=p>;</span>
+    <span class=n>socklen_t</span>        <span class=n>ai_addrlen</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=n>ai_addr</span><span class=p>;</span>
+    <span class=kt>char</span>            <span class=o>*</span><span class=n>ai_canonname</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>ai_next</span><span class=p>;</span>
+<span class=p>};</span>
+</code></pre></div><p>示例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;netdb.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;error.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
 
-    <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>host <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;www.baiduffdsfsdklfjrklger.com&#34;</span>;
-    <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>service <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;443&#34;</span>;
-    <span style=color:#66d9ef>char</span> hostip[<span style=color:#ae81ff>64</span>] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>0</span>};
-    <span style=color:#66d9ef>struct</span> addrinfo     <span style=color:#f92672>*</span>ailist,<span style=color:#f92672>*</span>aip;
-    <span style=color:#66d9ef>struct</span> addrinfo     hint;
-    <span style=color:#66d9ef>struct</span> sockaddr_in  <span style=color:#f92672>*</span>sinp;
-    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span>          <span style=color:#f92672>*</span>addr;
+    <span class=kt>char</span> <span class=o>*</span><span class=n>host</span> <span class=o>=</span> <span class=s>&#34;www.baiduffdsfsdklfjrklger.com&#34;</span><span class=p>;</span>
+    <span class=kt>char</span> <span class=o>*</span><span class=n>service</span> <span class=o>=</span> <span class=s>&#34;443&#34;</span><span class=p>;</span>
+    <span class=kt>char</span> <span class=n>hostip</span><span class=p>[</span><span class=mi>64</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=mi>0</span><span class=p>};</span>
+    <span class=k>struct</span> <span class=n>addrinfo</span>     <span class=o>*</span><span class=n>ailist</span><span class=p>,</span><span class=o>*</span><span class=n>aip</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>addrinfo</span>     <span class=n>hint</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>sockaddr_in</span>  <span class=o>*</span><span class=n>sinp</span><span class=p>;</span>
+    <span class=k>const</span> <span class=kt>char</span>          <span class=o>*</span><span class=n>addr</span><span class=p>;</span>
 
-    <span style=color:#66d9ef>int</span>                 err;
-    <span style=color:#66d9ef>int</span>                 rt<span style=color:#f92672>=-</span><span style=color:#ae81ff>1</span>;
+    <span class=kt>int</span>                 <span class=n>err</span><span class=p>;</span>
+    <span class=kt>int</span>                 <span class=n>rt</span><span class=o>=-</span><span class=mi>1</span><span class=p>;</span>
 
-    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>p;
-    p <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;abcdef&#34;</span>;
-    printf(<span style=color:#e6db74>&#34;p:%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, p);
-    ailist<span style=color:#f92672>=</span>NULL;
+    <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>p</span><span class=p>;</span>
+    <span class=n>p</span> <span class=o>=</span> <span class=s>&#34;abcdef&#34;</span><span class=p>;</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;p:%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>p</span><span class=p>);</span>
+    <span class=n>ailist</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
 
-    hint.ai_flags<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;
-    hint.ai_family<span style=color:#f92672>=</span>AF_INET;
-    hint.ai_socktype<span style=color:#f92672>=</span>SOCK_STREAM;
-    hint.ai_protocol<span style=color:#f92672>=</span>IPPROTO_TCP;
-    hint.ai_addrlen<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;
-    hint.ai_canonname<span style=color:#f92672>=</span>NULL;
-    hint.ai_addr<span style=color:#f92672>=</span>NULL;
-    hint.ai_next<span style=color:#f92672>=</span>NULL;
-    <span style=color:#66d9ef>if</span>((err<span style=color:#f92672>=</span>getaddrinfo(host,service,<span style=color:#f92672>&amp;</span>hint,<span style=color:#f92672>&amp;</span>ailist))<span style=color:#f92672>!=</span><span style=color:#ae81ff>0</span>)
-    {
-        printf(<span style=color:#e6db74>&#34;%s():getaddrinfo err:%s </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,__func__,gai_strerror(err));
-        <span style=color:#66d9ef>goto</span> end;
-    }
-    <span style=color:#66d9ef>for</span>(aip<span style=color:#f92672>=</span>ailist;aip<span style=color:#f92672>!=</span>NULL; aip<span style=color:#f92672>=</span>aip<span style=color:#f92672>-&gt;</span>ai_next)
-    {
-        <span style=color:#66d9ef>if</span>(aip<span style=color:#f92672>-&gt;</span>ai_family<span style=color:#f92672>==</span>AF_INET)
-        {
-            sinp<span style=color:#f92672>=</span>(<span style=color:#66d9ef>struct</span> sockaddr_in <span style=color:#f92672>*</span>)aip<span style=color:#f92672>-&gt;</span>ai_addr;
-            addr<span style=color:#f92672>=</span>inet_ntop(AF_INET,<span style=color:#f92672>&amp;</span>sinp<span style=color:#f92672>-&gt;</span>sin_addr,hostip,INET_ADDRSTRLEN);
+    <span class=n>hint</span><span class=p>.</span><span class=n>ai_flags</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+    <span class=n>hint</span><span class=p>.</span><span class=n>ai_family</span><span class=o>=</span><span class=n>AF_INET</span><span class=p>;</span>
+    <span class=n>hint</span><span class=p>.</span><span class=n>ai_socktype</span><span class=o>=</span><span class=n>SOCK_STREAM</span><span class=p>;</span>
+    <span class=n>hint</span><span class=p>.</span><span class=n>ai_protocol</span><span class=o>=</span><span class=n>IPPROTO_TCP</span><span class=p>;</span>
+    <span class=n>hint</span><span class=p>.</span><span class=n>ai_addrlen</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+    <span class=n>hint</span><span class=p>.</span><span class=n>ai_canonname</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
+    <span class=n>hint</span><span class=p>.</span><span class=n>ai_addr</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
+    <span class=n>hint</span><span class=p>.</span><span class=n>ai_next</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
+    <span class=k>if</span><span class=p>((</span><span class=n>err</span><span class=o>=</span><span class=n>getaddrinfo</span><span class=p>(</span><span class=n>host</span><span class=p>,</span><span class=n>service</span><span class=p>,</span><span class=o>&amp;</span><span class=n>hint</span><span class=p>,</span><span class=o>&amp;</span><span class=n>ailist</span><span class=p>))</span><span class=o>!=</span><span class=mi>0</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s():getaddrinfo err:%s </span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>__func__</span><span class=p>,</span><span class=n>gai_strerror</span><span class=p>(</span><span class=n>err</span><span class=p>));</span>
+        <span class=k>goto</span> <span class=n>end</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=k>for</span><span class=p>(</span><span class=n>aip</span><span class=o>=</span><span class=n>ailist</span><span class=p>;</span><span class=n>aip</span><span class=o>!=</span><span class=nb>NULL</span><span class=p>;</span> <span class=n>aip</span><span class=o>=</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_next</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=k>if</span><span class=p>(</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_family</span><span class=o>==</span><span class=n>AF_INET</span><span class=p>)</span>
+        <span class=p>{</span>
+            <span class=n>sinp</span><span class=o>=</span><span class=p>(</span><span class=k>struct</span> <span class=n>sockaddr_in</span> <span class=o>*</span><span class=p>)</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_addr</span><span class=p>;</span>
+            <span class=n>addr</span><span class=o>=</span><span class=n>inet_ntop</span><span class=p>(</span><span class=n>AF_INET</span><span class=p>,</span><span class=o>&amp;</span><span class=n>sinp</span><span class=o>-&gt;</span><span class=n>sin_addr</span><span class=p>,</span><span class=n>hostip</span><span class=p>,</span><span class=n>INET_ADDRSTRLEN</span><span class=p>);</span>
 
-            <span style=color:#66d9ef>if</span>(<span style=color:#f92672>!</span>addr) {
-                perror(<span style=color:#e6db74>&#34;inet_ntop&#34;</span>);
-            }
-            printf(<span style=color:#e6db74>&#34;%s %s %d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, __FILE__, __func__, __LINE__);
-            printf(<span style=color:#e6db74>&#34; address %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,addr<span style=color:#f92672>?</span>addr:<span style=color:#e6db74>&#34;unknown&#34;</span>);
-            printf(<span style=color:#e6db74>&#34; port %d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,ntohs(sinp<span style=color:#f92672>-&gt;</span>sin_port));
-            rt<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;
-            <span style=color:#66d9ef>goto</span> end;
-        }
-    }
+            <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>addr</span><span class=p>)</span> <span class=p>{</span>
+                <span class=n>perror</span><span class=p>(</span><span class=s>&#34;inet_ntop&#34;</span><span class=p>);</span>
+            <span class=p>}</span>
+            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
+            <span class=n>printf</span><span class=p>(</span><span class=s>&#34; address %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>addr</span><span class=o>?</span><span class=nl>addr</span><span class=p>:</span><span class=s>&#34;unknown&#34;</span><span class=p>);</span>
+            <span class=n>printf</span><span class=p>(</span><span class=s>&#34; port %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>ntohs</span><span class=p>(</span><span class=n>sinp</span><span class=o>-&gt;</span><span class=n>sin_port</span><span class=p>));</span>
+            <span class=n>rt</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+            <span class=k>goto</span> <span class=n>end</span><span class=p>;</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
 
-    printf(<span style=color:#e6db74>&#34;%s %s %d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, __FILE__, __func__, __LINE__);
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
 
-end:
-    printf(<span style=color:#e6db74>&#34;%s %s %d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, __FILE__, __func__, __LINE__);
-    <span style=color:#66d9ef>if</span>(ailist)
-        freeaddrinfo(ailist);    
-    <span style=color:#66d9ef>return</span> rt;
-}
-</code></pre></td></tr></table>
-</div>
-</div>
+<span class=nl>end</span><span class=p>:</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
+    <span class=k>if</span><span class=p>(</span><span class=n>ailist</span><span class=p>)</span>
+        <span class=n>freeaddrinfo</span><span class=p>(</span><span class=n>ailist</span><span class=p>);</span>    
+    <span class=k>return</span> <span class=n>rt</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div>
 </article>
 </div>
 </body>
 <div>
-<small> words: 264 tags:</small>
+<small> words: 178 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

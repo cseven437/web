@@ -12,9 +12,11 @@
 <meta itemprop=description content="genieacs
 用于tr069 服务器"><meta itemprop=datePublished content="2021-02-01T14:11:43+08:00">
 <meta itemprop=dateModified content="2021-06-05T11:28:50+08:00">
-<meta itemprop=wordCount content="495">
+<meta itemprop=wordCount content="441">
 <meta itemprop=keywords content="genieacs,tr069,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -45,121 +47,61 @@
 <p><a href=https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04>https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04</a></p>
 <p>系统要求: ubuntu 16.04</p>
 <p>脚本备份</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>First you should update all components and install the following perquisites
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>First you should update all components and install the following perquisites
 
 sudo apt-get update
 sudo apt-get dist-upgrade
 sudo apt-get install redis-server mongodb build-essential ruby-bundler ruby-dev libsqlite3-dev
-cd ~
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+<span class=nb>cd</span> ~
+curl -sL https://deb.nodesource.com/setup_12.x <span class=p>|</span> sudo -E bash -
 sudo apt install nodejs
 sudo npm install libxmljs
 Install GenieACS itself
 sudo npm install -g genieacs
-**And now make some files to start and stop all files in a TMUX Session, don<span style=color:#e6db74>&#39;t forget to change the &#34;ui-jwt-secret&#34; from &#34;changeme&#34; to something else **
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>cat &lt;&lt; EOF &gt; ./genieacs-start.sh
-</span><span style=color:#e6db74>#!/bin/sh
-</span><span style=color:#e6db74>if tmux has-session -t &#39;</span>genieacs<span style=color:#e6db74>&#39;; then
-</span><span style=color:#e6db74>  echo &#34;GenieACS is already running.&#34;
-</span><span style=color:#e6db74>  echo &#34;To stop it use: ./genieacs-stop.sh&#34;
-</span><span style=color:#e6db74>  echo &#34;To attach to it use: tmux attach -t genieacs&#34;
-</span><span style=color:#e6db74>else
-</span><span style=color:#e6db74>  tmux new-session -s &#39;</span>genieacs<span style=color:#e6db74>&#39; -d
-</span><span style=color:#e6db74>  tmux send-keys &#39;</span>genieacs-cwmp<span style=color:#e6db74>&#39; &#39;</span>C-m<span style=color:#e6db74>&#39;
-</span><span style=color:#e6db74>  tmux split-window
-</span><span style=color:#e6db74>  tmux send-keys &#39;</span>genieacs-nbi<span style=color:#e6db74>&#39; &#39;</span>C-m<span style=color:#e6db74>&#39;
-</span><span style=color:#e6db74>  tmux split-window
-</span><span style=color:#e6db74>  tmux send-keys &#39;</span>genieacs-fs<span style=color:#e6db74>&#39; &#39;</span>C-m<span style=color:#e6db74>&#39;
-</span><span style=color:#e6db74>  tmux split-window
-</span><span style=color:#e6db74>  tmux send-keys &#39;</span>genieacs-ui --ui-jwt-secret changeme<span style=color:#e6db74>&#39; &#39;</span>C-m <span style=color:#e6db74>&#39;
-</span><span style=color:#e6db74>  tmux select-layout tiled 2&gt;/dev/null
-</span><span style=color:#e6db74>  tmux rename-window &#39;</span>GenieACS<span style=color:#e6db74>&#39;
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>  echo &#34;GenieACS has been started in tmux session &#39;</span>geneiacs<span style=color:#e6db74>&#39;&#34;
-</span><span style=color:#e6db74>  echo &#34;To attach to session, use: tmux attach -t genieacs&#34;
-</span><span style=color:#e6db74>  echo &#34;To switch between panes use Ctrl+B-ArrowKey&#34;
-</span><span style=color:#e6db74>  echo &#34;To deattach, press Ctrl+B-D&#34;
-</span><span style=color:#e6db74>  echo &#34;To stop GenieACS, use: ./genieacs-stop.sh&#34;
-</span><span style=color:#e6db74>fi
-</span><span style=color:#e6db74>EOF
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>cat &lt;&lt; EOF &gt; ./genieacs-stop.sh
-</span><span style=color:#e6db74>#!/bin/sh
-</span><span style=color:#e6db74>if tmux has-session -t &#39;</span>genieacs<span style=color:#960050;background-color:#1e0010>&#39;</span> 2&gt;/dev/null; <span style=color:#66d9ef>then</span>
+**And now make some files to start and stop all files in a TMUX Session, don<span class=s1>&#39;t forget to change the &#34;ui-jwt-secret&#34; from &#34;changeme&#34; to something else **
+</span><span class=s1>
+</span><span class=s1>cat &lt;&lt; EOF &gt; ./genieacs-start.sh
+</span><span class=s1>#!/bin/sh
+</span><span class=s1>if tmux has-session -t &#39;</span>genieacs<span class=s1>&#39;; then
+</span><span class=s1>  echo &#34;GenieACS is already running.&#34;
+</span><span class=s1>  echo &#34;To stop it use: ./genieacs-stop.sh&#34;
+</span><span class=s1>  echo &#34;To attach to it use: tmux attach -t genieacs&#34;
+</span><span class=s1>else
+</span><span class=s1>  tmux new-session -s &#39;</span>genieacs<span class=s1>&#39; -d
+</span><span class=s1>  tmux send-keys &#39;</span>genieacs-cwmp<span class=s1>&#39; &#39;</span>C-m<span class=s1>&#39;
+</span><span class=s1>  tmux split-window
+</span><span class=s1>  tmux send-keys &#39;</span>genieacs-nbi<span class=s1>&#39; &#39;</span>C-m<span class=s1>&#39;
+</span><span class=s1>  tmux split-window
+</span><span class=s1>  tmux send-keys &#39;</span>genieacs-fs<span class=s1>&#39; &#39;</span>C-m<span class=s1>&#39;
+</span><span class=s1>  tmux split-window
+</span><span class=s1>  tmux send-keys &#39;</span>genieacs-ui --ui-jwt-secret changeme<span class=s1>&#39; &#39;</span>C-m <span class=s1>&#39;
+</span><span class=s1>  tmux select-layout tiled 2&gt;/dev/null
+</span><span class=s1>  tmux rename-window &#39;</span>GenieACS<span class=s1>&#39;
+</span><span class=s1>
+</span><span class=s1>  echo &#34;GenieACS has been started in tmux session &#39;</span>geneiacs<span class=s1>&#39;&#34;
+</span><span class=s1>  echo &#34;To attach to session, use: tmux attach -t genieacs&#34;
+</span><span class=s1>  echo &#34;To switch between panes use Ctrl+B-ArrowKey&#34;
+</span><span class=s1>  echo &#34;To deattach, press Ctrl+B-D&#34;
+</span><span class=s1>  echo &#34;To stop GenieACS, use: ./genieacs-stop.sh&#34;
+</span><span class=s1>fi
+</span><span class=s1>EOF
+</span><span class=s1>
+</span><span class=s1>cat &lt;&lt; EOF &gt; ./genieacs-stop.sh
+</span><span class=s1>#!/bin/sh
+</span><span class=s1>if tmux has-session -t &#39;</span>genieacs<span class=err>&#39;</span> 2&gt;/dev/null<span class=p>;</span> <span class=k>then</span>
   tmux kill-session -t genieacs 2&gt;/dev/null
-  echo <span style=color:#e6db74>&#34;GenieACS has been stopped.&#34;</span>
-<span style=color:#66d9ef>else</span>
-  echo <span style=color:#e6db74>&#34;GenieACS is not running!&#34;</span>
-<span style=color:#66d9ef>fi</span>
+  <span class=nb>echo</span> <span class=s2>&#34;GenieACS has been stopped.&#34;</span>
+<span class=k>else</span>
+  <span class=nb>echo</span> <span class=s2>&#34;GenieACS is not running!&#34;</span>
+<span class=k>fi</span>
 EOF
 
 chmod +x genieacs-start.sh genieacs-stop.sh
-After all those steps GenieACS should be installed properly and is ready <span style=color:#66d9ef>for</span> the first start.
+After all those steps GenieACS should be installed properly and is ready <span class=k>for</span> the first start.
 
 ./genieacs-start.sh
 tmux attach -t genieacs
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=docker搭建genieacs环境>docker搭建genieacs环境</h2>
+</code></pre></div><h2 id=docker搭建genieacs环境>docker搭建genieacs环境</h2>
 <p><a href=https://github.com/DrumSergio/GenieACS-Docker>GenieACS-Docker</a></p>
 <h2 id=genieacs-auth-config>genieacs auth config</h2>
 <p>选择标签页</p>
@@ -178,15 +120,17 @@ value: AUTH(&quot;acs-username&quot;, &quot;acs-password&quot;)
 </div>
 </body>
 <div>
-<small> words: 495 tags:</small>
+<small> words: 441 tags:</small>
 <small><code><a href=https://arair.net/tags/genieacs>genieacs</a></code></small>
 <small><code><a href=https://arair.net/tags/tr069>tr069</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

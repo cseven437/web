@@ -9,9 +9,11 @@
 <meta itemprop=name content="Linux平台C语言记录">
 <meta itemprop=description content="用于记录linux平台下c语言的学习记录"><meta itemprop=datePublished content="2021-02-04T09:54:58+08:00">
 <meta itemprop=dateModified content="2021-07-10T17:23:43+08:00">
-<meta itemprop=wordCount content="9708">
+<meta itemprop=wordCount content="9401">
 <meta itemprop=keywords content="linux,c,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -77,19 +79,10 @@
 <h1 id=stringh>string.h</h1>
 <h2 id=strcmp>strcmp</h2>
 <p>C 库函数 <code>int strcmp(const char _str1, const char _str2)</code> 把 str1 所指向的字符串和 str2 所指向的字符串进行比较。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> strcmp(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str1, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str2)
-</code></pre></td></tr></table>
-</div>
-</div><p>参数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=n>strcmp</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>str1</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>str2</span><span class=p>)</span>
+</code></pre></div><p>参数</p>
 <ul>
 <li>str1 &ndash; 要进行比较的第一个字符串。</li>
 <li>str2 &ndash; 要进行比较的第二个字符串。</li>
@@ -101,83 +94,40 @@
 <li>如果返回值等于 0，则表示 str1 等于 str2。</li>
 </ul>
 <p>实例</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span> 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span> ()
-{
-   <span style=color:#66d9ef>char</span> str1[<span style=color:#ae81ff>15</span>];
-   <span style=color:#66d9ef>char</span> str2[<span style=color:#ae81ff>15</span>];
-   <span style=color:#66d9ef>int</span> ret;
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp></span> 
+<span class=kt>int</span> <span class=nf>main</span> <span class=p>()</span>
+<span class=p>{</span>
+   <span class=kt>char</span> <span class=n>str1</span><span class=p>[</span><span class=mi>15</span><span class=p>];</span>
+   <span class=kt>char</span> <span class=n>str2</span><span class=p>[</span><span class=mi>15</span><span class=p>];</span>
+   <span class=kt>int</span> <span class=n>ret</span><span class=p>;</span>
  
  
-   strcpy(str1, <span style=color:#e6db74>&#34;abcdef&#34;</span>);
-   strcpy(str2, <span style=color:#e6db74>&#34;ABCDEF&#34;</span>);
+   <span class=n>strcpy</span><span class=p>(</span><span class=n>str1</span><span class=p>,</span> <span class=s>&#34;abcdef&#34;</span><span class=p>);</span>
+   <span class=n>strcpy</span><span class=p>(</span><span class=n>str2</span><span class=p>,</span> <span class=s>&#34;ABCDEF&#34;</span><span class=p>);</span>
  
-   ret <span style=color:#f92672>=</span> strcmp(str1, str2);
+   <span class=n>ret</span> <span class=o>=</span> <span class=n>strcmp</span><span class=p>(</span><span class=n>str1</span><span class=p>,</span> <span class=n>str2</span><span class=p>);</span>
  
-   <span style=color:#66d9ef>if</span>(ret <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>)
-   {
-      printf(<span style=color:#e6db74>&#34;str1 小于 str2&#34;</span>);
-   }
-   <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span>(ret <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span>) 
-   {
-      printf(<span style=color:#e6db74>&#34;str1 大于 str2&#34;</span>);
-   }
-   <span style=color:#66d9ef>else</span> 
-   {
-      printf(<span style=color:#e6db74>&#34;str1 等于 str2&#34;</span>);
-   }
+   <span class=k>if</span><span class=p>(</span><span class=n>ret</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>
+   <span class=p>{</span>
+      <span class=n>printf</span><span class=p>(</span><span class=s>&#34;str1 小于 str2&#34;</span><span class=p>);</span>
+   <span class=p>}</span>
+   <span class=k>else</span> <span class=k>if</span><span class=p>(</span><span class=n>ret</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>)</span> 
+   <span class=p>{</span>
+      <span class=n>printf</span><span class=p>(</span><span class=s>&#34;str1 大于 str2&#34;</span><span class=p>);</span>
+   <span class=p>}</span>
+   <span class=k>else</span> 
+   <span class=p>{</span>
+      <span class=n>printf</span><span class=p>(</span><span class=s>&#34;str1 等于 str2&#34;</span><span class=p>);</span>
+   <span class=p>}</span>
    
-   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
-}
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=strtol函数用法>strtol函数用法</h2>
+   <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=strtol函数用法>strtol函数用法</h2>
 <p>C 库函数 <code>long int strtol(const char *str, char **endptr, int base)</code> 把参数 str 所指向的字符串根据给定的 base 转换为一个长整数（类型为 long int 型），base 必须介于 2 和 36（包含）之间，或者是特殊值 0。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>long</span> <span style=color:#66d9ef>int</span> strtol(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str, <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>endptr, <span style=color:#66d9ef>int</span> base)
-</code></pre></td></tr></table>
-</div>
-</div><p>参数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>long</span> <span class=kt>int</span> <span class=n>strtol</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>str</span><span class=p>,</span> <span class=kt>char</span> <span class=o>**</span><span class=n>endptr</span><span class=p>,</span> <span class=kt>int</span> <span class=n>base</span><span class=p>)</span>
+</code></pre></div><p>参数</p>
 <ul>
 <li>str &ndash; 要转换为长整数的字符串。</li>
 <li>endptr &ndash; 对类型为 char* 的对象的引用，其值由函数设置为 str 中数值后的下一个字符。</li>
@@ -187,56 +137,28 @@
 <p>该函数返回转换后的长整数，如果没有执行有效的转换，则返回一个零值。</p>
 <p>实例</p>
 <p>下面的实例演示了 strtol() 函数的用法。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-   <span style=color:#66d9ef>char</span> str[<span style=color:#ae81ff>30</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;2030300 This is test&#34;</span>;
-   <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>ptr;
-   <span style=color:#66d9ef>long</span> ret;
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+   <span class=kt>char</span> <span class=n>str</span><span class=p>[</span><span class=mi>30</span><span class=p>]</span> <span class=o>=</span> <span class=s>&#34;2030300 This is test&#34;</span><span class=p>;</span>
+   <span class=kt>char</span> <span class=o>*</span><span class=n>ptr</span><span class=p>;</span>
+   <span class=kt>long</span> <span class=n>ret</span><span class=p>;</span>
 
-   ret <span style=color:#f92672>=</span> strtol(str, <span style=color:#f92672>&amp;</span>ptr, <span style=color:#ae81ff>10</span>);
-   printf(<span style=color:#e6db74>&#34;数字（无符号长整数）是 %ld</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ret);
-   printf(<span style=color:#e6db74>&#34;字符串部分是 |%s|&#34;</span>, ptr);
+   <span class=n>ret</span> <span class=o>=</span> <span class=n>strtol</span><span class=p>(</span><span class=n>str</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>ptr</span><span class=p>,</span> <span class=mi>10</span><span class=p>);</span>
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;数字（无符号长整数）是 %ld</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ret</span><span class=p>);</span>
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;字符串部分是 |%s|&#34;</span><span class=p>,</span> <span class=n>ptr</span><span class=p>);</span>
 
-   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>运行结果</p>
+   <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>运行结果</p>
 <pre tabindex=0><code>数字（无符号长整数）是 2030300
 字符串部分是 | This is test|
 </code></pre><h2 id=strstr>strstr</h2>
 <p>在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>strstr</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>haystack, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>needle);
-</code></pre></td></tr></table>
-</div>
-</div><p><strong>参数</strong></p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>char</span> <span class=o>*</span><span class=nf>strstr</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>haystack</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>needle</span><span class=p>);</span>
+</code></pre></div><p><strong>参数</strong></p>
 <ul>
 <li>haystack &ndash; 要被检索的 C 字符串。</li>
 <li>needle &ndash; 在 haystack 字符串内要搜索的小字符串。</li>
@@ -245,77 +167,36 @@
 <p>该函数返回在 haystack 中第一次出现 needle 字符串的位置，如果未找到则返回 null。</p>
 <p><strong>示例</strong></p>
 <p>下面的实例演示了 strstr() 函数的用法。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp></span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-   <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> haystack[<span style=color:#ae81ff>20</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;RUNOOB&#34;</span>;
-   <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> needle[<span style=color:#ae81ff>10</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;NOOB&#34;</span>;
-   <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>ret;
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+   <span class=k>const</span> <span class=kt>char</span> <span class=n>haystack</span><span class=p>[</span><span class=mi>20</span><span class=p>]</span> <span class=o>=</span> <span class=s>&#34;RUNOOB&#34;</span><span class=p>;</span>
+   <span class=k>const</span> <span class=kt>char</span> <span class=n>needle</span><span class=p>[</span><span class=mi>10</span><span class=p>]</span> <span class=o>=</span> <span class=s>&#34;NOOB&#34;</span><span class=p>;</span>
+   <span class=kt>char</span> <span class=o>*</span><span class=n>ret</span><span class=p>;</span>
 
-   ret <span style=color:#f92672>=</span> strstr(haystack, needle);
+   <span class=n>ret</span> <span class=o>=</span> <span class=n>strstr</span><span class=p>(</span><span class=n>haystack</span><span class=p>,</span> <span class=n>needle</span><span class=p>);</span>
 
-   printf(<span style=color:#e6db74>&#34;子字符串是： %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ret);
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;子字符串是： %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ret</span><span class=p>);</span>
 
-   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>让我们编译并运行上面的程序，这将产生以下结果：</p>
+   <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>让我们编译并运行上面的程序，这将产生以下结果：</p>
 <pre tabindex=0><code>子字符串是： NOOB
 </code></pre><h2 id=sscanf>sscanf</h2>
 <p>sscanf 读取格式化的字符串中的数据。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>scanf</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, ...);
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>fscanf</span>(FILE <span style=color:#f92672>*</span>stream, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, ...);
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sscanf</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>format, ...);
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=ffs>ffs</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>scanf</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>format</span><span class=p>,</span> <span class=p>...);</span>
+<span class=kt>int</span> <span class=nf>fscanf</span><span class=p>(</span><span class=n>FILE</span> <span class=o>*</span><span class=n>stream</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>format</span><span class=p>,</span> <span class=p>...);</span>
+<span class=kt>int</span> <span class=nf>sscanf</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>str</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>format</span><span class=p>,</span> <span class=p>...);</span>
+</code></pre></div><h2 id=ffs>ffs</h2>
 <p>ffs()函数用于查找一个整数中的第一个置位值(也就是bit为1的位)。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;strings.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>ffs</span>(<span style=color:#66d9ef>int</span> i);
-</code></pre></td></tr></table>
-</div>
-</div><p>这个函数几乎没有使用的，很少见到。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span><span class=cpf>&lt;strings.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>ffs</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span><span class=p>);</span>
+</code></pre></div><p>这个函数几乎没有使用的，很少见到。</p>
 <h1 id=socket编程errno大全>socket编程errno大全</h1>
 <pre tabindex=0><code>0:Success
 1:Operation notpermitted
@@ -522,169 +403,80 @@
 <p><strong>如何输出 %d、\ 和双引号</strong></p>
 <p>printf 中有输出控制符<code>%d</code>，转义字符前面有反斜杠<code>\</code>，还有双引号。那么大家有没有想过这样一个问题：怎样将这三个符号通过 printf 输出到屏幕上呢？</p>
 <p>要输出<code>%d</code>只需在前面再加上一个<code>%</code>，要输出<code>\</code>只需在前面再加上一个<code>\</code>，要输出双引号也只需在前面加上一个<code>\</code>即可。程序如下：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e># include &lt;stdio.h&gt;
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>void</span>){
-    printf(<span style=color:#e6db74>&#34;%%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-    printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\\n</span><span style=color:#e6db74>&#34;</span>);
-    printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\&#34;\&#34;\n</span><span style=color:#e6db74>&#34;</span>);
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=attribute-机制详解><strong>attribute</strong> 机制详解</h1>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp># include &lt;stdio.h&gt;
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>void</span><span class=p>){</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\\\n</span><span class=s>&#34;</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\&#34;\&#34;\n</span><span class=s>&#34;</span><span class=p>);</span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h1 id=attribute-机制详解><strong>attribute</strong> 机制详解</h1>
 <p>GNU C 的一大特色就是<strong>attribute</strong> 机制。attribute 可以设置函数属性（Function Attribute）、变量属性（Variable Attribute）和类型属性（Type Attribute）。</p>
 <p>其位置约束为： 放于声明的尾部";" 之前</p>
 <h1 id=内存分配>内存分配</h1>
 <h2 id=malloc>malloc</h2>
 <p>C 库函数 void *malloc(size_t size) 分配所需的内存空间，并返回一个指向它的指针。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>malloc(size_t size)
-</code></pre></td></tr></table>
-</div>
-</div><p>参数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>void</span> <span class=o>*</span><span class=n>malloc</span><span class=p>(</span><span class=n>size_t</span> <span class=n>size</span><span class=p>)</span>
+</code></pre></div><p>参数</p>
 <ul>
 <li>size &ndash; 内存块的大小，以字节为单位。</li>
 </ul>
 <p>返回值</p>
 <p>该函数返回一个指针 ，指向已分配大小的内存。如果请求失败，则返回 NULL。</p>
 <p>实例</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span> 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-   <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>str;
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp></span> 
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+   <span class=kt>char</span> <span class=o>*</span><span class=n>str</span><span class=p>;</span>
  
-   <span style=color:#75715e>/* 最初的内存分配 */</span>
-   str <span style=color:#f92672>=</span> (<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>) malloc(<span style=color:#ae81ff>15</span>);
-   strcpy(str, <span style=color:#e6db74>&#34;runoob&#34;</span>);
-   printf(<span style=color:#e6db74>&#34;String = %s,  Address = %u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, str, str);
+   <span class=cm>/* 最初的内存分配 */</span>
+   <span class=n>str</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span> <span class=n>malloc</span><span class=p>(</span><span class=mi>15</span><span class=p>);</span>
+   <span class=n>strcpy</span><span class=p>(</span><span class=n>str</span><span class=p>,</span> <span class=s>&#34;runoob&#34;</span><span class=p>);</span>
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;String = %s,  Address = %u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>str</span><span class=p>,</span> <span class=n>str</span><span class=p>);</span>
  
-   <span style=color:#75715e>/* 重新分配内存 */</span>
-   str <span style=color:#f92672>=</span> (<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>) realloc(str, <span style=color:#ae81ff>25</span>);
-   strcat(str, <span style=color:#e6db74>&#34;.com&#34;</span>);
-   printf(<span style=color:#e6db74>&#34;String = %s,  Address = %u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, str, str);
+   <span class=cm>/* 重新分配内存 */</span>
+   <span class=n>str</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span> <span class=n>realloc</span><span class=p>(</span><span class=n>str</span><span class=p>,</span> <span class=mi>25</span><span class=p>);</span>
+   <span class=n>strcat</span><span class=p>(</span><span class=n>str</span><span class=p>,</span> <span class=s>&#34;.com&#34;</span><span class=p>);</span>
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;String = %s,  Address = %u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>str</span><span class=p>,</span> <span class=n>str</span><span class=p>);</span>
  
-   free(str);
+   <span class=n>free</span><span class=p>(</span><span class=n>str</span><span class=p>);</span>
  
-   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
-}
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=free>free</h2>
+   <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=free>free</h2>
 <p>C 库函数 void free(void *ptr) 释放之前调用 calloc、malloc 或 realloc 所分配的内存空间。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> free(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>ptr)
-</code></pre></td></tr></table>
-</div>
-</div><p>参数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>void</span> <span class=n>free</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=n>ptr</span><span class=p>)</span>
+</code></pre></div><p>参数</p>
 <ul>
 <li>ptr &ndash; 指针指向一个要释放内存的内存块，该内存块之前是通过调用 malloc、calloc 或 realloc 进行分配内存的。如果传递的参数是一个空指针，则不会执行任何动作。</li>
 </ul>
 <h2 id=calloc>calloc</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>calloc</span>(size_t n, size_t size);
-</code></pre></td></tr></table>
-</div>
-</div><p>calloc会自动初始化分配的空间，置为0。malloc需要自行初始化。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>void</span> <span class=o>*</span><span class=nf>calloc</span><span class=p>(</span><span class=n>size_t</span> <span class=n>n</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>size</span><span class=p>);</span>
+</code></pre></div><p>calloc会自动初始化分配的空间，置为0。malloc需要自行初始化。</p>
 <ul>
 <li>n 指size的个数</li>
 <li>size 每一个空间的大小</li>
 </ul>
 <h2 id=realloc>realloc</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>realloc(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>ptr, size_t new_Size)
-</code></pre></td></tr></table>
-</div>
-</div><p>对动态内存进行扩容。ptr为原空间地址，new_Size为新增空间大小。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>void</span> <span class=o>*</span><span class=n>realloc</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=n>ptr</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>new_Size</span><span class=p>)</span>
+</code></pre></div><p>对动态内存进行扩容。ptr为原空间地址，new_Size为新增空间大小。</p>
 <h2 id=alloca>alloca</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span>
-<span style=color:#75715e>void *alloca(size_t size);</span><span style=color:#75715e>
-</span></code></pre></td></tr></table>
-</div>
-</div><p>函数说明：alloca() 用来配置 size 个字节的内存空间，然而和 malloc、colloc 不同的是，
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span>
+<span class=cpf>void *alloca(size_t size);</span><span class=cp>
+</span></code></pre></div><p>函数说明：alloca() 用来配置 size 个字节的内存空间，然而和 malloc、colloc 不同的是，
 alloca() 是从 栈空间(stack) 中分配内存的，因此在函数返回时会自动释放此空间。
 返回值：内存分配成功则返回首地址，失败则返回 NULL</p>
 <h1 id=popen>popen</h1>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>FILE <span style=color:#f92672>*</span> <span style=color:#a6e22e>popen</span>( <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> command,<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> type);
-</code></pre></td></tr></table>
-</div>
-</div><p>popen()会调用fork()产生子进程，然后从子进程中调用/bin/sh -c来执行参数command的指令。参数type可使用“r”代表读取，“w”代表写入。依照此type值，popen()会建立管道连到子进程的标准输出设备或标准输入设备，然后返回一个文件指针。随后进程便可利用此文件指针来读取子进程的输出设备或是写入到子进程的标准输入设备中。此外，所有使用文件指针(FILE*)操作的函数也都可以使用，除了fclose()以外。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span><span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=n>FILE</span> <span class=o>*</span> <span class=nf>popen</span><span class=p>(</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>command</span><span class=p>,</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>type</span><span class=p>);</span>
+</code></pre></div><p>popen()会调用fork()产生子进程，然后从子进程中调用/bin/sh -c来执行参数command的指令。参数type可使用“r”代表读取，“w”代表写入。依照此type值，popen()会建立管道连到子进程的标准输出设备或标准输入设备，然后返回一个文件指针。随后进程便可利用此文件指针来读取子进程的输出设备或是写入到子进程的标准输入设备中。此外，所有使用文件指针(FILE*)操作的函数也都可以使用，除了fclose()以外。</p>
 <ul>
 <li>如果 type 为 r，那么调用进程读进 command 的标准输出。</li>
 <li>如果 type 为 w，那么调用进程写到 command 的标准输入。</li>
@@ -694,94 +486,44 @@ alloca() 是从 栈空间(stack) 中分配内存的，因此在函数返回时�
 <p>错误值</p>
 <p>EINVAL参数type不合法。</p>
 <p>示例</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span> 
-main()
-{
-    FILE <span style=color:#f92672>*</span>fp;
-    <span style=color:#66d9ef>char</span> buffer[<span style=color:#ae81ff>80</span>];
-    fp <span style=color:#f92672>=</span> popen(<span style=color:#e6db74>&#34;cat /etc/passwd&#34;</span>, <span style=color:#e6db74>&#34;r&#34;</span>);
-    fgets(buffer, <span style=color:#66d9ef>sizeof</span>(buffer), fp);
-    printf(<span style=color:#e6db74>&#34;%s&#34;</span>, buffer);
-    pclose(fp);
-}
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=pclose>pclose</h1>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span><span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span> 
+<span class=n>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=n>FILE</span> <span class=o>*</span><span class=n>fp</span><span class=p>;</span>
+    <span class=kt>char</span> <span class=n>buffer</span><span class=p>[</span><span class=mi>80</span><span class=p>];</span>
+    <span class=n>fp</span> <span class=o>=</span> <span class=n>popen</span><span class=p>(</span><span class=s>&#34;cat /etc/passwd&#34;</span><span class=p>,</span> <span class=s>&#34;r&#34;</span><span class=p>);</span>
+    <span class=n>fgets</span><span class=p>(</span><span class=n>buffer</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buffer</span><span class=p>),</span> <span class=n>fp</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s&#34;</span><span class=p>,</span> <span class=n>buffer</span><span class=p>);</span>
+    <span class=n>pclose</span><span class=p>(</span><span class=n>fp</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><h1 id=pclose>pclose</h1>
 <p>获取popen执行的命令，在pclose中获取到的main函数的返回值，返回的数字为256的倍数，使用WEXITSTATUS(retValue) 可以获取真实值。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>write_value_to_json</span>(<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>key, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>value, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>type)
-{
-    FILE <span style=color:#f92672>*</span>fp <span style=color:#f92672>=</span> NULL;
-    <span style=color:#66d9ef>char</span> buf[<span style=color:#ae81ff>128</span>] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>0</span>};
-    <span style=color:#66d9ef>char</span> cmd[<span style=color:#ae81ff>128</span>] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>0</span>};
-    snprintf(cmd, <span style=color:#e6db74>&#34;djsonutil get /tmp/config_nat_set %s %s&#34;</span>, key, type);
-    fp <span style=color:#f92672>=</span> popen(key, <span style=color:#e6db74>&#34;r&#34;</span>);
-    <span style=color:#66d9ef>if</span>(fp <span style=color:#f92672>!=</span> NULL) {
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>write_value_to_json</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=n>key</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>value</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>type</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>FILE</span> <span class=o>*</span><span class=n>fp</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+    <span class=kt>char</span> <span class=n>buf</span><span class=p>[</span><span class=mi>128</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=mi>0</span><span class=p>};</span>
+    <span class=kt>char</span> <span class=n>cmd</span><span class=p>[</span><span class=mi>128</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=mi>0</span><span class=p>};</span>
+    <span class=n>snprintf</span><span class=p>(</span><span class=n>cmd</span><span class=p>,</span> <span class=s>&#34;djsonutil get /tmp/config_nat_set %s %s&#34;</span><span class=p>,</span> <span class=n>key</span><span class=p>,</span> <span class=n>type</span><span class=p>);</span>
+    <span class=n>fp</span> <span class=o>=</span> <span class=n>popen</span><span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=s>&#34;r&#34;</span><span class=p>);</span>
+    <span class=k>if</span><span class=p>(</span><span class=n>fp</span> <span class=o>!=</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
 
-        fread(buf, <span style=color:#66d9ef>sizeof</span>(buf), <span style=color:#ae81ff>1</span>, fp);
+        <span class=n>fread</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buf</span><span class=p>),</span> <span class=mi>1</span><span class=p>,</span> <span class=n>fp</span><span class=p>);</span>
 
-        <span style=color:#66d9ef>int</span> ret <span style=color:#f92672>=</span> pclose(fp);
-        <span style=color:#66d9ef>if</span>(WEXITSTATUS(ret) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
-            strncpy(value, buf, strlen(buf));
-        } <span style=color:#66d9ef>else</span> {
-            retrun <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-        }
-    }
-    <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=c-库宏>C 库宏</h1>
+        <span class=kt>int</span> <span class=n>ret</span> <span class=o>=</span> <span class=n>pclose</span><span class=p>(</span><span class=n>fp</span><span class=p>);</span>
+        <span class=k>if</span><span class=p>(</span><span class=n>WEXITSTATUS</span><span class=p>(</span><span class=n>ret</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+            <span class=n>strncpy</span><span class=p>(</span><span class=n>value</span><span class=p>,</span> <span class=n>buf</span><span class=p>,</span> <span class=n>strlen</span><span class=p>(</span><span class=n>buf</span><span class=p>));</span>
+        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+            <span class=n>retrun</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
+    <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h1 id=c-库宏>C 库宏</h1>
 <h2 id=offsetof>offsetof()</h2>
 <p>C 库宏 offsetof(type, member-designator) 会生成一个类型为 size_t 的整型常量，它是一个结构成员相对于结构开头的字节偏移量。成员是由 member-designator 给定的，结构的名称是在 type 中给定的。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>offsetof(type, member<span style=color:#f92672>-</span>designator)
-</code></pre></td></tr></table>
-</div>
-</div><p>参数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=n>offsetof</span><span class=p>(</span><span class=n>type</span><span class=p>,</span> <span class=n>member</span><span class=o>-</span><span class=n>designator</span><span class=p>)</span>
+</code></pre></div><p>参数</p>
 <ul>
 <li>type &ndash; 这是一个 class 类型，其中，member-designator 是一个有效的成员指示器。</li>
 <li>member-designator &ndash; 这是一个 class 类型的成员指示器。</li>
@@ -789,57 +531,29 @@ main()
 <p>返回值</p>
 <p>该宏返回类型为 size_t 的值，表示 type 中成员的偏移量。</p>
 <p>实例</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stddef.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>struct</span> address {
-   <span style=color:#66d9ef>char</span> name[<span style=color:#ae81ff>50</span>];
-   <span style=color:#66d9ef>char</span> street[<span style=color:#ae81ff>50</span>];
-   <span style=color:#66d9ef>int</span> phone;
-};
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stddef.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=k>struct</span> <span class=n>address</span> <span class=p>{</span>
+   <span class=kt>char</span> <span class=n>name</span><span class=p>[</span><span class=mi>50</span><span class=p>];</span>
+   <span class=kt>char</span> <span class=n>street</span><span class=p>[</span><span class=mi>50</span><span class=p>];</span>
+   <span class=kt>int</span> <span class=n>phone</span><span class=p>;</span>
+<span class=p>};</span>
    
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-   printf(<span style=color:#e6db74>&#34;address 结构中的 name 偏移 = %d 字节。</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,
-   offsetof(<span style=color:#66d9ef>struct</span> address, name));
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;address 结构中的 name 偏移 = %d 字节。</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span>
+   <span class=n>offsetof</span><span class=p>(</span><span class=k>struct</span> <span class=n>address</span><span class=p>,</span> <span class=n>name</span><span class=p>));</span>
    
-   printf(<span style=color:#e6db74>&#34;address 结构中的 street 偏移 = %d 字节。</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,
-   offsetof(<span style=color:#66d9ef>struct</span> address, street));
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;address 结构中的 street 偏移 = %d 字节。</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span>
+   <span class=n>offsetof</span><span class=p>(</span><span class=k>struct</span> <span class=n>address</span><span class=p>,</span> <span class=n>street</span><span class=p>));</span>
    
-   printf(<span style=color:#e6db74>&#34;address 结构中的 phone 偏移 = %d 字节。</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,
-   offsetof(<span style=color:#66d9ef>struct</span> address, phone));
+   <span class=n>printf</span><span class=p>(</span><span class=s>&#34;address 结构中的 phone 偏移 = %d 字节。</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span>
+   <span class=n>offsetof</span><span class=p>(</span><span class=k>struct</span> <span class=n>address</span><span class=p>,</span> <span class=n>phone</span><span class=p>));</span>
 
-   <span style=color:#66d9ef>return</span>(<span style=color:#ae81ff>0</span>);
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>执行结果</p>
+   <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>执行结果</p>
 <pre tabindex=0><code>address 结构中的 name 偏移 = 0 字节。
 address 结构中的 street 偏移 = 50 字节。
 address 结构中的 phone 偏移 = 100 字节。
@@ -849,134 +563,65 @@ address 结构中的 phone 偏移 = 100 字节。
 <ol>
 <li>不用知道函数返回什么类型，可以使用typeof()定义一个用于接收该函数返回值的变量</li>
 </ol>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>struct</span> apple{
-    <span style=color:#66d9ef>int</span> weight;
-    <span style=color:#66d9ef>int</span> color;
-};
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=k>struct</span> <span class=n>apple</span><span class=p>{</span>
+    <span class=kt>int</span> <span class=n>weight</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>color</span><span class=p>;</span>
+<span class=p>};</span>
 
-<span style=color:#66d9ef>struct</span> apple <span style=color:#f92672>*</span><span style=color:#a6e22e>get_apple_info</span>()
-{
-    <span style=color:#66d9ef>struct</span> apple <span style=color:#f92672>*</span>a1;
-    a1 <span style=color:#f92672>=</span> malloc(<span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>struct</span> apple));
-    <span style=color:#66d9ef>if</span>(a1 <span style=color:#f92672>==</span> NULL)
-    {
-        printf(<span style=color:#e6db74>&#34;malloc error.</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-        <span style=color:#66d9ef>return</span>;
-    }
+<span class=k>struct</span> <span class=n>apple</span> <span class=o>*</span><span class=nf>get_apple_info</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=k>struct</span> <span class=n>apple</span> <span class=o>*</span><span class=n>a1</span><span class=p>;</span>
+    <span class=n>a1</span> <span class=o>=</span> <span class=n>malloc</span><span class=p>(</span><span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=n>apple</span><span class=p>));</span>
+    <span class=k>if</span><span class=p>(</span><span class=n>a1</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;malloc error.</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+        <span class=k>return</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    a1<span style=color:#f92672>-&gt;</span>weight <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span>;
-    a1<span style=color:#f92672>-&gt;</span>color <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+    <span class=n>a1</span><span class=o>-&gt;</span><span class=n>weight</span> <span class=o>=</span> <span class=mi>2</span><span class=p>;</span>
+    <span class=n>a1</span><span class=o>-&gt;</span><span class=n>color</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
 
-    <span style=color:#66d9ef>return</span> a1;
-}
+    <span class=k>return</span> <span class=n>a1</span><span class=p>;</span>
+<span class=p>}</span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>argv[])
-{
-    typeof(get_apple_info()) r1;<span style=color:#75715e>//定义一个变量r1,用于接收函数get_apple_info()返回的值，由于该函数返回的类型是：struct apple *，所以变量r1也是该类型。注意，函数不会执行。
-</span><span style=color:#75715e></span>
-    r1 <span style=color:#f92672>=</span> get_apple_info();
+<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span>
+<span class=p>{</span>
+    <span class=n>typeof</span><span class=p>(</span><span class=n>get_apple_info</span><span class=p>())</span> <span class=n>r1</span><span class=p>;</span><span class=c1>//定义一个变量r1,用于接收函数get_apple_info()返回的值，由于该函数返回的类型是：struct apple *，所以变量r1也是该类型。注意，函数不会执行。
+</span><span class=c1></span>
+    <span class=n>r1</span> <span class=o>=</span> <span class=n>get_apple_info</span><span class=p>();</span>
 
-    printf(<span style=color:#e6db74>&#34;apple weight:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, r1<span style=color:#f92672>-&gt;</span>weight);
-    printf(<span style=color:#e6db74>&#34;apple color:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, r1<span style=color:#f92672>-&gt;</span>color);
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;apple weight:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>r1</span><span class=o>-&gt;</span><span class=n>weight</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;apple color:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>r1</span><span class=o>-&gt;</span><span class=n>color</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><ol start=2>
 <li>在宏定义中动态获取相关结构体成员的类型
 如下代码，定义一个和变量x相同类型的临时变量_max1，定义一个和变量y相同类型的临时变量_max2，再判断两者类型是否一致，不一致给出一个警告，最后比较两者。</li>
 </ol>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#define max(x, y) ({                \
-</span><span style=color:#75715e>    typeof(x) _max1 = (x);          \
-</span><span style=color:#75715e>    typeof(y) _max2 = (y);          \
-</span><span style=color:#75715e>    (void) (&amp;_max1 == &amp;_max2);      \</span><span style=color:#75715e>//如果调用者传参时，两者类型不一致，在编译时就会发出警告。
-</span><span style=color:#75715e></span>    _max1 <span style=color:#f92672>&gt;</span> _max2 <span style=color:#f92672>?</span> _max1 : _max2; })
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#define max(x, y) ({                \
+</span><span class=cp>    typeof(x) _max1 = (x);          \
+</span><span class=cp>    typeof(y) _max2 = (y);          \
+</span><span class=cp>    (void) (&amp;_max1 == &amp;_max2);      \</span><span class=c1>//如果调用者传参时，两者类型不一致，在编译时就会发出警告。
+</span><span class=c1></span>    <span class=n>_max1</span> <span class=o>&gt;</span> <span class=n>_max2</span> <span class=o>?</span> <span class=nl>_max1</span> <span class=p>:</span> <span class=n>_max2</span><span class=p>;</span> <span class=p>})</span>
+</code></pre></div><ol start=2>
 <li>如下代码，传入的a和b不是同一类型。</li>
 </ol>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>argv[])
-{
-    <span style=color:#66d9ef>int</span> a<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span>;
-    <span style=color:#66d9ef>float</span> b <span style=color:#f92672>=</span> <span style=color:#ae81ff>4.0</span>;
-    <span style=color:#66d9ef>int</span> r <span style=color:#f92672>=</span> max(a, b);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span>
+<span class=p>{</span>
+    <span class=kt>int</span> <span class=n>a</span><span class=o>=</span><span class=mi>3</span><span class=p>;</span>
+    <span class=kt>float</span> <span class=n>b</span> <span class=o>=</span> <span class=mf>4.0</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>r</span> <span class=o>=</span> <span class=n>max</span><span class=p>(</span><span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>);</span>
 
-    printf(<span style=color:#e6db74>&#34;r:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, r);
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;r:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>r</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><ol start=2>
 <li>此时编译就会出现警告</li>
 </ol>
 <pre tabindex=0><code>[root@xx c_base]# gcc test.c
@@ -986,111 +631,50 @@ test.c:43: 警告：比较不相关的指针时缺少类型转换
 <li>也可直接取得已知类型
 如下代码，定义了一个int类型的指针p，像这种用法主没什么太大的意义了。</li>
 </ol>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> a <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span>;
-typeof (<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>) p;
-p <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>a;
-printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, <span style=color:#f92672>*</span>p);
-</code></pre></td></tr></table>
-</div>
-</div><ol start=4>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=n>a</span> <span class=o>=</span> <span class=mi>2</span><span class=p>;</span>
+<span class=n>typeof</span> <span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)</span> <span class=n>p</span><span class=p>;</span>
+<span class=n>p</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>;</span>
+<span class=n>printf</span><span class=p>(</span><span class=s>&#34;%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=o>*</span><span class=n>p</span><span class=p>);</span>
+</code></pre></div><ol start=4>
 <li>其它用法</li>
 </ol>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>//其它用法1
-</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>p1;
-typeof (<span style=color:#f92672>*</span>p1) ch <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;a&#39;</span>; <span style=color:#75715e>//ch为char类型，不是char *类型。
-</span><span style=color:#75715e></span>printf(<span style=color:#e6db74>&#34;%d, %c</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, <span style=color:#66d9ef>sizeof</span>(ch), ch);<span style=color:#75715e>//1, a
-</span><span style=color:#75715e></span>
-<span style=color:#75715e>//其它用法2
-</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>p2;
-typeof (p2) p <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;hello world&#34;</span>;<span style=color:#75715e>//此时的p才是char *类型，由于在64位机器上，所以指针大小为8字节
-</span><span style=color:#75715e></span>printf(<span style=color:#e6db74>&#34;%d, %s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, <span style=color:#66d9ef>sizeof</span>(p), p);<span style=color:#75715e>//8, hello world
-</span></code></pre></td></tr></table>
-</div>
-</div><h1 id=select函数>select函数</h1>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=c1>//其它用法1
+</span><span class=c1></span><span class=kt>char</span> <span class=o>*</span><span class=n>p1</span><span class=p>;</span>
+<span class=n>typeof</span> <span class=p>(</span><span class=o>*</span><span class=n>p1</span><span class=p>)</span> <span class=n>ch</span> <span class=o>=</span> <span class=sc>&#39;a&#39;</span><span class=p>;</span> <span class=c1>//ch为char类型，不是char *类型。
+</span><span class=c1></span><span class=n>printf</span><span class=p>(</span><span class=s>&#34;%d, %c</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>ch</span><span class=p>),</span> <span class=n>ch</span><span class=p>);</span><span class=c1>//1, a
+</span><span class=c1></span>
+<span class=c1>//其它用法2
+</span><span class=c1></span><span class=kt>char</span> <span class=o>*</span><span class=n>p2</span><span class=p>;</span>
+<span class=n>typeof</span> <span class=p>(</span><span class=n>p2</span><span class=p>)</span> <span class=n>p</span> <span class=o>=</span> <span class=s>&#34;hello world&#34;</span><span class=p>;</span><span class=c1>//此时的p才是char *类型，由于在64位机器上，所以指针大小为8字节
+</span><span class=c1></span><span class=n>printf</span><span class=p>(</span><span class=s>&#34;%d, %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>p</span><span class=p>),</span> <span class=n>p</span><span class=p>);</span><span class=c1>//8, hello world
+</span></code></pre></div><h1 id=select函数>select函数</h1>
 <p>select函数使用</p>
 <p><strong>函数定义</strong></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/select.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_CLR</span>(fd, fd_set <span style=color:#f92672>*</span>fdset);
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_COPY</span>(fd_set <span style=color:#f92672>*</span>fdset_orig, fd_set <span style=color:#f92672>*</span>fdset_copy);
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>FD_ISSET</span>(fd, fd_set <span style=color:#f92672>*</span>fdset);
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_SET</span>(fd, fd_set <span style=color:#f92672>*</span>fdset);
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_ZERO</span>(fd_set <span style=color:#f92672>*</span>fdset);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/select.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>void</span> <span class=nf>FD_CLR</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset</span><span class=p>);</span>
+<span class=kt>void</span> <span class=nf>FD_COPY</span><span class=p>(</span><span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset_orig</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset_copy</span><span class=p>);</span>
+<span class=kt>int</span> <span class=nf>FD_ISSET</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset</span><span class=p>);</span>
+<span class=kt>void</span> <span class=nf>FD_SET</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset</span><span class=p>);</span>
+<span class=kt>void</span> <span class=nf>FD_ZERO</span><span class=p>(</span><span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset</span><span class=p>);</span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>select</span>(<span style=color:#66d9ef>int</span> nfds, fd_set <span style=color:#f92672>*</span><span style=color:#66d9ef>restrict</span> readfds, fd_set <span style=color:#f92672>*</span><span style=color:#66d9ef>restrict</span> writefds, fd_set <span style=color:#f92672>*</span>exceptfds, <span style=color:#66d9ef>struct</span> timeval <span style=color:#f92672>*</span>timeout););
-</code></pre></td></tr></table>
-</div>
-</div><p><strong>函数说明</strong></p>
+<span class=kt>int</span> <span class=nf>select</span><span class=p>(</span><span class=kt>int</span> <span class=n>nfds</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=kr>restrict</span> <span class=n>readfds</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=kr>restrict</span> <span class=n>writefds</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>exceptfds</span><span class=p>,</span> <span class=k>struct</span> <span class=n>timeval</span> <span class=o>*</span><span class=n>timeout</span><span class=p>););</span>
+</code></pre></div><p><strong>函数说明</strong></p>
 <p>select()用来等待文件描述词状态的改变。参数nfds代表最大的文件描述词加1，参数readfds、writefds和exceptfds 成为描述词组，是用来回传该描述词的读、写或例外的状况。底下的宏提供了处理这三种描述词组的方式：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_CLR</span>(fd, fd_set <span style=color:#f92672>*</span>fdset); <span style=color:#75715e>// 用来清除描述词组set中相关fd的位
-</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_COPY</span>(fd_set <span style=color:#f92672>*</span>fdset_orig, fd_set <span style=color:#f92672>*</span>fdset_copy);
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>FD_ISSET</span>(fd, fd_set <span style=color:#f92672>*</span>fdset); <span style=color:#75715e>// 用来测试描述词组set中相关fd的位是否位真
-</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_SET</span>(fd, fd_set <span style=color:#f92672>*</span>fdset); <span style=color:#75715e>// 用来设置描述词组set中相关fd的位
-</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>FD_ZERO</span>(fd_set <span style=color:#f92672>*</span>fdset); <span style=color:#75715e>// 用来清除描述词组set的全部位
-</span></code></pre></td></tr></table>
-</div>
-</div><p>在使用FD_ISSET测试fd_set数据类型中的描述符后，描述符集内<strong>任何与未就绪描述符对应的位</strong>返回时均被<strong>清0</strong>，因此，每次重新调用select函数时，都需要将描述符集内所关心的位置为1<strong>描述符必须被初始化</strong>，因为作为自动变量分配的一个描述符如果没有被初始化，那么发生的后果不可预期</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>void</span> <span class=nf>FD_CLR</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset</span><span class=p>);</span> <span class=c1>// 用来清除描述词组set中相关fd的位
+</span><span class=c1></span><span class=kt>void</span> <span class=nf>FD_COPY</span><span class=p>(</span><span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset_orig</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset_copy</span><span class=p>);</span>
+<span class=kt>int</span> <span class=nf>FD_ISSET</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset</span><span class=p>);</span> <span class=c1>// 用来测试描述词组set中相关fd的位是否位真
+</span><span class=c1></span><span class=kt>void</span> <span class=nf>FD_SET</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span> <span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset</span><span class=p>);</span> <span class=c1>// 用来设置描述词组set中相关fd的位
+</span><span class=c1></span><span class=kt>void</span> <span class=nf>FD_ZERO</span><span class=p>(</span><span class=n>fd_set</span> <span class=o>*</span><span class=n>fdset</span><span class=p>);</span> <span class=c1>// 用来清除描述词组set的全部位
+</span></code></pre></div><p>在使用FD_ISSET测试fd_set数据类型中的描述符后，描述符集内<strong>任何与未就绪描述符对应的位</strong>返回时均被<strong>清0</strong>，因此，每次重新调用select函数时，都需要将描述符集内所关心的位置为1<strong>描述符必须被初始化</strong>，因为作为自动变量分配的一个描述符如果没有被初始化，那么发生的后果不可预期</p>
 <p>readset、writeset、exceptset三个参数中，若对其中任何参数条件不感兴趣，则可将其设为<strong>NULL</strong></p>
 <p>timeout: 告知内核等待指定描述符中的任何一个就绪的时间限制</p>
 <p>timeval结构：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> timeval{
-    <span style=color:#66d9ef>long</span> tv_sec;    <span style=color:#75715e>// 秒
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>long</span> tv_usec;   <span style=color:#75715e>// 微秒
-</span><span style=color:#75715e></span>}
-</code></pre></td></tr></table>
-</div>
-</div><p>timeout参数的三种可能：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>timeval</span><span class=p>{</span>
+    <span class=kt>long</span> <span class=n>tv_sec</span><span class=p>;</span>    <span class=c1>// 秒
+</span><span class=c1></span>    <span class=kt>long</span> <span class=n>tv_usec</span><span class=p>;</span>   <span class=c1>// 微秒
+</span><span class=c1></span><span class=p>}</span>
+</code></pre></div><p>timeout参数的三种可能：</p>
 <ol>
 <li>设为空指针：永远等待下去，仅在有描述符就绪时才返回</li>
 <li>正常设置timeout，在不超过timeout设置的时间内，在有描述符就绪时返回</li>
@@ -1131,25 +715,13 @@ a.该套接字存在带外数据或者仍处于带外标记</p>
 <li>ENOMEM 核心内存不足</li>
 </ul>
 <h1 id=getopt>getopt</h1>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>       <span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>optarg;  <span style=color:#75715e>//选项的参数指针
-</span><span style=color:#75715e></span>       <span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>int</span> optind,   <span style=color:#75715e>//下一次调用getopt的时，从optind存储的位置处重新开始检查选项。 
-</span><span style=color:#75715e></span>       <span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>int</span> opterr,  <span style=color:#75715e>//当opterr=0时，getopt不向stderr输出错误信息。
-</span><span style=color:#75715e></span>       <span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>int</span> optopt;  <span style=color:#75715e>//当命令行选项字符不包括在optstring中或者选项缺少必要的参数时，该选项存储在optopt中，getopt返回&#39;？’、
-</span><span style=color:#75715e></span>       <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getopt</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>const</span> argv[], <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>optstring);
-</code></pre></td></tr></table>
-</div>
-</div><p>1.单个字符，表示选项，</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span><span class=cp></span>       <span class=k>extern</span> <span class=kt>char</span> <span class=o>*</span><span class=n>optarg</span><span class=p>;</span>  <span class=c1>//选项的参数指针
+</span><span class=c1></span>       <span class=k>extern</span> <span class=kt>int</span> <span class=n>optind</span><span class=p>,</span>   <span class=c1>//下一次调用getopt的时，从optind存储的位置处重新开始检查选项。 
+</span><span class=c1></span>       <span class=k>extern</span> <span class=kt>int</span> <span class=n>opterr</span><span class=p>,</span>  <span class=c1>//当opterr=0时，getopt不向stderr输出错误信息。
+</span><span class=c1></span>       <span class=k>extern</span> <span class=kt>int</span> <span class=n>optopt</span><span class=p>;</span>  <span class=c1>//当命令行选项字符不包括在optstring中或者选项缺少必要的参数时，该选项存储在optopt中，getopt返回&#39;？’、
+</span><span class=c1></span>       <span class=kt>int</span> <span class=nf>getopt</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span> <span class=k>const</span> <span class=n>argv</span><span class=p>[],</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>optstring</span><span class=p>);</span>
+</code></pre></div><p>1.单个字符，表示选项，</p>
 <p>2.单个字符后接一个冒号：表示该选项后必须跟一个参数。参数紧跟在选项后或者以空格隔开。该参数的指针赋给optarg。</p>
 <p>3 单个字符后跟两个冒号，表示该选项后必须跟一个参数。参数必须紧跟在选项后不能以空格隔开。该参数的指针赋给optarg。（这个特性是GNU的扩张）。</p>
 <p>getopt处理以'-’开头的命令行参数，如optstring=&ldquo;ab:c::d::",命令行为getopt.exe -a -b host -ckeke -d haha</p>
@@ -1159,17 +731,9 @@ a.该套接字存在带外数据或者仍处于带外标记</p>
 <p>如果optstring中的字符串以'+&lsquo;加号开头或者环境变量POSIXLY_CORRE被设置。那么一遇到不包含选项的命令行参数，getopt就会停止，返回-1。</p>
 <h1 id=daemon>daemon</h1>
 <p>run in the background</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>daemon</span>(<span style=color:#66d9ef>int</span> nochdir, <span style=color:#66d9ef>int</span> noclose);
-</code></pre></td></tr></table>
-</div>
-</div><p>The daemon() function is for programs wishing to detach themselves from the controlling terminal and run in the background as system daemons.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>daemon</span><span class=p>(</span><span class=kt>int</span> <span class=n>nochdir</span><span class=p>,</span> <span class=kt>int</span> <span class=n>noclose</span><span class=p>);</span>
+</code></pre></div><p>The daemon() function is for programs wishing to detach themselves from the controlling terminal and run in the background as system daemons.</p>
 <p>If nochdir is zero, daemon() changes the calling process&rsquo;s current working directory to the root directory ("/"); otherwise, the current working directory is left unchanged.</p>
 <p>If noclose is zero, daemon() redirects standard input, standard output and standard error to /dev/null; otherwise, no changes are made to these file descriptors.</p>
 <p><strong>return value:</strong></p>
@@ -1178,31 +742,14 @@ a.该套接字存在带外数据或者仍处于带外标记</p>
 <p>当linux中的 api函数发生异常时,一般会将errno变量(需include errno.h)赋一个整数值,不同的值表示不同的含义,可以通过查看该值推测出错的原因，在实际编程中用这一招解决了不少原本看来莫名其妙的问题。但是errno是一个数字，代表的具体含义还要到errno.h中去阅读宏定义，而每次查阅是一件很繁琐的事情。下面的几种方法可以方便的得到错误信息</p>
 <h2 id=perror>perror</h2>
 <p><code>perror ()</code>用来将上一个函数发生错误的原因输出到标准错误(stderr),参数s 所指的字符串会先打印出,后面再加上错误原因 字符串。此错误原因依照全局变量 <code>errno</code>的值来决定要输出的字符串。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;errno.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> perror(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>s)
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=strerror>strerror</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;errno.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>void</span> <span class=n>perror</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>s</span><span class=p>)</span>
+</code></pre></div><h2 id=strerror>strerror</h2>
 <p>将错误代码转换为字符串错误信息,可以将该字符串和其它的信息组合输出到用户界面</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;errno.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>strerror(<span style=color:#66d9ef>int</span> errno)
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=errno-的部分值>errno 的部分值</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;errno.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>char</span> <span class=o>*</span><span class=n>strerror</span><span class=p>(</span><span class=kt>int</span> <span class=n>errno</span><span class=p>)</span>
+</code></pre></div><h2 id=errno-的部分值>errno 的部分值</h2>
 <p>以下来自linux 2.4.20-18的内核代码中的/usr/include/asm/errno.h</p>
 <pre tabindex=0><code>#ifndef _I386_ERRNO_H
 #define _I386_ERRNO_H
@@ -1333,17 +880,9 @@ a.该套接字存在带外数据或者仍处于带外标记</p>
 #endif
 </code></pre><h2 id=herror>herror</h2>
 <p>在使用 gethostbyname() 的时候，你不能用perror() 打印错误信息(因为 errno 没有使用)，你应该调用 herror()。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netdb.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>herror</span>( <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>s );
-</code></pre></td></tr></table>
-</div>
-</div><p>适用于以下函数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;netdb.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>void</span> <span class=nf>herror</span><span class=p>(</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>s</span> <span class=p>);</span>
+</code></pre></div><p>适用于以下函数</p>
 <pre tabindex=0><code>gethostbyaddr()
 gethostbyaddr_r()
 gethostbyname()
@@ -1368,31 +907,15 @@ Nonauthoritative answer: Host name lookup failure. This is usually a temporary e
 <h2 id=isalpha>isalpha</h2>
 <p>isalpha() 函数用来检测一个字符是否是字母。
 要检测的字符。它可以是一个有效的字符（被转换为 int 类型），也可以是 EOF（表示无效的字符）。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ctype.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>isalpha</span>(<span style=color:#66d9ef>int</span> c);
-</code></pre></td></tr></table>
-</div>
-</div><p><strong>返回值</strong></p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;ctype.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>isalpha</span><span class=p>(</span><span class=kt>int</span> <span class=n>c</span><span class=p>);</span>
+</code></pre></div><p><strong>返回值</strong></p>
 <p>返回值为非零（真）表示c是字母，返回值为零（假）表示c不是字母。</p>
 <h2 id=islower>islower</h2>
 <p>islower() 函数用来检测一个字符是否是小写字母。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ctype.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>islower</span> (<span style=color:#66d9ef>int</span> c);
-</code></pre></td></tr></table>
-</div>
-</div><p>在默认情况下，小写字母包括：
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;ctype.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>islower</span> <span class=p>(</span><span class=kt>int</span> <span class=n>c</span><span class=p>);</span>
+</code></pre></div><p>在默认情况下，小写字母包括：
 a b c d e f g h i j k l m n o p q r s t u v w x y z</p>
 <p>标准 ASCII 编码共包含了 128 个字符，不同的字符属于不同的分类，我们在 &lt;ctype.h> 头文件中给出了详细的列表。
 参数</p>
@@ -1404,17 +927,9 @@ a b c d e f g h i j k l m n o p q r s t u v w x y z</p>
 <p>为非零（真）表示c是小写字母，返回值为零（假）表示c不是小写字母。</p>
 <h2 id=toupper>toupper</h2>
 <p>toupper()将小写字母转换为大写字母</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;ctype.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>toupper</span> (<span style=color:#66d9ef>int</span> c);
-</code></pre></td></tr></table>
-</div>
-</div><p>只有当参数 c 是一个小写字母，并且存在对应的大写字母时，这种转换才会发生。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;ctype.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>toupper</span> <span class=p>(</span><span class=kt>int</span> <span class=n>c</span><span class=p>);</span>
+</code></pre></div><p>只有当参数 c 是一个小写字母，并且存在对应的大写字母时，这种转换才会发生。</p>
 <p>在默认情况下，小写字母包括：
 a b c d e f g h i j k l m n o p q r s t u v w x y z</p>
 <p>大写字母包括：
@@ -1429,128 +944,63 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
 <h1 id=settimer>settimer</h1>
 <p>在linux c编程中。setitimer是一个比較经常使用的函数。可用来实现延时和定时的功能，网上有各种零零散散的使用方法说明，都仅仅提到了个别使用方法，今天抽出时间实践整理了一份比較具体的：</p>
 <p><strong>函数定义</strong></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/time.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>setitimer</span>(<span style=color:#66d9ef>int</span> which, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> itimerval <span style=color:#f92672>*</span>new_value,
-            <span style=color:#66d9ef>struct</span> itimerval <span style=color:#f92672>*</span>old_value);
-</code></pre></td></tr></table>
-</div>
-</div><p>当中which參数表示类型。可选的值有：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/time.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=kt>int</span> <span class=nf>setitimer</span><span class=p>(</span><span class=kt>int</span> <span class=n>which</span><span class=p>,</span> <span class=k>const</span> <span class=k>struct</span> <span class=n>itimerval</span> <span class=o>*</span><span class=n>new_value</span><span class=p>,</span>
+            <span class=k>struct</span> <span class=n>itimerval</span> <span class=o>*</span><span class=n>old_value</span><span class=p>);</span>
+</code></pre></div><p>当中which參数表示类型。可选的值有：</p>
 <p><strong>ITIMER_REAL</strong>：以系统真实的时间来计算，它送出SIGALRM信号。</p>
 <p><strong>ITIMER_VIRTUAL</strong>：以该进程在用户态下花费的时间来计算，它送出SIGVTALRM信号。</p>
 <p><strong>ITIMER_PROF</strong>：以该进程在用户态下和内核态下所费的时间来计算。它送出SIGPROF信号。</p>
 <p>紧接着的new_value和old_value均为itimerval结构体，先看一下itimerval结构体定义：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> itimerval {
-    <span style=color:#66d9ef>struct</span> timeval it_interval; <span style=color:#75715e>/* next value */</span>
-    <span style=color:#66d9ef>struct</span> timeval it_value;    <span style=color:#75715e>/* current value */</span>
-};
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>itimerval</span> <span class=p>{</span>
+    <span class=k>struct</span> <span class=n>timeval</span> <span class=n>it_interval</span><span class=p>;</span> <span class=cm>/* next value */</span>
+    <span class=k>struct</span> <span class=n>timeval</span> <span class=n>it_value</span><span class=p>;</span>    <span class=cm>/* current value */</span>
+<span class=p>};</span>
 
-<span style=color:#66d9ef>struct</span> timeval {
-    time_t      tv_sec;         <span style=color:#75715e>/* seconds */</span>
-    suseconds_t tv_usec;        <span style=color:#75715e>/* microseconds */</span>
-};
-</code></pre></td></tr></table>
-</div>
-</div><p>itimeval又是由两个timeval结构体组成，timeval包括tv_sec和tv_usec两部分。当中tv_se为秒。tv_usec为微秒(即1/1000000秒)</p>
+<span class=k>struct</span> <span class=n>timeval</span> <span class=p>{</span>
+    <span class=n>time_t</span>      <span class=n>tv_sec</span><span class=p>;</span>         <span class=cm>/* seconds */</span>
+    <span class=n>suseconds_t</span> <span class=n>tv_usec</span><span class=p>;</span>        <span class=cm>/* microseconds */</span>
+<span class=p>};</span>
+</code></pre></div><p>itimeval又是由两个timeval结构体组成，timeval包括tv_sec和tv_usec两部分。当中tv_se为秒。tv_usec为微秒(即1/1000000秒)</p>
 <p>当中的new_value參数用来对计时器进行设置，it_interval为计时间隔，it_value为延时时长，以下样例中表示的是在setitimer方法调用成功后，延时1微秒便触发一次SIGALRM信号，以后每隔200毫秒触发一次SIGALRM信号。</p>
 <p><strong>settimer工作机制是，先对it_value倒计时，当it_value为零时触发信号。然后重置为it_interval。继续对it_value倒计时。一直这样循环下去。</strong></p>
 <p>基于此机制。setitimer既能够用来延时运行，也可定时运行。</p>
 <p><strong>假如it_value为0是不会触发信号的，所以要能触发信号，it_value得大于0；假设it_interval为零，仅仅会延时。不会定时（也就是说仅仅会触发一次信号)。</strong></p>
 <p>old_value參数，通经常使用不上。设置为NULL，它是用来存储上一次setitimer调用时设置的new_value值。</p>
 <p>下面是一个简单的使用样例：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;signal.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/time.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>signalHandler</span>(<span style=color:#66d9ef>int</span> signo)
-{
-    <span style=color:#66d9ef>switch</span> (signo){
-        <span style=color:#66d9ef>case</span> SIGALRM:
-            printf(<span style=color:#e6db74>&#34;Caught the SIGALRM signal!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-            <span style=color:#66d9ef>break</span>;
-   }
-}
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/time.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>void</span> <span class=nf>signalHandler</span><span class=p>(</span><span class=kt>int</span> <span class=n>signo</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=k>switch</span> <span class=p>(</span><span class=n>signo</span><span class=p>){</span>
+        <span class=k>case</span> <span class=nl>SIGALRM</span><span class=p>:</span>
+            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;Caught the SIGALRM signal!</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+            <span class=k>break</span><span class=p>;</span>
+   <span class=p>}</span>
+<span class=p>}</span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>argv[])
-{
-    signal(SIGALRM, signalHandler);
+<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span>
+<span class=p>{</span>
+    <span class=n>signal</span><span class=p>(</span><span class=n>SIGALRM</span><span class=p>,</span> <span class=n>signalHandler</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>struct</span> itimerval new_value, old_value;
-    new_value.it_value.tv_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-    new_value.it_value.tv_usec <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-    new_value.it_interval.tv_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-    new_value.it_interval.tv_usec <span style=color:#f92672>=</span> <span style=color:#ae81ff>200000</span>;
-    setitimer(ITIMER_REAL, <span style=color:#f92672>&amp;</span>new_value, <span style=color:#f92672>&amp;</span>old_value);
+    <span class=k>struct</span> <span class=n>itimerval</span> <span class=n>new_value</span><span class=p>,</span> <span class=n>old_value</span><span class=p>;</span>
+    <span class=n>new_value</span><span class=p>.</span><span class=n>it_value</span><span class=p>.</span><span class=n>tv_sec</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+    <span class=n>new_value</span><span class=p>.</span><span class=n>it_value</span><span class=p>.</span><span class=n>tv_usec</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+    <span class=n>new_value</span><span class=p>.</span><span class=n>it_interval</span><span class=p>.</span><span class=n>tv_sec</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+    <span class=n>new_value</span><span class=p>.</span><span class=n>it_interval</span><span class=p>.</span><span class=n>tv_usec</span> <span class=o>=</span> <span class=mi>200000</span><span class=p>;</span>
+    <span class=n>setitimer</span><span class=p>(</span><span class=n>ITIMER_REAL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>new_value</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>old_value</span><span class=p>);</span>
     
-    <span style=color:#66d9ef>for</span>(;;);
+    <span class=k>for</span><span class=p>(;;);</span>
      
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=预置宏>预置宏</h1>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h1 id=预置宏>预置宏</h1>
 <p>可变参数宏__VA_ARGS__</p>
 <p>使用方法</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#define my_print2(fmt,...)  printf(fmt,##__VA_ARGS__)  
-</span></code></pre></td></tr></table>
-</div>
-</div><h1 id=qa>Q/A</h1>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#define my_print2(fmt,...)  printf(fmt,##__VA_ARGS__)  
+</span></code></pre></div><h1 id=qa>Q/A</h1>
 <h2 id=linux-多线程与信号>linux 多线程与信号</h2>
 <p>接收到一个信号时，主进程会停止运行，直到信号处理完成后再继续。
 信号处理顺序：最后一个信号处理完再处理上一个，直到全部处理完成后再运行主进程</p>
@@ -1558,15 +1008,17 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
 </div>
 </body>
 <div>
-<small> words: 9708 tags:</small>
+<small> words: 9401 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

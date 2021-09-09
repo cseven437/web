@@ -11,9 +11,11 @@
 <meta itemprop=description content="共享内存
 共享内存是System V版本的最后一个进程间通信方式。共享内存，顾名思义就是允许两个不相关的进程访问同一个逻辑内存，共享内存是两个正在运行的进程之间共享和传递数据的一种非常有效的方式。不同进程之间共享的内存通常为同一段物理内存。进程可以将同一段物理内存连接到他们自己的地址空间中，所有的进程都可以访问共享内存中的地址。如果某个进程向共享内存写入数据，所做的改动将立即影响到可以访问同一段共享内存的任何其他进程。"><meta itemprop=datePublished content="2021-03-06T10:41:30+08:00">
 <meta itemprop=dateModified content="2021-03-06T10:41:30+08:00">
-<meta itemprop=wordCount content="2221">
+<meta itemprop=wordCount content="2045">
 <meta itemprop=keywords content="c,linux,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -48,21 +50,11 @@
 <p>共享内存相关函数有<code>shmget()</code>,<code>shmat()</code>,<code>shmdt()</code>,<code>shmctl()</code></p>
 <h3 id=shmget----用来获得共享内存区域的id>shmget &ndash; 用来获得共享内存区域的ID。</h3>
 <p>函数定义</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/shm.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>shmget</span>(key_t key, size_t size, <span style=color:#66d9ef>int</span> shmflg);
-</code></pre></td></tr></table>
-</div>
-</div><p>参数：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/shm.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>shmget</span><span class=p>(</span><span class=n>key_t</span> <span class=n>key</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>size</span><span class=p>,</span> <span class=kt>int</span> <span class=n>shmflg</span><span class=p>);</span>
+</code></pre></div><p>参数：</p>
 <ul>
 <li>key: 提供一个参数key(0-32位整数)，通过key查找或创建对应的共享内存段</li>
 <li>size: size以字节为单位指定需要共享大的内存容量</li>
@@ -90,21 +82,11 @@
 </ul>
 <h3 id=shmat----把共享内存对象映射到调用进程的地址空间>shmat &ndash; 把共享内存对象映射到调用进程的地址空间</h3>
 <p>函数定义</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/shm.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>shmat</span>(<span style=color:#66d9ef>int</span> shmid, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>shmaddr, <span style=color:#66d9ef>int</span> shmflg);
-</code></pre></td></tr></table>
-</div>
-</div><p>参数：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/shm.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>shmat</span><span class=p>(</span><span class=kt>int</span> <span class=n>shmid</span><span class=p>,</span> <span class=k>const</span> <span class=kt>void</span> <span class=o>*</span><span class=n>shmaddr</span><span class=p>,</span> <span class=kt>int</span> <span class=n>shmflg</span><span class=p>);</span>
+</code></pre></div><p>参数：</p>
 <ul>
 <li>shmid: 共享内存标识符</li>
 <li>shmaddr: 指定共享内存出现在进程内存地址的什么位置，直接指定为<code>NULL</code>让内核自己决定一个合适大的地址位置</li>
@@ -122,21 +104,11 @@
 <li>ENOMEM：核心内存不足</li>
 </ul>
 <h3 id=shmdt----断开共享内存的连接>shmdt &ndash; 断开共享内存的连接</h3>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/shm.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>shmdt</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>shmaddr);
-</code></pre></td></tr></table>
-</div>
-</div><p>参数： shmaddr: 连接的共享内存的起始地址</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/shm.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>shmdt</span><span class=p>(</span><span class=k>const</span> <span class=kt>void</span> <span class=o>*</span><span class=n>shmaddr</span><span class=p>);</span>
+</code></pre></div><p>参数： shmaddr: 连接的共享内存的起始地址</p>
 <p>返回值：</p>
 <ul>
 <li>成功: 0</li>
@@ -147,21 +119,11 @@
 <li>EINVAL：无效的参数shmaddr</li>
 </ul>
 <h3 id=shmctl----完成对共享内存的控制>shmctl &ndash; 完成对共享内存的控制</h3>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/shm.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>shmctl</span>(<span style=color:#66d9ef>int</span> shmid, <span style=color:#66d9ef>int</span> cmd, <span style=color:#66d9ef>struct</span> shmid_ds <span style=color:#f92672>*</span>buf);
-</code></pre></td></tr></table>
-</div>
-</div><p>参数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/shm.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>shmctl</span><span class=p>(</span><span class=kt>int</span> <span class=n>shmid</span><span class=p>,</span> <span class=kt>int</span> <span class=n>cmd</span><span class=p>,</span> <span class=k>struct</span> <span class=n>shmid_ds</span> <span class=o>*</span><span class=n>buf</span><span class=p>);</span>
+</code></pre></div><p>参数</p>
 <ul>
 <li>shmid: 共享内存标识符</li>
 <li>cmd:
@@ -173,57 +135,29 @@
 </li>
 <li>buf: 共享内存管理结构体。具体说明参见共享内存内核结构定义部分</li>
 </ul>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> shmid_ds {
-    <span style=color:#66d9ef>struct</span> ipc_perm shm_perm;    <span style=color:#75715e>/* Ownership and permissions */</span>
-    size_t          shm_segsz;   <span style=color:#75715e>/* Size of segment (bytes) */</span>
-    time_t          shm_atime;   <span style=color:#75715e>/* Last attach time */</span>
-    time_t          shm_dtime;   <span style=color:#75715e>/* Last detach time */</span>
-    time_t          shm_ctime;   <span style=color:#75715e>/* Last change time */</span>
-    pid_t           shm_cpid;    <span style=color:#75715e>/* PID of creator */</span>
-    pid_t           shm_lpid;    <span style=color:#75715e>/* PID of last shmat(2)/shmdt(2) */</span>
-    shmatt_t        shm_nattch;  <span style=color:#75715e>/* No. of current attaches */</span>
-    ...
-};
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>shmid_ds</span> <span class=p>{</span>
+    <span class=k>struct</span> <span class=n>ipc_perm</span> <span class=n>shm_perm</span><span class=p>;</span>    <span class=cm>/* Ownership and permissions */</span>
+    <span class=n>size_t</span>          <span class=n>shm_segsz</span><span class=p>;</span>   <span class=cm>/* Size of segment (bytes) */</span>
+    <span class=n>time_t</span>          <span class=n>shm_atime</span><span class=p>;</span>   <span class=cm>/* Last attach time */</span>
+    <span class=n>time_t</span>          <span class=n>shm_dtime</span><span class=p>;</span>   <span class=cm>/* Last detach time */</span>
+    <span class=n>time_t</span>          <span class=n>shm_ctime</span><span class=p>;</span>   <span class=cm>/* Last change time */</span>
+    <span class=n>pid_t</span>           <span class=n>shm_cpid</span><span class=p>;</span>    <span class=cm>/* PID of creator */</span>
+    <span class=n>pid_t</span>           <span class=n>shm_lpid</span><span class=p>;</span>    <span class=cm>/* PID of last shmat(2)/shmdt(2) */</span>
+    <span class=n>shmatt_t</span>        <span class=n>shm_nattch</span><span class=p>;</span>  <span class=cm>/* No. of current attaches */</span>
+    <span class=p>...</span>
+<span class=p>};</span>
 
-<span style=color:#66d9ef>struct</span> ipc_perm {
-    key_t          __key;    <span style=color:#75715e>/* Key supplied to shmget(2) */</span>
-    uid_t          uid;      <span style=color:#75715e>/* Effective UID of owner */</span>
-    gid_t          gid;      <span style=color:#75715e>/* Effective GID of owner */</span>
-    uid_t          cuid;     <span style=color:#75715e>/* Effective UID of creator */</span>
-    gid_t          cgid;     <span style=color:#75715e>/* Effective GID of creator */</span>
-    <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>short</span> mode;     <span style=color:#75715e>/* Permissions + SHM_DEST and
-</span><span style=color:#75715e>                                SHM_LOCKED flags */</span>
-    <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>short</span> __seq;    <span style=color:#75715e>/* Sequence number */</span>
-};
-</code></pre></td></tr></table>
-</div>
-</div><p>返回值：</p>
+<span class=k>struct</span> <span class=n>ipc_perm</span> <span class=p>{</span>
+    <span class=n>key_t</span>          <span class=n>__key</span><span class=p>;</span>    <span class=cm>/* Key supplied to shmget(2) */</span>
+    <span class=n>uid_t</span>          <span class=n>uid</span><span class=p>;</span>      <span class=cm>/* Effective UID of owner */</span>
+    <span class=n>gid_t</span>          <span class=n>gid</span><span class=p>;</span>      <span class=cm>/* Effective GID of owner */</span>
+    <span class=n>uid_t</span>          <span class=n>cuid</span><span class=p>;</span>     <span class=cm>/* Effective UID of creator */</span>
+    <span class=n>gid_t</span>          <span class=n>cgid</span><span class=p>;</span>     <span class=cm>/* Effective GID of creator */</span>
+    <span class=kt>unsigned</span> <span class=kt>short</span> <span class=n>mode</span><span class=p>;</span>     <span class=cm>/* Permissions + SHM_DEST and
+</span><span class=cm>                                SHM_LOCKED flags */</span>
+    <span class=kt>unsigned</span> <span class=kt>short</span> <span class=n>__seq</span><span class=p>;</span>    <span class=cm>/* Sequence number */</span>
+<span class=p>};</span>
+</code></pre></div><p>返回值：</p>
 <ul>
 <li>成功: 0</li>
 <li>失败: -1</li>
@@ -238,303 +172,147 @@
 </ul>
 <h2 id=示例>示例</h2>
 <p>头文件</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>// shm.h
-</span><span style=color:#75715e></span><span style=color:#75715e>#ifndef _SHMDATA_H_HEADER
-</span><span style=color:#75715e>#define _SHMDATA_H_HEADER
-</span><span style=color:#75715e>#define TEXT_SZ 2048
-</span><span style=color:#75715e></span><span style=color:#66d9ef>struct</span> shared_use_st
-{  
-    <span style=color:#66d9ef>int</span> written;<span style=color:#75715e>//作为一个标志，非0：表示可读，0表示可写 
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>char</span> text[TEXT_SZ];<span style=color:#75715e>//记录写入和读取的文本
-</span><span style=color:#75715e></span>};
-<span style=color:#75715e>#endif
-</span></code></pre></td></tr></table>
-</div>
-</div><p>write</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/shm.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;shm.h&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;errno.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-    key_t key <span style=color:#f92672>=</span> <span style=color:#ae81ff>1234</span>;
-    <span style=color:#66d9ef>struct</span> shared_use_st <span style=color:#f92672>*</span>shared;
-    <span style=color:#66d9ef>int</span> size;
-    <span style=color:#66d9ef>int</span> shmid;
-    <span style=color:#66d9ef>int</span> running <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-    shmid <span style=color:#f92672>=</span> shmget(key, <span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>struct</span> shared_use_st), <span style=color:#ae81ff>0666</span><span style=color:#f92672>|</span>IPC_CREAT);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=c1>// shm.h
+</span><span class=c1></span><span class=cp>#ifndef _SHMDATA_H_HEADER
+</span><span class=cp>#define _SHMDATA_H_HEADER
+</span><span class=cp>#define TEXT_SZ 2048
+</span><span class=cp></span><span class=k>struct</span> <span class=n>shared_use_st</span>
+<span class=p>{</span>  
+    <span class=kt>int</span> <span class=n>written</span><span class=p>;</span><span class=c1>//作为一个标志，非0：表示可读，0表示可写 
+</span><span class=c1></span>    <span class=kt>char</span> <span class=n>text</span><span class=p>[</span><span class=n>TEXT_SZ</span><span class=p>];</span><span class=c1>//记录写入和读取的文本
+</span><span class=c1></span><span class=p>};</span>
+<span class=cp>#endif
+</span></code></pre></div><p>write</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/shm.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&#34;shm.h&#34;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;errno.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=n>key_t</span> <span class=n>key</span> <span class=o>=</span> <span class=mi>1234</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>shared_use_st</span> <span class=o>*</span><span class=n>shared</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>size</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>shmid</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>running</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+    <span class=n>shmid</span> <span class=o>=</span> <span class=n>shmget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=n>shared_use_st</span><span class=p>),</span> <span class=mo>0666</span><span class=o>|</span><span class=n>IPC_CREAT</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>if</span>(shmid <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) {
-        perror(<span style=color:#e6db74>&#34;shmget&#34;</span>);
-        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-    }
+    <span class=k>if</span><span class=p>(</span><span class=n>shmid</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;shmget&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    printf(<span style=color:#e6db74>&#34;memory attached at 0x%X</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, shmid);
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;memory attached at 0x%X</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>shmid</span><span class=p>);</span>
 
-    shared <span style=color:#f92672>=</span> shmat(shmid, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>);
-    <span style=color:#66d9ef>if</span>(<span style=color:#f92672>!</span>shared) {
-        perror(<span style=color:#e6db74>&#34;shmat&#34;</span>);
-        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-    }
+    <span class=n>shared</span> <span class=o>=</span> <span class=n>shmat</span><span class=p>(</span><span class=n>shmid</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+    <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>shared</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;shmat&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    shared<span style=color:#f92672>-&gt;</span>written <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    <span class=n>shared</span><span class=o>-&gt;</span><span class=n>written</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
 
-    <span style=color:#66d9ef>while</span>(running) {
-        <span style=color:#66d9ef>if</span>(shared<span style=color:#f92672>-&gt;</span>written <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span>) {
+    <span class=k>while</span><span class=p>(</span><span class=n>running</span><span class=p>)</span> <span class=p>{</span>
+        <span class=k>if</span><span class=p>(</span><span class=n>shared</span><span class=o>-&gt;</span><span class=n>written</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
 
-            printf(<span style=color:#e6db74>&#34;wait.....</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-            sleep(<span style=color:#ae81ff>1</span>);
-        }
-        <span style=color:#66d9ef>else</span>
-        {
-            printf(<span style=color:#e6db74>&#34;enter buf:&#34;</span>);
-            fgets(shared<span style=color:#f92672>-&gt;</span>text, BUFSIZ, stdin);
-            shared<span style=color:#f92672>-&gt;</span>written <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-            <span style=color:#66d9ef>if</span>(strncmp(shared<span style=color:#f92672>-&gt;</span>text, <span style=color:#e6db74>&#34;exit&#34;</span>, <span style=color:#ae81ff>4</span>) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
-                running <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-            }
-        }
-    }
+            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;wait.....</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+            <span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+        <span class=p>}</span>
+        <span class=k>else</span>
+        <span class=p>{</span>
+            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;enter buf:&#34;</span><span class=p>);</span>
+            <span class=n>fgets</span><span class=p>(</span><span class=n>shared</span><span class=o>-&gt;</span><span class=n>text</span><span class=p>,</span> <span class=n>BUFSIZ</span><span class=p>,</span> <span class=n>stdin</span><span class=p>);</span>
+            <span class=n>shared</span><span class=o>-&gt;</span><span class=n>written</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+            <span class=k>if</span><span class=p>(</span><span class=n>strncmp</span><span class=p>(</span><span class=n>shared</span><span class=o>-&gt;</span><span class=n>text</span><span class=p>,</span> <span class=s>&#34;exit&#34;</span><span class=p>,</span> <span class=mi>4</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+                <span class=n>running</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+            <span class=p>}</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
 
-    printf(<span style=color:#e6db74>&#34;shadt</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;shadt</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>if</span>(shmdt(shared) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) {
-        perror(<span style=color:#e6db74>&#34;shmdt&#34;</span>);
-        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-    }
+    <span class=k>if</span><span class=p>(</span><span class=n>shmdt</span><span class=p>(</span><span class=n>shared</span><span class=p>)</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;shmdt&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    <span style=color:#75715e>// printf(&#34;shmctl\n&#34;);
-</span><span style=color:#75715e></span>    <span style=color:#75715e>// if(shmctl(shmid, IPC_RMID, 0) == -1) {
-</span><span style=color:#75715e></span>    <span style=color:#75715e>//     perror(&#34;shmctl&#34;);
-</span><span style=color:#75715e></span>    <span style=color:#75715e>//     return -1;
-</span><span style=color:#75715e></span>    <span style=color:#75715e>// }
-</span><span style=color:#75715e></span>
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>read</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/shm.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;shm.h&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;errno.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-    key_t key <span style=color:#f92672>=</span> <span style=color:#ae81ff>1234</span>;
-    <span style=color:#66d9ef>struct</span> shared_use_st <span style=color:#f92672>*</span>shared;
-    <span style=color:#66d9ef>int</span> size;
-    <span style=color:#66d9ef>int</span> shmid;
-    <span style=color:#66d9ef>int</span> running <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-    shmid <span style=color:#f92672>=</span> shmget(key, <span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>struct</span> shared_use_st), <span style=color:#ae81ff>0666</span><span style=color:#f92672>|</span>IPC_CREAT);
+    <span class=c1>// printf(&#34;shmctl\n&#34;);
+</span><span class=c1></span>    <span class=c1>// if(shmctl(shmid, IPC_RMID, 0) == -1) {
+</span><span class=c1></span>    <span class=c1>//     perror(&#34;shmctl&#34;);
+</span><span class=c1></span>    <span class=c1>//     return -1;
+</span><span class=c1></span>    <span class=c1>// }
+</span><span class=c1></span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>read</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/shm.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&#34;shm.h&#34;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;errno.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=n>key_t</span> <span class=n>key</span> <span class=o>=</span> <span class=mi>1234</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>shared_use_st</span> <span class=o>*</span><span class=n>shared</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>size</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>shmid</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>running</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+    <span class=n>shmid</span> <span class=o>=</span> <span class=n>shmget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=n>shared_use_st</span><span class=p>),</span> <span class=mo>0666</span><span class=o>|</span><span class=n>IPC_CREAT</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>if</span>(shmid <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) {
-        peror(<span style=color:#e6db74>&#34;shmget&#34;</span>);
-        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-    }
+    <span class=k>if</span><span class=p>(</span><span class=n>shmid</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>peror</span><span class=p>(</span><span class=s>&#34;shmget&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    printf(<span style=color:#e6db74>&#34;memory attached at 0x%X</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, shmid);
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;memory attached at 0x%X</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>shmid</span><span class=p>);</span>
 
-    shared <span style=color:#f92672>=</span> shmat(shmid, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>);
-    <span style=color:#66d9ef>if</span>(<span style=color:#f92672>!</span>shared) {
-        peror(<span style=color:#e6db74>&#34;shmat&#34;</span>);
-        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-    }
+    <span class=n>shared</span> <span class=o>=</span> <span class=n>shmat</span><span class=p>(</span><span class=n>shmid</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+    <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>shared</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>peror</span><span class=p>(</span><span class=s>&#34;shmat&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    shared<span style=color:#f92672>-&gt;</span>written <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    <span class=n>shared</span><span class=o>-&gt;</span><span class=n>written</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
 
-    <span style=color:#66d9ef>while</span>(running) {
-        <span style=color:#66d9ef>if</span>(shared<span style=color:#f92672>-&gt;</span>written <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span>) {
+    <span class=k>while</span><span class=p>(</span><span class=n>running</span><span class=p>)</span> <span class=p>{</span>
+        <span class=k>if</span><span class=p>(</span><span class=n>shared</span><span class=o>-&gt;</span><span class=n>written</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
 
-            shared<span style=color:#f92672>-&gt;</span>written <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-            printf(<span style=color:#e6db74>&#34;read text:%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, shared<span style=color:#f92672>-&gt;</span>text);
-            <span style=color:#66d9ef>if</span>(strncmp(shared<span style=color:#f92672>-&gt;</span>text, <span style=color:#e6db74>&#34;exit&#34;</span>, <span style=color:#ae81ff>4</span>) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
-                running <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-            }
-        }
-        <span style=color:#66d9ef>else</span>
-        {
-            sleep(<span style=color:#ae81ff>1</span>);
-        }
-    }
+            <span class=n>shared</span><span class=o>-&gt;</span><span class=n>written</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;read text:%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>shared</span><span class=o>-&gt;</span><span class=n>text</span><span class=p>);</span>
+            <span class=k>if</span><span class=p>(</span><span class=n>strncmp</span><span class=p>(</span><span class=n>shared</span><span class=o>-&gt;</span><span class=n>text</span><span class=p>,</span> <span class=s>&#34;exit&#34;</span><span class=p>,</span> <span class=mi>4</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+                <span class=n>running</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+            <span class=p>}</span>
+        <span class=p>}</span>
+        <span class=k>else</span>
+        <span class=p>{</span>
+            <span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
 
-    printf(<span style=color:#e6db74>&#34;shadt</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;shadt</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
 
-    <span style=color:#66d9ef>if</span>(shmdt(shared) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) {
-        perror(<span style=color:#e6db74>&#34;shmdt&#34;</span>);
-        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-    }
+    <span class=k>if</span><span class=p>(</span><span class=n>shmdt</span><span class=p>(</span><span class=n>shared</span><span class=p>)</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;shmdt&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    printf(<span style=color:#e6db74>&#34;shmctl</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-    <span style=color:#66d9ef>if</span>(shmctl(shmid, IPC_RMID, <span style=color:#ae81ff>0</span>) <span style=color:#f92672>==</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) {
-        perror(<span style=color:#e6db74>&#34;shmctl&#34;</span>);
-        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-    }
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;shmctl</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+    <span class=k>if</span><span class=p>(</span><span class=n>shmctl</span><span class=p>(</span><span class=n>shmid</span><span class=p>,</span> <span class=n>IPC_RMID</span><span class=p>,</span> <span class=mi>0</span><span class=p>)</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;shmctl&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=总结>总结</h2>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=总结>总结</h2>
 <ol>
 <li>
 <p>共享内存中的数据，从来不写入到实际磁盘文件中去；而通过mmap()映射普通文件实现的共享内存通信可以指定何时将数据写入磁盘文件中。 注：系统V共享内存机制实际是通过shm文件系统中的文件实现的，shm文件系统的安装点在交换分区上，系统重新引导后，所有的内容都丢失。</p>
@@ -550,15 +328,17 @@
 </div>
 </body>
 <div>
-<small> words: 2221 tags:</small>
+<small> words: 2045 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

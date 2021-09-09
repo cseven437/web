@@ -9,9 +9,11 @@
 <meta itemprop=name content="Mysql">
 <meta itemprop=description content="用于记录sql语句等信息"><meta itemprop=datePublished content="2021-01-31T17:24:19+08:00">
 <meta itemprop=dateModified content="2021-06-09T21:22:33+08:00">
-<meta itemprop=wordCount content="965">
+<meta itemprop=wordCount content="1260">
 <meta itemprop=keywords content="mysql,sql,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -39,35 +41,13 @@
 </aside>
 <p>用于记录sql语句等信息</p>
 <p>查看MYSQL数据库中所有用户</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql>mysql<span style=color:#f92672>&gt;</span> <span style=color:#66d9ef>SELECT</span> <span style=color:#66d9ef>DISTINCT</span> CONCAT(<span style=color:#e6db74>&#39;User: &#39;&#39;&#39;</span>,<span style=color:#66d9ef>user</span>,<span style=color:#e6db74>&#39;&#39;&#39;@&#39;&#39;&#39;</span>,<span style=color:#66d9ef>host</span>,<span style=color:#e6db74>&#39;&#39;&#39;;&#39;</span>) <span style=color:#66d9ef>AS</span> query <span style=color:#66d9ef>FROM</span> mysql.<span style=color:#66d9ef>user</span>;
-</code></pre></td></tr></table>
-</div>
-</div><p>查看数据库中具体某个用户的权限</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql>mysql<span style=color:#f92672>&gt;</span> <span style=color:#66d9ef>show</span> grants <span style=color:#66d9ef>for</span> <span style=color:#e6db74>&#39;cactiuser&#39;</span><span style=color:#f92672>@</span><span style=color:#e6db74>&#39;%&#39;</span>;
-mysql<span style=color:#f92672>&gt;</span> <span style=color:#66d9ef>select</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>from</span> mysql.<span style=color:#66d9ef>user</span> <span style=color:#66d9ef>where</span> <span style=color:#66d9ef>user</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#39;cactiuser&#39;</span> <span style=color:#960050;background-color:#1e0010>\</span><span style=color:#66d9ef>G</span>   
-</code></pre></td></tr></table>
-</div>
-</div><p>查看user表结构　需要具体的项可结合表结构来查询</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql>mysql<span style=color:#f92672>&gt;</span> <span style=color:#66d9ef>desc</span> mysql.<span style=color:#66d9ef>user</span>;
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=管理mysql的命令>管理MySQL的命令</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=k>SELECT</span><span class=w> </span><span class=k>DISTINCT</span><span class=w> </span><span class=n>CONCAT</span><span class=p>(</span><span class=s1>&#39;User: &#39;&#39;&#39;</span><span class=p>,</span><span class=k>user</span><span class=p>,</span><span class=s1>&#39;&#39;&#39;@&#39;&#39;&#39;</span><span class=p>,</span><span class=k>host</span><span class=p>,</span><span class=s1>&#39;&#39;&#39;;&#39;</span><span class=p>)</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=n>query</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=n>mysql</span><span class=p>.</span><span class=k>user</span><span class=p>;</span><span class=w>
+</span></code></pre></div><p>查看数据库中具体某个用户的权限</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=k>show</span><span class=w> </span><span class=n>grants</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s1>&#39;cactiuser&#39;</span><span class=o>@</span><span class=s1>&#39;%&#39;</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>mysql</span><span class=p>.</span><span class=k>user</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=k>user</span><span class=o>=</span><span class=s1>&#39;cactiuser&#39;</span><span class=w> </span><span class=err>\</span><span class=k>G</span><span class=w>   
+</span></code></pre></div><p>查看user表结构　需要具体的项可结合表结构来查询</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=k>desc</span><span class=w> </span><span class=n>mysql</span><span class=p>.</span><span class=k>user</span><span class=p>;</span><span class=w>
+</span></code></pre></div><h2 id=管理mysql的命令>管理MySQL的命令</h2>
 <p>以下列出了使用Mysql数据库过程中常用的命令：</p>
 <ul>
 <li>
@@ -155,28 +135,12 @@ DELETE FROM 表名称 WHERE 列名称 = 值</li>
 <li>删除所有行<br>
 可以在不删除表的情况下删除所有的行。这意味着表的结构、属性和索引都是完整的：</li>
 </ol>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#66d9ef>DELETE</span> <span style=color:#66d9ef>FROM</span> <span style=color:#66d9ef>table_name</span>
-<span style=color:#f92672>#</span> <span style=color:#960050;background-color:#1e0010>或者</span>
-<span style=color:#66d9ef>DELETE</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>FROM</span> <span style=color:#66d9ef>table_name</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>删除指定内容</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#66d9ef>DELETE</span> <span style=color:#66d9ef>FROM</span> <span style=color:#66d9ef>table_name</span> <span style=color:#66d9ef>WHERE</span> [condition];
-</code></pre></td></tr></table>
-</div>
-</div><p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>DELETE</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=k>table_name</span><span class=w>
+</span><span class=w></span><span class=o>#</span><span class=w> </span><span class=err>或者</span><span class=w>
+</span><span class=w></span><span class=k>DELETE</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=k>table_name</span><span class=w>
+</span></code></pre></div><p>删除指定内容</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>DELETE</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=k>table_name</span><span class=w> </span><span class=k>WHERE</span><span class=w> </span><span class=p>[</span><span class=n>condition</span><span class=p>];</span><span class=w>
+</span></code></pre></div><p>实例</p>
 <p>假设 COMPANY 表有以下记录：</p>
 <pre tabindex=0><code>
 ID          NAME        AGE         ADDRESS     SALARY
@@ -189,53 +153,18 @@ ID          NAME        AGE         ADDRESS     SALARY
 6           Kim         22          South-Hall  45000.0
 7           James       24          Houston     10000.0
 </code></pre><p>下面是一个实例，它会删除 ID 为 7 的客户：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#66d9ef>DELETE</span> <span style=color:#66d9ef>FROM</span> COMPANY <span style=color:#66d9ef>WHERE</span> ID <span style=color:#f92672>=</span> <span style=color:#ae81ff>7</span>;
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=select-语句>SELECT 语句</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>DELETE</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=n>COMPANY</span><span class=w> </span><span class=k>WHERE</span><span class=w> </span><span class=n>ID</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>7</span><span class=p>;</span><span class=w>
+</span></code></pre></div><h3 id=select-语句>SELECT 语句</h3>
 <p>语法：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#66d9ef>SELECT</span> <span style=color:#960050;background-color:#1e0010>列名称</span> <span style=color:#66d9ef>from</span> <span style=color:#960050;background-color:#1e0010>表名称</span>
-</code></pre></td></tr></table>
-</div>
-</div><p><code>*</code> 代表所有列</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#66d9ef>SELECT</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>from</span> tablename
-</code></pre></td></tr></table>
-</div>
-</div><p><code>Max()</code>表示查询该列最大值</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#66d9ef>SELECT</span> <span style=color:#66d9ef>Max</span>(maxTxRate),<span style=color:#66d9ef>Max</span>(maxRxRate),<span style=color:#66d9ef>Max</span>(maxTotalRate) <span style=color:#66d9ef>from</span> WwanRateInfo
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=where>where</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>SELECT</span><span class=w> </span><span class=err>列名称</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=err>表名称</span><span class=w>
+</span></code></pre></div><p><code>*</code> 代表所有列</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>SELECT</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>tablename</span><span class=w>
+</span></code></pre></div><p><code>Max()</code>表示查询该列最大值</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>SELECT</span><span class=w> </span><span class=k>Max</span><span class=p>(</span><span class=n>maxTxRate</span><span class=p>),</span><span class=k>Max</span><span class=p>(</span><span class=n>maxRxRate</span><span class=p>),</span><span class=k>Max</span><span class=p>(</span><span class=n>maxTotalRate</span><span class=p>)</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>WwanRateInfo</span><span class=w>
+</span></code></pre></div><h3 id=where>where</h3>
 <p>语法</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#66d9ef>SELECT</span> <span style=color:#960050;background-color:#1e0010>列名称</span> <span style=color:#66d9ef>FROM</span> <span style=color:#960050;background-color:#1e0010>表名称</span> <span style=color:#66d9ef>WHERE</span> <span style=color:#960050;background-color:#1e0010>列</span> <span style=color:#960050;background-color:#1e0010>运算符</span> <span style=color:#960050;background-color:#1e0010>值</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>下面的运算符可在 WHERE 子句中使用：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>SELECT</span><span class=w> </span><span class=err>列名称</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=err>表名称</span><span class=w> </span><span class=k>WHERE</span><span class=w> </span><span class=err>列</span><span class=w> </span><span class=err>运算符</span><span class=w> </span><span class=err>值</span><span class=w>
+</span></code></pre></div><p>下面的运算符可在 WHERE 子句中使用：</p>
 <table>
 <thead>
 <tr>
@@ -284,15 +213,17 @@ ID          NAME        AGE         ADDRESS     SALARY
 </div>
 </body>
 <div>
-<small> words: 965 tags:</small>
+<small> words: 1260 tags:</small>
 <small><code><a href=https://arair.net/tags/mysql>mysql</a></code></small>
 <small><code><a href=https://arair.net/tags/sql>sql</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

@@ -16,23 +16,12 @@ adb reboot recovery　命令行进recovery模式&lt;/p></description></item><ite
 &lt;p>iperf是一个网络性能测试工具。可以测试TCP和UDP带宽质量，可以测量最大TCP带宽，具有多种参数和UDP特性，可以报告带宽，延迟抖动和数据包丢失。Iperf在linux和windows平台均有二进制版本供自由使用。&lt;/p>
 &lt;p>iperf was developed by NLANRDAST as a modern alternative for measuring maximum TCP and UDP bandwidth performance. Iperf allows the tuning of various parameters and UDP characteristics. Iperf reports bandwidth, delay jitter, datagram loss.&lt;/p></description></item><item><title>ping命令</title><link>https://arair.net/posts/4d462862/</link><pubDate>Mon, 25 Jan 2021 14:58:01 +0800</pubDate><guid>https://arair.net/posts/4d462862/</guid><description>当前使用linux下ping为例 -I 指定接口 -i interval 发送数据包之间等待的间隔(单位秒)。默认设置是等待一秒 -c count 发送count次ECHO_REQUE</description></item><item><title>sublime使用记录</title><link>https://arair.net/posts/ee5ba116/</link><pubDate>Sun, 24 Jan 2021 20:21:48 +0800</pubDate><guid>https://arair.net/posts/ee5ba116/</guid><description>&lt;p>使用 sublime记录&lt;/p></description></item><item><title>Makefile使用记录</title><link>https://arair.net/posts/ddeb0201/</link><pubDate>Sun, 24 Jan 2021 11:15:04 +0800</pubDate><guid>https://arair.net/posts/ddeb0201/</guid><description>= 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前make</description></item><item><title>vim使用记录以及相关配置</title><link>https://arair.net/posts/5bfa5c98/</link><pubDate>Sat, 23 Jan 2021 20:08:30 +0800</pubDate><guid>https://arair.net/posts/5bfa5c98/</guid><description>&lt;h2 id="编译">编译&lt;/h2>
 &lt;p>获取代码并编译&lt;/p>
-&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-&lt;/span>&lt;span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">git clone https://github.com/vim/vim.git
-cd vim/src
-./configure --prefix&lt;span style="color:#f92672">=&lt;/span>~/opt/usr/local/
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">git clone https://github.com/vim/vim.git
+&lt;span class="nb">cd&lt;/span> vim/src
+./configure --prefix&lt;span class="o">=&lt;/span>~/opt/usr/local/
 make
 make install
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>修改PATH&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改PATH&lt;/p>
 &lt;pre tabindex="0">&lt;code>~/.bashrc
 export PATH=~/usr/local/bin:$PATH
 &lt;/code>&lt;/pre></description></item><item><title>git的使用记录</title><link>https://arair.net/posts/c02e41ad/</link><pubDate>Thu, 21 Jan 2021 10:39:15 +0800</pubDate><guid>https://arair.net/posts/c02e41ad/</guid><description>&lt;p>记录git的使用方法&lt;/p></description></item></channel></rss>

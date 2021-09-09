@@ -12,9 +12,11 @@
 <meta itemprop=description content="linux 记录网络接口流量信息的文件在/proc/net/dev
 以下为c获相关信息示例"><meta itemprop=datePublished content="2021-03-16T19:40:07+08:00">
 <meta itemprop=dateModified content="2021-03-16T19:42:12+08:00">
-<meta itemprop=wordCount content="453">
+<meta itemprop=wordCount content="348">
 <meta itemprop=keywords content="linux,network,traffic,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -31,237 +33,128 @@
 </aside>
 <p>linux 记录网络接口流量信息的文件在<code>/proc/net/dev</code></p>
 <p>以下为c获相关信息示例</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>/*
-</span><span style=color:#75715e> * Inter-|   Receive                                                |  Transmit
-</span><span style=color:#75715e> *  face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
-</span><span style=color:#75715e> *  ens33: 1378627    6509    0    0    0     0          0         0  1046428    4792    0    0    0     0       0          0
-</span><span style=color:#75715e> *     lo: 10212375   78449    0    0    0     0          0         0 10212375   78449    0    0    0     0       0          0
-</span><span style=color:#75715e> *  ens39:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
-</span><span style=color:#75715e> *  ens38: 16144882   77529    0    0    0     0          0         0   368175    3317    0    0    0     0       0          0
-</span><span style=color:#75715e> */</span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cm>/*
+</span><span class=cm> * Inter-|   Receive                                                |  Transmit
+</span><span class=cm> *  face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
+</span><span class=cm> *  ens33: 1378627    6509    0    0    0     0          0         0  1046428    4792    0    0    0     0       0          0
+</span><span class=cm> *     lo: 10212375   78449    0    0    0     0          0         0 10212375   78449    0    0    0     0       0          0
+</span><span class=cm> *  ens39:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+</span><span class=cm> *  ens38: 16144882   77529    0    0    0     0          0         0   368175    3317    0    0    0     0       0          0
+</span><span class=cm> */</span>
 
-<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;errno.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#75715e>#undef long_t
-</span><span style=color:#75715e>#define long_t long long unsigned 
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>struct</span>
-{
-    <span style=color:#66d9ef>char</span> iface[<span style=color:#ae81ff>32</span>];
-    long_t rcv_bytes;
-    long_t rcv_packets;
-    long_t rcv_errs;
-    long_t rcv_drop;
-    long_t rcv_fifo;
-    long_t rcv_frame;
-    long_t rcv_compressed;
-    long_t rcv_multicast;
+<span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;errno.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=cp>#undef long_t
+</span><span class=cp>#define long_t long long unsigned 
+</span><span class=cp></span>
+<span class=k>typedef</span> <span class=k>struct</span>
+<span class=p>{</span>
+    <span class=kt>char</span> <span class=n>iface</span><span class=p>[</span><span class=mi>32</span><span class=p>];</span>
+    <span class=n>long_t</span> <span class=n>rcv_bytes</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>rcv_packets</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>rcv_errs</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>rcv_drop</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>rcv_fifo</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>rcv_frame</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>rcv_compressed</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>rcv_multicast</span><span class=p>;</span>
 
-    long_t snd_bytes;
-    long_t snd_packets;
-    long_t snd_errs;
-    long_t snd_drop;
-    long_t snd_fifo;
-    long_t snd_colls;
-    long_t snd_carrier;
-    long_t snd_compressed;
-}dev_st;
+    <span class=n>long_t</span> <span class=n>snd_bytes</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>snd_packets</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>snd_errs</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>snd_drop</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>snd_fifo</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>snd_colls</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>snd_carrier</span><span class=p>;</span>
+    <span class=n>long_t</span> <span class=n>snd_compressed</span><span class=p>;</span>
+<span class=p>}</span><span class=n>dev_st</span><span class=p>;</span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{
-    FILE <span style=color:#f92672>*</span>fp <span style=color:#f92672>=</span> NULL;
-    <span style=color:#66d9ef>char</span> buf[<span style=color:#ae81ff>128</span>] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>0</span>};
-    dev_st st[<span style=color:#ae81ff>10</span>];
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=n>FILE</span> <span class=o>*</span><span class=n>fp</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+    <span class=kt>char</span> <span class=n>buf</span><span class=p>[</span><span class=mi>128</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=mi>0</span><span class=p>};</span>
+    <span class=n>dev_st</span> <span class=n>st</span><span class=p>[</span><span class=mi>10</span><span class=p>];</span>
 
-    fp <span style=color:#f92672>=</span> fopen(<span style=color:#e6db74>&#34;/proc/net/dev&#34;</span>, <span style=color:#e6db74>&#34;r&#34;</span>);
-    <span style=color:#66d9ef>if</span>(fp <span style=color:#f92672>==</span> NULL) {
-        perror(<span style=color:#e6db74>&#34;fopen&#34;</span>);
-        <span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-    }
-    <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    <span class=n>fp</span> <span class=o>=</span> <span class=n>fopen</span><span class=p>(</span><span class=s>&#34;/proc/net/dev&#34;</span><span class=p>,</span> <span class=s>&#34;r&#34;</span><span class=p>);</span>
+    <span class=k>if</span><span class=p>(</span><span class=n>fp</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;fopen&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
 
-    fgets(buf, <span style=color:#66d9ef>sizeof</span>(buf), fp);
-    fgets(buf, <span style=color:#66d9ef>sizeof</span>(buf), fp);
-    memset(st, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>sizeof</span>(dev_st));
-    <span style=color:#66d9ef>while</span>(fgets(buf, <span style=color:#66d9ef>sizeof</span>(buf), fp)) {
-        {
-            <span style=color:#75715e>// sscanf(buf, &#34;%s %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu&#34;,
-</span><span style=color:#75715e></span>            sscanf(buf, <span style=color:#e6db74>&#34;%6s: %7llu %7llu %4llu %4llu %4llu %5llu %10llu %9llu %8llu %7llu %4llu %4llu %4llu %5llu %7llu %10llu&#34;</span>,
-                    st[i].iface,
-                    <span style=color:#f92672>&amp;</span>st[i].rcv_bytes,
-                    <span style=color:#f92672>&amp;</span>st[i].rcv_packets,
-                    <span style=color:#f92672>&amp;</span>st[i].rcv_errs,
-                    <span style=color:#f92672>&amp;</span>st[i].rcv_drop,
-                    <span style=color:#f92672>&amp;</span>st[i].rcv_fifo,
-                    <span style=color:#f92672>&amp;</span>st[i].rcv_frame,
-                    <span style=color:#f92672>&amp;</span>st[i].rcv_compressed,
-                    <span style=color:#f92672>&amp;</span>st[i].rcv_multicast,
-                    <span style=color:#f92672>&amp;</span>st[i].snd_bytes,
-                    <span style=color:#f92672>&amp;</span>st[i].snd_packets,
-                    <span style=color:#f92672>&amp;</span>st[i].snd_errs,
-                    <span style=color:#f92672>&amp;</span>st[i].snd_drop,
-                    <span style=color:#f92672>&amp;</span>st[i].snd_fifo,
-                    <span style=color:#f92672>&amp;</span>st[i].snd_colls,
-                    <span style=color:#f92672>&amp;</span>st[i].snd_carrier,
-                    <span style=color:#f92672>&amp;</span>st[i].snd_compressed);
-            st[i].iface[strlen(st[i].iface)<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;\0&#39;</span>;
-        }
-        i<span style=color:#f92672>++</span>;
-    }
+    <span class=n>fgets</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buf</span><span class=p>),</span> <span class=n>fp</span><span class=p>);</span>
+    <span class=n>fgets</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buf</span><span class=p>),</span> <span class=n>fp</span><span class=p>);</span>
+    <span class=n>memset</span><span class=p>(</span><span class=n>st</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>dev_st</span><span class=p>));</span>
+    <span class=k>while</span><span class=p>(</span><span class=n>fgets</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buf</span><span class=p>),</span> <span class=n>fp</span><span class=p>))</span> <span class=p>{</span>
+        <span class=p>{</span>
+            <span class=c1>// sscanf(buf, &#34;%s %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu&#34;,
+</span><span class=c1></span>            <span class=n>sscanf</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=s>&#34;%6s: %7llu %7llu %4llu %4llu %4llu %5llu %10llu %9llu %8llu %7llu %4llu %4llu %4llu %5llu %7llu %10llu&#34;</span><span class=p>,</span>
+                    <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>iface</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_bytes</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_packets</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_errs</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_drop</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_fifo</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_frame</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_compressed</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_multicast</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_bytes</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_packets</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_errs</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_drop</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_fifo</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_colls</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_carrier</span><span class=p>,</span>
+                    <span class=o>&amp;</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_compressed</span><span class=p>);</span>
+            <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>iface</span><span class=p>[</span><span class=n>strlen</span><span class=p>(</span><span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>iface</span><span class=p>)</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+        <span class=p>}</span>
+        <span class=n>i</span><span class=o>++</span><span class=p>;</span>
+    <span class=p>}</span>
 
-    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>2</span>;i <span style=color:#f92672>++</span>)
-    {
-        printf(<span style=color:#e6db74>&#34;st[%d].iface:%s</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].iface);
-        printf(<span style=color:#e6db74>&#34;st[%d].rcv_bytes:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].rcv_bytes);
-        printf(<span style=color:#e6db74>&#34;st[%d].rcv_packets:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].rcv_packets);
-        printf(<span style=color:#e6db74>&#34;st[%d].rcv_errs:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].rcv_errs);
-        printf(<span style=color:#e6db74>&#34;st[%d].rcv_drop:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].rcv_drop);
-        printf(<span style=color:#e6db74>&#34;st[%d].rcv_fifo:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].rcv_fifo);
-        printf(<span style=color:#e6db74>&#34;st[%d].rcv_frame:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].rcv_frame);
-        printf(<span style=color:#e6db74>&#34;st[%d].rcv_compressed:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].rcv_compressed);
-        printf(<span style=color:#e6db74>&#34;st[%d].rcv_multicast:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].rcv_multicast);
-        printf(<span style=color:#e6db74>&#34;st[%d].snd_bytes:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].snd_bytes);
-        printf(<span style=color:#e6db74>&#34;st[%d].snd_packets:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].snd_packets);
-        printf(<span style=color:#e6db74>&#34;st[%d].snd_errs:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].snd_errs);
-        printf(<span style=color:#e6db74>&#34;st[%d].snd_drop:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].snd_drop);
-        printf(<span style=color:#e6db74>&#34;st[%d].snd_fifo:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].snd_fifo);
-        printf(<span style=color:#e6db74>&#34;st[%d].snd_colls:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].snd_colls);
-        printf(<span style=color:#e6db74>&#34;st[%d].snd_carrier:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].snd_carrier);
-        printf(<span style=color:#e6db74>&#34;st[%d].snd_compressed:%llu</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, i, st[i].snd_compressed);
-        printf(<span style=color:#e6db74>&#34;----------------------------------------------------------</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-    }
+    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span><span class=n>i</span> <span class=o>&lt;</span> <span class=mi>2</span><span class=p>;</span><span class=n>i</span> <span class=o>++</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].iface:%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>iface</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].rcv_bytes:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_bytes</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].rcv_packets:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_packets</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].rcv_errs:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_errs</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].rcv_drop:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_drop</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].rcv_fifo:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_fifo</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].rcv_frame:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_frame</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].rcv_compressed:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_compressed</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].rcv_multicast:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>rcv_multicast</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].snd_bytes:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_bytes</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].snd_packets:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_packets</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].snd_errs:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_errs</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].snd_drop:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_drop</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].snd_fifo:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_fifo</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].snd_colls:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_colls</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].snd_carrier:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_carrier</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;st[%d].snd_compressed:%llu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>st</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>snd_compressed</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;----------------------------------------------------------</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+    <span class=p>}</span>
 
 
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></td></tr></table>
-</div>
-</div>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div>
 </article>
 </div>
 </body>
 <div>
-<small> words: 453 tags:</small>
+<small> words: 348 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/network>network</a></code></small>
 <small><code><a href=https://arair.net/tags/traffic>traffic</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

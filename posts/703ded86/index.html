@@ -29,9 +29,11 @@
 ​	ssh进入后台执行opkg.sh命令，等待执行完成
 ​	修改用户名admin为root"><meta itemprop=datePublished content="2021-02-07T20:28:34+08:00">
 <meta itemprop=dateModified content="2021-02-07T20:28:34+08:00">
-<meta itemprop=wordCount content="497">
+<meta itemprop=wordCount content="481">
 <meta itemprop=keywords content="linux,padavan,route,timemachine,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -68,54 +70,26 @@
 </li>
 <li>
 <p>编辑afpd.service文件，把以下内容贴近去</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#75715e>&lt;?xml version=&#34;1.0&#34; standalone=&#39;no&#39;?&gt;</span>
-<span style=color:#75715e>&lt;!DOCTYPE service-group SYSTEM &#34;avahi-service.dtd&#34;&gt;</span>
-<span style=color:#f92672>&lt;service-group&gt;</span>
-    <span style=color:#f92672>&lt;name</span> <span style=color:#a6e22e>replace-wildcards=</span><span style=color:#e6db74>&#34;yes&#34;</span><span style=color:#f92672>&gt;</span>AFP on %h<span style=color:#f92672>&lt;/name&gt;</span>
-    <span style=color:#f92672>&lt;service&gt;</span>
-        <span style=color:#f92672>&lt;type&gt;</span>_afpovertcp._tcp<span style=color:#f92672>&lt;/type&gt;</span>
-        <span style=color:#f92672>&lt;port&gt;</span>548<span style=color:#f92672>&lt;/port&gt;</span>
-    <span style=color:#f92672>&lt;/service&gt;</span>
-    <span style=color:#f92672>&lt;service&gt;</span>
-        <span style=color:#f92672>&lt;type&gt;</span>_device-info._tcp<span style=color:#f92672>&lt;/type&gt;</span>
-        <span style=color:#f92672>&lt;port&gt;</span>0<span style=color:#f92672>&lt;/port&gt;</span>
-        <span style=color:#f92672>&lt;txt-record&gt;</span>model=TimeMachine<span style=color:#f92672>&lt;/txt-record&gt;</span>
-    <span style=color:#f92672>&lt;/service&gt;</span>
-<span style=color:#f92672>&lt;/service-group&gt;</span>
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=cp>&lt;?xml version=&#34;1.0&#34; standalone=&#39;no&#39;?&gt;</span>
+<span class=cp>&lt;!DOCTYPE service-group SYSTEM &#34;avahi-service.dtd&#34;&gt;</span>
+<span class=nt>&lt;service-group&gt;</span>
+    <span class=nt>&lt;name</span> <span class=na>replace-wildcards=</span><span class=s>&#34;yes&#34;</span><span class=nt>&gt;</span>AFP on %h<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;service&gt;</span>
+        <span class=nt>&lt;type&gt;</span>_afpovertcp._tcp<span class=nt>&lt;/type&gt;</span>
+        <span class=nt>&lt;port&gt;</span>548<span class=nt>&lt;/port&gt;</span>
+    <span class=nt>&lt;/service&gt;</span>
+    <span class=nt>&lt;service&gt;</span>
+        <span class=nt>&lt;type&gt;</span>_device-info._tcp<span class=nt>&lt;/type&gt;</span>
+        <span class=nt>&lt;port&gt;</span>0<span class=nt>&lt;/port&gt;</span>
+        <span class=nt>&lt;txt-record&gt;</span>model=TimeMachine<span class=nt>&lt;/txt-record&gt;</span>
+    <span class=nt>&lt;/service&gt;</span>
+<span class=nt>&lt;/service-group&gt;</span>
+</code></pre></div></li>
 <li>
 <p>启动avahi</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>/opt/etc/init.d/S20dbus restart
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>/opt/etc/init.d/S20dbus restart
 /opt/etc/init.d/S42avahi-daemon restart
-</code></pre></td></tr></table>
-</div>
-</div></li>
+</code></pre></div></li>
 <li>
 <p>查看avahi是否运行</p>
 <p><code>ps | grep avahi</code></p>
@@ -174,17 +148,19 @@ file perm = 0664 directory perm = 0775
 </div>
 </body>
 <div>
-<small> words: 497 tags:</small>
+<small> words: 481 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/padavan>padavan</a></code></small>
 <small><code><a href=https://arair.net/tags/route>route</a></code></small>
 <small><code><a href=https://arair.net/tags/timemachine>timemachine</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

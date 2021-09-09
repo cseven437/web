@@ -15,9 +15,11 @@ Sed 主要用来自动编辑一个或多个文件、简化对文件的反复操�
 sed 可依照脚本的指令来处理、编辑文本文件。
 Sed 主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。"><meta itemprop=datePublished content="2021-06-23T15:55:59+08:00">
 <meta itemprop=dateModified content="2021-07-09T17:10:01+08:00">
-<meta itemprop=wordCount content="693">
+<meta itemprop=wordCount content="685">
 <meta itemprop=keywords content="sed,linux-command,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -75,67 +77,37 @@ Sed 主要用来自动编辑一个或多个文件、简化对文件的反复操�
 <h3 id=删除-d>删除 d</h3>
 <ol>
 <li>删除有reboot的行
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sed -i <span style=color:#e6db74>&#39;/reboot/d&#39;</span> testfile
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>sed -i <span class=s1>&#39;/reboot/d&#39;</span> testfile
+</code></pre></div></li>
 </ol>
 <h3 id=打印-p>打印 p</h3>
 <p><code>/etc/passwd</code>文件的部分内容</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ cat /etc/passwd
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ cat /etc/passwd
 syslog:x:104:110::/home/syslog:/usr/sbin/nologin
 uuidd:x:107:112::/run/uuidd:/usr/sbin/nologin
-</code></pre></td></tr></table>
-</div>
-</div><p>取<code>uuid:</code>后面的字符串</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ sed -n <span style=color:#e6db74>&#39;s/uuidd://p&#39;</span> /etc/passwd
+</code></pre></div><p>取<code>uuid:</code>后面的字符串</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ sed -n <span class=s1>&#39;s/uuidd://p&#39;</span> /etc/passwd
 x:107:112::/run/uuidd:/usr/sbin/nologin
-</code></pre></td></tr></table>
-</div>
-</div><p>与<code>uuid:</code>有关的字符串</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ sed -n <span style=color:#e6db74>&#39;/uuidd:/p&#39;</span> /etc/passwd
+</code></pre></div><p>与<code>uuid:</code>有关的字符串</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ sed -n <span class=s1>&#39;/uuidd:/p&#39;</span> /etc/passwd
 uuidd:x:107:112::/run/uuidd:/usr/sbin/nologin
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=参考链接>参考链接</h2>
+</code></pre></div><h2 id=参考链接>参考链接</h2>
 <p>(<a href=https://www.runoob.com/linux/linux-comm-sed.html>https://www.runoob.com/linux/linux-comm-sed.html</a>)</p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 693 tags:</small>
+<small> words: 685 tags:</small>
 <small><code><a href=https://arair.net/tags/sed>sed</a></code></small>
 <small><code><a href=https://arair.net/tags/linux-command>linux-command</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

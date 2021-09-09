@@ -11,9 +11,11 @@
 <meta itemprop=description content="定义
 信号量本质上是一个计数器（不设置全局变量是因为进程间是相互独立的，而这不一定能看到，看到也不能保证++引用计数为原子操作）,用于多进程对共享数据对象的读取，它和管道有所不同，它不以传送数据为主要目的，它主要是用来保护共享资源（信号量也属于临界资源），使得资源在一个时刻只有一个进程独享。"><meta itemprop=datePublished content="2021-03-14T10:41:11+08:00">
 <meta itemprop=dateModified content="2021-03-14T10:41:11+08:00">
-<meta itemprop=wordCount content="3406">
+<meta itemprop=wordCount content="3269">
 <meta itemprop=keywords content="linux进程间通信,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -80,27 +82,14 @@
 <h2 id=兼容系统v的信号量的函数>兼容系统v的信号量的函数</h2>
 <h3 id=semget>semget</h3>
 <p>创建信号量</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/sem.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>semget</span>(key_t key, <span style=color:#66d9ef>int</span> nsems, <span style=color:#66d9ef>int</span> semflg);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/sem.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>semget</span><span class=p>(</span><span class=n>key_t</span> <span class=n>key</span><span class=p>,</span> <span class=kt>int</span> <span class=n>nsems</span><span class=p>,</span> <span class=kt>int</span> <span class=n>semflg</span><span class=p>);</span>
 
-<span style=color:#75715e>#define key_t int
-</span></code></pre></td></tr></table>
-</div>
-</div><p>参数:</p>
+<span class=cp>#define key_t int
+</span></code></pre></div><p>参数:</p>
 <ul>
 <li>key: 建立IPC通讯(消息队列，信号量和共享内存)时必须指定一个ID值。通常情况下，该id值通过ftok函数得到，由内核变成标识符，要想让两个进程看到同一个信号集，只需设置key值不变就可以。</li>
 <li>nsems: 指定信号量集中需要大的信号量数目，通常为1</li>
@@ -112,23 +101,12 @@
 </ul>
 <h3 id=semctl>semctl</h3>
 <p>删除和初始化信号量</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/sem.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>semctl</span>(<span style=color:#66d9ef>int</span> semid, <span style=color:#66d9ef>int</span> semnum, <span style=color:#66d9ef>int</span> cmd, ...);
-</code></pre></td></tr></table>
-</div>
-</div><p>参数:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/sem.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>semctl</span><span class=p>(</span><span class=kt>int</span> <span class=n>semid</span><span class=p>,</span> <span class=kt>int</span> <span class=n>semnum</span><span class=p>,</span> <span class=kt>int</span> <span class=n>cmd</span><span class=p>,</span> <span class=p>...);</span>
+</code></pre></div><p>参数:</p>
 <ul>
 <li>
 <p>semid: 由<code>semget</code>返回的信号量标识符</p>
@@ -143,101 +121,49 @@
 <li>IPC_RMID: 用于删除一个已经无需继续使用的信号量标识符，删除的话就不需要缺省参数，只需要三个参数即可</li>
 </ul>
 <p>如有需要第四个参数一般设置为union semnu arg</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>union</span> semun {
-    <span style=color:#66d9ef>int</span>              val;    <span style=color:#75715e>/* Value for SETVAL */</span>
-    <span style=color:#66d9ef>struct</span> semid_ds <span style=color:#f92672>*</span>buf;    <span style=color:#75715e>/* Buffer for IPC_STAT, IPC_SET */</span>
-    <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>short</span>  <span style=color:#f92672>*</span>array;  <span style=color:#75715e>/* Array for GETALL, SETALL */</span>
-    <span style=color:#66d9ef>struct</span> seminfo  <span style=color:#f92672>*</span>__buf;  <span style=color:#75715e>/* Buffer for IPC_INFO
-</span><span style=color:#75715e>                                (Linux-specific) */</span>
-};
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>union</span> <span class=n>semun</span> <span class=p>{</span>
+    <span class=kt>int</span>              <span class=n>val</span><span class=p>;</span>    <span class=cm>/* Value for SETVAL */</span>
+    <span class=k>struct</span> <span class=n>semid_ds</span> <span class=o>*</span><span class=n>buf</span><span class=p>;</span>    <span class=cm>/* Buffer for IPC_STAT, IPC_SET */</span>
+    <span class=kt>unsigned</span> <span class=kt>short</span>  <span class=o>*</span><span class=n>array</span><span class=p>;</span>  <span class=cm>/* Array for GETALL, SETALL */</span>
+    <span class=k>struct</span> <span class=n>seminfo</span>  <span class=o>*</span><span class=n>__buf</span><span class=p>;</span>  <span class=cm>/* Buffer for IPC_INFO
+</span><span class=cm>                                (Linux-specific) */</span>
+<span class=p>};</span>
+</code></pre></div></li>
 </ul>
 <h3 id=semop>semop</h3>
 <p>改变信号量大的值</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/ipc.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/sem.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>semop</span>(<span style=color:#66d9ef>int</span> semid, <span style=color:#66d9ef>struct</span> sembuf <span style=color:#f92672>*</span>sops, size_t nsops);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/sem.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>semop</span><span class=p>(</span><span class=kt>int</span> <span class=n>semid</span><span class=p>,</span> <span class=k>struct</span> <span class=n>sembuf</span> <span class=o>*</span><span class=n>sops</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>nsops</span><span class=p>);</span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>semtimedop</span>(<span style=color:#66d9ef>int</span> semid, <span style=color:#66d9ef>struct</span> sembuf <span style=color:#f92672>*</span>sops, size_t nsops,
-               <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> timespec <span style=color:#f92672>*</span>timeout);
-</code></pre></td></tr></table>
-</div>
-</div><p>参数:</p>
+<span class=kt>int</span> <span class=nf>semtimedop</span><span class=p>(</span><span class=kt>int</span> <span class=n>semid</span><span class=p>,</span> <span class=k>struct</span> <span class=n>sembuf</span> <span class=o>*</span><span class=n>sops</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>nsops</span><span class=p>,</span>
+               <span class=k>const</span> <span class=k>struct</span> <span class=n>timespec</span> <span class=o>*</span><span class=n>timeout</span><span class=p>);</span>
+</code></pre></div><p>参数:</p>
 <ul>
 <li>nsops: 进行操作信号量的个数，即sops结构变量的个数，需大于或等于1。最常见设置此值等于1，只完成对一个信号量的操作</li>
 <li>sembuf:
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> sembuf{ 
-    <span style=color:#66d9ef>short</span> sem_num;   <span style=color:#75715e>//除非使用一组信号量，否则它为0 
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>short</span> sem_op;   <span style=color:#75715e>//信号量在一次操作中需要改变的数据，通常是两个数，                                        
-</span><span style=color:#75715e></span>                    <span style=color:#75715e>//一个是-1，即P（等待）操作， 
-</span><span style=color:#75715e></span>                    <span style=color:#75715e>//一个是+1，即V（发送信号）操作。 
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>short</span> sem_flg; <span style=color:#75715e>//通常为SEM_UNDO,使操作系统跟踪信号量， 
-</span><span style=color:#75715e></span>                <span style=color:#75715e>//并在进程没有释放该信号量而终止时，操作系统释放信号量 
-</span><span style=color:#75715e></span>}; 
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>sembuf</span><span class=p>{</span> 
+    <span class=kt>short</span> <span class=n>sem_num</span><span class=p>;</span>   <span class=c1>//除非使用一组信号量，否则它为0 
+</span><span class=c1></span>    <span class=kt>short</span> <span class=n>sem_op</span><span class=p>;</span>   <span class=c1>//信号量在一次操作中需要改变的数据，通常是两个数，                                        
+</span><span class=c1></span>                    <span class=c1>//一个是-1，即P（等待）操作， 
+</span><span class=c1></span>                    <span class=c1>//一个是+1，即V（发送信号）操作。 
+</span><span class=c1></span>    <span class=kt>short</span> <span class=n>sem_flg</span><span class=p>;</span> <span class=c1>//通常为SEM_UNDO,使操作系统跟踪信号量， 
+</span><span class=c1></span>                <span class=c1>//并在进程没有释放该信号量而终止时，操作系统释放信号量 
+</span><span class=c1></span><span class=p>};</span> 
+</code></pre></div></li>
 </ul>
 <p>通常设置为SEM_UNDO,使操作系统跟踪信号量， 并在进程没有释放该信号量而终止时，操作系统释放信号量 ，例如在二元信号量中，你不释放该信号量 而异常退出，就会导致别的进程一直申请不到信号量，而一直处于挂起状态。</p>
 <h2 id=posix信号量函数>posix信号量函数</h2>
 <h3 id=sem_init>sem_init</h3>
 <p>该函数用于创建信号量，其原型如下</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;semaphore.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sem_init</span>(sem_t <span style=color:#f92672>*</span>sem, <span style=color:#66d9ef>int</span> pshared, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> value);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;semaphore.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>sem_init</span><span class=p>(</span><span class=n>sem_t</span> <span class=o>*</span><span class=n>sem</span><span class=p>,</span> <span class=kt>int</span> <span class=n>pshared</span><span class=p>,</span> <span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>value</span><span class=p>);</span>
 
-Link with <span style=color:#f92672>-</span>pthread.
-</code></pre></td></tr></table>
-</div>
-</div><p>该函数初始化由sem指向的信号对象，设置它的共享选项，并给它一个初始的整数值。</p>
+<span class=n>Link</span> <span class=n>with</span> <span class=o>-</span><span class=n>pthread</span><span class=p>.</span>
+</code></pre></div><p>该函数初始化由sem指向的信号对象，设置它的共享选项，并给它一个初始的整数值。</p>
 <ul>
 <li>pshared: 控制信号量的类型，如果其值为0，就表示这个信号量是当前进程的局部信号量，否则信号量就可以在多个进程之间共享，</li>
 <li>value: 为sem的初始值。</li>
@@ -249,237 +175,116 @@ Link with <span style=color:#f92672>-</span>pthread.
 </ul>
 <h3 id=sem_post>sem_post</h3>
 <p>释放信号量，让信号量的值加1。相当于V操作。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;semaphore.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sem_post</span>(sem_t <span style=color:#f92672>*</span>sem);
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;semaphore.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>sem_post</span><span class=p>(</span><span class=n>sem_t</span> <span class=o>*</span><span class=n>sem</span><span class=p>);</span>
 
-Link with <span style=color:#f92672>-</span>pthread.
-</code></pre></td></tr></table>
-</div>
-</div><p>返回值:</p>
+<span class=n>Link</span> <span class=n>with</span> <span class=o>-</span><span class=n>pthread</span><span class=p>.</span>
+</code></pre></div><p>返回值:</p>
 <ul>
 <li>成功: 返回0</li>
 <li>失败: 返回-1</li>
 </ul>
 <h3 id=sem_wait>sem_wait</h3>
 <p>等待信号量，如果信号量的值大于0,将信号量的值减1,立即返回。如果信号量的值为0,则线程阻塞，相当于P操作。</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sem_wait</span>(sem_t <span style=color:#f92672>*</span>sem);  
-</code></pre></td></tr></table>
-</div>
-</div><p>成功返回0,失败返回-1。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>sem_wait</span><span class=p>(</span><span class=n>sem_t</span> <span class=o>*</span><span class=n>sem</span><span class=p>);</span>  
+</code></pre></div><p>成功返回0,失败返回-1。</p>
 <h3 id=sem_destroy>sem_destroy</h3>
 <p>该函数用于对用完的信号量的清理。它的原型如下：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>sem_destroy</span>(sem_t <span style=color:#f92672>*</span>sem); 
-</code></pre></td></tr></table>
-</div>
-</div><p>成功时返回0，失败时返回-1.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>sem_destroy</span><span class=p>(</span><span class=n>sem_t</span> <span class=o>*</span><span class=n>sem</span><span class=p>);</span> 
+</code></pre></div><p>成功时返回0，失败时返回-1.</p>
 <h2 id=例子>例子</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">78
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">79
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">80
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">81
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">82
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">83
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">84
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">85
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">86
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">87
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">88
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">89
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">90
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;semaphore.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;errno.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;pthread.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#75715e>#define total 20
-</span><span style=color:#75715e></span>
-sem_t remain, apple, pear, mutex;
-<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> vremain <span style=color:#f92672>=</span> <span style=color:#ae81ff>20</span>, vapple <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>, vpear <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>father</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>);
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>mather</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>);
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>son</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>);
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>daughter</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>);
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>print_sem</span>();
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;semaphore.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;errno.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;pthread.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=cp>#define total 20
+</span><span class=cp></span>
+<span class=n>sem_t</span> <span class=n>remain</span><span class=p>,</span> <span class=n>apple</span><span class=p>,</span> <span class=n>pear</span><span class=p>,</span> <span class=n>mutex</span><span class=p>;</span>
+<span class=k>static</span> <span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>vremain</span> <span class=o>=</span> <span class=mi>20</span><span class=p>,</span> <span class=n>vapple</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=n>vpear</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>father</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=p>);</span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>mather</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=p>);</span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>son</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=p>);</span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>daughter</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=p>);</span>
+<span class=kt>void</span> <span class=nf>print_sem</span><span class=p>();</span>
 
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
-{  
-    pthread_t fa, ma, so, da;  
-    sem_init(<span style=color:#f92672>&amp;</span>remain, <span style=color:#ae81ff>0</span>, total);<span style=color:#75715e>//总数初始化为20 
-</span><span style=color:#75715e></span>    sem_init(<span style=color:#f92672>&amp;</span>apple, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>);<span style=color:#75715e>//盆子中苹果数, 开始为0  
-</span><span style=color:#75715e></span>    sem_init(<span style=color:#f92672>&amp;</span>pear, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>);<span style=color:#75715e>//盆子中梨子数, 开始为0   
-</span><span style=color:#75715e></span>    sem_init(<span style=color:#f92672>&amp;</span>mutex, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>);<span style=color:#75715e>//互斥锁, 初始为1 
-</span><span style=color:#75715e></span>    pthread_create(<span style=color:#f92672>&amp;</span>fa, NULL, <span style=color:#f92672>&amp;</span>father, NULL);  
-    pthread_create(<span style=color:#f92672>&amp;</span>ma, NULL, <span style=color:#f92672>&amp;</span>mather, NULL);  
-    pthread_create(<span style=color:#f92672>&amp;</span>so, NULL, <span style=color:#f92672>&amp;</span>son, NULL); 
-    pthread_create(<span style=color:#f92672>&amp;</span>da, NULL, <span style=color:#f92672>&amp;</span>daughter, NULL);    
-    <span style=color:#66d9ef>for</span>(;;);
-}
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>father</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg)
-{  
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>)
-    {      
-        sem_wait(<span style=color:#f92672>&amp;</span>remain);     
-        sem_wait(<span style=color:#f92672>&amp;</span>mutex);      
-        printf(<span style=color:#e6db74>&#34;父亲: 放苹果之前, 剩余空间=%u, 苹果数=%u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, vremain<span style=color:#f92672>--</span>, vapple<span style=color:#f92672>++</span>);
-        printf(<span style=color:#e6db74>&#34;父亲: 放苹果之后, 剩余空间=%u, 苹果数=%u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, vremain, vapple);
-        sem_post(<span style=color:#f92672>&amp;</span>mutex);      
-        sem_post(<span style=color:#f92672>&amp;</span>apple);  
-        sleep(<span style=color:#ae81ff>1</span>);  
-    }
-}
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>mather</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg)
-{  
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>)
-    {      
-        sem_wait(<span style=color:#f92672>&amp;</span>remain);     
-        sem_wait(<span style=color:#f92672>&amp;</span>mutex);      
-        printf(<span style=color:#e6db74>&#34;母亲: 放梨子之前, 剩余空间=%u, 梨子数=%u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, vremain<span style=color:#f92672>--</span>, vpear<span style=color:#f92672>++</span>);
-        printf(<span style=color:#e6db74>&#34;母亲: 放梨子之后, 剩余空间=%u, 梨子数=%u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, vremain, vpear);
-        sem_post(<span style=color:#f92672>&amp;</span>mutex);  
-        sem_post(<span style=color:#f92672>&amp;</span>pear);   
-        sleep(<span style=color:#ae81ff>2</span>);  
-    }
-}
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>son</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg)
-{  
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>)
-    {      
-        sem_wait(<span style=color:#f92672>&amp;</span>pear);   
-        sem_wait(<span style=color:#f92672>&amp;</span>mutex);   
-        printf(<span style=color:#e6db74>&#34;儿子: 吃梨子之前, 剩余空间=%u, 梨子数=%u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, vremain<span style=color:#f92672>++</span>, vpear<span style=color:#f92672>--</span>);
-        printf(<span style=color:#e6db74>&#34;儿子: 吃梨子之后, 剩余空间=%u, 梨子数=%u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, vremain, vpear);
-        sem_post(<span style=color:#f92672>&amp;</span>mutex);  
-        sem_post(<span style=color:#f92672>&amp;</span>remain);     
-        sleep(<span style=color:#ae81ff>3</span>);
-    }
-}
-<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>daughter</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>arg)
-{  
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>)
-    {  
-        sem_wait(<span style=color:#f92672>&amp;</span>apple);  
-        sem_wait(<span style=color:#f92672>&amp;</span>mutex);
-        printf(<span style=color:#e6db74>&#34;女儿: 吃苹果之前, 剩余空间=%u, 苹果数=%u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, vremain<span style=color:#f92672>++</span>, vapple<span style=color:#f92672>--</span>);
-        printf(<span style=color:#e6db74>&#34;女儿: 吃苹果之前, 剩余空间=%u, 苹果数=%u</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, vremain, vapple);   
-        sem_post(<span style=color:#f92672>&amp;</span>mutex);  
-        sem_post(<span style=color:#f92672>&amp;</span>remain); 
-        sleep(<span style=color:#ae81ff>3</span>);  
-    }
-}
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>print_sem</span>()
-{  
-    <span style=color:#66d9ef>int</span> val1, val2, val3;
-    sem_getvalue(<span style=color:#f92672>&amp;</span>remain, <span style=color:#f92672>&amp;</span>val1);  
-    sem_getvalue(<span style=color:#f92672>&amp;</span>apple, <span style=color:#f92672>&amp;</span>val2);   
-    sem_getvalue(<span style=color:#f92672>&amp;</span>pear, <span style=color:#f92672>&amp;</span>val3);
-    printf(<span style=color:#e6db74>&#34;Semaphore: remain:%d, apple:%d, pear:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, val1, val2, val3);
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>运行结果</p>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>  
+    <span class=n>pthread_t</span> <span class=n>fa</span><span class=p>,</span> <span class=n>ma</span><span class=p>,</span> <span class=n>so</span><span class=p>,</span> <span class=n>da</span><span class=p>;</span>  
+    <span class=n>sem_init</span><span class=p>(</span><span class=o>&amp;</span><span class=n>remain</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>total</span><span class=p>);</span><span class=c1>//总数初始化为20 
+</span><span class=c1></span>    <span class=n>sem_init</span><span class=p>(</span><span class=o>&amp;</span><span class=n>apple</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span><span class=c1>//盆子中苹果数, 开始为0  
+</span><span class=c1></span>    <span class=n>sem_init</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pear</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span><span class=c1>//盆子中梨子数, 开始为0   
+</span><span class=c1></span>    <span class=n>sem_init</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span><span class=c1>//互斥锁, 初始为1 
+</span><span class=c1></span>    <span class=n>pthread_create</span><span class=p>(</span><span class=o>&amp;</span><span class=n>fa</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>father</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>  
+    <span class=n>pthread_create</span><span class=p>(</span><span class=o>&amp;</span><span class=n>ma</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>mather</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>  
+    <span class=n>pthread_create</span><span class=p>(</span><span class=o>&amp;</span><span class=n>so</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>son</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span> 
+    <span class=n>pthread_create</span><span class=p>(</span><span class=o>&amp;</span><span class=n>da</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>daughter</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>    
+    <span class=k>for</span><span class=p>(;;);</span>
+<span class=p>}</span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>father</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=n>arg</span><span class=p>)</span>
+<span class=p>{</span>  
+    <span class=k>while</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+    <span class=p>{</span>      
+        <span class=n>sem_wait</span><span class=p>(</span><span class=o>&amp;</span><span class=n>remain</span><span class=p>);</span>     
+        <span class=n>sem_wait</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>);</span>      
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;父亲: 放苹果之前, 剩余空间=%u, 苹果数=%u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>vremain</span><span class=o>--</span><span class=p>,</span> <span class=n>vapple</span><span class=o>++</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;父亲: 放苹果之后, 剩余空间=%u, 苹果数=%u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>vremain</span><span class=p>,</span> <span class=n>vapple</span><span class=p>);</span>
+        <span class=n>sem_post</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>);</span>      
+        <span class=n>sem_post</span><span class=p>(</span><span class=o>&amp;</span><span class=n>apple</span><span class=p>);</span>  
+        <span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>  
+    <span class=p>}</span>
+<span class=p>}</span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>mather</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=n>arg</span><span class=p>)</span>
+<span class=p>{</span>  
+    <span class=k>while</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+    <span class=p>{</span>      
+        <span class=n>sem_wait</span><span class=p>(</span><span class=o>&amp;</span><span class=n>remain</span><span class=p>);</span>     
+        <span class=n>sem_wait</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>);</span>      
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;母亲: 放梨子之前, 剩余空间=%u, 梨子数=%u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>vremain</span><span class=o>--</span><span class=p>,</span> <span class=n>vpear</span><span class=o>++</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;母亲: 放梨子之后, 剩余空间=%u, 梨子数=%u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>vremain</span><span class=p>,</span> <span class=n>vpear</span><span class=p>);</span>
+        <span class=n>sem_post</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>);</span>  
+        <span class=n>sem_post</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pear</span><span class=p>);</span>   
+        <span class=n>sleep</span><span class=p>(</span><span class=mi>2</span><span class=p>);</span>  
+    <span class=p>}</span>
+<span class=p>}</span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>son</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=n>arg</span><span class=p>)</span>
+<span class=p>{</span>  
+    <span class=k>while</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+    <span class=p>{</span>      
+        <span class=n>sem_wait</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pear</span><span class=p>);</span>   
+        <span class=n>sem_wait</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>);</span>   
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;儿子: 吃梨子之前, 剩余空间=%u, 梨子数=%u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>vremain</span><span class=o>++</span><span class=p>,</span> <span class=n>vpear</span><span class=o>--</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;儿子: 吃梨子之后, 剩余空间=%u, 梨子数=%u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>vremain</span><span class=p>,</span> <span class=n>vpear</span><span class=p>);</span>
+        <span class=n>sem_post</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>);</span>  
+        <span class=n>sem_post</span><span class=p>(</span><span class=o>&amp;</span><span class=n>remain</span><span class=p>);</span>     
+        <span class=n>sleep</span><span class=p>(</span><span class=mi>3</span><span class=p>);</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+<span class=kt>void</span> <span class=o>*</span><span class=nf>daughter</span><span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=n>arg</span><span class=p>)</span>
+<span class=p>{</span>  
+    <span class=k>while</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+    <span class=p>{</span>  
+        <span class=n>sem_wait</span><span class=p>(</span><span class=o>&amp;</span><span class=n>apple</span><span class=p>);</span>  
+        <span class=n>sem_wait</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;女儿: 吃苹果之前, 剩余空间=%u, 苹果数=%u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>vremain</span><span class=o>++</span><span class=p>,</span> <span class=n>vapple</span><span class=o>--</span><span class=p>);</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;女儿: 吃苹果之前, 剩余空间=%u, 苹果数=%u</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>vremain</span><span class=p>,</span> <span class=n>vapple</span><span class=p>);</span>   
+        <span class=n>sem_post</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mutex</span><span class=p>);</span>  
+        <span class=n>sem_post</span><span class=p>(</span><span class=o>&amp;</span><span class=n>remain</span><span class=p>);</span> 
+        <span class=n>sleep</span><span class=p>(</span><span class=mi>3</span><span class=p>);</span>  
+    <span class=p>}</span>
+<span class=p>}</span>
+<span class=kt>void</span> <span class=nf>print_sem</span><span class=p>()</span>
+<span class=p>{</span>  
+    <span class=kt>int</span> <span class=n>val1</span><span class=p>,</span> <span class=n>val2</span><span class=p>,</span> <span class=n>val3</span><span class=p>;</span>
+    <span class=n>sem_getvalue</span><span class=p>(</span><span class=o>&amp;</span><span class=n>remain</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>val1</span><span class=p>);</span>  
+    <span class=n>sem_getvalue</span><span class=p>(</span><span class=o>&amp;</span><span class=n>apple</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>val2</span><span class=p>);</span>   
+    <span class=n>sem_getvalue</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pear</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>val3</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;Semaphore: remain:%d, apple:%d, pear:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>val1</span><span class=p>,</span> <span class=n>val2</span><span class=p>,</span> <span class=n>val3</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>运行结果</p>
 <pre tabindex=0><code>母亲: 放梨子之前, 剩余空间=20, 梨子数=0
 母亲: 放梨子之后, 剩余空间=19, 梨子数=1
 儿子: 吃梨子之前, 剩余空间=19, 梨子数=1
@@ -521,14 +326,16 @@ sem_t remain, apple, pear, mutex;
 </div>
 </body>
 <div>
-<small> words: 3406 tags:</small>
+<small> words: 3269 tags:</small>
 <small><code><a href=https://arair.net/tags/linux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1>linux进程间通信</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

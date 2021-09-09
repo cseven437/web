@@ -9,9 +9,11 @@
 <meta itemprop=name content="linux c常用结构体">
 <meta itemprop=description content="常用结构体"><meta itemprop=datePublished content="2021-02-04T10:03:37+08:00">
 <meta itemprop=dateModified content="2021-02-04T10:03:37+08:00">
-<meta itemprop=wordCount content="160">
+<meta itemprop=wordCount content="124">
 <meta itemprop=keywords content="linux,c,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -28,111 +30,59 @@
 </aside>
 <p>常用结构体</p>
 <p>sockaddr</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/socket.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span><span style=color:#66d9ef>struct</span> sockaddr {  
-    sa_family_t sin_family;<span style=color:#75715e>//地址族
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>char</span> sa_data[<span style=color:#ae81ff>14</span>]; <span style=color:#75715e>//14字节，包含套接字中的目标地址和端口信息               
-</span><span style=color:#75715e></span>};
-</code></pre></td></tr></table>
-</div>
-</div><p>sockaddr_in</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;netinet/in.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;arpa/inet.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>struct</span> sockaddr_in
-{
-    sa_family_t     sin_family;
-    <span style=color:#66d9ef>uint16_t</span>        sin_port;
-    <span style=color:#66d9ef>struct</span> in_addr  sin_addr;
-    <span style=color:#66d9ef>char</span>            sin_zero[<span style=color:#ae81ff>8</span>];
-}
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=k>struct</span> <span class=n>sockaddr</span> <span class=p>{</span>  
+    <span class=n>sa_family_t</span> <span class=n>sin_family</span><span class=p>;</span><span class=c1>//地址族
+</span><span class=c1></span>    <span class=kt>char</span> <span class=n>sa_data</span><span class=p>[</span><span class=mi>14</span><span class=p>];</span> <span class=c1>//14字节，包含套接字中的目标地址和端口信息               
+</span><span class=c1></span><span class=p>};</span>
+</code></pre></div><p>sockaddr_in</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;netinet/in.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=k>struct</span> <span class=n>sockaddr_in</span>
+<span class=p>{</span>
+    <span class=n>sa_family_t</span>     <span class=n>sin_family</span><span class=p>;</span>
+    <span class=kt>uint16_t</span>        <span class=n>sin_port</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>in_addr</span>  <span class=n>sin_addr</span><span class=p>;</span>
+    <span class=kt>char</span>            <span class=n>sin_zero</span><span class=p>[</span><span class=mi>8</span><span class=p>];</span>
+<span class=p>}</span>
 
-<span style=color:#66d9ef>struct</span> in_addr
-{
-    In_addr_t       s_addr;
-}
-</code></pre></td></tr></table>
-</div>
-</div><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> in6_addr
-{
-    <span style=color:#66d9ef>union</span>
-    {
-        <span style=color:#66d9ef>uint8_t</span> __u6_addr8[<span style=color:#ae81ff>16</span>];   <span style=color:#75715e>// 128 bit
-</span><span style=color:#75715e></span>        <span style=color:#75715e>#if defined __USE_MISC || defined __USE_GNU
-</span><span style=color:#75715e></span>        <span style=color:#66d9ef>uint16_t</span> __u6_addr16[<span style=color:#ae81ff>8</span>];  <span style=color:#75715e>// 64 bit
-</span><span style=color:#75715e></span>        <span style=color:#66d9ef>uint32_t</span> __u6_addr32[<span style=color:#ae81ff>4</span>];  <span style=color:#75715e>// 32 bit
-</span><span style=color:#75715e></span>        <span style=color:#75715e>#endif
-</span><span style=color:#75715e></span>    } __in6_u;
-    <span style=color:#75715e>#define s6_addr         __in6_u.__u6_addr8
-</span><span style=color:#75715e></span>    <span style=color:#75715e>#if defined __USE_MISC || defined __USE_GNU
-</span><span style=color:#75715e></span>    <span style=color:#75715e># define s6_addr16      __in6_u.__u6_addr16
-</span><span style=color:#75715e></span>    <span style=color:#75715e># define s6_addr32      __in6_u.__u6_addr32
-</span><span style=color:#75715e></span>    <span style=color:#75715e>#endif
-</span><span style=color:#75715e></span>};
-</code></pre></td></tr></table>
-</div>
-</div>
+<span class=k>struct</span> <span class=n>in_addr</span>
+<span class=p>{</span>
+    <span class=n>In_addr_t</span>       <span class=n>s_addr</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>in6_addr</span>
+<span class=p>{</span>
+    <span class=k>union</span>
+    <span class=p>{</span>
+        <span class=kt>uint8_t</span> <span class=n>__u6_addr8</span><span class=p>[</span><span class=mi>16</span><span class=p>];</span>   <span class=c1>// 128 bit
+</span><span class=c1></span>        <span class=cp>#if defined __USE_MISC || defined __USE_GNU
+</span><span class=cp></span>        <span class=kt>uint16_t</span> <span class=n>__u6_addr16</span><span class=p>[</span><span class=mi>8</span><span class=p>];</span>  <span class=c1>// 64 bit
+</span><span class=c1></span>        <span class=kt>uint32_t</span> <span class=n>__u6_addr32</span><span class=p>[</span><span class=mi>4</span><span class=p>];</span>  <span class=c1>// 32 bit
+</span><span class=c1></span>        <span class=cp>#endif
+</span><span class=cp></span>    <span class=p>}</span> <span class=n>__in6_u</span><span class=p>;</span>
+    <span class=cp>#define s6_addr         __in6_u.__u6_addr8
+</span><span class=cp></span>    <span class=cp>#if defined __USE_MISC || defined __USE_GNU
+</span><span class=cp></span>    <span class=cp># define s6_addr16      __in6_u.__u6_addr16
+</span><span class=cp></span>    <span class=cp># define s6_addr32      __in6_u.__u6_addr32
+</span><span class=cp></span>    <span class=cp>#endif
+</span><span class=cp></span><span class=p>};</span>
+</code></pre></div>
 </article>
 </div>
 </body>
 <div>
-<small> words: 160 tags:</small>
+<small> words: 124 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

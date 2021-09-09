@@ -1,16 +1,18 @@
-<!doctype html><html><title>module代码示例</title><meta name=description content="Makefile编写 1 2 3 4 5 6 7 8 9 10 obj-m+=timer_test.o #SRC=&amp;#34;/lib/modules/$(shell uname -r)/build/&amp;#34; CROSS_COMPILE=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&amp;#34; SRC=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&amp;#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean 示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 #include &amp;lt;linux/module.h&amp;gt;#include &amp;lt;linux/kernel.h&amp;gt;#include &amp;lt;linux/init.h&amp;gt; static int __init hello_init (void) {"><meta name=generator content="Hugo 0.88.1">
+<!doctype html><html><title>module代码示例</title><meta name=description content="Makefile编写 obj-m+=timer_test.o #SRC=&amp;#34;/lib/modules/$(shell uname -r)/build/&amp;#34; CROSS_COMPILE=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&amp;#34; SRC=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&amp;#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean 示例 #include &amp;lt;linux/module.h&amp;gt;#include &amp;lt;linux/kernel.h&amp;gt;#include &amp;lt;linux/init.h&amp;gt; static int __init hello_init (void) { printk(&amp;#34;hello,world\n&amp;#34;); return 0; } static void __exit hello_exit (void) { printk(&amp;#34;Hello module exit\n&amp;#34;); } module_init(hello_init); module_exit(hello_exit); MODULE_AUTHOR(&amp;#34;CXF&amp;#34;); MODULE_LICENSE(&amp;#34;Dual BSD/GPL&amp;#34;); 模块选项 内核模块是采用"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="module代码示例">
-<meta property="og:description" content="Makefile编写 1 2 3 4 5 6 7 8 9 10 obj-m+=timer_test.o #SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34; CROSS_COMPILE=&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34; SRC=&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean 示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 #include <linux/module.h>#include <linux/kernel.h>#include <linux/init.h> static int __init hello_init (void) {">
+<meta property="og:description" content="Makefile编写 obj-m+=timer_test.o #SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34; CROSS_COMPILE=&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34; SRC=&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean 示例 #include <linux/module.h>#include <linux/kernel.h>#include <linux/init.h> static int __init hello_init (void) { printk(&#34;hello,world\n&#34;); return 0; } static void __exit hello_exit (void) { printk(&#34;Hello module exit\n&#34;); } module_init(hello_init); module_exit(hello_exit); MODULE_AUTHOR(&#34;CXF&#34;); MODULE_LICENSE(&#34;Dual BSD/GPL&#34;); 模块选项 内核模块是采用">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://arair.net/posts/ad9a609f/"><meta property="article:section" content="post">
 <meta property="article:published_time" content="2021-01-24T11:46:59+08:00">
 <meta property="article:modified_time" content="2021-02-04T20:08:57+08:00">
 <meta itemprop=name content="module代码示例">
-<meta itemprop=description content="Makefile编写 1 2 3 4 5 6 7 8 9 10 obj-m+=timer_test.o #SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34; CROSS_COMPILE=&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34; SRC=&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean 示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 #include <linux/module.h>#include <linux/kernel.h>#include <linux/init.h> static int __init hello_init (void) {"><meta itemprop=datePublished content="2021-01-24T11:46:59+08:00">
+<meta itemprop=description content="Makefile编写 obj-m+=timer_test.o #SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34; CROSS_COMPILE=&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34; SRC=&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean 示例 #include <linux/module.h>#include <linux/kernel.h>#include <linux/init.h> static int __init hello_init (void) { printk(&#34;hello,world\n&#34;); return 0; } static void __exit hello_exit (void) { printk(&#34;Hello module exit\n&#34;); } module_init(hello_init); module_exit(hello_exit); MODULE_AUTHOR(&#34;CXF&#34;); MODULE_LICENSE(&#34;Dual BSD/GPL&#34;); 模块选项 内核模块是采用"><meta itemprop=datePublished content="2021-01-24T11:46:59+08:00">
 <meta itemprop=dateModified content="2021-02-04T20:08:57+08:00">
-<meta itemprop=wordCount content="447">
+<meta itemprop=wordCount content="396">
 <meta itemprop=keywords content>
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -34,93 +36,43 @@
 </nav>
 </aside>
 <h2 id=makefile编写>Makefile编写</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-makefile data-lang=makefile>obj-m<span style=color:#f92672>+=</span>timer_test.o
-<span style=color:#75715e>#SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34;
-</span><span style=color:#75715e></span>
-CROSS_COMPILE<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34;</span>
-SRC<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34;</span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=nv>obj-m</span><span class=o>+=</span>timer_test.o
+<span class=c>#SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34;
+</span><span class=c></span>
+<span class=nv>CROSS_COMPILE</span><span class=o>=</span><span class=s2>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34;</span>
+<span class=nv>SRC</span><span class=o>=</span><span class=s2>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34;</span>
 
-<span style=color:#a6e22e>all</span><span style=color:#f92672>:</span>
-    make -C <span style=color:#66d9ef>$(</span>SRC<span style=color:#66d9ef>)</span> M<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>PWD<span style=color:#66d9ef>)</span> modules
-<span style=color:#a6e22e>clean</span><span style=color:#f92672>:</span>
-    make -C <span style=color:#66d9ef>$(</span>SRC<span style=color:#66d9ef>)</span> M<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>PWD<span style=color:#66d9ef>)</span> clean
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=示例>示例</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/module.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/kernel.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/init.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> __init <span style=color:#a6e22e>hello_init</span> (<span style=color:#66d9ef>void</span>)
-{
-    printk(<span style=color:#e6db74>&#34;hello,world</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
+<span class=nf>all</span><span class=o>:</span>
+    make -C <span class=k>$(</span>SRC<span class=k>)</span> <span class=nv>M</span><span class=o>=</span><span class=k>$(</span>PWD<span class=k>)</span> modules
+<span class=nf>clean</span><span class=o>:</span>
+    make -C <span class=k>$(</span>SRC<span class=k>)</span> <span class=nv>M</span><span class=o>=</span><span class=k>$(</span>PWD<span class=k>)</span> clean
+</code></pre></div><h2 id=示例>示例</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;linux/module.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;linux/kernel.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;linux/init.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=k>static</span> <span class=kt>int</span> <span class=n>__init</span> <span class=nf>hello_init</span> <span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;hello,world</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
 
-<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> __exit <span style=color:#a6e22e>hello_exit</span> (<span style=color:#66d9ef>void</span>)
+<span class=k>static</span> <span class=kt>void</span> <span class=n>__exit</span> <span class=nf>hello_exit</span> <span class=p>(</span><span class=kt>void</span><span class=p>)</span>
 
-{
-    printk(<span style=color:#e6db74>&#34;Hello module exit</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-}
+<span class=p>{</span>
+    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;Hello module exit</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+<span class=p>}</span>
 
-module_init(hello_init);
-module_exit(hello_exit);
-MODULE_AUTHOR(<span style=color:#e6db74>&#34;CXF&#34;</span>);
-MODULE_LICENSE(<span style=color:#e6db74>&#34;Dual BSD/GPL&#34;</span>);
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=模块选项>模块选项</h1>
+<span class=n>module_init</span><span class=p>(</span><span class=n>hello_init</span><span class=p>);</span>
+<span class=n>module_exit</span><span class=p>(</span><span class=n>hello_exit</span><span class=p>);</span>
+<span class=n>MODULE_AUTHOR</span><span class=p>(</span><span class=s>&#34;CXF&#34;</span><span class=p>);</span>
+<span class=n>MODULE_LICENSE</span><span class=p>(</span><span class=s>&#34;Dual BSD/GPL&#34;</span><span class=p>);</span>
+</code></pre></div><h1 id=模块选项>模块选项</h1>
 <p>内核模块是采用如module_param宏的方式定义其参数</p>
 <p>原型</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>define module_param(name, type, perm)              \
-   module_param_named(name, name, type, perm)
-</code></pre></td></tr></table>
-</div>
-</div><p>详细内容查看内核文件<code>include/linux/moduleparam.h</code></p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=n>define</span> <span class=n>module_param</span><span class=p>(</span><span class=n>name</span><span class=p>,</span> <span class=n>type</span><span class=p>,</span> <span class=n>perm</span><span class=p>)</span>              \
+   <span class=n>module_param_named</span><span class=p>(</span><span class=n>name</span><span class=p>,</span> <span class=n>name</span><span class=p>,</span> <span class=n>type</span><span class=p>,</span> <span class=n>perm</span><span class=p>)</span>
+</code></pre></div><p>详细内容查看内核文件<code>include/linux/moduleparam.h</code></p>
 <p>参数说明</p>
 <ul>
 <li>name: 参数名称</li>
@@ -129,51 +81,26 @@ MODULE_LICENSE(<span style=color:#e6db74>&#34;Dual BSD/GPL&#34;</span>);
 </ul>
 <p>每个模块都在<code>/sys/modules</code>中被分派一个目录。子目录<code>/sys/modules/module/parameters</code>中的每个文件就是该模块所输出的每个参数</p>
 <h2 id=示例代码>示例代码</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/init.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;linux/module.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>MODULE_LICENSE(<span style=color:#e6db74>&#34;GPL&#34;</span>);
-<span style=color:#66d9ef>int</span> test_param <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;linux/init.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;linux/module.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=n>MODULE_LICENSE</span><span class=p>(</span><span class=s>&#34;GPL&#34;</span><span class=p>);</span>
+<span class=kt>int</span> <span class=n>test_param</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
 
-<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>hello_init</span>(<span style=color:#66d9ef>void</span>)
-{
-    printk(<span style=color:#e6db74>&#34;test_param:%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, test_param);
-    printk(<span style=color:#e6db74>&#34;&lt;0&gt; hello world</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>hello_exit</span>(<span style=color:#66d9ef>void</span>)
-{
-    printk(<span style=color:#e6db74>&#34;&lt;0&gt; goodbye</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
-}
+<span class=k>static</span> <span class=kt>int</span> <span class=nf>hello_init</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;test_param:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>test_param</span><span class=p>);</span>
+    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;&lt;0&gt; hello world</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+<span class=k>static</span> <span class=kt>void</span> <span class=nf>hello_exit</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;&lt;0&gt; goodbye</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+<span class=p>}</span>
 
-module_param(test_param, <span style=color:#66d9ef>int</span>, <span style=color:#ae81ff>0644</span>);
-module_init(hello_init); <span style=color:#75715e>//该宏在模块的目标代码中增加一个特殊的段，用于说明内核初始化函数所在的位置
-</span><span style=color:#75715e></span>module_exit(hello_exit); <span style=color:#75715e>//跟上面的宏对立
-</span></code></pre></td></tr></table>
-</div>
-</div><p>加载模块</p>
+<span class=n>module_param</span><span class=p>(</span><span class=n>test_param</span><span class=p>,</span> <span class=kt>int</span><span class=p>,</span> <span class=mo>0644</span><span class=p>);</span>
+<span class=n>module_init</span><span class=p>(</span><span class=n>hello_init</span><span class=p>);</span> <span class=c1>//该宏在模块的目标代码中增加一个特殊的段，用于说明内核初始化函数所在的位置
+</span><span class=c1></span><span class=n>module_exit</span><span class=p>(</span><span class=n>hello_exit</span><span class=p>);</span> <span class=c1>//跟上面的宏对立
+</span></code></pre></div><p>加载模块</p>
 <pre tabindex=0><code>insmod hello_modele test_param=1
 </code></pre><p>查看参数文件权限</p>
 <pre tabindex=0><code>ls /sys/module/hello_module/parameters/test_param -l
@@ -189,13 +116,15 @@ module_init(hello_init); <span style=color:#75715e>//该宏在模块的目标代
 </div>
 </body>
 <div>
-<small> words: 447 tags:</small>
+<small> words: 396 tags:</small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

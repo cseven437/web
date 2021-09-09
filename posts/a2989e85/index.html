@@ -8,9 +8,11 @@
 <meta itemprop=name content="iptables的使用">
 <meta itemprop=description content="iptables 流向图 graph LR NETWORK --> prerouting(RPEROUTING) prerouting --raw mangle nat--> route(route) route --> input(INPUT) input --mangle filter--> local(local process) local --> output(OUTPUT) output --raw mangle nat filter--> postrouting(POSTROUTING) route --> forward(forward) forward --mangle filter--> postrouting postrouting --mangle nat--> NETWORK2(NETWORK) netfilter hooks +-----------> local +-----------+ | process | | | | | | | | v MANGLE +-------------+--------+ FILTER | | +----------------------+ RAW SECURITY | input | |"><meta itemprop=datePublished content="2021-02-07T20:21:10+08:00">
 <meta itemprop=dateModified content="2021-09-08T20:51:21+08:00">
-<meta itemprop=wordCount content="3751">
+<meta itemprop=wordCount content="3742">
 <meta itemprop=keywords content="iptables,command,linux,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -406,31 +408,16 @@
 <p>先看一下target的执行</p>
 <pre tabindex=0><code>iptables -t mangle -A PREROUTING -i eth0 -p tcp --dport 80 -j MARK --set-mark 1
 </code></pre><p>内核里对target MARK的处理代码</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>// linux-5.10.55
-</span><span style=color:#75715e></span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>
-<span style=color:#a6e22e>mark_tg</span>(<span style=color:#66d9ef>struct</span> sk_buff <span style=color:#f92672>*</span>skb, <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> xt_action_param <span style=color:#f92672>*</span>par)
-{
-    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> xt_mark_tginfo2 <span style=color:#f92672>*</span>info <span style=color:#f92672>=</span> par<span style=color:#f92672>-&gt;</span>targinfo;
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=c1>// linux-5.10.55
+</span><span class=c1></span><span class=k>static</span> <span class=kt>unsigned</span> <span class=kt>int</span>
+<span class=nf>mark_tg</span><span class=p>(</span><span class=k>struct</span> <span class=n>sk_buff</span> <span class=o>*</span><span class=n>skb</span><span class=p>,</span> <span class=k>const</span> <span class=k>struct</span> <span class=n>xt_action_param</span> <span class=o>*</span><span class=n>par</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=k>const</span> <span class=k>struct</span> <span class=n>xt_mark_tginfo2</span> <span class=o>*</span><span class=n>info</span> <span class=o>=</span> <span class=n>par</span><span class=o>-&gt;</span><span class=n>targinfo</span><span class=p>;</span>
 
-    skb<span style=color:#f92672>-&gt;</span>mark <span style=color:#f92672>=</span> (skb<span style=color:#f92672>-&gt;</span>mark <span style=color:#f92672>&amp;</span> <span style=color:#f92672>~</span>info<span style=color:#f92672>-&gt;</span>mask) <span style=color:#f92672>^</span> info<span style=color:#f92672>-&gt;</span>mark;
-    <span style=color:#66d9ef>return</span> XT_CONTINUE;
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>只是设置了<code>skb->mark</code>而已，没有改变报文内容。</p>
+    <span class=n>skb</span><span class=o>-&gt;</span><span class=n>mark</span> <span class=o>=</span> <span class=p>(</span><span class=n>skb</span><span class=o>-&gt;</span><span class=n>mark</span> <span class=o>&amp;</span> <span class=o>~</span><span class=n>info</span><span class=o>-&gt;</span><span class=n>mask</span><span class=p>)</span> <span class=o>^</span> <span class=n>info</span><span class=o>-&gt;</span><span class=n>mark</span><span class=p>;</span>
+    <span class=k>return</span> <span class=n>XT_CONTINUE</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>只是设置了<code>skb->mark</code>而已，没有改变报文内容。</p>
 <p>mark match: 匹配mark非0的直接放通，mark为0的继续匹配下面的规则</p>
 <pre tabindex=0><code>iptables -A POSTROUTING -t mangle -m mark ! --mark 0 -j ACCEPT
 </code></pre><p>MARK target: 设置标记</p>
@@ -508,16 +495,18 @@ iptables -A POSTROUTING -t mangle -j CONNMARK --save-mark
 </div>
 </body>
 <div>
-<small> words: 3751 tags:</small>
+<small> words: 3742 tags:</small>
 <small><code><a href=https://arair.net/tags/iptables>iptables</a></code></small>
 <small><code><a href=https://arair.net/tags/command>command</a></code></small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

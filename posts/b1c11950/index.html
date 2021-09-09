@@ -9,9 +9,11 @@
 <meta itemprop=name content="linux c--文件IO">
 <meta itemprop=description content="系统通过文件描述符(file descriptor：一个非负的整型值)将各种IO类型统一起来。这些IO类型包括普通文件，终端，管道，FIFO，设备，套接字等等。有了文件描述符，就可以使用一套统一的IO函数：open/read/write/close等。"><meta itemprop=datePublished content="2021-06-30T20:06:23+08:00">
 <meta itemprop=dateModified content="2021-06-30T20:06:23+08:00">
-<meta itemprop=wordCount content="1639">
+<meta itemprop=wordCount content="1614">
 <meta itemprop=keywords content="linux,c,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -34,25 +36,13 @@
 </aside>
 <p>系统通过文件描述符(file descriptor：一个非负的整型值)将各种IO类型统一起来。这些IO类型包括普通文件，终端，管道，FIFO，设备，套接字等等。有了文件描述符，就可以使用一套统一的IO函数：open/read/write/close等。</p>
 <h2 id=open函数>open函数</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/stat.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;fcntl.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>open</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> pathname, <span style=color:#66d9ef>int</span> flags);
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>open</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> pathname, <span style=color:#66d9ef>int</span> flags, mode_t mode);
-</code></pre></td></tr></table>
-</div>
-</div><p>open函数说明：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/stat.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;fcntl.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>open</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>pathname</span><span class=p>,</span> <span class=kt>int</span> <span class=n>flags</span><span class=p>);</span>
+<span class=kt>int</span> <span class=nf>open</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>pathname</span><span class=p>,</span> <span class=kt>int</span> <span class=n>flags</span><span class=p>,</span> <span class=n>mode_t</span> <span class=n>mode</span><span class=p>);</span>
+</code></pre></div><p>open函数说明：</p>
 <p>参数:</p>
 <ul>
 <li>pathname 指向欲打开的文件路径字符串.</li>
@@ -106,60 +96,29 @@
 </ul>
 <p>附加说明：使用 access()作用户认证方面的判断要特别小心, 例如在access()后再作open()空文件可能会造成系统安全上的问题. 使用完记得使用close函数关闭文件描述符</p>
 <p>范例</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/types.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sys/stat.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;fcntl.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>main()
-{
-    <span style=color:#66d9ef>int</span> fd, size;
-    <span style=color:#66d9ef>char</span> s[] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Linux Programmer!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, buffer[<span style=color:#ae81ff>80</span>];
-    fd <span style=color:#f92672>=</span> open(<span style=color:#e6db74>&#34;/tmp/temp&#34;</span>, O_WRONLY<span style=color:#f92672>|</span>O_CREAT);
-    write(fd, s, <span style=color:#66d9ef>sizeof</span>(s));
-    close(fd);
-    fd <span style=color:#f92672>=</span> open(<span style=color:#e6db74>&#34;/tmp/temp&#34;</span>, O_RDONLY);
-    size <span style=color:#f92672>=</span> read(fd, buffer, <span style=color:#66d9ef>sizeof</span>(buffer));
-    close(fd);
-    printf(<span style=color:#e6db74>&#34;%s&#34;</span>, buffer);
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>执行</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;sys/stat.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;fcntl.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=n>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=kt>int</span> <span class=n>fd</span><span class=p>,</span> <span class=n>size</span><span class=p>;</span>
+    <span class=kt>char</span> <span class=n>s</span><span class=p>[]</span> <span class=o>=</span> <span class=s>&#34;Linux Programmer!</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>buffer</span><span class=p>[</span><span class=mi>80</span><span class=p>];</span>
+    <span class=n>fd</span> <span class=o>=</span> <span class=n>open</span><span class=p>(</span><span class=s>&#34;/tmp/temp&#34;</span><span class=p>,</span> <span class=n>O_WRONLY</span><span class=o>|</span><span class=n>O_CREAT</span><span class=p>);</span>
+    <span class=n>write</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span> <span class=n>s</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>s</span><span class=p>));</span>
+    <span class=n>close</span><span class=p>(</span><span class=n>fd</span><span class=p>);</span>
+    <span class=n>fd</span> <span class=o>=</span> <span class=n>open</span><span class=p>(</span><span class=s>&#34;/tmp/temp&#34;</span><span class=p>,</span> <span class=n>O_RDONLY</span><span class=p>);</span>
+    <span class=n>size</span> <span class=o>=</span> <span class=n>read</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span> <span class=n>buffer</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buffer</span><span class=p>));</span>
+    <span class=n>close</span><span class=p>(</span><span class=n>fd</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s&#34;</span><span class=p>,</span> <span class=n>buffer</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>执行</p>
 <pre tabindex=0><code>Linux Programmer!
 </code></pre><h2 id=close函数>close函数</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>close</span>(<span style=color:#66d9ef>int</span> fd);
-</code></pre></td></tr></table>
-</div>
-</div><p>函数说明：当使用完文件后若已不再需要则可使用 close()关闭该文件, 二close()会让数据写回磁盘, 并释放该文件所占用的资源. 参数fd 为先前由open()或creat()所返回的文件描述词.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>close</span><span class=p>(</span><span class=kt>int</span> <span class=n>fd</span><span class=p>);</span>
+</code></pre></div><p>函数说明：当使用完文件后若已不再需要则可使用 close()关闭该文件, 二close()会让数据写回磁盘, 并释放该文件所占用的资源. 参数fd 为先前由open()或creat()所返回的文件描述词.</p>
 <p>返回值：若文件顺利关闭则返回0, 发生错误时返回-1.</p>
 <p>错误代码：EBADF 参数fd 非有效的文件描述词或该文件已关闭.</p>
 <p>附加说明：虽然在进程结束时, 系统会自动关闭已打开的文件, 但仍建议自行关闭文件, 并确实检查返回值.</p>
@@ -170,15 +129,17 @@
 </div>
 </body>
 <div>
-<small> words: 1639 tags:</small>
+<small> words: 1614 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

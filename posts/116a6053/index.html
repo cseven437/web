@@ -9,9 +9,11 @@
 <meta itemprop=name content="javascript">
 <meta itemprop=description content="JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。"><meta itemprop=datePublished content="2021-02-09T12:50:56+08:00">
 <meta itemprop=dateModified content="2021-03-01T20:27:14+08:00">
-<meta itemprop=wordCount content="1247">
+<meta itemprop=wordCount content="1218">
 <meta itemprop=keywords content="javascript,">
-<style type=text/css>body{background-color:#fff;color:#000}@media(prefers-color-scheme:dark){body{background-color:#0d1117;color:#c9d1d9}:any-link{color:#58a6ff}}</style><body><div id=content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
@@ -46,49 +48,25 @@ millisec 必须。周期性执行或调用 code 之间的时间间隔，以毫�
 返回值
 一个可以传递给 Window.clearInterval() 从而取消对 code 的周期性执行的值。</p>
 <p>实例</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#f92672>&lt;</span><span style=color:#a6e22e>html</span><span style=color:#f92672>&gt;</span>
-<span style=color:#f92672>&lt;</span><span style=color:#a6e22e>body</span><span style=color:#f92672>&gt;</span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=o>&lt;</span><span class=nx>html</span><span class=o>&gt;</span>
+<span class=o>&lt;</span><span class=nx>body</span><span class=o>&gt;</span>
 
-<span style=color:#f92672>&lt;</span><span style=color:#a6e22e>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text&#34;</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;clock&#34;</span> <span style=color:#a6e22e>size</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;35&#34;</span> <span style=color:#f92672>/&gt;</span>
-<span style=color:#f92672>&lt;</span><span style=color:#a6e22e>script</span> <span style=color:#a6e22e>language</span><span style=color:#f92672>=</span><span style=color:#a6e22e>javascript</span><span style=color:#f92672>&gt;</span>
-<span style=color:#66d9ef>var</span> <span style=color:#66d9ef>int</span><span style=color:#f92672>=</span><span style=color:#a6e22e>self</span>.<span style=color:#a6e22e>setInterval</span>(<span style=color:#e6db74>&#34;clock()&#34;</span>,<span style=color:#ae81ff>50</span>)
-<span style=color:#66d9ef>function</span> <span style=color:#a6e22e>clock</span>()
-  {
-  <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>t</span><span style=color:#f92672>=</span><span style=color:#66d9ef>new</span> Date()
-  document.<span style=color:#a6e22e>getElementById</span>(<span style=color:#e6db74>&#34;clock&#34;</span>).<span style=color:#a6e22e>value</span><span style=color:#f92672>=</span><span style=color:#a6e22e>t</span>
-  }
-<span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/script&gt;</span>
-<span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/form&gt;</span>
-<span style=color:#f92672>&lt;</span><span style=color:#a6e22e>button</span> <span style=color:#a6e22e>onclick</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;int=window.clearInterval(int)&#34;</span><span style=color:#f92672>&gt;</span>
-<span style=color:#a6e22e>Stop</span> <span style=color:#a6e22e>interval</span><span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/button&gt;</span>
+<span class=o>&lt;</span><span class=nx>input</span> <span class=nx>type</span><span class=o>=</span><span class=s2>&#34;text&#34;</span> <span class=nx>id</span><span class=o>=</span><span class=s2>&#34;clock&#34;</span> <span class=nx>size</span><span class=o>=</span><span class=s2>&#34;35&#34;</span> <span class=o>/&gt;</span>
+<span class=o>&lt;</span><span class=nx>script</span> <span class=nx>language</span><span class=o>=</span><span class=nx>javascript</span><span class=o>&gt;</span>
+<span class=kd>var</span> <span class=kr>int</span><span class=o>=</span><span class=nx>self</span><span class=p>.</span><span class=nx>setInterval</span><span class=p>(</span><span class=s2>&#34;clock()&#34;</span><span class=p>,</span><span class=mi>50</span><span class=p>)</span>
+<span class=kd>function</span> <span class=nx>clock</span><span class=p>()</span>
+  <span class=p>{</span>
+  <span class=kd>var</span> <span class=nx>t</span><span class=o>=</span><span class=k>new</span> <span class=nb>Date</span><span class=p>()</span>
+  <span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;clock&#34;</span><span class=p>).</span><span class=nx>value</span><span class=o>=</span><span class=nx>t</span>
+  <span class=p>}</span>
+<span class=o>&lt;</span><span class=err>/script&gt;</span>
+<span class=o>&lt;</span><span class=err>/form&gt;</span>
+<span class=o>&lt;</span><span class=nx>button</span> <span class=nx>onclick</span><span class=o>=</span><span class=s2>&#34;int=window.clearInterval(int)&#34;</span><span class=o>&gt;</span>
+<span class=nx>Stop</span> <span class=nx>interval</span><span class=o>&lt;</span><span class=err>/button&gt;</span>
 
-<span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/body&gt;</span>
-<span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/html&gt;</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=sleep>sleep</h2>
+<span class=o>&lt;</span><span class=err>/body&gt;</span>
+<span class=o>&lt;</span><span class=err>/html&gt;</span>
+</code></pre></div><h2 id=sleep>sleep</h2>
 <p>很多编程语言里都有sleep()，delay()等方法，它能让我们的程序不那么着急的去执行下一步操作，而是延迟、等待一段时间。软件开发中经常会遇到需要这样的函数，比如等待几分钟去检查某一事件是否发生。JavaScript里有setTimeout()方法来实现设定一段时间后执行某个任务，但写法很丑陋，需要提供回调函数：</p>
 <p>setTimeout(function(){ alert(&ldquo;Hello&rdquo;); }, 3000);
 复制代码
@@ -120,15 +98,8 @@ console.log(&lsquo;Do other things, ' + new Date());
 <p>split() 方法不改变原始字符串。</p>
 </blockquote>
 <p>语法</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#a6e22e>string</span>.<span style=color:#a6e22e>split</span>(<span style=color:#a6e22e>separator</span>,<span style=color:#a6e22e>limit</span>)
-</code></pre></td></tr></table>
-</div>
-</div><p><strong>参数值</strong></p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=nx>string</span><span class=p>.</span><span class=nx>split</span><span class=p>(</span><span class=nx>separator</span><span class=p>,</span><span class=nx>limit</span><span class=p>)</span>
+</code></pre></div><p><strong>参数值</strong></p>
 <ul>
 <li>separator 可选。字符串或正则表达式，从该参数指定的地方分割 string Object。</li>
 <li>limit 可选。该参数可指定返回的数组的最大长度。如果设置了该参数，返回的子串不会多于这个参数指定的数组。如果没有设置该参数，整个字符串都会被分割，不考虑它的长度。</li>
@@ -141,90 +112,52 @@ console.log(&lsquo;Do other things, ' + new Date());
 <ol>
 <li>
 <p>省略分割参数：</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
-<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>=</span><span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>split</span>();
-</code></pre></td></tr></table>
-</div>
-</div><p>输出数组值得结果:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>str</span><span class=o>=</span><span class=s2>&#34;How are you doing today?&#34;</span><span class=p>;</span>
+<span class=kd>var</span> <span class=nx>n</span><span class=o>=</span><span class=nx>str</span><span class=p>.</span><span class=nx>split</span><span class=p>();</span>
+</code></pre></div><p>输出数组值得结果:</p>
 <pre tabindex=0><code>How are you doing today?
 </code></pre><p>``</p>
 </li>
 <li>
 <p>分割每个字符，包括空格:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
-<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>=</span><span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#34;&#34;</span>);
-</code></pre></td></tr></table>
-</div>
-</div><p>输出结果</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>str</span><span class=o>=</span><span class=s2>&#34;How are you doing today?&#34;</span><span class=p>;</span>
+<span class=kd>var</span> <span class=nx>n</span><span class=o>=</span><span class=nx>str</span><span class=p>.</span><span class=nx>split</span><span class=p>(</span><span class=s2>&#34;&#34;</span><span class=p>);</span>
+</code></pre></div><p>输出结果</p>
 <pre tabindex=0><code>H,o,w, ,a,r,e, ,y,o,u, ,d,o,i,n,g, ,t,o,d,a,y,?
 </code></pre></li>
 <li>
 <p>使用 limit 参数</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
-<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>=</span><span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#34; &#34;</span>,<span style=color:#ae81ff>3</span>);
-</code></pre></td></tr></table>
-</div>
-</div><p>将输出3个数组的值</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>str</span><span class=o>=</span><span class=s2>&#34;How are you doing today?&#34;</span><span class=p>;</span>
+<span class=kd>var</span> <span class=nx>n</span><span class=o>=</span><span class=nx>str</span><span class=p>.</span><span class=nx>split</span><span class=p>(</span><span class=s2>&#34; &#34;</span><span class=p>,</span><span class=mi>3</span><span class=p>);</span>
+</code></pre></div><p>将输出3个数组的值</p>
 <pre tabindex=0><code>How,are,you
 </code></pre></li>
 <li>
 <p>使用一个字符作为分隔符</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>str</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;How are you doing today?&#34;</span>;
-<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>=</span><span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#34;o&#34;</span>);
-</code></pre></td></tr></table>
-</div>
-</div><p>输出数组值得结果</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>str</span><span class=o>=</span><span class=s2>&#34;How are you doing today?&#34;</span><span class=p>;</span>
+<span class=kd>var</span> <span class=nx>n</span><span class=o>=</span><span class=nx>str</span><span class=p>.</span><span class=nx>split</span><span class=p>(</span><span class=s2>&#34;o&#34;</span><span class=p>);</span>
+</code></pre></div><p>输出数组值得结果</p>
 <pre tabindex=0><code>H,w are y,u d,ing t,day?
 </code></pre></li>
 </ol>
 <h2 id=获取当前系统时间>获取当前系统时间</h2>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>now</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Date(); <span style=color:#75715e>// 单位毫秒
-</span><span style=color:#75715e></span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>timestamp</span> <span style=color:#f92672>=</span> parseInt(<span style=color:#66d9ef>new</span> Date().<span style=color:#a6e22e>getTime</span>()<span style=color:#f92672>/</span><span style=color:#ae81ff>1000</span>);  <span style=color:#75715e>// 单位秒
-</span></code></pre></td></tr></table>
-</div>
-</div>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>now</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span> <span class=c1>// 单位毫秒
+</span><span class=c1></span><span class=kd>var</span> <span class=nx>timestamp</span> <span class=o>=</span> <span class=nb>parseInt</span><span class=p>(</span><span class=k>new</span> <span class=nb>Date</span><span class=p>().</span><span class=nx>getTime</span><span class=p>()</span><span class=o>/</span><span class=mi>1000</span><span class=p>);</span>  <span class=c1>// 单位秒
+</span></code></pre></div>
 </article>
 </div>
 </body>
 <div>
-<small> words: 1247 tags:</small>
+<small> words: 1218 tags:</small>
 <small><code><a href=https://arair.net/tags/javascript>javascript</a></code></small>
 </div>
 </html>
-</div>
+</body>
 <script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css>
+<script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></body>
-</html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
