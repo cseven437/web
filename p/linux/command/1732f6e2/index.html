@@ -1,0 +1,89 @@
+<!doctype html><html><title>linux nm命令</title><meta name=description content="nm是用来列出动态库静态库等文件中的符号信息
+"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="linux nm命令">
+<meta property="og:description" content="nm是用来列出动态库静态库等文件中的符号信息">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/linux/command/1732f6e2/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-03-06T19:00:43+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="linux nm命令">
+<meta itemprop=description content="nm是用来列出动态库静态库等文件中的符号信息"><meta itemprop=datePublished content="2021-03-06T19:00:43+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="290">
+<meta itemprop=keywords content="linux,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>linux nm命令</h1>
+<p>
+<small>
+2021-03-06, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>nm是用来列出动态库静态库等文件中的符号信息</p>
+<pre tabindex=0><code>Usage: nm [option(s)] [file(s)]
+ List symbols in [file(s)] (a.out by default).
+ The options are:
+  -a, --debug-syms       Display debugger-only symbols
+  -A, --print-file-name  Print name of the input file before every symbol
+  -B                     Same as --format=bsd
+  -C, --demangle[=STYLE] Decode low-level symbol names into user-level names
+                          The STYLE, if specified, can be `auto' (the default),
+                          `gnu', `lucid', `arm', `hp', `edg', `gnu-v3', `java'
+                          or `gnat'
+      --no-demangle      Do not demangle low-level symbol names
+  -D, --dynamic          Display dynamic symbols instead of normal symbols
+      --defined-only     Display only defined symbols
+  -e                     (ignored)
+  -f, --format=FORMAT    Use the output format FORMAT.  FORMAT can be `bsd',
+                           `sysv' or `posix'.  The default is `bsd'
+  -g, --extern-only      Display only external symbols
+  -l, --line-numbers     Use debugging information to find a filename and
+                           line number for each symbol
+  -n, --numeric-sort     Sort symbols numerically by address
+  -o                     Same as -A
+  -p, --no-sort          Do not sort the symbols
+  -P, --portability      Same as --format=posix
+  -r, --reverse-sort     Reverse the sense of the sort
+      --plugin NAME      Load the specified plugin
+  -S, --print-size       Print size of defined symbols
+  -s, --print-armap      Include index for symbols from archive members
+      --size-sort        Sort symbols by size
+      --special-syms     Include special symbols in the output
+      --synthetic        Display synthetic symbols as well
+  -t, --radix=RADIX      Use RADIX for printing symbol values
+      --target=BFDNAME   Specify the target object format as BFDNAME
+  -u, --undefined-only   Display only undefined symbols
+      --with-symbol-versions  Display version strings after symbol names
+  -X 32_64               (ignored)
+  @FILE                  Read options from FILE
+  -h, --help             Display this information
+  -V, --version          Display this program's version number
+
+nm: supported targets: elf64-x86-64 elf32-i386 elf32-iamcu elf32-x86-64 pei-i386 pei-x86-64 elf64-l1om elf64-k1om elf64-little elf64-big elf32-little elf32-big pe-x86-64 pe-bigobj-x86-64 pe-i386 plugin srec symbolsrec verilog tekhex binary ihex
+</code></pre>
+</article>
+</div>
+</body>
+<div>
+<small> words: 290 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

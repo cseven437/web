@@ -1,0 +1,75 @@
+<!doctype html><html><title>shell--循环语句</title><meta name=description content="for语句 顺序输出当前列表中的数字： for loop in 1 2 3 4 5 do echo &amp;#34;The value is: $loop&amp;#34; done 输出结果 The value is: 1 The value is: 2 The value is: 3 The value is: 4 The value is: 5 顺序输出字符串中的字符： #!/bin/bash"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="shell--循环语句">
+<meta property="og:description" content="for语句 顺序输出当前列表中的数字： for loop in 1 2 3 4 5 do echo &#34;The value is: $loop&#34; done 输出结果 The value is: 1 The value is: 2 The value is: 3 The value is: 4 The value is: 5 顺序输出字符串中的字符： #!/bin/bash">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/06fb18b8f773474cac988f7d11008d8d/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-09-12T17:16:33+08:00">
+<meta property="article:modified_time" content="2021-09-12T17:16:33+08:00">
+<meta itemprop=name content="shell--循环语句">
+<meta itemprop=description content="for语句 顺序输出当前列表中的数字： for loop in 1 2 3 4 5 do echo &#34;The value is: $loop&#34; done 输出结果 The value is: 1 The value is: 2 The value is: 3 The value is: 4 The value is: 5 顺序输出字符串中的字符： #!/bin/bash"><meta itemprop=datePublished content="2021-09-12T17:16:33+08:00">
+<meta itemprop=dateModified content="2021-09-12T17:16:33+08:00">
+<meta itemprop=wordCount content="89">
+<meta itemprop=keywords content="shell,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>shell--循环语句</h1>
+<p>
+<small>
+2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#for语句>for语句</a></li>
+</ul>
+</nav>
+</aside>
+<h2 id=for语句>for语句</h2>
+<p><strong>顺序输出当前列表中的数字：</strong></p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=k>for</span> loop in <span class=m>1</span> <span class=m>2</span> <span class=m>3</span> <span class=m>4</span> <span class=m>5</span>
+<span class=k>do</span>
+    <span class=nb>echo</span> <span class=s2>&#34;The value is: </span><span class=nv>$loop</span><span class=s2>&#34;</span>
+<span class=k>done</span>
+</code></pre></div><p>输出结果</p>
+<pre tabindex=0><code>The value is: 1
+The value is: 2
+The value is: 3
+The value is: 4
+The value is: 5
+</code></pre><p><strong>顺序输出字符串中的字符：</strong></p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=k>for</span> str in This is a string
+<span class=k>do</span>
+    <span class=nb>echo</span> <span class=nv>$str</span>
+<span class=k>done</span>
+</code></pre></div><p>输出结果</p>
+<pre tabindex=0><code>This
+is
+a
+string
+</code></pre>
+</article>
+</div>
+</body>
+<div>
+<small> words: 89 tags:</small>
+<small><code><a href=https://arair.net/tags/shell>shell</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

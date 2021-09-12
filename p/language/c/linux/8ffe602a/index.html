@@ -1,0 +1,107 @@
+<!doctype html><html><title>ioctl 通过接口获取ip netmask</title><meta name=description content="ioctl 通过接口获取ip netmask
+"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="ioctl 通过接口获取ip netmask">
+<meta property="og:description" content="ioctl 通过接口获取ip netmask">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/language/c/linux/8ffe602a/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-03-26T16:09:57+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="ioctl 通过接口获取ip netmask">
+<meta itemprop=description content="ioctl 通过接口获取ip netmask"><meta itemprop=datePublished content="2021-03-26T16:09:57+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="205">
+<meta itemprop=keywords content="linux,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>ioctl 通过接口获取ip netmask</h1>
+<p>
+<small>
+2021-03-26, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>ioctl 通过接口获取ip netmask</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>static</span> <span class=n>boolean</span> <span class=nf>GetIP</span><span class=p>(</span><span class=n>uint32</span> <span class=o>*</span><span class=n>retIP</span><span class=p>,</span> <span class=n>uint32</span> <span class=o>*</span><span class=n>netMask</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>iface</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=kt>int</span> <span class=n>s</span><span class=p>,</span> <span class=n>ret</span><span class=p>;</span>
+  <span class=k>struct</span> <span class=n>ifreq</span> <span class=n>buffer</span><span class=p>;</span>
+  <span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=n>sa</span><span class=p>;</span>
+
+  <span class=k>if</span> <span class=p>(</span> <span class=n>retIP</span> <span class=o>==</span> <span class=nb>NULL</span> <span class=o>||</span> <span class=n>netMask</span> <span class=o>==</span> <span class=nb>NULL</span> <span class=p>)</span>
+  <span class=p>{</span>
+    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+  <span class=p>}</span>
+
+  <span class=cm>/* Open a socket */</span>
+  <span class=n>s</span> <span class=o>=</span> <span class=n>socket</span><span class=p>(</span><span class=n>PF_INET</span><span class=p>,</span> <span class=n>SOCK_DGRAM</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+  <span class=k>if</span> <span class=p>(</span> <span class=n>s</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=p>)</span>
+  <span class=p>{</span>
+    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+  <span class=p>}</span>
+  <span class=cm>/* Set up the interface request buffer for wlan0. */</span>
+  <span class=n>memset</span><span class=p>(</span><span class=o>&amp;</span><span class=n>buffer</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buffer</span><span class=p>));</span>
+  <span class=n>strlcpy</span><span class=p>(</span><span class=n>buffer</span><span class=p>.</span><span class=n>ifr_name</span><span class=p>,</span> <span class=n>iface</span><span class=p>,</span> <span class=n>IFNAMSIZ</span><span class=p>);</span>
+
+  <span class=cm>/* Call the ioctl to get the address. */</span>
+  <span class=n>ret</span> <span class=o>=</span> <span class=n>ioctl</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=n>SIOCGIFADDR</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>buffer</span><span class=p>);</span>
+
+  <span class=k>if</span> <span class=p>(</span> <span class=n>ret</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=p>)</span>
+  <span class=p>{</span>
+    <span class=cm>/* Close the socket handle. */</span>
+    <span class=n>close</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
+    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+  <span class=p>}</span>
+
+  <span class=cm>/* Copy out the ip address for the interface. */</span>
+  <span class=n>sa</span> <span class=o>=</span> <span class=p>(</span><span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=p>)</span><span class=o>&amp;</span><span class=p>(</span><span class=n>buffer</span><span class=p>.</span><span class=n>ifr_addr</span><span class=p>);</span>
+  <span class=o>*</span><span class=n>retIP</span> <span class=o>=</span> <span class=p>((</span><span class=k>struct</span> <span class=n>sockaddr_in</span> <span class=o>*</span><span class=p>)</span><span class=n>sa</span><span class=p>)</span><span class=o>-&gt;</span><span class=n>sin_addr</span><span class=p>.</span><span class=n>s_addr</span><span class=p>;</span>
+
+  <span class=cm>/* Set up the interface request buffer for wlan0. */</span>
+  <span class=n>memset</span><span class=p>(</span><span class=o>&amp;</span><span class=n>buffer</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buffer</span><span class=p>));</span>
+  <span class=n>strlcpy</span><span class=p>(</span><span class=n>buffer</span><span class=p>.</span><span class=n>ifr_name</span><span class=p>,</span> <span class=n>iface</span><span class=p>,</span> <span class=n>IFNAMSIZ</span><span class=p>);</span>
+
+  <span class=cm>/* Call the ioctl to get the address. */</span>
+  <span class=n>ret</span> <span class=o>=</span> <span class=n>ioctl</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=n>SIOCGIFNETMASK</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>buffer</span><span class=p>);</span>
+
+  <span class=k>if</span> <span class=p>(</span> <span class=n>ret</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=p>)</span>
+  <span class=p>{</span>
+    <span class=cm>/* Close the socket handle. */</span>
+    <span class=n>close</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
+    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+  <span class=p>}</span>
+
+  <span class=cm>/* Copy out the netmask for the interface. */</span>
+  <span class=n>sa</span> <span class=o>=</span> <span class=p>(</span><span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=p>)</span><span class=o>&amp;</span><span class=p>(</span><span class=n>buffer</span><span class=p>.</span><span class=n>ifr_netmask</span><span class=p>);</span>
+  <span class=o>*</span><span class=n>netMask</span> <span class=o>=</span> <span class=p>((</span><span class=k>struct</span> <span class=n>sockaddr_in</span> <span class=o>*</span><span class=p>)</span><span class=n>sa</span><span class=p>)</span><span class=o>-&gt;</span><span class=n>sin_addr</span><span class=p>.</span><span class=n>s_addr</span><span class=p>;</span>
+
+  <span class=cm>/* Close the socket handle. */</span>
+  <span class=n>close</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
+
+  <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 205 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

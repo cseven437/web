@@ -1,0 +1,176 @@
+<!doctype html><html><title>树莓派摄像头的使用</title><meta name=description content="准备一个树莓派，一个摄像头模块
+"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="树莓派摄像头的使用">
+<meta property="og:description" content="准备一个树莓派，一个摄像头模块">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/raspberry/297ab292/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-05-12T13:59:26+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="树莓派摄像头的使用">
+<meta itemprop=description content="准备一个树莓派，一个摄像头模块"><meta itemprop=datePublished content="2021-05-12T13:59:26+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="1153">
+<meta itemprop=keywords content="raspberry,camera,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>树莓派摄像头的使用</h1>
+<p>
+<small>
+2021-05-12, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#开启camera>开启camera</a></li>
+<li><a href=#测试是否可以正常使用>测试是否可以正常使用</a></li>
+<li><a href=#通过vlc实现http视频播放>通过vlc实现http视频播放</a></li>
+<li><a href=#直播推流>直播推流</a></li>
+<li><a href=#raspivid-部分参数解释>raspivid 部分参数解释</a></li>
+</ul>
+</nav>
+</aside>
+<p>准备一个树莓派，一个摄像头模块</p>
+<h2 id=开启camera>开启camera</h2>
+<ol>
+<li>执行<code>sudo raspi-config</code></li>
+</ol>
+<pre tabindex=0><code>┌─────────────────────────────┤ Raspberry Pi Software Configuration Tool (raspi-config) ├──────────────────────────────┐ 
+│                                                                                                                      │ 
+│                           1 System Options       Configure system settings                                           │ 
+│                           2 Display Options      Configure display settings                                          │ 
+│                           3 Interface Options    Configure connections to peripherals                                │ 
+│                           4 Performance Options  Configure performance settings                                      │ 
+│                           5 Localisation Options Configure language and regional settings                            │ 
+│                           6 Advanced Options     Configure advanced settings                                         │ 
+│                           8 Update               Update this tool to the latest version                              │ 
+│                           9 About raspi-config   Information about this configuration tool                           │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                  &lt;Select&gt;                                  &lt;Finish&gt;                                  │ 
+│                                                                                                                      │ 
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 
+</code></pre><ol start=2>
+<li>选择 3</li>
+</ol>
+<pre tabindex=0><code>┌─────────────────────────────┤ Raspberry Pi Software Configuration Tool (raspi-config) ├──────────────────────────────┐ 
+│                                                                                                                      │ 
+│                        P1 Camera      Enable/disable connection to the Raspberry Pi Camera                           │ 
+│                        P2 SSH         Enable/disable remote command line access using SSH                            │ 
+│                        P3 VNC         Enable/disable graphical remote access using RealVNC                           │ 
+│                        P4 SPI         Enable/disable automatic loading of SPI kernel module                          │ 
+│                        P5 I2C         Enable/disable automatic loading of I2C kernel module                          │ 
+│                        P6 Serial Port Enable/disable shell messages on the serial connection                         │ 
+│                        P7 1-Wire      Enable/disable one-wire interface                                              │ 
+│                        P8 Remote GPIO Enable/disable remote access to GPIO pins                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                                                                                                      │ 
+│                                  &lt;Select&gt;                                  &lt;Back&gt;                                    │ 
+│                                                                                                                      │ 
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 
+</code></pre><ol start=3>
+<li>选择<code>P1 Camera</code></li>
+</ol>
+<pre tabindex=0><code> ┌──────────────────────────────────────────────────────────┐
+ │                                                          │
+ │ Would you like the camera interface to be enabled?       │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │                                                          │
+ │               &lt;Yes&gt;                  &lt;No&gt;                │
+ │                                                          │
+ └──────────────────────────────────────────────────────────┘
+</code></pre><ol start=4>
+<li>选择<code>Yes</code> 然后重启系统</li>
+</ol>
+<h2 id=测试是否可以正常使用>测试是否可以正常使用</h2>
+<p>执行<code>raspistill -o image.jpg</code>看是否可以拍照成功</p>
+<h2 id=通过vlc实现http视频播放>通过vlc实现http视频播放</h2>
+<p>在树莓派中安装vlc</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>sudo apt update
+sudo apt install vlc
+</code></pre></div><p>执行以下代码</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>raspivid -o - -t <span class=m>0</span>  -fps <span class=m>30</span> -b <span class=m>6000000</span> -ex auto -awb auto -vs  <span class=p>|</span>cvlc -vvv stream:///dev/stdin --sout <span class=s1>&#39;#standard{access=http,mux=ts,dst=:8080}&#39;</span> :demux<span class=o>=</span>h264
+</code></pre></div><p>在同一个局域网的电脑中，使用视频播放器打开url <code>http://192.168.1.9:8080</code>， 不可以用浏览器打开</p>
+<h2 id=直播推流>直播推流</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>pi@raspberrypi:~ $ cat obs-start.sh 
+<span class=c1>#!/bin/sh</span>
+
+<span class=nv>rtmpurl</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+<span class=nv>rtmpval</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+
+<span class=k>if</span> tmux has-session -t <span class=s1>&#39;obs-start&#39;</span><span class=p>;</span> <span class=k>then</span>
+        <span class=nb>echo</span> <span class=s2>&#34;obs is already running.&#34;</span>
+        <span class=nb>echo</span> <span class=s2>&#34;To stop it use: ./obs-stop.sh&#34;</span>
+        <span class=nb>echo</span> <span class=s2>&#34;To attach to it use: tmux attach -t obs&#34;</span>
+<span class=k>else</span>
+        tmux new-session -s <span class=s1>&#39;obs&#39;</span> -d
+        tmux send-keys <span class=s1>&#39;raspivid -o - -t 0 -fps 24 -b 6000000 -ex auto | ffmpeg -re -stream_loop -1 -f h264 -i - -vcodec copy -acodec aac -b:a 192k -f flv &#34;&#39;</span><span class=nv>$rtmpurl$rtmpval</span><span class=s1>&#39;&#34;&#39;</span> <span class=s1>&#39;C-m&#39;</span>
+        <span class=c1>#tmux split-window</span>
+        <span class=c1>#tmux select-layout tiled 2&gt;/dev/null</span>
+        tmux rename-window <span class=s1>&#39;obs&#39;</span>
+
+        <span class=nb>echo</span> <span class=s2>&#34;obs has been started in tmux session &#39;obs&#39;&#34;</span>
+        <span class=nb>echo</span> <span class=s2>&#34;To attach to session, use: tmux attach -t obs&#34;</span>
+        <span class=nb>echo</span> <span class=s2>&#34;To switch between panes use Ctrl+B-ArrowKey&#34;</span>
+        <span class=nb>echo</span> <span class=s2>&#34;To deattach, press Ctrl+B-D&#34;</span>
+        <span class=nb>echo</span> <span class=s2>&#34;To stop obs, use: ./obs-stop.sh&#34;</span>
+<span class=k>fi</span>
+pi@raspberrypi:~ $ cat obs-stop.sh 
+<span class=c1>#!/bin/sh</span>
+<span class=k>if</span> tmux has-session -t <span class=s1>&#39;obs&#39;</span> 2&gt;/dev/null<span class=p>;</span> <span class=k>then</span>
+        tmux kill-session -t obs 2&gt;/dev/null
+        <span class=nb>echo</span> <span class=s2>&#34;obs has been stopped.&#34;</span>
+<span class=k>else</span>
+        <span class=nb>echo</span> <span class=s2>&#34;obs is not running!&#34;</span>
+<span class=k>fi</span>
+</code></pre></div><h2 id=raspivid-部分参数解释>raspivid 部分参数解释</h2>
+<ul>
+<li>fps: 设置fps值</li>
+<li>b: 设置码率</li>
+<li>-ex: 曝光模式选项，有夜拍模式的摄像头可以选择auto，会自动打开夜拍模式
+<pre tabindex=0><code>Exposure mode options :
+off,auto,night,nightpreview,backlight,spotlight,sports,snow,beach,verylong,fixedfps,antishake,fireworks
+</code></pre></li>
+</ul>
+</article>
+</div>
+</body>
+<div>
+<small> words: 1153 tags:</small>
+<small><code><a href=https://arair.net/tags/raspberry>raspberry</a></code></small>
+<small><code><a href=https://arair.net/tags/camera>camera</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

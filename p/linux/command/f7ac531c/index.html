@@ -1,0 +1,605 @@
+<!doctype html><html><title>Linux命令记录</title><meta name=description content="grep Linux 命令大全 Linux 命令大全
+"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="Linux命令记录">
+<meta property="og:description" content="grep
+Linux 命令大全 Linux 命令大全">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/linux/command/f7ac531c/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-02-04T09:58:12+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="Linux命令记录">
+<meta itemprop=description content="grep
+Linux 命令大全 Linux 命令大全"><meta itemprop=datePublished content="2021-02-04T09:58:12+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="6951">
+<meta itemprop=keywords content="linux,command,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>Linux命令记录</h1>
+<p>
+<small>
+2021-02-04, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#pacman>pacman</a></li>
+</ul>
+<ul>
+<li><a href=#文件管理>文件管理</a>
+<ul>
+<li><a href=#cp>cp</a></li>
+<li><a href=#find>find</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href=#查看是csh还是bash和更改shell设置>查看是csh还是bash和更改shell设置</a></li>
+</ul>
+</nav>
+</aside>
+<h1 id=grep>grep</h1>
+<p>Linux 命令大全 Linux 命令大全</p>
+<h1 id=ln>ln</h1>
+<p>建立软链接命令</p>
+<p>lua5.3链接到lua</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>ln -s /usr/bin/lua /usr/bin/lua5.3
+</code></pre></div><h1 id=man>man</h1>
+<pre tabindex=0><code>用于查看linux命令等的用法的命令
+
+1   Executable programs or shell commands
+
+2   System calls (functions provided by the kernel)
+
+3   Library calls (functions within program libraries)
+
+4   Special files (usually found in /dev)
+
+5   File formats and conventions eg /etc/passwd
+
+6   Games
+
+7   Miscellaneous (including macro packages and conventions), e.g. man(7), groff(7)
+
+8   System administration commands (usually only for root)
+
+9   Kernel routines [Non standard]
+
+man ls
+
+​    Display the manual page for the item (program) ls.
+
+man -a intro
+
+​    Display, in succession, all of the available intro manual pages contained within the manual.  It is possible to quit between successive displays or skip any of them.
+
+man -t alias | lpr -Pps
+
+​    Format  the manual page referenced by `alias', usually a shell manual page, into the default troff or groff format and pipe it to the printer named ps.  The default output for groff is usually PostScript.  man --help
+
+​    should advise as to which processor is bound to the -t option.
+
+man -l -Tdvi ./foo.1x.gz &gt; ./foo.1x.dvi
+
+​    This command will decompress and format the nroff source manual page ./foo.1x.gz into a device independent (dvi) file.  The redirection is necessary as the -T flag causes output to  be  directed  to  stdout  with  no
+
+​    pager.  The output could be viewed with a program such as xdvi or further processed into PostScript using a program such as dvips.
+
+man -k printf
+
+​    Search the short descriptions and manual page names for the keyword printf as regular expression.  Print out any matches.  Equivalent to apropos -r printf.
+
+man -f smail
+
+​    Lookup the manual pages referenced by smail and print out the short descriptions of any found.  Equivalent to whatis -r smail.
+</code></pre><h1 id=pidof>pidof</h1>
+<p>pidof命令用于查找指定名称的进程的进程号id号。</p>
+<p>语法</p>
+<pre tabindex=0><code>pidof(选项)(参数)
+</code></pre><p>选项</p>
+<pre tabindex=0><code>-s：仅返回一个进程号；
+-c：仅显示具有相同“root”目录的进程；
+-x：显示由脚本开启的进程；
+-o：指定不显示的进程ID。
+</code></pre><p>参数
+进程名称：指定要查找的进程名称。</p>
+<p>实例</p>
+<pre tabindex=0><code>pidof nginx
+13312 5371
+
+pidof crond
+1509
+
+pidof init
+1
+</code></pre><h1 id=unzip>unzip</h1>
+<p>unzip命令用于解压缩由zip命令压缩的“.zip”压缩包。</p>
+<p>语法
+unzip(选项)(参数)
+选项</p>
+<pre tabindex=0><code>-c：将解压缩的结果显示到屏幕上，并对字符做适当的转换；
+-f：更新现有的文件；
+-l：显示压缩文件内所包含的文件；
+-p：与-c参数类似，会将解压缩的结果显示到屏幕上，但不会执行任何的转换；
+-t：检查压缩文件是否正确；
+-u：与-f参数类似，但是除了更新现有的文件外，也会将压缩文件中的其他文件解压缩到目录中；
+-v：执行时显示详细的信息；
+-z：仅显示压缩文件的备注文字；
+-a：对文本文件进行必要的字符转换；
+-b：不要对文本文件进行字符转换；
+-C：压缩文件中的文件名称区分大小写；
+-j：不处理压缩文件中原有的目录路径；
+-L：将压缩文件中的全部文件名改为小写；
+-M：将输出结果送到more程序处理；
+-n：解压缩时不要覆盖原有的文件；
+-o：不必先询问用户，unzip执行后覆盖原有的文件；
+-P&lt;密码&gt;：使用zip的密码选项；
+-q：执行时不显示任何信息；
+-s：将文件名中的空白字符转换为底线字符；
+-V：保留VMS的文件版本信息；
+-X：解压缩时同时回存文件原来的UID/GID；
+-d&lt;目录&gt;：指定文件解压缩后所要存储的目录；
+-x&lt;文件&gt;：指定不要处理.zip压缩文件中的哪些文件；
+-Z：unzip-Z等于执行zipinfo指令。
+</code></pre><p>参数
+压缩包：指定要解压的“.zip”压缩包。</p>
+<p>实例
+将压缩文件text.zip在当前目录下解压缩。</p>
+<p>unzip test.zip
+将压缩文件text.zip在指定目录/tmp下解压缩，如果已有相同的文件存在，要求unzip命令不覆盖原先的文件。</p>
+<p>unzip -n test.zip -d /tmp
+查看压缩文件目录，但不解压。</p>
+<p>unzip -v test.zip
+将压缩文件test.zip在指定目录/tmp下解压缩，如果已有相同的文件存在，要求unzip命令覆盖原先的文件。</p>
+<p>unzip -o test.zip -d tmp/</p>
+<h1 id=zip>zip</h1>
+<pre tabindex=0><code>zip -rP abc#123 test.zip test.txt
+</code></pre><ul>
+<li>-P abc#123 是加密密码</li>
+<li>-r 递归，将指定目录下的所有文件和子目录一并处理</li>
+<li>test.zip 是生成的压缩文件</li>
+<li>test.txt 是被压缩的文件</li>
+</ul>
+<pre tabindex=0><code>-r 递归，将指定目录下的所有文件和子目录一并处理
+-S 包含系统和隐藏文件
+-y 直接保存符号连接，而非该连接所指向的文件
+-X 不保存额外的文件属性
+-m 将文件压缩并加入压缩文件后，删除源文件
+-&lt;压缩级别&gt; 1~9，数字越大，压缩率越高
+-F 尝试修复已损坏的压缩文件
+-T 检查备份文件内的每个文件是否正确无误
+-q 不显示指令执行过程
+-g 将文件压缩后附加在既有的压缩文件之后，而非另行建立新的压缩文件
+-u 更新压缩包内文件
+-f 更新压缩包内文件。如果符合条件的文件没有包含在压缩包中，则压缩后添加
+-$ 保存第一个被压缩文件所在磁盘的卷标
+-j 只保存文件名称及其内容
+-D 压缩文件内不建立目录名称
+-i &lt;表达式&gt; 压缩目录时，只压缩符合条件的文件
+-x &lt;表达式&gt; 排除符合条件的文件
+-n &lt;文件名后缀&gt; 排除指定文件名后缀的文件
+-b &lt;缓存路径&gt; 指定临时文件目录
+-d &lt;表达式&gt; 从压缩文件内删除指定的文件
+-t &lt;日期时间&gt; 把压缩文件的日期设成指定的日期
+-o 以压缩文件内拥有最新更改时间的文件为准，将压缩文件的更改时间设成和该文件相同
+-A 调整可执行的自动解压缩文件
+-c 替每个被压缩的文件加上注释
+-z 替压缩文件加上注释
+-k 使用MS-DOS兼容格式的文件名称。
+-l 压缩文件时，把LF字符置换成LF+CR字符。
+-ll 压缩文件时，把LF+CR字符置换成LF字符。
+</code></pre><h1 id=inittab>inittab</h1>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>sed -i <span class=s1>&#39;s/^::respawn:\/usr\/bin\/netmanager/::once:\/usr\/bin\/netmanager/&#39;</span> <span class=k>$(</span>DIR_ROMFS<span class=k>)</span>/etc/inittab
+</code></pre></div><h1 id=uname>uname</h1>
+<p>uname &ndash;help
+Usage: uname [OPTION]&mldr;
+Print certain system information.  With no OPTION, same as -s.</p>
+<pre tabindex=0><code>  -a, --all                print all information, in the following order,
+                             except omit -p and -i if unknown:
+  -s, --kernel-name        print the kernel name
+  -n, --nodename           print the network node hostname
+  -r, --kernel-release     print the kernel release
+  -v, --kernel-version     print the kernel version
+  -m, --machine            print the machine hardware name
+  -p, --processor          print the processor type or &quot;unknown&quot;
+  -i, --hardware-platform  print the hardware platform or &quot;unknown&quot;
+  -o, --operating-system   print the operating system
+      --help     display this help and exit
+      --version  output version information and exit
+</code></pre><pre tabindex=0><code>$ uname -p
+x86_64
+$ uname -m
+x86_64
+$ uname -i
+x86_64
+$ uname -o
+GNU/Linux
+$ uname -v
+#140~14.04.1-Ubuntu SMP Fri Feb 16 09:25:20 UTC 2018
+$ uname -r
+4.4.0-116-generic
+$ uname -n
+ubuntu-PowerEdge-R740
+$ uname -s
+Linux
+</code></pre><h1 id=dropbear>dropbear</h1>
+<ol>
+<li>介绍
+小型的嵌入式系统专用的SSH服务端和客户端工具
+服务器端：dropbear、dropbearkey
+客户端：dbclient
+dropbear默认使用nsswitch实现名称解析（账户名称）
+dropbear会在用户登录时检查其默认shell是否为安全shell，/etc/shells中的shell一般称为安全shell</li>
+<li>安装编译
+下载链接:<a href=https://matt.ucc.asn.au/dropbear/>https://matt.ucc.asn.au/dropbear/</a>
+下载完成并解压后执行如下命令进行编译安装
+dropbear默认编译方式:</li>
+</ol>
+<pre tabindex=0><code>./configure
+
+make &amp;&amp; make install
+</code></pre><ol start=3>
+<li>主机密钥配置
+默认情况下，dropbear的配置文件存放在/etc/dropbear目录下(如果没有，则需要手动创建)
+为dropbear生成配置文件:</li>
+</ol>
+<pre tabindex=0><code>dropbearkey -t TYPE -f dropbear_TYPE_host_key -s SIZE
+        
+-t TYPE: 秘钥配置文件的类型，一般有rsa,dss,ecdsa等
+-f dropbear_TYPE_host_key: 指定该TYPE加密类型的配置文件的存放路劲
+-s SIZE：指定加密的位数，默认情况下rsa为1024，最多4096 只要是8的倍数即可，ecdsa默认为256，长度限制为112-571
+</code></pre><ol start=3>
+<li>般情况下只需要为常用的加密类型生成其配置文件即可</li>
+<li>ssh登录主机</li>
+</ol>
+<pre tabindex=0><code>ssh USERNAME@HOST
+</code></pre><ol start=5>
+<li>dbclient登录其它主机</li>
+</ol>
+<pre tabindex=0><code>dbclient USERNAME@HOST
+</code></pre><h1 id=包管理工具>包管理工具</h1>
+<h2 id=pacman>pacman</h2>
+<p>pacman 用法</p>
+<pre tabindex=0><code>pacman -Sy abc                  #和源同步后安装名为abc的包
+pacman -S   abc                  #从本地数据库中得到abc的信息，下载安装abc包
+pacman -Sf abc                  #强制安装包abc
+pacman -Ss abc                  #搜索有关abc信息的包
+pacman -Si abc                  #从数据库中搜索包abc的信息
+pacman -Q                         # 列出已经安装的软件包
+pacman -Q abc                  # 检查 abc 软件包是否已经安装
+pacman -Qi abc                  #列出已安装的包abc的详细信息
+pacman -Ql abc                 # 列出abc软件包的所有文件
+pacman -Qo /path/to/abc # 列出abc文件所属的软件包
+pacman -Syu                      #同步源，并更新系统
+pacman -Sy                        #仅同步源
+pacman -Su                        #更新系统
+pacman -R   abc                  #删除abc包
+pacman -Rd abc               #强制删除被依赖的包
+pacman -Rc abc                  #删除abc包和依赖abc的包
+pacman -Rsc abc                #删除abc包和abc依赖的包
+pacman -Sc                       #清理/var/cache/pacman/pkg目录下的旧包
+pacman -Scc                      #清除所有下载的包和数据库
+pacman -U   abc                  #安装下载的abs包，或新编译的abc包
+pacman -Sd abc                  #忽略依赖性问题，安装包abc
+pacman -Su --ignore foo      #升级时不升级包foo
+pacman -Sg abc                  #查询abc这个包组包含的软件包
+</code></pre><h1 id=grub命令行启动windows>grub命令行启动windows</h1>
+<p>对于Windows和Linux双系统的用户，你可能会陷入这样一种窘境：在你的Grub2引导中，没有Windows的选项，这时，一般的选择是先启动Linux系统，修改Grub2的设置后再重启。
+实际上，考虑到用户的奇思妙想与鬼畜操作，Grub还提供了一个命令行终端，不需要启动Linux就可以直接引导电脑上的其他系统（Grub理论上也并非是和Linux绑定，所以其自成一体也在情理之中）。</p>
+<p>在开机后的Grub引导页面，按下ESC，即进入Grub的命令行模式。下面，我们依次介绍几条我们会用到的命令，同时也是这个终端的几条核心命令。</p>
+<ul>
+<li>ls
+ls 命令 ，和Linux的ls命令功能基本相同。列出目录下的文件与子目录。在默认的根目录下，键入ls命令，可以看到打印出一串形如“(hd0,1)”的目录，这里的每一个目录就代表着一个硬盘的分区（不管是linux的还是windows的）。
+ls命令还可以用于查看任意子目录里的情况，如 ls (hd0, 1)/ 可查看(hd0, 1)分区中的文件。</li>
+<li>set root=
+和Linux里的终端一样，Grub的命令行也有当前目录的概念。set root= 可以改换当前目录。比如set root=(hd0, 1)</li>
+<li>chainloader
+chainloader命令是指定一个文件作为链式装载程序载入。怎么样，这个解释是不是说得云里雾里？但实际上，如果我们只是用终端启动windows的话，也不需要了解太多，你只需要用ls命令找到windows的bootmgfw.efi即可（一般来说，这个efi是在某个分区下的/efi/Microsoft/Boot/中）</li>
+<li>boot
+按照当前设置，引导系统启动。</li>
+</ul>
+<p>有了上述的四条命令，我们就可以实现用grub命令引导启动windows了。基本的操作步骤：</p>
+<ol>
+<li>在引导列表页按ESC进入Grub2终端 。</li>
+<li><code>insmod part_gpt</code> 导入模块，让grub可以看到gpt格式的硬盘（这个有没有必要我也不清楚，但执行一下也不妨事。）。</li>
+<li>借助 ls 命令找到windows系统的 bootmgfw.efi 所在的分区（hd_, _）。</li>
+<li>修改当前目录 <code>set root=(hd*, *)</code> 。</li>
+<li><code>chainloader /efi/Microsoft/Boot/bootmgfw.efi</code> （可以用 ls 再确认一下这个路径）。</li>
+<li><code>boot</code> 系统启动</li>
+</ol>
+<blockquote>
+<p>Tips： ls命令打印出来的分区名称，可能是”(hd_, gpt_)”，在我们键入分区时，这个gpt可以省略。</p>
+</blockquote>
+<p>按照上述步骤操作，如果你的windows系统本身没什么问题的话，应该是可以正常启动的。</p>
+<p>P.S. 笔者接触Grub2的命令行模式其实源于一个非常低能的错误——在更新了BIOS后，忘记把装双系统用的系统盘从USB口上拔下来，导致系统自动U盘启动，连个Windows10的引导项都没得，只有ubuntu 的安装选项（没错，在Linux还没有正式安装时，Grub2就已经可以用了），以至于鼓捣了半个多钟头，后来才想到，如果当时把U盘拔下来，就没有这些破事儿了。</p>
+<h1 id=start-stop-daemon>start-stop-daemon</h1>
+<p><strong>功能</strong></p>
+<p>启动和停止系统守护程序</p>
+<p>参数</p>
+<pre tabindex=0><code>Commands:
+-S|--start -- &lt;argument&gt; ... 开启一个系统守护程序，并传递参数给它
+-K|--stop 停止一个程序
+-T|--status 得到程序的状态
+-H|--help 显示帮助信息
+-V|--version 打印版本信息
+Matching options (at least one is required):
+-p|--pidfile &lt;pid-file&gt; pid file to check
+-x|--exec &lt;executable&gt; program to start/check if it isrunning
+-n|--name &lt;process-name&gt; process name to check
+-u|--user &lt;username|uid&gt; process owner to check
+Options:
+-g|--group &lt;group|gid&gt; 按指定用户组权限运行程序
+-c|--chuid &lt;name|uid[:group|gid]&gt;
+按指定用户、用户组权限运行程序
+-s|--signal &lt;signal&gt; signal to send (default TERM)
+-a|--startas &lt;pathname&gt; program to start (default is&lt;executable&gt;)
+-r|--chroot &lt;directory&gt; chroot to &lt;directory&gt;before starting
+-d|--chdir &lt;directory&gt; change to &lt;directory&gt;(default is /)
+-N|--nicelevel &lt;incr&gt; add incr to the process' nicelevel
+-P|--procsched &lt;policy[:prio]&gt;
+use &lt;policy&gt; with &lt;prio&gt; for the kernel
+process scheduler (default prio is 0)
+-I|--iosched &lt;class[:prio]&gt; use &lt;class&gt; with&lt;prio&gt; to set the IO
+scheduler (default prio is 4)
+-k|--umask &lt;mask&gt; 在开始运行前设置&lt;mask&gt;
+-b|--background 后台运行
+-m|--make-pidfile 当命令本身不创建pidfile时，由start-stop-daemon创建
+-R|--retry &lt;schedule&gt; 等待timeout的时间，检查进程是否停止，如果没有发送KILL信号；
+-t|--test 测试模式
+-o|--oknodo exit status 0 (not 1) if nothing done
+-q|--quiet 不要输出警告
+-v|--verbose 显示运行过程信息
+</code></pre><pre tabindex=0><code>1. -S, --start [--] arguments
+              Check for the existence of a specified process.  If such a
+              process exists, start-stop-daemon does nothing, and exits with
+              error status 1 (0 if --oknodo is specified).  If such a
+              process does not exist, it starts an instance, using either
+              the executable specified by --exec or, if specified, by
+              --startas.  Any arguments given after -- on the command line
+              are passed unmodified to the program being started.
+    2. 如上所述，在--之后加入命令行参数：
+        start-stop-daemon -S -b -x /usr/sbin/httpd -- -h /var/www
+</code></pre><p><strong>应用</strong></p>
+<ol>
+<li>开启一个daemon进程</li>
+</ol>
+<pre tabindex=0><code>start-stop-daemon --start --background --exec /root/proxy.py
+</code></pre><ol start=2>
+<li>关闭一个daemon进程</li>
+</ol>
+<pre tabindex=0><code>start-stop-daemon --stop --name proxy.py
+</code></pre><p><strong>参考启动文件</strong></p>
+<pre tabindex=0><code>cat /etc/init.d/S71httpd
+        #! /bin/sh
+        
+        set -e
+        
+        DESC=&quot;httpd&quot;
+        NAME=httpd
+        DAEMON=/usr/sbin/$NAME
+        
+        case &quot;$1&quot; in
+          start)
+                printf &quot;Starting $DESC: &quot;
+                start-stop-daemon -S -b -x $NAME -- -h /var/www
+                echo &quot;OK&quot;
+                ;;
+          stop)
+                printf &quot;Stopping $DESC: &quot;
+                start-stop-daemon -K -x $NAME
+                echo &quot;OK&quot;
+                ;;
+          restart|force-reload)
+                echo &quot;Restarting $DESC: &quot;
+                $0 stop
+                sleep 1
+                $0 start
+                echo &quot;&quot;
+                ;;
+          *)
+                echo &quot;Usage: $0 {start|stop|restart|force-reload}&quot; &gt;&amp;2
+                exit 1
+                ;;
+        esac
+        
+        exit 0
+</code></pre><h1 id=signal>signal</h1>
+<p><strong>SIGINT、SIGTERM和SIGKILL区别</strong></p>
+<p><strong>1. SIGINT与SIGTERM区别</strong></p>
+<ol>
+<li>SIGINT关联ctrl+c</li>
+<li>SIGINT只能结束前台进程</li>
+<li>通过ctrl+c对当前进程发送结束信号，信号被进程树接收到（即：不仅当前进程，子进程也会收到结束信号）</li>
+</ol>
+<p><strong>2. SIGTERM与SIGKILL</strong></p>
+<ol>
+<li>SIGTERM可以被阻塞、处理和忽略；因此有的进程不能按预期的结束</li>
+<li>kill不使用参数：发送SIGTERM信号，只有当前进程收到信号，若当前进程被kill，则子进程的父进程就会更改为init，即pid为1</li>
+<li>kill命令的默认不带参数发生的信号就是SIGTERM，让程序友好的退出 ，当程序未退出时，可以使用kill -9强制退出</li>
+</ol>
+<h1 id=tail>tail</h1>
+<p>tail -n 50 wx.log</p>
+<p>示例：查看/var/log/boot.log，只显示最后一行。则执行</p>
+<p>tail -n 1  /var/log/boot.log</p>
+<p>tail -n 1000：显示最后1000行</p>
+<p>tail -n +1000：从1000行开始显示，显示1000行以后的</p>
+<p>head -n 1000：显示前面1000行</p>
+<h1 id=watch>watch</h1>
+<p>watch可以帮你监测一个命令的运行结果，来监测你想要的一切命令的结果变化</p>
+<p>参数：</p>
+<pre tabindex=0><code>Usage: watch [-dhntv] [--differences[=cumulative]] [--help] [--interval=&lt;n&gt;] [--no-title] [--version] &lt;command&gt;
+  -d, --differences[=cumulative]        highlight changes between updates
+                (cumulative means highlighting is cumulative)
+  -h, --help                            print a summary of the options
+  -n, --interval=&lt;seconds&gt;              seconds to wait between updates
+  -v, --version                         print the version number
+  -t, --no-title                        turns off showing the header
+</code></pre><p>示例</p>
+<pre tabindex=0><code>watch -n 1 -d netstat -ant 【-n 设置间隔，-d,difference，高亮显示不同】
+ 
+   watch -d 'ls /home/omd'       【-d 高亮显示】
+ 
+   watch -t 'ls /home/omd'       【-t会关闭watch命令在顶部的时间间隔】
+ 
+说明： 切换终端： Ctrl+x     退出watch：Ctrl+g
+</code></pre><pre tabindex=0><code>watch -n 1 -d 'pstree|grep http'
+ 
+实时查看模拟攻击客户机建立起来的连接数
+ 
+watch -n 1 -d 'netstat -an | grep &quot;21&quot; | egrep &quot;192.168.25.100&quot;| wc -l'
+ 
+监测当前目录中 scf' 的文件的变化
+ 
+watch -d 'ls -l|grep scf'
+ 
+10秒一次输出系统的平均负载
+ 
+watch -n 1 -d &quot;uptime&quot;
+</code></pre><h1 id=dd>dd</h1>
+<p>Linux dd命令用于读取、转换并输出数据。
+dd可从标准输入或文件中读取数据，根据指定的格式来转换数据，再输出到文件、设备或标准输出。
+参数说明:
+• if=文件名：输入文件名，默认为标准输入。即指定源文件。
+• of=文件名：输出文件名，默认为标准输出。即指定目的文件。
+• ibs=bytes：一次读入bytes个字节，即指定一个块大小为bytes个字节。
+obs=bytes：一次输出bytes个字节，即指定一个块大小为bytes个字节。
+bs=bytes：同时设置读入/输出的块大小为bytes个字节。
+• cbs=bytes：一次转换bytes个字节，即指定转换缓冲区大小。
+• skip=blocks：从输入文件开头跳过blocks个块后再开始复制。
+• seek=blocks：从输出文件开头跳过blocks个块后再开始复制。
+• count=blocks：仅拷贝blocks个块，块大小等于ibs指定的字节数。
+• conv=&lt;关键字>，关键字可以有以下11种：
+• conversion：用指定的参数转换文件。
+• ascii：转换ebcdic为ascii
+• ebcdic：转换ascii为ebcdic
+• ibm：转换ascii为alternate ebcdic
+• block：把每一行转换为长度为cbs，不足部分用空格填充
+• unblock：使每一行的长度都为cbs，不足部分用空格填充
+• lcase：把大写字符转换为小写字符
+• ucase：把小写字符转换为大写字符
+• swab：交换输入的每对字节
+• noerror：出错时不停止
+• notrunc：不截短输出文件
+• sync：将每个输入块填充到ibs个字节，不足部分用空（NUL）字符补齐。
+• &ndash;help：显示帮助信息
+• &ndash;version：显示版本信息
+实例
+在Linux 下制作启动盘，可使用如下命令：</p>
+<pre tabindex=0><code>dd if=boot.img of=/dev/fd0 bs=1440k
+</code></pre><p>将testfile文件中的所有英文字母转换为大写，然后转成为testfile_1文件，在命令提示符中使用如下命令：</p>
+<pre tabindex=0><code>dd if=testfile_2 of=testfile_1 conv=ucase
+</code></pre><p>其中testfile_2 的内容为：</p>
+<pre tabindex=0><code>$ cat testfile_2 #testfile_2的内容  
+HELLO LINUX!  
+Linux is a free unix-type opterating system.  
+This is a linux testfile!  
+Linux test
+</code></pre><p>转换完成后，testfile_1 的内容如下：</p>
+<pre tabindex=0><code>$ dd if=testfile_2 of=testfile_1 conv=ucase #使用dd 命令，大小写转换记录了0+1 的读入  
+记录了0+1 的写出  
+95字节（95 B）已复制，0.000131446 秒，723 KB/s  
+cmd@hdd-desktop:~$ cat testfile_1 #查看转换后的testfile_1文件内容  
+HELLO LINUX!  
+LINUX IS A FREE UNIX-TYPE OPTERATING SYSTEM.  
+THIS IS A LINUX TESTFILE!  
+LINUX TEST #testfile_2中的所有字符都变成了大写字母
+</code></pre><p>由标准输入设备读入字符串，并将字符串转换成大写后，再输出到标准输出设备，使用的命令为：</p>
+<pre tabindex=0><code>dd conv=ucase
+</code></pre><p>输入以上命令后按回车键，输入字符串，再按回车键，按组合键Ctrl+D 退出，出现以下结果：</p>
+<pre tabindex=0><code>$ dd conv=ucase 
+Hello Linux! #输入字符串后按回车键  
+HELLO LINUX! #按组合键Ctrl+D退出，转换成大写结果  
+记录了0+1 的读入  
+记录了0+1 的写出  
+13字节（13 B）已复制，12.1558 秒，0.0 KB/s
+</code></pre><h1 id=adb>adb</h1>
+<p><strong>问题</strong></p>
+<p>ubuntu14.04 adb安装及解决adb devices找不到设备的问题</p>
+<p>安装</p>
+<pre tabindex=0><code>sudo apt-get install android-tools-adb
+</code></pre><p>查看</p>
+<p>命令：<code>lsusb</code></p>
+<pre tabindex=0><code>Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 011: ID 2207:0006
+</code></pre><blockquote>
+<p>2207:0006这行内容就是设备的。</p>
+</blockquote>
+<p>加入规则</p>
+<pre tabindex=0><code>sudo gedit /etc/udev/rules.d/51-android.rules
+</code></pre><p>加入内容：</p>
+<pre tabindex=0><code>SUBSYSTEM==&quot;usb&quot;, ATTRS{idVendor}==&quot;2207&quot;, ATTRS{idProduct}==&quot;0006&quot;,MODE=&quot;0666&quot;
+#注释：lsusb中内容2207:0006, idVendor对应2207，idProduct对应。
+</code></pre><p>保存退出</p>
+<p>验证</p>
+<p>udev重启：</p>
+<pre tabindex=0><code>sudo service udev restart
+</code></pre><p>查看是否有设备：</p>
+<pre tabindex=0><code>adb devices
+</code></pre><p>如果没有设备，运行：</p>
+<pre tabindex=0><code>adb kill-server
+adb start-server
+adb devices
+</code></pre><p>如果还是没有设备，尝试：</p>
+<pre tabindex=0><code>gedit ~/.android/adb_usb.ini
+</code></pre><p>lsusb中内容2207，加入其中：</p>
+<pre tabindex=0><code>0x2207
+</code></pre><p>然后就可以看到设备了。</p>
+<p><code>adb shell</code> 进入设备</p>
+<h1 id=env>env</h1>
+<p>显示系统中已存在的环境变量</p>
+<p>语法</p>
+<pre tabindex=0><code>env(选项)(参数)
+</code></pre><p>选项</p>
+<pre tabindex=0><code>-i：开始一个新的空的环境；
+-u&lt;变量名&gt;：从当前环境中删除指定的变量。
+</code></pre><p>参数</p>
+<ul>
+<li>变量定义：定义在新的环境中变量，定义多个变量定义用空格隔开。格式为“变量名=值”；</li>
+<li>指定：指定要执行的指令和参数。</li>
+</ul>
+<pre tabindex=0><code># env
+SHELL=/bin/bash  # 终端类型
+</code></pre><h1 id=chsh>chsh</h1>
+<p>Linux chsh命令用于更改使用者 shell 设定。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=c1># chsh -s /bin/csh  # 改变当前设置为 /bin/csh</span>
+Changing shell <span class=k>for</span> root.
+Shell not changed.
+</code></pre></div><h2 id=文件管理>文件管理</h2>
+<h3 id=cp>cp</h3>
+<pre tabindex=0><code>--preserve或-p：除复制文件的内容外，还把修改时间和访问权限也复制到新文件中。
+</code></pre><h3 id=find>find</h3>
+<pre tabindex=0><code>-maxdepth ：指定遍历搜索的最大深度。最大目录层级
+-mindepth： 指定开始遍历搜索的最小深度。最小目录层级
+</code></pre><h1 id=问题>问题</h1>
+<h2 id=查看是csh还是bash和更改shell设置>查看是csh还是bash和更改shell设置</h2>
+<ol>
+<li>判断终端是csh还是bash：
+终端命令：env</li>
+</ol>
+<pre tabindex=0><code>SHELL=/bin/zsh
+</code></pre>
+</article>
+</div>
+</body>
+<div>
+<small> words: 6951 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/command>command</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

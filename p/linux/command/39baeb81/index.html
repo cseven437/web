@@ -1,0 +1,650 @@
+<!doctype html><html><title>awk命令</title><meta name=description content="awk是一种编程语言，用于在linux/unix下对文本和数据进行处理。数据可以来自标准输入（stdin）、一个或多个文件，或其它命令的输出。它支持用户自定义函数和动态正则表达式等先进功能，是linux/unix下的一个强大编程工具。它在命令行中使用，但更多是作为脚本来使用。awk有很多内建的功能，比如数组、函数等，这是它和C语言的共同之处，灵活性是awk最大的优势。
+"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="awk命令">
+<meta property="og:description" content="awk是一种编程语言，用于在linux/unix下对文本和数据进行处理。数据可以来自标准输入（stdin）、一个或多个文件，或其它命令的输出。它支持用户自定义函数和动态正则表达式等先进功能，是linux/unix下的一个强大编程工具。它在命令行中使用，但更多是作为脚本来使用。awk有很多内建的功能，比如数组、函数等，这是它和C语言的共同之处，灵活性是awk最大的优势。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/linux/command/39baeb81/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-02-07T20:04:33+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="awk命令">
+<meta itemprop=description content="awk是一种编程语言，用于在linux/unix下对文本和数据进行处理。数据可以来自标准输入（stdin）、一个或多个文件，或其它命令的输出。它支持用户自定义函数和动态正则表达式等先进功能，是linux/unix下的一个强大编程工具。它在命令行中使用，但更多是作为脚本来使用。awk有很多内建的功能，比如数组、函数等，这是它和C语言的共同之处，灵活性是awk最大的优势。"><meta itemprop=datePublished content="2021-02-07T20:04:33+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="5390">
+<meta itemprop=keywords content="awk,linux,command,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>awk命令</h1>
+<p>
+<small>
+2021-02-07, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#awk命令格式和选项>awk命令格式和选项</a></li>
+<li><a href=#语法格式>语法格式</a>
+<ul>
+<li><a href=#常用命令选项>常用命令选项</a></li>
+</ul>
+</li>
+<li><a href=#awk脚本>awk脚本</a>
+<ul>
+<li><a href=#模式与操作>模式与操作</a></li>
+</ul>
+</li>
+<li><a href=#awk命令基本格式>awk命令基本格式</a></li>
+<li><a href=#awk执行过程分析>AWK执行过程分析</a></li>
+<li><a href=#awk内置变量>AWK内置变量</a></li>
+<li><a href=#将外部变量值传递给awk>将外部变量值传递给awk</a></li>
+<li><a href=#awk运算>awk运算</a></li>
+<li><a href=#awk高级输入输出>awk高级输入输出</a>
+<ul>
+<li><a href=#读取下一条记录next语句>读取下一条记录：<code>next</code>语句</a></li>
+<li><a href=#读取下一行记录getline语句>读取下一行记录：<code>getline</code>语句</a></li>
+<li><a href=#文件操作>文件操作</a></li>
+</ul>
+</li>
+<li><a href=#循环结构>循环结构</a>
+<ul>
+<li><a href=#for循环>for循环</a></li>
+<li><a href=#while循环>while循环</a></li>
+<li><a href=#dowhile循环>do&mldr;while循环</a></li>
+<li><a href=#其他相关语句>其他相关语句</a></li>
+</ul>
+</li>
+<li><a href=#数组>数组</a></li>
+<li><a href=#内置函数>内置函数</a>
+<ul>
+<li><a href=#算术函数>算术函数</a></li>
+<li><a href=#时间函数>时间函数</a></li>
+<li><a href=#其他一般函数>其他一般函数</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</aside>
+<p>awk是一种编程语言，用于在linux/unix下对文本和数据进行处理。数据可以来自标准输入（stdin）、一个或多个文件，或其它命令的输出。它支持用户自定义函数和动态正则表达式等先进功能，是linux/unix下的一个强大编程工具。它在命令行中使用，但更多是作为脚本来使用。awk有很多内建的功能，比如数组、函数等，这是它和C语言的共同之处，灵活性是awk最大的优势。</p>
+<h2 id=awk命令格式和选项>awk命令格式和选项</h2>
+<h2 id=语法格式>语法格式</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=o>[</span>options<span class=o>]</span> <span class=s1>&#39;script&#39;</span> <span class=nv>var</span><span class=o>=</span>value file<span class=o>(</span>s<span class=o>)</span>
+awk <span class=o>[</span>options<span class=o>]</span> -f scriptfile <span class=nv>var</span><span class=o>=</span>value file<span class=o>(</span>s<span class=o>)</span>
+</code></pre></div><h3 id=常用命令选项>常用命令选项</h3>
+<ul>
+<li><code>-F fs</code> fs 指定输入分隔符，fs可以是字符串或正则表达式</li>
+<li><code>-v var=value</code> 赋值一个用户定义变量，将外部变量传递给awk</li>
+<li><code>-f scriptfile</code> 从脚本文件中读取awk命令</li>
+</ul>
+<h2 id=awk脚本>awk脚本</h2>
+<p>awk脚本是由模式和操作组成的。</p>
+<h3 id=模式与操作>模式与操作</h3>
+<h4 id=模式>模式</h4>
+<p>模式可以是以下任意一种：</p>
+<ul>
+<li>正则表达式：使用通配符的扩展集</li>
+<li>关系表达式：使用运算符进行操作，可以是字符串或数字的比较测试</li>
+<li>模式匹配表达式：用运算符<code>~</code> (匹配) 和 <code>~!</code> (不匹配)</li>
+<li>BEGIN 语句块，pattern语句块，END语句块</li>
+</ul>
+<h4 id=操作>操作</h4>
+<p>操作由一个或多个命令、函数、表达式组成，之间由换行符或分号隔开，并位于打括号内，主要部分是：变量或数组赋值、输出命令、内置函数、控制流语句。</p>
+<h2 id=awk命令基本格式>awk命令基本格式</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;BEGIN{ commands } pattern{ commands } END{ commands}&#39;</span> file
+</code></pre></div><p>一个awk脚本通常由<code>BEGIN，通用语句块，END语句块</code>组成，三部分是可选的。通常是被<code>单引号或双引号包住</code>。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;BEGIN{ i=0 } { i++ } END{ print i }&#39;</span> filename
+awk <span class=s2>&#34;BEGIN{ i=0 } { i++ } END{ print i }&#34;</span> filename
+</code></pre></div><h2 id=awk执行过程分析>AWK执行过程分析</h2>
+<ul>
+<li>
+<p>第一步：执行<code>BEGIN { commands } pattern</code>语句块中的语句</p>
+<blockquote>
+<p><code>BEG语句块</code>： 在awk开始从输入输出流中读取行之前执行，在BEGIN语句块中执行如变量初始化，打印输出表头等操作。</p>
+</blockquote>
+</li>
+<li>
+<p>第二部：从文件或标准输入中读取一行，然后执行<code>pattern{ commands }</code>语句块。它逐行扫描文件，从第一行到最后一行重复这个过程，知道全部文件都被读取完毕。</p>
+<blockquote>
+<p><code>pattern语句块</code>：pattern语句块中的通用命令是最重要的部分，它是可选的。如果没有提供pattern语句块，则默认执行{ print }，及打印每一个读取到的行。<code>{ }</code>类似一个循环体，会对文件中的每一行进行迭代，通常将变量初始化语句放在BEGIN语句块中，将打印结果等语句放在END语句块中。</p>
+</blockquote>
+</li>
+<li>
+<p>第三步：当读至输入流末尾时，执行<code>END { command }</code>语句块</p>
+<blockquote>
+<p><code>语句块</code>：在awk从输入流中读取完所有的行之后及被执行，比如打印所有行的<code>分析结果</code>这类<code>信息汇总</code>都是在END语句块中完成，它也是一个可选语句块。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id=awk内置变量>AWK内置变量</h2>
+<ul>
+<li><code>$n</code>：当前记录的第n个字段，比如n为1表示第一个字段，n为2表示第二个字段。</li>
+<li><code>$0</code>：这个变量包含执行过程中当前行的文本内容。</li>
+<li><code>ARGC</code>：命令行参数的数目。</li>
+<li><code>ARGIND</code>：命令行中当前文件的位置（从0开始算）。</li>
+<li><code>ARGV</code>：包含命令行参数的数组。</li>
+<li><code>CONVFMT</code>：数字转换格式（默认值为%.6g）。</li>
+<li><code>ENVIRON</code>：环境变量关联数组。</li>
+<li><code>ERRNO</code>：最后一个系统错误的描述</li>
+<li><code>FIELDWIDTHS</code>：字段宽度列表（用空格键分隔）。</li>
+<li><code>FILENAME</code>：当前输入文件的名。</li>
+<li><code>NR</code>：表示记录数，在执行过程中对应于当前的行号</li>
+<li><code>FNR</code>：同<code>NR</code>，但相对于当前文件。</li>
+<li><code>FS</code>：字段分隔符（默认是任何空格）。</li>
+<li><code>IGNORECASE</code>：如果为真，则进行忽略大小写的匹配。</li>
+<li><code>NF</code>：表示字段数，在执行过程中对应于当前的字段数。 <code>print $NF</code>打印一行中最后一个字段</li>
+<li><code>OFMT</code>：数字的输出格式（默认值是%.6g）。</li>
+<li><code>OFS</code>：输出字段分隔符（默认值是一个空格）。</li>
+<li><code>ORS</code>：输出记录分隔符（默认值是一个换行符）。</li>
+<li><code>RS</code>：记录分隔符（默认是一个换行符）。</li>
+<li><code>RSTART</code>：由match函数所匹配的字符串的第一个位置。</li>
+<li><code>RLENGTH</code>：由match函数所匹配的字符串的长度。</li>
+<li><code>SUBSEP</code>：数组下标分隔符（默认值是34）。</li>
+</ul>
+<h2 id=将外部变量值传递给awk>将外部变量值传递给awk</h2>
+<ul>
+<li>
+<p>借助<code>-v</code>选项，可以将来自外部值（非stdin）传递给awk</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=nv>VAR</span><span class=o>=</span><span class=m>10000</span>
+<span class=nb>echo</span> <span class=p>|</span> awk -v <span class=nv>VARIABLE</span><span class=o>=</span><span class=nv>$VAR</span> <span class=s1>&#39;{ print VARIABLE }&#39;</span>
+</code></pre></div></li>
+<li>
+<p>定义内部变量接收外部变量</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=nv>var1</span><span class=o>=</span><span class=s2>&#34;aaa&#34;</span>
+<span class=nv>var2</span><span class=o>=</span><span class=s2>&#34;bbb&#34;</span>
+<span class=nb>echo</span> <span class=p>|</span> awk <span class=s1>&#39;{ print v1,v2 }&#39;</span> <span class=nv>v1</span><span class=o>=</span><span class=nv>$var1</span> <span class=nv>v2</span><span class=o>=</span><span class=nv>$var2</span>
+</code></pre></div></li>
+<li>
+<p>当输入来自文件时 待确认，没有看懂</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;{ print v1,v2 }&#39;</span> <span class=nv>v1</span><span class=o>=</span><span class=nv>$var1</span> <span class=nv>v2</span><span class=o>=</span><span class=nv>$var2</span> filename
+</code></pre></div></li>
+</ul>
+<h2 id=awk运算>awk运算</h2>
+<ul>
+<li>
+<p>算术运算：（+,-,*,/,&,!,++,&ndash;）</p>
+<blockquote>
+<p>所有用作算术运算符进行操作时，操作数自动转为数值，所有非数值都变为0</p>
+</blockquote>
+</li>
+<li>
+<p>赋值运算：（=, +=, -=, *=, /=, %=, **=）</p>
+</li>
+<li>
+<p>逻辑运算符：（||, &&）</p>
+</li>
+<li>
+<p>关系运算符：（&lt;, &lt;=, >, >=, !=, ==）</p>
+</li>
+<li>
+<p>正则运算符：（~, ~!）（匹配正则表达式，与不匹配正则表达式）</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;BEGIN{a=&#34;100testa&#34;;if(a ~ /^100*/){print &#34;ok&#34;;}}&#39;</span>
+ok
+</code></pre></div></li>
+</ul>
+<h2 id=awk高级输入输出>awk高级输入输出</h2>
+<h3 id=读取下一条记录next语句>读取下一条记录：<code>next</code>语句</h3>
+<p>awk中next语句使用：在循环逐行匹配，如果遇到next，就会跳过当前行，直接忽略下面语句。而进行下一行匹配。next语句一般用于多行合并：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;NR%2==1{next}{print NR,$0;}&#39;</span> text.txt
+</code></pre></div><blockquote>
+<p>**说明：**当记录行号处以2余1，就跳过当前行。下面的<code>print NR,$0</code>也不会执行。下一行开始，程序有开始判断<code>NR%2</code>值。这个时候记录行号是：2 ，就会执行下面语句块：<code>print NR,$0</code></p>
+</blockquote>
+<h3 id=读取下一行记录getline语句>读取下一行记录：<code>getline</code>语句</h3>
+<p><code>awk getline</code>用法：输出重定向需用到getline函数。getline从标准输入、管道或者当前正在处理的文件之外的其他输入文件获得输入。它负责从输入获得下一行的内容，并给NF，NR和FNR等内建变量赋值。如果得到一条记录，getline函数返回1，如果到达文件的末尾就返回0，如果出现错误，例如打开文件失败，就返回-1。
+语法格式：<code>getline var</code>变量var包含了特定行的内容
+用法说明：</p>
+<ul>
+<li>当其左右无重定向符(<code>|</code>、<code>&lt;</code>)时：getline则作用于重定向输入文件，由于该文件是刚打开，并没有被awk读入一行，只是getline读入，那么getline返回的是该文件的第一行，而不是隔行。</li>
+</ul>
+<h3 id=文件操作>文件操作</h3>
+<ul>
+<li>打开文件<code>open("filename")</code></li>
+<li>关闭文件<code>close("filename")</code></li>
+<li>输出到文件 重定向到文件，如<code>echo | awk '{printf("hello world!n") > "datafile"}'</code></li>
+</ul>
+<h2 id=循环结构>循环结构</h2>
+<h3 id=for循环>for循环</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=k>for</span><span class=o>(</span>变量 in 数组<span class=o>)</span>  
+<span class=o>{</span>语句<span class=o>}</span>
+
+<span class=k>for</span><span class=o>(</span>变量<span class=p>;</span>条件<span class=p>;</span>表达式<span class=o>)</span>
+<span class=o>{</span>语句<span class=o>}</span>
+</code></pre></div><h3 id=while循环>while循环</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=k>while</span><span class=o>(</span>表达式<span class=o>)</span>
+  <span class=o>{</span>语句<span class=o>}</span>
+</code></pre></div><h3 id=dowhile循环>do&mldr;while循环</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=k>do</span>
+<span class=o>{</span>语句<span class=o>}</span> <span class=k>while</span><span class=o>(</span>条件<span class=o>)</span>
+</code></pre></div><h3 id=其他相关语句>其他相关语句</h3>
+<ul>
+<li><code>break</code>：退出程序循环</li>
+<li><code>continue</code>：进入下一次循环</li>
+<li><code>next</code>：读取下一个输入行</li>
+<li><code>exit</code>：退出主输入循环，进入END，若没有END或END中有exit语句，则退出脚本。</li>
+</ul>
+<h2 id=数组>数组</h2>
+<p>在awk中数组叫做关联数组（associative arrays）。awk中的数组不必提前声明，也不必声明大小。数组元素用0或空字符串来初始化，着根据上下文而定。</p>
+<ul>
+<li>获取数组长度</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;BEGIN{
+</span><span class=s1>        info=&#34;it is a test&#34;;
+</span><span class=s1>        lens=split(info,tA,&#34; &#34;);    #使用split函数获取数组长度
+</span><span class=s1>        print length(tA),lens;      #使用length函数获取数组长度（版本有要求）
+</span><span class=s1>        }&#39;</span>
+</code></pre></div><blockquote>
+<p><strong>说明：</strong> <strong>版本够高</strong>的awk当中，支持直接得到数组长度的方法<code>length()</code>，如果awk的版本过低，则不支持。另外，如果传给length的变量是一个字符串，那么length返回的是字符串的长度。</p>
+</blockquote>
+<ul>
+<li>输出数组内容
+<ul>
+<li>有序输出 <code>for...in</code>
+<blockquote>
+<p>因为数组是关联数组，默认是无序的</p>
+</blockquote>
+</li>
+<li>有序输出<code>for(i=1;i&lt;lens;i++)</code>
+<blockquote>
+<p>数组下标从1开始</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>判断键值是否存在</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=c1>#错误的判断方法，awk数组是关联数组，只要通过数组引用它的KEY，就会自动创建。</span>
+awk <span class=s1>&#39;BEGIN{
+</span><span class=s1>    tB[&#34;a&#34;]=&#34;a1&#34;;
+</span><span class=s1>    tB[&#34;b&#34;]=&#34;b1&#34;;
+</span><span class=s1>    if(tB[&#34;c&#34;]!=&#34;1&#34;){   #tB[&#34;c&#34;]没有定义，但是循环的时候会输出
+</span><span class=s1>        print &#34;no found&#34;;
+</span><span class=s1>    };
+</span><span class=s1>    for(k in tB){
+</span><span class=s1>        print k,tB[k];
+</span><span class=s1>    }}&#39;</span>
+</code></pre></div><p>输出：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>no found
+a a1
+b b1
+c
+</code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=c1>#正确的判定方法：使用 if ( key in array) 判断数组中是否包含 键值</span>
+awk <span class=s1>&#39;BEGIN{
+</span><span class=s1>        tB[&#34;a&#34;]=&#34;a1&#34;;
+</span><span class=s1>        tB[&#34;b&#34;]=&#34;b1&#34;;
+</span><span class=s1>        tB[&#34;c&#34;]=&#34;c1&#34;;
+</span><span class=s1>        if( &#34;c&#34; in tB){
+</span><span class=s1>            print &#34;ok&#34;;
+</span><span class=s1>        };
+</span><span class=s1>        for(k in tB){
+</span><span class=s1>            print k,tB[k];
+</span><span class=s1>        }}&#39;</span>
+</code></pre></div><p>输出：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>ok
+a a1
+b b1
+c c1
+</code></pre></div><ul>
+<li>删除键值</li>
+</ul>
+<p><code>delete array[key]</code>可以删除，对应数组key的，序列值。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;BEGIN{
+</span><span class=s1>        tB[&#34;a&#34;]=&#34;a1&#34;;
+</span><span class=s1>        tB[&#34;b&#34;]=&#34;b1&#34;;
+</span><span class=s1>        delete tB[&#34;a&#34;];
+</span><span class=s1>        for(k in tB){
+</span><span class=s1>            print k,tB[k];
+</span><span class=s1>        }}&#39;</span>
+</code></pre></div><p>输出：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>b b1
+</code></pre></div><ul>
+<li>二维数组</li>
+</ul>
+<p>awk的多维数组在本质上是一维数组，更确切一点，awk在存储上并不支持多维数组。awk提供了逻辑上模拟二维数组的访问方式。例如，<code>array[2,4]=1</code>这样的访问是允许的。awk使用一个特殊的字符串<code>SUBSEP</code>作为分割字段。 类似一维数组的成员测试，多维数组可以使用<code>if ( (i,j) in array)</code>这样的语法，但是下标必须放置在圆括号中。类似一维数组的循环访问，多维数组使用<code>for ( item in array )</code>这样的语法遍历数组。与一维数组不同的是，多维数组必须使用<code>split()</code>函数来访问单独的下标分量。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;BEGIN{  
+</span><span class=s1>    for(i=1;i&lt;=9;i++){  
+</span><span class=s1>        for(j=1;j&lt;=9;j++){  
+</span><span class=s1>            tarr[i,j]=i*j;  
+</span><span class=s1>            print i,&#34;*&#34;,j,&#34;=&#34;,tarr[i,j];  
+</span><span class=s1>            }
+</span><span class=s1>        }
+</span><span class=s1>     }&#39;</span>
+
+awk <span class=s1>&#39;BEGIN{  
+</span><span class=s1>        for(i=1;i&lt;=9;i++){  
+</span><span class=s1>            for(j=1;j&lt;=9;j++){  
+</span><span class=s1>                    tarr[i,j]=i*j; } }
+</span><span class=s1>        for(m in tarr){  
+</span><span class=s1>            split(m,tarr2,SUBSEP);  
+</span><span class=s1>            print tarr2[1],&#34;*&#34;,tarr2[2],&#34;=&#34;,tarr[m]; } }&#39;</span>
+</code></pre></div><h2 id=内置函数>内置函数</h2>
+<h3 id=算术函数>算术函数</h3>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>atan2( y, x )</td>
+<td>返回 y/x 的反正切。</td>
+</tr>
+<tr>
+<td>cos( x )</td>
+<td>返回 x 的余弦；x 是弧度。</td>
+</tr>
+<tr>
+<td>sin( x )</td>
+<td>返回 x 的正弦；x 是弧度。</td>
+</tr>
+<tr>
+<td>exp( x )</td>
+<td>返回 x 幂函数。</td>
+</tr>
+<tr>
+<td>log( x )</td>
+<td>返回 x 的自然对数。</td>
+</tr>
+<tr>
+<td>sqrt( x )</td>
+<td>返回 x 平方根。</td>
+</tr>
+<tr>
+<td>int( x )</td>
+<td>返回 x 的截断至整数的值。</td>
+</tr>
+<tr>
+<td>rand( )</td>
+<td>返回任意数字 n，其中 0 &lt;= n &lt; 1。</td>
+</tr>
+<tr>
+<td>srand( [expr] )</td>
+<td>将 rand 函数的种子值设置为 Expr 参数的值，或如果省略 Expr 参数则使用某天的时间。返回先前的种子值。</td>
+</tr>
+</tbody>
+</table>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;BEGIN{
+</span><span class=s1>        OFMT=&#34;%.3f&#34;;    #OFMT 设置输出数据格式是保留3位小数。
+</span><span class=s1>        fs=sin(1);
+</span><span class=s1>        fe=exp(10);
+</span><span class=s1>        fl=log(10);
+</span><span class=s1>        fi=int(3.1415);
+</span><span class=s1>        print fs,fe,fl,fi;
+</span><span class=s1>        }&#39;</span>
+</code></pre></div><p>输出结果为：<code>0.841 22026.466 2.303 3</code></p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>awk <span class=s1>&#39;BEGIN{
+</span><span class=s1>        srand();
+</span><span class=s1>        fr=int(100*rand());
+</span><span class=s1>        print fr;
+</span><span class=s1>        }&#39;</span>
+</code></pre></div><p>输出：<code>78</code></p>
+<ul>
+<li>字符串函数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gsub( Ere, Repl, [ In ] )</td>
+<td>除了正则表达式所有具体值被替代这点，它和 sub 函数完全一样地执行。</td>
+</tr>
+<tr>
+<td>sub( Ere, Repl, [ In ] )</td>
+<td>用 Repl 参数指定的字符串替换 In 参数指定的字符串中的由 Ere 参数指定的扩展正则表达式的第一个具体值。sub 函数返回替换的数量。出现在 Repl 参数指定的字符串中的 &（和符号）由 In 参数指定的与 Ere 参数的指定的扩展正则表达式匹配的字符串替换。如果未指定 In 参数，缺省值是整个记录（$0 记录变量）。</td>
+</tr>
+<tr>
+<td>index( String1, String2 )</td>
+<td>在由 String1 参数指定的字符串（其中有出现 String2 指定的参数）中，返回位置，从 1 开始编号。如果 String2 参数不在 String1 参数中出现，则返回 0（零）。</td>
+</tr>
+<tr>
+<td>length [(String)]</td>
+<td>返回 String 参数指定的字符串的长度（字符形式）。如果未给出 String 参数，则返回整个记录的长度（$0 记录变量）。</td>
+</tr>
+<tr>
+<td>blength [(String)]</td>
+<td>返回 String 参数指定的字符串的长度（以字节为单位）。如果未给出 String 参数，则返回整个记录的长度（$0 记录变量）。</td>
+</tr>
+<tr>
+<td>substr( String, M, [ N ] )</td>
+<td>返回具有 N 参数指定的字符数量子串。子串从 String 参数指定的字符串取得，其字符以 M 参数指定的位置开始。M 参数指定为将 String 参数中的第一个字符作为编号 1。如果未指定 N 参数，则子串的长度将是 M 参数指定的位置到 String 参数的末尾 的长度。</td>
+</tr>
+<tr>
+<td>match( String, Ere )</td>
+<td>在 String 参数指定的字符串（Ere 参数指定的扩展正则表达式出现在其中）中返回位置（字符形式），从 1 开始编号，或如果 Ere 参数不出现，则返回 0（零）。RSTART 特殊变量设置为返回值。RLENGTH 特殊变量设置为匹配的字符串的长度，或如果未找到任何匹配，则设置为 -1（负一）。</td>
+</tr>
+<tr>
+<td>tolower( String )</td>
+<td>返回 String 参数指定的字符串，字符串中每个大写字符将更改为小写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。</td>
+</tr>
+<tr>
+<td>toupper( String )</td>
+<td>返回 String 参数指定的字符串，字符串中每个小写字符将更改为大写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。</td>
+</tr>
+<tr>
+<td>sprintf(Format, Expr, Expr, . . . )</td>
+<td>根据 Format 参数指定的 printf 子例程格式字符串来格式化 Expr 参数指定的表达式并返回最后生成的字符串。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>说明： Ere都可以是正则表达式。</p>
+</blockquote>
+<h3 id=时间函数>时间函数</h3>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mktime( YYYY MM dd HH MM ss[ DST])</td>
+<td>生成时间格式</td>
+</tr>
+<tr>
+<td>strftime([format [, timestamp]])</td>
+<td>格式化时间输出，将时间戳转为时间字符串 具体格式，见下表.</td>
+</tr>
+<tr>
+<td>systime()</td>
+<td>得到时间戳,返回从1970年1月1日开始到当前时间(不计闰年)的整秒数</td>
+</tr>
+</tbody>
+</table>
+<p><strong>strftime日期和时间格式说明符 :</strong></p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%a</td>
+<td>星期几的缩写(Sun)</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>星期几的完整写法(Sunday)</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>月名的缩写(Oct)</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>月名的完整写法(October)</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>本地日期和时间</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>十进制日期</td>
+</tr>
+<tr>
+<td>%D</td>
+<td>日期 08/20/99</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>日期，如果只有一位会补上一个空格</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>用十进制表示24小时格式的小时</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>用十进制表示12小时格式的小时</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>从1月1日起一年中的第几天</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>十进制表示的月份</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>十进制表示的分钟</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>12小时表示法(AM/PM)</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>十进制表示的秒</td>
+</tr>
+<tr>
+<td>%U</td>
+<td>十进制表示的一年中的第几个星期(星期天作为一个星期的开始)</td>
+</tr>
+<tr>
+<td>%w</td>
+<td>十进制表示的星期几(星期天是0)</td>
+</tr>
+<tr>
+<td>%W</td>
+<td>十进制表示的一年中的第几个星期(星期一作为一个星期的开始)</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>重新设置本地日期(08/20/99)</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>重新设置本地时间(12：00：00)</td>
+</tr>
+<tr>
+<td>%y</td>
+<td>两位数字表示的年(99)</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>当前月份</td>
+</tr>
+<tr>
+<td>%Z</td>
+<td>时区(PDT)</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>百分号(%)</td>
+</tr>
+</tbody>
+</table>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=c1>#mktime使用</span>
+awk <span class=s1>&#39;BEGIN{tstamp=mktime(&#34;2001 01 01 12 12 12&#34;);print strftime(&#34;%c&#34;,tstamp);}&#39;</span>  
+输出：2001年01月01日 星期一 12时12分12秒  
+
+awk <span class=s1>&#39;BEGIN{tstamp1=mktime(&#34;2001 01 01 12 12 12&#34;);tstamp2=mktime(&#34;2001 02 01 0 0 0&#34;);print tstamp2-tstamp1;}&#39;</span>  
+输出：2634468  
+
+<span class=c1>#求2个时间段中间时间差，介绍了strftime使用方法</span>
+awk <span class=s1>&#39;BEGIN{tstamp1=mktime(&#34;2001 01 01 12 12 12&#34;);tstamp2=systime();print tstamp2-tstamp1;}&#39;</span>  
+输出：308201392
+</code></pre></div><h3 id=其他一般函数>其他一般函数</h3>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>close( Expression )</td>
+<td>用同一个带字符串值的 Expression 参数来关闭由 print 或 printf 语句打开的或调用getline 函数打开的文件或管道。如果文件或管道成功关闭，则返回 0；其它情况下返回非零值。如果打算写一个文件，并稍后在同一个程序中读取文件，则 close 语句是必需的。</td>
+</tr>
+<tr>
+<td>system(command )</td>
+<td>执行 Command 参数指定的命令，并返回退出状态。等同于 system 子例程。</td>
+</tr>
+<tr>
+<td>Expression</td>
+<td>getline [ Variable ]</td>
+</tr>
+<tr>
+<td>getline [ Variable ] &lt; Expression</td>
+<td>从 Expression 参数指定的文件读取输入的下一个记录，并将 Variable 参数指定的变量设置为该记录的值。只要流保留打开且 Expression 参数对同一个字符串求值，则对 getline 函数的每次后续调用读取另一个记录。如果未指定 Variable 参数，则 $0 记录变量和 NF 特殊变量设置为从流读取的记录。</td>
+</tr>
+<tr>
+<td>getline [ Variable ]</td>
+<td>将 Variable 参数指定的变量设置为从当前输入文件读取的下一个输入记录。如果未指定 Variable 参数，则 $0 记录变量设置为该记录的值，还将设置 NF、NR 和 FNR 特殊变量。</td>
+</tr>
+</tbody>
+</table>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=c1>#打开外部文件（close用法）</span>
+awk <span class=s1>&#39;BEGIN{while(&#34;cat /etc/passwd&#34;|getline){print $0;};close(&#34;/etc/passwd&#34;);}&#39;</span>  
+输出: root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin  
+
+<span class=c1>#逐行读取外部文件(getline使用方法）  </span>
+awk <span class=s1>&#39;BEGIN{while(getline &lt; &#34;/etc/passwd&#34;){print $0;};close(&#34;/etc/passwd&#34;);}&#39;</span>  
+输出：root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin  
+
+awk <span class=s1>&#39;BEGIN{print &#34;Enter your name:&#34;;getline name;print name;}&#39;</span>
+Enter your name:  
+chengmo  
+chengmo  
+
+<span class=c1>#调用外部应用程序(system使用方法） b返回值，是执行结果。</span>
+awk <span class=s1>&#39;BEGIN{b=system(&#34;ls -al&#34;);print b;}&#39;</span>  
+输出： total <span class=m>42092</span> drwxr-xr-x <span class=m>14</span> chengmo chengmo <span class=m>4096</span> 09-30 17:47 . drwxr-xr-x <span class=m>95</span> root root <span class=m>4096</span> 10-08 14:01 ..  
+</code></pre></div><p>批量修改文件名</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>unzip a.zip | mv `unzip -l a.zip | awk &#39;{if(NR == 4){ print $4}}&#39;` html
+</code></pre></div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 5390 tags:</small>
+<small><code><a href=https://arair.net/tags/awk>awk</a></code></small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
+<small><code><a href=https://arair.net/tags/command>command</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

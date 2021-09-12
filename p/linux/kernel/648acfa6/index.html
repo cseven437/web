@@ -1,0 +1,138 @@
+<!doctype html><html><title>Kernel_panic</title><meta name=description content="需要打开以下项，保证有足够的调试信息
+CONFIG_DEBUG_KERNEL=y CONFIG_DEBUG_INFO=y CONFIG_KALLSYMS=y CONFIG_KALLSYMS_ALL=y CONFIG_DEBUG_BUGVERBOSE=y CONFIG_STACKTRACE=y "><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="Kernel_panic">
+<meta property="og:description" content="需要打开以下项，保证有足够的调试信息
+CONFIG_DEBUG_KERNEL=y
+CONFIG_DEBUG_INFO=y
+CONFIG_KALLSYMS=y
+CONFIG_KALLSYMS_ALL=y
+CONFIG_DEBUG_BUGVERBOSE=y
+CONFIG_STACKTRACE=y
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/linux/kernel/648acfa6/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-01-24T11:49:21+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="Kernel_panic">
+<meta itemprop=description content="需要打开以下项，保证有足够的调试信息
+CONFIG_DEBUG_KERNEL=y
+CONFIG_DEBUG_INFO=y
+CONFIG_KALLSYMS=y
+CONFIG_KALLSYMS_ALL=y
+CONFIG_DEBUG_BUGVERBOSE=y
+CONFIG_STACKTRACE=y
+"><meta itemprop=datePublished content="2021-01-24T11:49:21+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="490">
+<meta itemprop=keywords content>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>Kernel_panic</h1>
+<p>
+<small>
+2021-01-24, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>需要打开以下项，保证有足够的调试信息</p>
+<pre tabindex=0><code>CONFIG_DEBUG_KERNEL=y
+CONFIG_DEBUG_INFO=y
+CONFIG_KALLSYMS=y
+CONFIG_KALLSYMS_ALL=y
+CONFIG_DEBUG_BUGVERBOSE=y
+CONFIG_STACKTRACE=y
+</code></pre><p>panic 信息</p>
+<pre tabindex=0><code>[  201.500000] hello,world
+[  201.510000] Kernel bug detected[#1]:
+[  201.510000] CPU: 0 PID: 2491 Comm: insmod Not tainted 3.10.90 #10
+[  201.510000] task: 871732a0 ti: 84248000 task.ti: 84248000
+[  201.510000] $ 0   : 00000000 80840000 00000001 000052a0
+[  201.510000] $ 4   : c013c260 c013c260 ffffd988 00100000
+[  201.510000] $ 8   : 00000064 00000003 00000000 00000000
+[  201.510000] $12   : 00000187 00000000 00000000 00000000
+[  201.510000] $16   : c013c260 8002f34c 00000000 c0144000
+[  201.510000] $20   : 00000000 806c0000 00000001 840dbe80
+[  201.510000] $24   : 00000002 8000183c                  
+[  201.510000] $28   : 84248000 8424bdc8 00000001 c0144084
+[  201.510000] Hi    : 00000000
+[  201.510000] Lo    : 364ea000
+[  201.510000] epc   : 8002f354 add_timer+0x8/0x14
+[  201.510000]     Not tainted
+[  201.510000] ra    : c0144084 init_module+0x84/0x9c [timer_test]
+[  201.510000] Status: 1000f403 KERNEL EXL IE 
+[  201.510000] Cause : 10800034
+[  201.510000] PrId  : 00019385 (MIPS 24Kc)
+[  201.510000] Modules linked in: timer_test(+) GobiNet [last unloaded: timer_test]
+[  201.510000] Process insmod (pid: 2491, threadinfo=84248000, task=871732a0, tls=77e0be50)
+[  201.510000] Stack : 00000001 00000001 c013c120 ffffffff c013c12c c013c12c 80840000 8000043c
+          00000000 8080007f 00000001 8428fe00 8424bed8 c013c12c c013c120 80046e04
+          8424bed8 c013c12c c013c120 8424bed8 806c0000 00000000 806c0000 80061c48
+          c013c120 771f8e54 00000001 8008f920 c013c12c 00007fff 8005f290 8424be88
+          fff94000 00000000 00000000 00000000 00000000 00000000 00000000 00464008
+          ...
+[  201.510000] Call Trace:
+[  201.510000] [&lt;8002f354&gt;] add_timer+0x8/0x14
+[  201.510000] [&lt;c0144084&gt;] init_module+0x84/0x9c [timer_test]
+[  201.510000] [&lt;8000043c&gt;] do_one_initcall+0x3c/0x1b4
+[  201.510000] [&lt;80061c48&gt;] load_module+0xf84/0x14c4
+[  201.510000] [&lt;8006225c&gt;] SyS_init_module+0xd4/0xec
+[  201.510000] [&lt;8000b244&gt;] stack_done+0x20/0x40
+[  201.510000] 
+[  201.510000] 
+Code: 00402021  8c820000  0002102b &lt;00020336&gt; 0800bc71  8c850008  27bdffd8  afbf0024  afb30020 
+[  201.510000] c0_compare_interrupt 64
+
+</code></pre><p>可以使用gdb来查看错误位置</p>
+<pre tabindex=0><code>$ gdb vmlinux 
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;x86_64-linux-gnu&quot;.
+Type &quot;show configuration&quot; for configuration details.
+For bug reporting instructions, please see:
+&lt;http://www.gnu.org/software/gdb/bugs/&gt;.
+Find the GDB manual and other documentation resources online at:
+&lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from vmlinux...done.
+(gdb) l *add_timer+0x8
+0x8002f3e8 is in add_timer (/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10/arch/mips-ori/include/asm/bug.h:29).
+24                      if (condition)
+25                              BUG();
+26                      else
+27                              return;
+28              }
+29              __asm__ __volatile__(&quot;tne $0, %0, %1&quot;
+30                                   : : &quot;r&quot; (condition), &quot;i&quot; (BRK_BUG));
+31      }
+32
+33      #define BUG_ON(C) __BUG_ON((unsigned long)(C))
+</code></pre><p>需要有Reading symbols from vmlinux&mldr;done.才能调试，如果没有会显示Reading symbols from vmlinux&mldr;(no debugging symbols found)&mldr;done.</p>
+</article>
+</div>
+</body>
+<div>
+<small> words: 490 tags:</small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

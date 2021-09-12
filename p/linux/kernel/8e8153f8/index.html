@@ -1,0 +1,179 @@
+<!doctype html><html><title>proc文件子系统</title><meta name=description content="proc_create使用方法
+"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="proc文件子系统">
+<meta property="og:description" content="proc_create使用方法">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/linux/kernel/8e8153f8/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-01-24T11:25:18+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="proc文件子系统">
+<meta itemprop=description content="proc_create使用方法"><meta itemprop=datePublished content="2021-01-24T11:25:18+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="387">
+<meta itemprop=keywords content="proc,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>proc文件子系统</h1>
+<p>
+<small>
+2021-01-24, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#proc_create>proc_create</a></li>
+<li><a href=#remove_proc_entry>remove_proc_entry</a></li>
+</ul>
+</nav>
+</aside>
+<p>proc_create使用方法</p>
+<h1 id=函数原型>函数原型</h1>
+<h2 id=proc_create>proc_create</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>static</span> <span class=kr>inline</span> <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=nf>proc_create</span><span class=p>(</span>
+    <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>name</span><span class=p>,</span> <span class=n>umode_t</span> <span class=n>mode</span><span class=p>,</span> <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=n>parent</span><span class=p>,</span>
+    <span class=k>const</span> <span class=k>struct</span> <span class=n>file_operations</span> <span class=o>*</span><span class=n>proc_fops</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=k>return</span> <span class=n>proc_create_data</span><span class=p>(</span><span class=n>name</span><span class=p>,</span> <span class=n>mode</span><span class=p>,</span> <span class=n>parent</span><span class=p>,</span> <span class=n>proc_fops</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+<span class=p>}</span>
+
+<span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=nf>proc_create_data</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>name</span><span class=p>,</span> <span class=n>umode_t</span> <span class=n>mode</span><span class=p>,</span>
+                    <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=n>parent</span><span class=p>,</span>
+                    <span class=k>const</span> <span class=k>struct</span> <span class=n>file_operations</span> <span class=o>*</span><span class=n>proc_fops</span><span class=p>,</span>
+                    <span class=kt>void</span> <span class=o>*</span><span class=n>data</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=n>pde</span><span class=p>;</span>
+    <span class=k>if</span> <span class=p>((</span><span class=n>mode</span> <span class=o>&amp;</span> <span class=n>S_IFMT</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span>
+        <span class=n>mode</span> <span class=o>|=</span> <span class=n>S_IFREG</span><span class=p>;</span>
+                           
+    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>S_ISREG</span><span class=p>(</span><span class=n>mode</span><span class=p>))</span> <span class=p>{</span>  
+        <span class=n>WARN_ON</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span> <span class=cm>/* use proc_mkdir() */</span>
+        <span class=k>return</span> <span class=nb>NULL</span><span class=p>;</span>
+    <span class=p>}</span>
+    
+    <span class=k>if</span> <span class=p>((</span><span class=n>mode</span> <span class=o>&amp;</span> <span class=n>S_IALLUGO</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> 
+        <span class=n>mode</span> <span class=o>|=</span> <span class=n>S_IRUGO</span><span class=p>;</span>
+    <span class=n>pde</span> <span class=o>=</span> <span class=n>__proc_create</span><span class=p>(</span><span class=o>&amp;</span><span class=n>parent</span><span class=p>,</span> <span class=n>name</span><span class=p>,</span> <span class=n>mode</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>pde</span><span class=p>)</span>
+        <span class=k>goto</span> <span class=n>out</span><span class=p>;</span>
+    <span class=n>pde</span><span class=o>-&gt;</span><span class=n>proc_fops</span> <span class=o>=</span> <span class=n>proc_fops</span><span class=p>;</span>
+    <span class=n>pde</span><span class=o>-&gt;</span><span class=n>data</span> <span class=o>=</span> <span class=n>data</span><span class=p>;</span>
+    <span class=k>if</span> <span class=p>(</span><span class=n>proc_register</span><span class=p>(</span><span class=n>parent</span><span class=p>,</span> <span class=n>pde</span><span class=p>)</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>
+        <span class=k>goto</span> <span class=n>out_free</span><span class=p>;</span>
+    <span class=k>return</span> <span class=n>pde</span><span class=p>;</span>
+<span class=nl>out_free</span><span class=p>:</span>
+    <span class=n>kfree</span><span class=p>(</span><span class=n>pde</span><span class=p>);</span>
+<span class=nl>out</span><span class=p>:</span>
+    <span class=k>return</span> <span class=nb>NULL</span><span class=p>;</span>
+<span class=p>}</span>
+<span class=n>EXPORT_SYMBOL</span><span class=p>(</span><span class=n>proc_create_data</span><span class=p>);</span>
+</code></pre></div><h2 id=remove_proc_entry>remove_proc_entry</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cm>/*   
+</span><span class=cm> * Remove a /proc entry and free it if it&#39;s not currently in use.
+</span><span class=cm> */</span>
+<span class=kt>void</span> <span class=nf>remove_proc_entry</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>name</span><span class=p>,</span> <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=n>parent</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>**</span><span class=n>p</span><span class=p>;</span>
+    <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=n>de</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+    <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>fn</span> <span class=o>=</span> <span class=n>name</span><span class=p>;</span>
+    <span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>len</span><span class=p>;</span>
+
+    <span class=n>spin_lock</span><span class=p>(</span><span class=o>&amp;</span><span class=n>proc_subdir_lock</span><span class=p>);</span>
+    <span class=k>if</span> <span class=p>(</span><span class=n>__xlate_proc_name</span><span class=p>(</span><span class=n>name</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>parent</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>fn</span><span class=p>)</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>spin_unlock</span><span class=p>(</span><span class=o>&amp;</span><span class=n>proc_subdir_lock</span><span class=p>);</span>
+        <span class=k>return</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=n>len</span> <span class=o>=</span> <span class=n>strlen</span><span class=p>(</span><span class=n>fn</span><span class=p>);</span>
+
+    <span class=k>for</span> <span class=p>(</span><span class=n>p</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>parent</span><span class=o>-&gt;</span><span class=n>subdir</span><span class=p>;</span> <span class=o>*</span><span class=n>p</span><span class=p>;</span> <span class=n>p</span><span class=o>=&amp;</span><span class=p>(</span><span class=o>*</span><span class=n>p</span><span class=p>)</span><span class=o>-&gt;</span><span class=n>next</span> <span class=p>)</span> <span class=p>{</span>
+        <span class=k>if</span> <span class=p>(</span><span class=n>proc_match</span><span class=p>(</span><span class=n>len</span><span class=p>,</span> <span class=n>fn</span><span class=p>,</span> <span class=o>*</span><span class=n>p</span><span class=p>))</span> <span class=p>{</span>
+            <span class=n>de</span> <span class=o>=</span> <span class=o>*</span><span class=n>p</span><span class=p>;</span>
+            <span class=o>*</span><span class=n>p</span> <span class=o>=</span> <span class=n>de</span><span class=o>-&gt;</span><span class=n>next</span><span class=p>;</span>
+            <span class=n>de</span><span class=o>-&gt;</span><span class=n>next</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+            <span class=k>break</span><span class=p>;</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
+    <span class=n>spin_unlock</span><span class=p>(</span><span class=o>&amp;</span><span class=n>proc_subdir_lock</span><span class=p>);</span>
+    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>de</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>WARN</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=s>&#34;name &#39;%s&#39;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>name</span><span class=p>);</span>
+        <span class=k>return</span><span class=p>;</span>
+    <span class=p>}</span>
+
+    <span class=n>proc_entry_rundown</span><span class=p>(</span><span class=n>de</span><span class=p>);</span>
+
+    <span class=k>if</span> <span class=p>(</span><span class=n>S_ISDIR</span><span class=p>(</span><span class=n>de</span><span class=o>-&gt;</span><span class=n>mode</span><span class=p>))</span>
+        <span class=n>parent</span><span class=o>-&gt;</span><span class=n>nlink</span><span class=o>--</span><span class=p>;</span>
+    <span class=n>de</span><span class=o>-&gt;</span><span class=n>nlink</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+    <span class=n>WARN</span><span class=p>(</span><span class=n>de</span><span class=o>-&gt;</span><span class=n>subdir</span><span class=p>,</span> <span class=s>&#34;%s: removing non-empty directory &#34;</span>
+             <span class=s>&#34;&#39;%s/%s&#39;, leaking at least &#39;%s&#39;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span>
+             <span class=n>de</span><span class=o>-&gt;</span><span class=n>parent</span><span class=o>-&gt;</span><span class=n>name</span><span class=p>,</span> <span class=n>de</span><span class=o>-&gt;</span><span class=n>name</span><span class=p>,</span> <span class=n>de</span><span class=o>-&gt;</span><span class=n>subdir</span><span class=o>-&gt;</span><span class=n>name</span><span class=p>);</span>
+    <span class=n>pde_put</span><span class=p>(</span><span class=n>de</span><span class=p>);</span>
+<span class=p>}</span>
+<span class=n>EXPORT_SYMBOL</span><span class=p>(</span><span class=n>remove_proc_entry</span><span class=p>);</span>
+</code></pre></div><p><strong>.open</strong> 查看相关proc文件时执行</p>
+<h1 id=示例>示例</h1>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;linux/init.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;linux/module.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;linux/proc_fs.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;linux/seq_file.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=n>MODULE_LICENSE</span><span class=p>(</span><span class=s>&#34;GPL&#34;</span><span class=p>);</span>
+
+<span class=cp>#define MYTEST_PROC_DIR &#34;mytest&#34;
+</span><span class=cp>#define MYTEST_PROC_FILE &#34;mytest&#34;
+</span><span class=cp></span>
+<span class=k>static</span> <span class=kt>int</span> <span class=nf>zss_test_proc_show</span><span class=p>(</span><span class=k>struct</span> <span class=n>seq_file</span> <span class=o>*</span><span class=n>m</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=n>v</span><span class=p>)</span>
+<span class=p>{</span>
+        <span class=n>seq_printf</span><span class=p>(</span><span class=n>m</span><span class=p>,</span><span class=s>&#34;testttt&#34;</span><span class=p>);</span>
+        <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+
+<span class=k>static</span> <span class=kt>int</span> <span class=nf>zss_test_proc_open</span><span class=p>(</span><span class=k>struct</span> <span class=n>inode</span> <span class=o>*</span><span class=n>inode</span><span class=p>,</span> <span class=k>struct</span> <span class=n>file</span> <span class=o>*</span><span class=n>file</span><span class=p>)</span>
+<span class=p>{</span>
+        <span class=k>return</span> <span class=n>single_open</span><span class=p>(</span><span class=n>file</span><span class=p>,</span> <span class=n>zss_test_proc_show</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+<span class=p>}</span>
+
+<span class=k>static</span> <span class=k>const</span> <span class=k>struct</span> <span class=n>file_operations</span> <span class=n>zss_test_proc_fops</span> <span class=o>=</span> <span class=p>{</span>
+        <span class=p>.</span><span class=n>open</span>       <span class=o>=</span> <span class=n>zss_test_proc_open</span><span class=p>,</span>
+        <span class=p>.</span><span class=n>read</span>       <span class=o>=</span> <span class=n>seq_read</span><span class=p>,</span>
+        <span class=p>.</span><span class=n>llseek</span>     <span class=o>=</span> <span class=n>seq_lseek</span><span class=p>,</span>
+        <span class=p>.</span><span class=n>release</span>    <span class=o>=</span> <span class=n>single_release</span><span class=p>,</span>
+<span class=p>};</span>
+
+<span class=k>static</span> <span class=kt>int</span> <span class=nf>hello_init</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+<span class=p>{</span>
+        <span class=n>printk</span><span class=p>(</span><span class=s>&#34;&lt;0&gt; hello world</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+        <span class=n>proc_create</span><span class=p>(</span><span class=s>&#34;zss_test&#34;</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>zss_test_proc_fops</span><span class=p>);</span>
+        <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+<span class=k>static</span> <span class=kt>void</span> <span class=nf>hello_exit</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+<span class=p>{</span>
+        <span class=n>printk</span><span class=p>(</span><span class=s>&#34;&lt;0&gt; goodbye</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+        <span class=n>remove_proc_entry</span><span class=p>(</span><span class=s>&#34;zss_test&#34;</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+<span class=p>}</span>
+<span class=n>module_init</span><span class=p>(</span><span class=n>hello_init</span><span class=p>);</span> <span class=c1>//该宏在模块的目标代码中增加一个特殊的段，用于说明内核初始化函数所在的位置
+</span><span class=c1></span><span class=n>module_exit</span><span class=p>(</span><span class=n>hello_exit</span><span class=p>);</span> <span class=c1>//跟上面的宏对立
+</span></code></pre></div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 387 tags:</small>
+<small><code><a href=https://arair.net/tags/proc>proc</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

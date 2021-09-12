@@ -1,0 +1,98 @@
+<!doctype html><html><title>telnet</title><meta name=description content="Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。
+"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="telnet">
+<meta property="og:description" content="Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/linux/command/ebe9242e/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-04-23T15:45:47+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="telnet">
+<meta itemprop=description content="Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。"><meta itemprop=datePublished content="2021-04-23T15:45:47+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="317">
+<meta itemprop=keywords content="telnet,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>telnet</h1>
+<p>
+<small>
+2021-04-23, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#服务端程序telnetd>服务端程序telnetd</a></li>
+<li><a href=#客户端程序telnet>客户端程序telnet</a></li>
+<li><a href=#问题解决root用户无法使用telnet命令登录服务器>问题：解决root用户无法使用telnet命令登录服务器</a></li>
+</ul>
+</nav>
+</aside>
+<p>Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。</p>
+<h2 id=服务端程序telnetd>服务端程序telnetd</h2>
+<pre tabindex=0><code>~ # telnetd -h
+telnetd: invalid option -- 'h'
+BusyBox v1.23.1 (2021-04-16 11:26:22 CST) multi-call binary.
+
+Usage: telnetd [OPTIONS]
+
+Handle incoming telnet connections
+
+        -l LOGIN        Exec LOGIN on connect
+        -f ISSUE_FILE   Display ISSUE_FILE instead of /etc/issue
+        -K              Close connection as soon as login exits
+                        (normally wait until all programs close slave pty)
+        -p PORT         Port to listen on
+        -b ADDR[:PORT]  Address to bind to
+        -F              Run in foreground
+        -i              Inetd mode
+        -w SEC          Inetd 'wait' mode, linger time SEC
+        -S              Log to syslog (implied by -i or without -F and -w)
+</code></pre><h2 id=客户端程序telnet>客户端程序telnet</h2>
+<pre tabindex=0><code>~ # telnet
+BusyBox v1.23.1 (2021-04-16 11:26:22 CST) multi-call binary.
+
+Usage: telnet [-a] [-l USER] HOST [PORT]
+
+Connect to telnet server
+
+        -a      Automatic login with $USER variable
+        -l USER Automatic login as USER
+</code></pre><h2 id=问题解决root用户无法使用telnet命令登录服务器>问题：解决root用户无法使用telnet命令登录服务器</h2>
+<p>telnet 密码修改命令：passwd</p>
+<p>使用tty命令查询用户登录方式，</p>
+<pre tabindex=0><code>#tty
+/dev/pts/3
+</code></pre><p>并将登录方式添加到/etc/securetty文件中</p>
+<p>解决办法：</p>
+<p>在/etc/sucuretty内容中添加如下内容</p>
+<pre tabindex=0><code>pts/0
+pts/1
+pts/2
+pts/3
+pts/4
+pts/5
+</code></pre>
+</article>
+</div>
+</body>
+<div>
+<small> words: 317 tags:</small>
+<small><code><a href=https://arair.net/tags/telnet>telnet</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

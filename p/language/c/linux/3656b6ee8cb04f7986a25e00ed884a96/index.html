@@ -1,0 +1,90 @@
+<!doctype html><html><title>linux-c system函数</title><meta name=description content="C 库函数 system 把command指定的命令名称或程序名称传给要被命令处理器执行的主机环境，并在命令完成后返回。 #include &amp;lt;stdlib.h&amp;gt; int system(const char *command) 参数 command &amp;ndash; 包含被请求变量名"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="linux-c system函数">
+<meta property="og:description" content="C 库函数 system 把command指定的命令名称或程序名称传给要被命令处理器执行的主机环境，并在命令完成后返回。 #include <stdlib.h> int system(const char *command) 参数 command &ndash; 包含被请求变量名">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/language/c/linux/3656b6ee8cb04f7986a25e00ed884a96/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-07-10T16:56:52+08:00">
+<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta itemprop=name content="linux-c system函数">
+<meta itemprop=description content="C 库函数 system 把command指定的命令名称或程序名称传给要被命令处理器执行的主机环境，并在命令完成后返回。 #include <stdlib.h> int system(const char *command) 参数 command &ndash; 包含被请求变量名"><meta itemprop=datePublished content="2021-07-10T16:56:52+08:00">
+<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
+<meta itemprop=wordCount content="205">
+<meta itemprop=keywords content="linux-c,system,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>linux-c system函数</h1>
+<p>
+<small>
+2021-07-10, updated 2021-09-12
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#参数>参数</a></li>
+<li><a href=#返回值>返回值</a></li>
+<li><a href=#示例>示例</a></li>
+</ul>
+</nav>
+</aside>
+<p>C 库函数 <code>system</code> 把<strong>command</strong>指定的命令名称或程序名称传给要被命令处理器执行的主机环境，并在命令完成后返回。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=n>system</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>command</span><span class=p>)</span>
+</code></pre></div><h2 id=参数>参数</h2>
+<p>command &ndash; 包含被请求变量名称的 C 字符串。</p>
+<h2 id=返回值>返回值</h2>
+<p>如果发生错误，则返回值为 -1，否则返回命令的状态。</p>
+<p>返回的状态可以使用<code>WIFEXITED</code>宏来获取命令的返回值</p>
+<h2 id=示例>示例</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span><span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>main</span> <span class=p>()</span>
+<span class=p>{</span>
+    <span class=kt>char</span> <span class=n>command</span><span class=p>[</span><span class=mi>50</span><span class=p>];</span>
+    <span class=kt>int</span> <span class=n>status</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+
+    <span class=n>strcpy</span><span class=p>(</span> <span class=n>command</span><span class=p>,</span> <span class=s>&#34;ls -l ff&#34;</span> <span class=p>);</span>
+    <span class=n>status</span> <span class=o>=</span> <span class=n>system</span><span class=p>(</span><span class=n>command</span><span class=p>);</span>
+
+    <span class=k>if</span><span class=p>(</span><span class=n>status</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;system error</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;run success, return value is:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>WEXITSTATUS</span><span class=p>(</span><span class=n>status</span><span class=p>));</span>
+    <span class=p>}</span>
+
+    <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>执行结果</p>
+<pre tabindex=0><code>total 28
+-rwxr-xr-x 1  16712 Sep  9 08:15 a.out
+-rw-r--r-- 1    347 Sep  9 08:15 system.c
+run success, return value is:0
+</code></pre><p>参考链接</p>
+<p><a href=https://www.runoob.com/cprogramming/c-function-system.html>https://www.runoob.com/cprogramming/c-function-system.html</a></p>
+</article>
+</div>
+</body>
+<div>
+<small> words: 205 tags:</small>
+<small><code><a href=https://arair.net/tags/linux-c>linux-c</a></code></small>
+<small><code><a href=https://arair.net/tags/system>system</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
