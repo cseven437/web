@@ -2,18 +2,41 @@
 <link href="/tool/tool.css" rel="stylesheet" type="text/css" />
 
 <div>
-<table>
-<tbody>
-<tr>
-<td colspan="2" id="title">
-<h2>IP地址转换器</h2>
-</td>
-</tr>
-<tr>
-<td width="70px"><label>IP地址</label></td>
-<td><input type="text" id="inp1"> <button type="button" onclick="ipcon()" class="calc">转换</button><br><label id="error1"></label></td>
-</tr>
-<tr><td></td><td id="res" width="220px"></td>
-</tr>
-</tbody></table>
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="2" id="title">
+                    <h2>IP地址转换器</h2>
+                </td>
+            </tr>
+            <tr>
+                <td width="70px"><label>IP地址</label></td>
+                <td><input type="text" id="inp1"> <button type="button" onclick="ipcon()"
+                        class="calc">转换</button><br><label id="error1"></label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="res" width="220px"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="2" id="title">
+                    <h2>hugo toml生成</h2>
+                </td>
+            </tr>
+            <tr>
+                <td width="70px"><label>时间</label></td>
+                <td><input type="text" id="inp1"> <button type="button" onclick="hugo_generation()"
+                        class="calc">生成</button><br><label id="error1"></label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="hugo_res" width="220px"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
