@@ -1,0 +1,249 @@
+<!doctype html><html><title>JavaScript 获取日期方法</title><meta name=description content="日期方法允许您获取并设置日期值（年、月、日、时、分、秒、毫秒） 日期获取方法 获取方法用于获取日期的某个部分（来自日期对象的信息）。下面是最常用"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="JavaScript 获取日期方法">
+<meta property="og:description" content="日期方法允许您获取并设置日期值（年、月、日、时、分、秒、毫秒） 日期获取方法 获取方法用于获取日期的某个部分（来自日期对象的信息）。下面是最常用">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/1632124240/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-09-20T15:50:40+08:00">
+<meta property="article:modified_time" content="2021-09-20T15:53:35+08:00">
+<meta itemprop=name content="JavaScript 获取日期方法">
+<meta itemprop=description content="日期方法允许您获取并设置日期值（年、月、日、时、分、秒、毫秒） 日期获取方法 获取方法用于获取日期的某个部分（来自日期对象的信息）。下面是最常用"><meta itemprop=datePublished content="2021-09-20T15:50:40+08:00">
+<meta itemprop=dateModified content="2021-09-20T15:53:35+08:00">
+<meta itemprop=wordCount content="1154">
+<meta itemprop=keywords content="javascript,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>JavaScript 获取日期方法</h1>
+<p>
+<small>
+2021-09-20, updated 2021-09-20
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#日期获取方法>日期获取方法</a>
+<ul>
+<li><a href=#gettime-方法>getTime() 方法</a></li>
+<li><a href=#getfullyear-方法>getFullYear() 方法</a></li>
+<li><a href=#getmonth-方法>getMonth() 方法</a></li>
+<li><a href=#getdate-方法>getDate() 方法</a></li>
+<li><a href=#gethours-方法>getHours() 方法</a></li>
+<li><a href=#getminutes-方法>getMinutes() 方法</a></li>
+<li><a href=#getseconds-方法>getSeconds() 方法</a></li>
+<li><a href=#getmilliseconds-方法>getMilliseconds() 方法</a></li>
+<li><a href=#getday-方法>getDay() 方法</a></li>
+<li><a href=#utc-日期方法>UTC 日期方法</a></li>
+</ul>
+</li>
+<li><a href=#js-时间戳格式化日期格式>js 时间戳格式化日期格式</a></li>
+</ul>
+</nav>
+</aside>
+<p>日期方法允许您获取并设置日期值（年、月、日、时、分、秒、毫秒）</p>
+<h2 id=日期获取方法>日期获取方法</h2>
+<p>获取方法用于获取日期的某个部分（来自日期对象的信息）。下面是最常用的方法（以字母顺序排序）：</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>方法</th>
+<th style=text-align:left>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>getDate()</td>
+<td style=text-align:left>以数值返回天（1-31）</td>
+</tr>
+<tr>
+<td style=text-align:left>getDay()</td>
+<td style=text-align:left>以数值获取周名（0-6）</td>
+</tr>
+<tr>
+<td style=text-align:left>getFullYear()</td>
+<td style=text-align:left>获取四位的年（yyyy）</td>
+</tr>
+<tr>
+<td style=text-align:left>getHours()</td>
+<td style=text-align:left>获取小时（0-23）</td>
+</tr>
+<tr>
+<td style=text-align:left>getMilliseconds()</td>
+<td style=text-align:left>获取毫秒（0-999）</td>
+</tr>
+<tr>
+<td style=text-align:left>getMinutes()</td>
+<td style=text-align:left>获取分（0-59）</td>
+</tr>
+<tr>
+<td style=text-align:left>getMonth()</td>
+<td style=text-align:left>获取月（0-11）</td>
+</tr>
+<tr>
+<td style=text-align:left>getSeconds()</td>
+<td style=text-align:left>获取秒（0-59）</td>
+</tr>
+<tr>
+<td style=text-align:left>getTime()</td>
+<td style=text-align:left>获取时间（从 1970 年 1 月 1 日至今）</td>
+</tr>
+</tbody>
+</table>
+<h3 id=gettime-方法>getTime() 方法</h3>
+<p>getTime() 方法返回自 1970 年 1 月 1 日以来的毫秒数：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getTime</span><span class=p>();</span>
+</code></pre></div><h3 id=getfullyear-方法>getFullYear() 方法</h3>
+<p>getFullYear() 方法以四位数字形式返回日期年份：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getFullYear</span><span class=p>();</span>
+</code></pre></div><h3 id=getmonth-方法>getMonth() 方法</h3>
+<p>getMonth() 以数字（0-11）返回日期的月份：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getMonth</span><span class=p>();</span>
+</code></pre></div><p>在 JavaScript 中，第一个月（1 月）是月号 0，因此 12 月返回月号 11。</p>
+<p>您可以使用名称数组，并使用 getMonth() 将月份作为名称返回：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=kd>var</span> <span class=nx>months</span> <span class=o>=</span> 
+            <span class=p>[</span>
+            <span class=s2>&#34;January&#34;</span><span class=p>,</span> <span class=s2>&#34;February&#34;</span><span class=p>,</span> <span class=s2>&#34;March&#34;</span><span class=p>,</span> <span class=s2>&#34;April&#34;</span><span class=p>,</span> <span class=s2>&#34;May&#34;</span><span class=p>,</span> <span class=s2>&#34;June&#34;</span><span class=p>,</span> 
+            <span class=s2>&#34;July&#34;</span><span class=p>,</span> <span class=s2>&#34;August&#34;</span><span class=p>,</span> <span class=s2>&#34;September&#34;</span><span class=p>,</span> <span class=s2>&#34;October&#34;</span><span class=p>,</span> <span class=s2>&#34;November&#34;</span><span class=p>,</span> <span class=s2>&#34;December&#34;</span>
+            <span class=p>];</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>months</span><span class=p>[</span><span class=nx>d</span><span class=p>.</span><span class=nx>getMonth</span><span class=p>()];</span>
+</code></pre></div><h3 id=getdate-方法>getDate() 方法</h3>
+<p>getDate() 方法以数字（1-31）返回日期的日：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getDate</span><span class=p>();</span>
+</code></pre></div><h3 id=gethours-方法>getHours() 方法</h3>
+<p>getHours() 方法以数字（0-23）返回日期的小时数：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getHours</span><span class=p>();</span>
+</code></pre></div><h3 id=getminutes-方法>getMinutes() 方法</h3>
+<p>getMinutes() 方法以数字（0-59）返回日期的分钟数：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getMinutes</span><span class=p>();</span>
+</code></pre></div><h3 id=getseconds-方法>getSeconds() 方法</h3>
+<p>getSeconds() 方法以数字（0-59）返回日期的秒数：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getSeconds</span><span class=p>();</span>
+</code></pre></div><h3 id=getmilliseconds-方法>getMilliseconds() 方法</h3>
+<p>getMilliseconds() 方法以数字（0-999）返回日期的毫秒数：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getMilliseconds</span><span class=p>();</span>
+</code></pre></div><h3 id=getday-方法>getDay() 方法</h3>
+<p>getDay() 方法以数字（0-6）返回日期的星期名（weekday）：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>d</span><span class=p>.</span><span class=nx>getDay</span><span class=p>();</span>
+</code></pre></div><p>在 JavaScript 中，一周的第一天（0）表示“星期日”，即使世界上的一些国家认为周的第一天是“星期一”。</p>
+<p>您可以使用名称数组，并使用 getDay() 将星期名作为名称返回：</p>
+<p>实例</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>d</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>();</span>
+<span class=kd>var</span> <span class=nx>days</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;Sunday&#34;</span><span class=p>,</span> <span class=s2>&#34;Monday&#34;</span><span class=p>,</span> <span class=s2>&#34;Tuesday&#34;</span><span class=p>,</span> <span class=s2>&#34;Wednesday&#34;</span><span class=p>,</span> <span class=s2>&#34;Thursday&#34;</span><span class=p>,</span> <span class=s2>&#34;Friday&#34;</span><span class=p>,</span> <span class=s2>&#34;Saturday&#34;</span><span class=p>];</span>
+<span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s2>&#34;demo&#34;</span><span class=p>).</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>days</span><span class=p>[</span><span class=nx>d</span><span class=p>.</span><span class=nx>getDay</span><span class=p>()];</span>
+</code></pre></div><h3 id=utc-日期方法>UTC 日期方法</h3>
+<p>UTC 日期方法用于处理 UTC 日期（通用时区日期，Univeral Time Zone dates）：</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>方法</th>
+<th style=text-align:left>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>getUTCDate()</td>
+<td style=text-align:left>等于 getDate()，但返回 UTC 日期</td>
+</tr>
+<tr>
+<td style=text-align:left>getUTCDay()</td>
+<td style=text-align:left>等于 getDay()，但返回 UTC 日</td>
+</tr>
+<tr>
+<td style=text-align:left>getUTCFullYear()</td>
+<td style=text-align:left>等于 getFullYear()，但返回 UTC 年</td>
+</tr>
+<tr>
+<td style=text-align:left>getUTCHours()</td>
+<td style=text-align:left>等于 getHours()，但返回 UTC 小时</td>
+</tr>
+<tr>
+<td style=text-align:left>getUTCMilliseconds()</td>
+<td style=text-align:left>等于 getMilliseconds()，但返回 UTC 毫秒</td>
+</tr>
+<tr>
+<td style=text-align:left>getUTCMinutes()</td>
+<td style=text-align:left>等于 getMinutes()，但返回 UTC 分</td>
+</tr>
+<tr>
+<td style=text-align:left>getUTCMonth()</td>
+<td style=text-align:left>等于 getMonth()，但返回 UTC 月</td>
+</tr>
+<tr>
+<td style=text-align:left>getUTCSeconds()</td>
+<td style=text-align:left>等于 getSeconds()，但返回 UTC 秒</td>
+</tr>
+</tbody>
+</table>
+<h2 id=js-时间戳格式化日期格式>js 时间戳格式化日期格式</h2>
+<p>时间戳转换为日期，网上搜了好几个或多或少都有点问题，自己整理了一下，写了个方法</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>formatDate</span><span class=p>(</span><span class=mi>1565280000000</span><span class=p>))</span>
+</code></pre></div><p>输出: 2019-08-09 00:00:00</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=nb>Date</span><span class=p>.</span><span class=nx>prototype</span><span class=p>.</span><span class=nx>format</span> <span class=o>=</span><span class=kd>function</span><span class=p>(</span><span class=nx>datetime</span><span class=p>)</span>
+<span class=p>{</span>
+       <span class=kd>var</span> <span class=nx>date</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>(</span><span class=nx>datetime</span><span class=p>);</span><span class=c1>//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+</span><span class=c1></span>                <span class=kd>var</span> <span class=nx>year</span> <span class=o>=</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getFullYear</span><span class=p>(),</span>
+                    <span class=nx>month</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=p>(</span><span class=nx>date</span><span class=p>.</span><span class=nx>getMonth</span><span class=p>()</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>),</span>
+                    <span class=nx>sdate</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getDate</span><span class=p>()).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>),</span>
+                    <span class=nx>hour</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getHours</span><span class=p>()).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>),</span>
+                    <span class=nx>minute</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getMinutes</span><span class=p>()).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>),</span>
+                    <span class=nx>second</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getSeconds</span><span class=p>()).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>);</span>
+                <span class=c1>// 拼接
+</span><span class=c1></span>                <span class=kd>var</span> <span class=nx>result</span> <span class=o>=</span> <span class=nx>year</span> <span class=o>+</span> <span class=s2>&#34;-&#34;</span><span class=o>+</span> <span class=nx>month</span> <span class=o>+</span><span class=s2>&#34;-&#34;</span><span class=o>+</span> <span class=nx>sdate</span> <span class=o>+</span><span class=s2>&#34; &#34;</span><span class=o>+</span> <span class=nx>hour</span> <span class=o>+</span><span class=s2>&#34;:&#34;</span><span class=o>+</span> <span class=nx>minute</span> <span class=o>+</span><span class=s2>&#34;:&#34;</span> <span class=o>+</span> <span class=nx>second</span><span class=p>;</span>
+                <span class=c1>// 返回
+</span><span class=c1></span>                <span class=k>return</span> <span class=nx>result</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=nx>formatDate</span><span class=p>(</span><span class=nx>datetime</span><span class=p>)</span> <span class=p>{</span>
+                <span class=kd>var</span> <span class=nx>date</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>(</span><span class=nx>datetime</span><span class=p>);</span><span class=c1>//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+</span><span class=c1></span>                <span class=kd>var</span> <span class=nx>year</span> <span class=o>=</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getFullYear</span><span class=p>(),</span>
+                    <span class=nx>month</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=p>(</span><span class=nx>date</span><span class=p>.</span><span class=nx>getMonth</span><span class=p>()</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>),</span>
+                    <span class=nx>sdate</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getDate</span><span class=p>()).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>),</span>
+                    <span class=nx>hour</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getHours</span><span class=p>()).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>),</span>
+                    <span class=nx>minute</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getMinutes</span><span class=p>()).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>),</span>
+                    <span class=nx>second</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>date</span><span class=p>.</span><span class=nx>getSeconds</span><span class=p>()).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>);</span>
+                <span class=c1>// 拼接
+</span><span class=c1></span>                <span class=kd>var</span> <span class=nx>result</span> <span class=o>=</span> <span class=nx>year</span> <span class=o>+</span> <span class=s2>&#34;-&#34;</span><span class=o>+</span> <span class=nx>month</span> <span class=o>+</span><span class=s2>&#34;-&#34;</span><span class=o>+</span> <span class=nx>sdate</span> <span class=o>+</span><span class=s2>&#34; &#34;</span><span class=o>+</span> <span class=nx>hour</span> <span class=o>+</span><span class=s2>&#34;:&#34;</span><span class=o>+</span> <span class=nx>minute</span> <span class=o>+</span><span class=s2>&#34;:&#34;</span> <span class=o>+</span> <span class=nx>second</span><span class=p>;</span>
+                <span class=c1>// 返回
+</span><span class=c1></span>                <span class=k>return</span> <span class=nx>result</span><span class=p>;</span>
+            <span class=p>}</span>
+</code></pre></div>
+</article>
+</div>
+</body>
+<div>
+<small> words: 1154 tags:</small>
+<small><code><a href=https://arair.net/tags/javascript>javascript</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

@@ -1,0 +1,81 @@
+<!doctype html><html><title>IPv4-IP地址分类</title><meta name=description content="IP地址由四段组成，每个字段是一个字节，8位，最大值是255 IP地址由两部分组成，即网络地址和主机地址。网络地址表示其属于互联网的哪一个网络"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="IPv4-IP地址分类">
+<meta property="og:description" content="IP地址由四段组成，每个字段是一个字节，8位，最大值是255 IP地址由两部分组成，即网络地址和主机地址。网络地址表示其属于互联网的哪一个网络">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/fbf965f77e814d5fa5d7d0c1d292edfe/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-09-20T15:49:39+08:00">
+<meta property="article:modified_time" content="2021-09-20T15:53:35+08:00">
+<meta itemprop=name content="IPv4-IP地址分类">
+<meta itemprop=description content="IP地址由四段组成，每个字段是一个字节，8位，最大值是255 IP地址由两部分组成，即网络地址和主机地址。网络地址表示其属于互联网的哪一个网络"><meta itemprop=datePublished content="2021-09-20T15:49:39+08:00">
+<meta itemprop=dateModified content="2021-09-20T15:53:35+08:00">
+<meta itemprop=wordCount content="882">
+<meta itemprop=keywords content="network,ipv4,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>IPv4-IP地址分类</h1>
+<p>
+<small>
+2021-09-20, updated 2021-09-20
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>IP地址由四段组成，每个字段是一个字节，8位，最大值是255</p>
+<p>IP地址由两部分组成，即网络地址和主机地址。网络地址表示其属于互联网的哪一个网络，主机地址表示其属于该网络中的哪一台主机。二者是主从关系。</p>
+<p>IP地址的四大类型标识的是网络中的某台主机。IPv4的地址长度为32位，共4个字节，但是实际中我们用点分十进制记法。</p>
+<p>IP地址根据网络号和主机号来分，分为A、B、C三类及特殊地址D、E。全0和全1的保留不用。</p>
+<ul>
+<li>
+<p>A类：(1.0.0.0-126.0.0.0)（默认子网掩码：255.0.0.0或 0xFF000000）第一个字节为网络号，后三个字节为主机号。该类IP地址的最前面为“0”，所以地址的网络号取值于1~126之间。一般用于大型网络。</p>
+</li>
+<li>
+<p>B类：(128.0.0.0-191.255.0.0)（默认子网掩码：255.255.0.0或0xFFFF0000）前两个字节为网络号，后两个字节为主机号。该类IP地址的最前面为“10”，所以地址的网络号取值于128~191之间。一般用于中等规模网络。</p>
+</li>
+<li>
+<p>C类：(192.0.0.0-223.255.255.0)（子网掩码：255.255.255.0或 0xFFFFFF00）前三个字节为网络号，最后一个字节为主机号。该类IP地址的最前面为“110”，所以地址的网络号取值于192~223之间。一般用于小型网络。</p>
+</li>
+<li>
+<p>D类：是多播地址。该类IP地址的最前面为“1110”，所以地址的网络号取值于224~239之间。一般用于多路广播用户 。</p>
+</li>
+<li>
+<p>E类：是保留地址。该类IP地址的最前面为“1111”，所以地址的网络号取值于240~255之间。</p>
+</li>
+</ul>
+<p>在IP地址3种主要类型里，各保留了3个区域作为私有地址，其地址范围如下：</p>
+<ul>
+<li>
+<p>A类地址：10.0.0.0～10.255.255.255</p>
+</li>
+<li>
+<p>B类地址：172.16.0.0～172.31.255.255</p>
+</li>
+<li>
+<p>C类地址：192.168.0.0～192.168.255.255</p>
+</li>
+</ul>
+<p>回环地址：127.0.0.1。 也是本机地址，等效于localhost或本机IP。一般用于测试使用。例如：ping 127.0.0.1来测试本机TCP/IP是否正常。</p>
+</article>
+</div>
+</body>
+<div>
+<small> words: 882 tags:</small>
+<small><code><a href=https://arair.net/tags/network>network</a></code></small>
+<small><code><a href=https://arair.net/tags/ipv4>ipv4</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

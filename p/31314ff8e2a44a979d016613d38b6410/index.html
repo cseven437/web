@@ -1,15 +1,14 @@
-<!doctype html><html><title>xml</title><meta name=description content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。
-"><meta name=generator content="Hugo 0.88.1">
+<!doctype html><html><title>xml</title><meta name=description content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。 所有 XML 文档中的文本均会被解析器解析。 只有"><meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="xml">
-<meta property="og:description" content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。">
+<meta property="og:description" content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。 所有 XML 文档中的文本均会被解析器解析。 只有">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/language/dbdc72e9/"><meta property="article:section" content="p">
+<meta property="og:url" content="https://arair.net/p/31314ff8e2a44a979d016613d38b6410/"><meta property="article:section" content="p">
 <meta property="article:published_time" content="2021-02-09T13:12:48+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta property="article:modified_time" content="2021-09-20T15:53:35+08:00">
 <meta itemprop=name content="xml">
-<meta itemprop=description content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。"><meta itemprop=datePublished content="2021-02-09T13:12:48+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="417">
+<meta itemprop=description content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。 所有 XML 文档中的文本均会被解析器解析。 只有"><meta itemprop=datePublished content="2021-02-09T13:12:48+08:00">
+<meta itemprop=dateModified content="2021-09-20T15:53:35+08:00">
+<meta itemprop=wordCount content="512">
 <meta itemprop=keywords content="language,xml,">
 <style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
 <script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
@@ -21,17 +20,22 @@
 <h1 class=post-title>xml</h1>
 <p>
 <small>
-2021-02-09, updated 2021-09-12
+2021-02-09, updated 2021-09-20
 </small>
 </p>
 </header>
 <aside>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#cdata>CDATA</a></li>
+<li><a href=#转义字符>转义字符</a></li>
+</ul>
+</nav>
 </aside>
 <p>可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。</p>
 <p>所有 XML 文档中的文本均会被解析器解析。</p>
 <p>只有 CDATA 区段（CDATA section）中的文本会被解析器忽略。</p>
-<h1 id=cdata>CDATA</h1>
+<h2 id=cdata>CDATA</h2>
 <p>术语 CDATA 指的是不应由 XML 解析器进行解析的文本数据（Unparsed Character Data）。</p>
 <p>在 XML 元素中，"&lt;" 和 &ldquo;&&rdquo; 是非法的。</p>
 <p>&ldquo;&lt;&rdquo; 会产生错误，因为解析器会把该字符解释为新元素的开始。</p>
@@ -58,11 +62,57 @@ else
 <p>关于 CDATA 部分的注释：
 CDATA 部分不能包含字符串 &ldquo;]]>"。也不允许嵌套的 CDATA 部分。</p>
 <p>标记 CDATA 部分结尾的 &ldquo;]]>&rdquo; 不能包含空格或折行。</p>
+<h2 id=转义字符>转义字符</h2>
+<table>
+<thead>
+<tr>
+<th>转义字符</th>
+<th>字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&amp;lt;</code></td>
+<td>&lt;</td>
+<td>小于号</td>
+</tr>
+<tr>
+<td><code>&amp;gt;</code></td>
+<td>></td>
+<td>大于号</td>
+</tr>
+<tr>
+<td><code>&amp;amp;</code></td>
+<td>&</td>
+<td>和</td>
+</tr>
+<tr>
+<td><code>&amp;apos;</code></td>
+<td>'</td>
+<td>单引号</td>
+</tr>
+<tr>
+<td><code>&amp;quot;</code></td>
+<td>"</td>
+<td>双引号</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>说明：</p>
+<ol>
+<li>转义序列字符之间不能有空格；</li>
+<li>转义序列必须以”;”结束；</li>
+<li>单独出现的”&”不会被认为是转义的开始；</li>
+<li>区分大小写。</li>
+</ol>
+</blockquote>
 </article>
 </div>
 </body>
 <div>
-<small> words: 417 tags:</small>
+<small> words: 512 tags:</small>
 <small><code><a href=https://arair.net/tags/language>language</a></code></small>
 <small><code><a href=https://arair.net/tags/xml>xml</a></code></small>
 </div>
