@@ -1,0 +1,77 @@
+<!doctype html><html><title>gcc 交叉编译环境问题</title><meta name=description content="报错信息 ld: error: cannot open crt1.o: No such file or directory ld: error: cannot open crti.o: No such file or directory ld: error: cannot open crtbegin.o: No such file or directory ld: error: cannot open crtend.o: No such file or directory ld: error: cannot open crtn.o: No such file or directory ld: error: cannot find -lgcc ld: error: cannot find -lgcc_s ld: error: cannot find -lc ld:"><meta name=generator content="Hugo 0.88.1">
+<meta property="og:title" content="gcc 交叉编译环境问题">
+<meta property="og:description" content="报错信息 ld: error: cannot open crt1.o: No such file or directory ld: error: cannot open crti.o: No such file or directory ld: error: cannot open crtbegin.o: No such file or directory ld: error: cannot open crtend.o: No such file or directory ld: error: cannot open crtn.o: No such file or directory ld: error: cannot find -lgcc ld: error: cannot find -lgcc_s ld: error: cannot find -lc ld:">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://arair.net/p/2a3a146722774670a571cbf524617350/"><meta property="article:section" content="p">
+<meta property="article:published_time" content="2021-10-31T10:49:45+08:00">
+<meta property="article:modified_time" content="2021-10-31T10:51:42+08:00">
+<meta itemprop=name content="gcc 交叉编译环境问题">
+<meta itemprop=description content="报错信息 ld: error: cannot open crt1.o: No such file or directory ld: error: cannot open crti.o: No such file or directory ld: error: cannot open crtbegin.o: No such file or directory ld: error: cannot open crtend.o: No such file or directory ld: error: cannot open crtn.o: No such file or directory ld: error: cannot find -lgcc ld: error: cannot find -lgcc_s ld: error: cannot find -lc ld:"><meta itemprop=datePublished content="2021-10-31T10:49:45+08:00">
+<meta itemprop=dateModified content="2021-10-31T10:51:42+08:00">
+<meta itemprop=wordCount content="228">
+<meta itemprop=keywords content="gcc,">
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
+<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
+<body>
+<div id=post class=post>
+<article>
+<header>
+<h1 class=post-title>gcc 交叉编译环境问题</h1>
+<p>
+<small>
+2021-10-31, updated 2021-10-31
+</small>
+</p>
+</header>
+<aside>
+<nav id=TableOfContents></nav>
+</aside>
+<p>报错信息</p>
+<pre tabindex=0><code>ld: error: cannot open crt1.o: No such file or directory
+ld: error: cannot open crti.o: No such file or directory
+ld: error: cannot open crtbegin.o: No such file or directory
+ld: error: cannot open crtend.o: No such file or directory
+ld: error: cannot open crtn.o: No such file or directory
+ld: error: cannot find -lgcc
+ld: error: cannot find -lgcc_s
+ld: error: cannot find -lc
+ld: error: cannot find -lgcc
+ld: error: cannot find -lgcc_s
+</code></pre><p>需要配置sysroot</p>
+<pre tabindex=0><code>gcc --sysroot=/path/to/toolchain/sysroot
+</code></pre><p><code>/path/to/toolchain/sysroot</code>是系统头文件和库的位置</p>
+<p>cmake 2.8添加sysroot方法</p>
+<pre tabindex=0><code class=language-CMakefile data-lang=CMakefile># compiler
+set(CMAKE_C_COMPILER /path/to/arm-none-linux-gnueabi-gcc)
+set(CMAKE_CXX_COMPILER /path/to/arm-none-linux-gnueabi-g++)
+# sysroot location
+set(MYSYSROOT /path/to/sysroots/cortexa7-vfp-neon-telechips-linux-gnueabi)
+# compiler/linker flags
+set(CMAKE_C_FLAGS &quot;${CMAKE_C_FLAGS} --sysroot=${MYSYSROOT}&quot; CACHE INTERNAL &quot;&quot; FORCE)
+set(CMAKE_C_LINK_FLAGS &quot;${CMAKE_C_LINK_FLAGS} --sysroot=${MYSYSROOT}&quot; CACHE INTERNAL &quot;&quot; FORCE)
+set(CMAKE_CXX_FLAGS &quot;${CMAKE_CXX_FLAGS} --sysroot=${MYSYSROOT}&quot; CACHE INTERNAL &quot;&quot; FORCE)
+set(CMAKE_CXX_LINK_FLAGS &quot;${CMAKE_CXX_LINK_FLAGS} --sysroot=${MYSYSROOT}&quot; CACHE INTERNAL &quot;&quot; FORCE)
+# cmake built-in settings to use find_xxx() functions
+set(CMAKE_FIND_ROOT_PATH &quot;${MYSYSROOT}&quot;)
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+</code></pre><p>cmake 3.0之后的版本可以使用<code>CMAKE_SYSROOT</code></p>
+</article>
+</div>
+</body>
+<div>
+<small> words: 228 tags:</small>
+<small><code><a href=https://arair.net/tags/gcc>gcc</a></code></small>
+</div>
+</html>
+</body>
+<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
+<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
+<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>

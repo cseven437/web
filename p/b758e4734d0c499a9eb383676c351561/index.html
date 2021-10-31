@@ -4,11 +4,11 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://arair.net/p/b758e4734d0c499a9eb383676c351561/"><meta property="article:section" content="p">
 <meta property="article:published_time" content="2021-09-12T17:18:35+08:00">
-<meta property="article:modified_time" content="2021-09-13T20:07:43+08:00">
+<meta property="article:modified_time" content="2021-10-31T10:51:42+08:00">
 <meta itemprop=name content="shell--字符串截取">
 <meta itemprop=description content="Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。 从指定位置开始截取 这种方式需要两个参数：除了指定起始位置，还"><meta itemprop=datePublished content="2021-09-12T17:18:35+08:00">
-<meta itemprop=dateModified content="2021-09-13T20:07:43+08:00">
-<meta itemprop=wordCount content="1546">
+<meta itemprop=dateModified content="2021-10-31T10:51:42+08:00">
+<meta itemprop=wordCount content="1544">
 <meta itemprop=keywords content="shell,">
 <style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
 <script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
@@ -20,7 +20,7 @@
 <h1 class=post-title>shell--字符串截取</h1>
 <p>
 <small>
-2021-09-12, updated 2021-09-13
+2021-09-12, updated 2021-10-31
 </small>
 </p>
 </header>
@@ -61,7 +61,7 @@
 </code></pre></div><p>结果为<code>biancheng.net</code>。</p>
 <h3 id=2-从右边开始计数>2. 从右边开始计数</h3>
 <p>如果想从字符串的右边开始计数，那么截取字符串的具体格式如下：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=si>${</span><span class=nv>string</span><span class=p>: 0-start :</span><span class=nv>length</span><span class=si>}</span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=si>${</span><span class=nv>string</span><span class=p>%chars*</span><span class=si>}</span>
 </code></pre></div><p>同第1种格式相比，第2种格式仅仅多了<code>0-</code>，这是固定的写法，专门用来表示从字符串右边开始计数。</p>
 <p>这里需要强调两点：</p>
 <ul>
@@ -108,8 +108,8 @@
 <span class=nb>echo</span> <span class=si>${</span><span class=nv>str</span><span class=p>##*aa</span><span class=si>}</span>  <span class=c1>#结果为 @@@</span>
 </code></pre></div><h3 id=2-使用--截取左边字符>2. 使用 % 截取左边字符</h3>
 <p>使用<code>%</code>号可以截取指定字符（或者子字符串）左边的所有字符，具体格式如下：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=si>${</span><span class=nv>string</span><span class=p>%chars*</span><span class=si>}</span>
-</code></pre></div><p>请注意<code>*</code>的位置，因为要截取 chars 左边的字符，而忽略 chars 右边的字符，所以<code>*</code>应该位于 chars 的右侧。其他方面<code>%</code>和<code>#</code>的用法相同，这里不再赘述，仅举例说明：</p>
+<p>${string%chars*}</p>
+<p>请注意<code>*</code>的位置，因为要截取 chars 左边的字符，而忽略 chars 右边的字符，所以<code>*</code>应该位于 chars 的右侧。其他方面<code>%</code>和<code>#</code>的用法相同，这里不再赘述，仅举例说明：</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash
 </span><span class=cp></span><span class=nv>url</span><span class=o>=</span><span class=s2>&#34;http://c.biancheng.net/index.html&#34;</span>
 <span class=nb>echo</span> <span class=si>${</span><span class=nv>url</span><span class=p>%/*</span><span class=si>}</span>  <span class=c1>#结果为 http://c.biancheng.net</span>
@@ -165,7 +165,7 @@
 </div>
 </body>
 <div>
-<small> words: 1546 tags:</small>
+<small> words: 1544 tags:</small>
 <small><code><a href=https://arair.net/tags/shell>shell</a></code></small>
 </div>
 </html>
