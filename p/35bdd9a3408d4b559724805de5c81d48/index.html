@@ -1,15 +1,14 @@
-<!doctype html><html><title>Mysql</title><meta name=description content="用于记录sql语句等信息
-"><meta name=generator content="Hugo 0.88.1">
+<!doctype html><html><title>Mysql</title><meta name=description content="用于记录sql语句等信息 查看MYSQL数据库中所有用户 mysql&amp;gt;SELECTDISTINCTCONCAT(&amp;#39;User: &amp;#39;&amp;#39;&amp;#39;,user,&amp;#39;&amp;#39;&amp;#39;@&amp;#39;"><meta name=generator content="Hugo 0.91.0">
 <meta property="og:title" content="Mysql">
-<meta property="og:description" content="用于记录sql语句等信息">
+<meta property="og:description" content="用于记录sql语句等信息 查看MYSQL数据库中所有用户 mysql>SELECTDISTINCTCONCAT('User: ''',user,'''@'">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/other/7c363cc6/"><meta property="article:section" content="p">
+<meta property="og:url" content="https://arair.net/p/35bdd9a3408d4b559724805de5c81d48/"><meta property="article:section" content="p">
 <meta property="article:published_time" content="2021-01-31T17:24:19+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
+<meta property="article:modified_time" content="2021-12-19T09:14:39+08:00">
 <meta itemprop=name content="Mysql">
-<meta itemprop=description content="用于记录sql语句等信息"><meta itemprop=datePublished content="2021-01-31T17:24:19+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="1260">
+<meta itemprop=description content="用于记录sql语句等信息 查看MYSQL数据库中所有用户 mysql>SELECTDISTINCTCONCAT('User: ''',user,'''@'"><meta itemprop=datePublished content="2021-01-31T17:24:19+08:00">
+<meta itemprop=dateModified content="2021-12-19T09:14:39+08:00">
+<meta itemprop=wordCount content="1349">
 <meta itemprop=keywords content="mysql,sql,">
 <style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
 <script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
@@ -21,7 +20,7 @@
 <h1 class=post-title>Mysql</h1>
 <p>
 <small>
-2021-01-31, updated 2021-09-12
+2021-01-31, updated 2021-12-19
 </small>
 </p>
 </header>
@@ -33,7 +32,8 @@
 <ul>
 <li><a href=#delete-语句>DELETE 语句</a></li>
 <li><a href=#select-语句>SELECT 语句</a></li>
-<li><a href=#where>where</a></li>
+<li><a href=#where-用于条件判断>WHERE 用于条件判断</a></li>
+<li><a href=#update-修改>UPDATE 修改</a></li>
 </ul>
 </li>
 </ul>
@@ -161,7 +161,7 @@ ID          NAME        AGE         ADDRESS     SALARY
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>SELECT</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>tablename</span><span class=w>
 </span></code></pre></div><p><code>Max()</code>表示查询该列最大值</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>SELECT</span><span class=w> </span><span class=k>Max</span><span class=p>(</span><span class=n>maxTxRate</span><span class=p>),</span><span class=k>Max</span><span class=p>(</span><span class=n>maxRxRate</span><span class=p>),</span><span class=k>Max</span><span class=p>(</span><span class=n>maxTotalRate</span><span class=p>)</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>WwanRateInfo</span><span class=w>
-</span></code></pre></div><h3 id=where>where</h3>
+</span></code></pre></div><h3 id=where-用于条件判断>WHERE 用于条件判断</h3>
 <p>语法</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>SELECT</span><span class=w> </span><span class=err>列名称</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=err>表名称</span><span class=w> </span><span class=k>WHERE</span><span class=w> </span><span class=err>列</span><span class=w> </span><span class=err>运算符</span><span class=w> </span><span class=err>值</span><span class=w>
 </span></code></pre></div><p>下面的运算符可在 WHERE 子句中使用：</p>
@@ -207,13 +207,17 @@ ID          NAME        AGE         ADDRESS     SALARY
 </tr>
 </tbody>
 </table>
-<p>参考链接</p>
+<h3 id=update-修改>UPDATE 修改</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>UPDATE</span><span class=w> </span><span class=k>table_name</span><span class=w>
+</span><span class=w></span><span class=k>SET</span><span class=w> </span><span class=n>column1</span><span class=o>=</span><span class=n>value1</span><span class=p>,</span><span class=n>column2</span><span class=o>=</span><span class=n>value2</span><span class=p>,...</span><span class=w>
+</span><span class=w></span><span class=k>WHERE</span><span class=w> </span><span class=n>some_column</span><span class=o>=</span><span class=n>some_value</span><span class=p>;</span><span class=w>
+</span></code></pre></div><p>参考链接</p>
 <p><a href=https://www.runoob.com/mysql/mysql-administration.html>https://www.runoob.com/mysql/mysql-administration.html</a></p>
 </article>
 </div>
 </body>
 <div>
-<small> words: 1260 tags:</small>
+<small> words: 1349 tags:</small>
 <small><code><a href=https://arair.net/tags/mysql>mysql</a></code></small>
 <small><code><a href=https://arair.net/tags/sql>sql</a></code></small>
 </div>

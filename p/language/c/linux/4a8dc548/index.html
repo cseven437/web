@@ -1,6 +1,6 @@
 <!doctype html><html><title>linux进程间通信--信号</title><meta name=description content="概念：
  信号是在软件层次上对中断机制的一种模拟，是一种异步通信方式 信号可以直接进行用户空间进程和内核进程之间的交互，内核进程也可以利用它来通知用户空间进程发生了哪些系统事件。 如果该进程当前并未处于执行态，则该信号就由内核保存起来，直到该进程恢复执行再传递给它；如果一个信号被进程设置为阻塞，则该信号的传递被延迟，直到其阻塞被 取消时才被传递给进程。  用户进程对信号的响应方式：
- 忽略信号：对信号不做任何处理，但是有两个信号不能忽略：即SIGKILL及SIGSTOP。 捕捉信号：定义信号处理函数，当信号发生时，执行相应的处理函数。 执行缺省操作：Linux对每种信号都规定了默认操作 "><meta name=generator content="Hugo 0.88.1">
+ 忽略信号：对信号不做任何处理，但是有两个信号不能忽略：即SIGKILL及SIGSTOP。 捕捉信号：定义信号处理函数，当信号发生时，执行相应的处理函数。 执行缺省操作：Linux对每种信号都规定了默认操作 "><meta name=generator content="Hugo 0.91.0">
 <meta property="og:title" content="linux进程间通信--信号">
 <meta property="og:description" content="概念：
 
@@ -79,14 +79,21 @@
 <span class=n>sighandler_t</span> <span class=nf>signal</span><span class=p>(</span><span class=kt>int</span> <span class=n>signum</span><span class=p>,</span> <span class=n>sighandler_t</span> <span class=n>handler</span><span class=p>);</span>
 </code></pre></div><p>参数说明：</p>
 <ul>
-<li>signum：信号编号</li>
-<li>handler：</li>
 <li>
-<ul>
-<li>SIG_IGN：忽略参数signum指定的信号</li>
-<li>SIG_DFL：将参数signum指定的信号重设为核心预设的信号处理方式，即采用系统默认方式处理信号</li>
-<li>自定义信号函数处理指针</li>
-</ul>
+<p>signum：信号编号</p>
+</li>
+<li>
+<p>handler：</p>
+</li>
+<li></li>
+<li>
+<p>SIG_IGN：忽略参数signum指定的信号</p>
+</li>
+<li>
+<p>SIG_DFL：将参数signum指定的信号重设为核心预设的信号处理方式，即采用系统默认方式处理信号</p>
+</li>
+<li>
+<p>自定义信号函数处理指针</p>
 </li>
 </ul>
 <p>返回值：</p>

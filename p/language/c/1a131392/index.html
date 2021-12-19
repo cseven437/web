@@ -1,5 +1,5 @@
 <!doctype html><html><title>sqlite3 C相关函数</title><meta name=description content="sqlite3 c相关函数
-"><meta name=generator content="Hugo 0.88.1">
+"><meta name=generator content="Hugo 0.91.0">
 <meta property="og:title" content="sqlite3 C相关函数">
 <meta property="og:description" content="sqlite3 c相关函数">
 <meta property="og:type" content="article">
@@ -9,7 +9,7 @@
 <meta itemprop=name content="sqlite3 C相关函数">
 <meta itemprop=description content="sqlite3 c相关函数"><meta itemprop=datePublished content="2021-06-16T15:52:54+08:00">
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="1596">
+<meta itemprop=wordCount content="1594">
 <meta itemprop=keywords content="c,sqlite3,">
 <style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
 <script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
@@ -47,7 +47,7 @@ const char* sql,              : 执行的sql功能语句
 *callback,                    : sql语句对应的回调函数
 void* data,                   : 传递给回调函数的 指针参数
 char **errmsq                 : 错误信息
-</code></pre><p>其中 const char* sql表示 相应的 sql语句，如果我们直接在linux下，使用shell是可以实现所有的sqlite功能的，但是如果进行C或C++ 开发程序时，很明显是没有shell可用的，所以这个 *sql就是对应sqlite功能命令的 “字符串”，后面我们举例来分析。回调函数指针callback则是 *sql功能命令对应的 回调函数，所谓 回调函数的意思是，会先执行*sql对应的功能命令，然后将结果传递给回调函数，回调函数根据结果再进一步执行。这代表着，这个 “回调函数”才是最有意义的，我们要讲我们需要的功能，通过回调函数来实现，不管是获取数据库表中有效信息，还是其他动作。</p>
+</code></pre><p>其中 const char* sql表示 相应的 sql语句，如果我们直接在linux下，使用shell是可以实现所有的sqlite功能的，但是如果进行C或C++ 开发程序时，很明显是没有shell可用的，所以这个 *sql就是对应sqlite功能命令的 “字符串”，后面我们举例来分析。回调函数指针callback则是 <em>sql功能命令对应的 回调函数，所谓 回调函数的意思是，会先执行</em>sql对应的功能命令，然后将结果传递给回调函数，回调函数根据结果再进一步执行。这代表着，这个 “回调函数”才是最有意义的，我们要讲我们需要的功能，通过回调函数来实现，不管是获取数据库表中有效信息，还是其他动作。</p>
 <p>2、sqlite3_exec的回调函数 callback</p>
 <p>我们还是来先看下回调函数的参数：</p>
 <pre tabindex=0><code>typedef int(*sqlite_callback)(void* para, int columenCount, char** columnValue, char** columnName);
@@ -151,7 +151,7 @@ Operation done successfully
 </div>
 </body>
 <div>
-<small> words: 1596 tags:</small>
+<small> words: 1594 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 <small><code><a href=https://arair.net/tags/sqlite3>sqlite3</a></code></small>
 </div>

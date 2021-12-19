@@ -1,15 +1,14 @@
-<!doctype html><html><title>ssh使用方法</title><meta name=description content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。SSH最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。SSH在正确使用时可弥补网络中的漏洞。SSH客户端适用于多种平台。几乎所有UNIX平台—包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。
-"><meta name=generator content="Hugo 0.88.1">
-<meta property="og:title" content="ssh使用方法">
-<meta property="og:description" content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。SSH最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。SSH在正确使用时可弥补网络中的漏洞。SSH客户端适用于多种平台。几乎所有UNIX平台—包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。">
+<!doctype html><html><title>ssh使用记录</title><meta name=description content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和"><meta name=generator content="Hugo 0.91.0">
+<meta property="og:title" content="ssh使用记录">
+<meta property="og:description" content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/linux/command/660de759/"><meta property="article:section" content="p">
+<meta property="og:url" content="https://arair.net/p/58e9487f045047d893fd28b88a434b81/"><meta property="article:section" content="p">
 <meta property="article:published_time" content="2021-04-23T16:55:43+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="ssh使用方法">
-<meta itemprop=description content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。SSH最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。SSH在正确使用时可弥补网络中的漏洞。SSH客户端适用于多种平台。几乎所有UNIX平台—包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。"><meta itemprop=datePublished content="2021-04-23T16:55:43+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="414">
+<meta property="article:modified_time" content="2021-12-19T09:14:39+08:00">
+<meta itemprop=name content="ssh使用记录">
+<meta itemprop=description content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和"><meta itemprop=datePublished content="2021-04-23T16:55:43+08:00">
+<meta itemprop=dateModified content="2021-12-19T09:14:39+08:00">
+<meta itemprop=wordCount content="482">
 <meta itemprop=keywords content="ssh,linux-command,">
 <style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
 <script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
@@ -18,10 +17,10 @@
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>ssh使用方法</h1>
+<h1 class=post-title>ssh使用记录</h1>
 <p>
 <small>
-2021-04-23, updated 2021-09-12
+2021-04-23, updated 2021-12-19
 </small>
 </p>
 </header>
@@ -34,6 +33,7 @@
 <li><a href=#客户端生成公钥>客户端生成公钥</a></li>
 <li><a href=#生成秘钥到指定目录>生成秘钥到指定目录</a></li>
 <li><a href=#上传公钥到服务器>上传公钥到服务器</a></li>
+<li><a href=#问题>问题</a></li>
 </ul>
 </li>
 </ul>
@@ -57,11 +57,18 @@
 <p>可以直接在文件<code>~/.ssh/authorized_keys</code>中添加生成的公钥内容</p>
 <p>然后就可以免密登录了。</p>
 <p>注意：不需要重启ssh服务</p>
+<h3 id=问题>问题</h3>
+<p>update 2021-11-1</p>
+<p>最近更新到openssh 8.8版本时，发现rsa密钥默认不支持，后续修改为ed25519替代rsa</p>
+<pre tabindex=0><code>ssh-keygen -t ed25519
+</code></pre><p>ssh测试命令</p>
+<pre tabindex=0><code>ssh -vT user@host -p port
+</code></pre>
 </article>
 </div>
 </body>
 <div>
-<small> words: 414 tags:</small>
+<small> words: 482 tags:</small>
 <small><code><a href=https://arair.net/tags/ssh>ssh</a></code></small>
 <small><code><a href=https://arair.net/tags/linux-command>linux-command</a></code></small>
 </div>
