@@ -1,4 +1,4 @@
-<!doctype html><html><title>内核通知连</title><meta name=description content="定义链 用于通知信息的处理函数，包括要调用的回调函数 // include\linux\notifier.h struct notifier_block; typedef int (*notifier_fn_t)(struct notifier_block *nb, unsigned long action, void *data); struct notifier_block { notifier_fn_t notifier_call; struct notifier_block __rcu *next; int priority; }; notifier_call 要执行的函数 next 链接列表的元素 priority 代表函"><meta name=generator content="Hugo 0.91.0">
+<!doctype html><html><title>内核通知连</title><meta name=description content="定义链 用于通知信息的处理函数，包括要调用的回调函数 // include\linux\notifier.h struct notifier_block; typedef int (*notifier_fn_t)(struct notifier_block *nb, unsigned long action, void *data); struct notifier_block { notifier_fn_t notifier_call; struct notifier_block __rcu *next; int priority; }; notifier_call 要执行的函数 next 链接列表的元素 priority 代表函"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="内核通知连">
 <meta property="og:description" content="定义链 用于通知信息的处理函数，包括要调用的回调函数 // include\linux\notifier.h struct notifier_block; typedef int (*notifier_fn_t)(struct notifier_block *nb, unsigned long action, void *data); struct notifier_block { notifier_fn_t notifier_call; struct notifier_block __rcu *next; int priority; }; notifier_call 要执行的函数 next 链接列表的元素 priority 代表函">
 <meta property="og:type" content="article">
@@ -10,61 +10,40 @@
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="150">
 <meta itemprop=keywords content>
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>内核通知连</h1>
-<p>
+<h1 class=post-title>内核通知连</h1><p>
 <small>
 2021-01-24, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
-<nav id=TableOfContents></nav>
-</aside>
-<h1 id=定义链>定义链</h1>
-<p>用于通知信息的处理函数，包括要调用的回调函数</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=c1>// include\linux\notifier.h
-</span><span class=c1></span><span class=k>struct</span> <span class=n>notifier_block</span><span class=p>;</span>
-
-<span class=k>typedef</span>	<span class=nf>int</span> <span class=p>(</span><span class=o>*</span><span class=n>notifier_fn_t</span><span class=p>)(</span><span class=k>struct</span> <span class=n>notifier_block</span> <span class=o>*</span><span class=n>nb</span><span class=p>,</span>
-			<span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>action</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=n>data</span><span class=p>);</span>
-
-<span class=k>struct</span> <span class=n>notifier_block</span> <span class=p>{</span>
-	<span class=n>notifier_fn_t</span> <span class=n>notifier_call</span><span class=p>;</span>
-	<span class=k>struct</span> <span class=n>notifier_block</span> <span class=n>__rcu</span> <span class=o>*</span><span class=n>next</span><span class=p>;</span>
-	<span class=kt>int</span> <span class=n>priority</span><span class=p>;</span>
-<span class=p>};</span>
-</code></pre></div><ul>
-<li>notifier_call 要执行的函数</li>
-<li>next 链接列表的元素</li>
-<li>priority 代表函数的优先级，较高优先级的函数会先被执行</li>
-</ul>
-<h1 id=网络子系统的通知链>网络子系统的通知链</h1>
-<ul>
+</p></header><aside>
+<nav id=TableOfContents></nav></aside><h1 id=定义链>定义链</h1><p>用于通知信息的处理函数，包括要调用的回调函数</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// include\linux\notifier.h
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>struct</span> <span class=n>notifier_block</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>typedef</span>	<span class=nf>int</span> <span class=p>(</span><span class=o>*</span><span class=n>notifier_fn_t</span><span class=p>)(</span><span class=k>struct</span> <span class=n>notifier_block</span> <span class=o>*</span><span class=n>nb</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>			<span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>action</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=n>data</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=n>notifier_block</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>notifier_fn_t</span> <span class=n>notifier_call</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>struct</span> <span class=n>notifier_block</span> <span class=n>__rcu</span> <span class=o>*</span><span class=n>next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=kt>int</span> <span class=n>priority</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></div><ul>
+<li>notifier_call 要执行的函数</li><li>next 链接列表的元素</li><li>priority 代表函数的优先级，较高优先级的函数会先被执行</li></ul><h1 id=网络子系统的通知链>网络子系统的通知链</h1><ul>
 <li>inetaddr_chain
-发送有关本地接口上的IPv4地址的插入、删除以及变更的通知信息。</li>
-<li>netdev_chain
-发送有关网路设备注册状态的通知信息。</li>
-</ul>
-</article>
-</div>
-</body>
-<div>
+发送有关本地接口上的IPv4地址的插入、删除以及变更的通知信息。</li><li>netdev_chain
+发送有关网路设备注册状态的通知信息。</li></ul></article></div></body><div>
 <small> words: 150 tags:</small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

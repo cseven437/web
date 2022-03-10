@@ -1,4 +1,4 @@
-<!doctype html><html><title>iptables的使用</title><meta name=description content="iptables 流向图 graph LR NETWORK --&amp;gt; prerouting(RPEROUTING) prerouting --raw mangle nat--&amp;gt; route(route) route --&amp;gt; input(INPUT) input --mangle filter--&amp;gt; local(local process) local --&amp;gt; output(OUTPUT) output --raw mangle nat filter--&amp;gt; postrouting(POSTROUTING) route --&amp;gt; forward(forward) forward --mangle filter--&amp;gt; postrouting postrouting --mangle nat--&amp;gt; NETWORK2(NETWORK) netfilter hooks +-----------&amp;gt; local +-----------+ | process | | | | | | | | v MANGLE +-------------+--------+ FILTER | | +----------------------+ RAW SECURITY | input | |"><meta name=generator content="Hugo 0.91.0">
+<!doctype html><html><title>iptables的使用</title><meta name=description content="iptables 流向图 graph LR NETWORK --&amp;gt; prerouting(RPEROUTING) prerouting --raw mangle nat--&amp;gt; route(route) route --&amp;gt; input(INPUT) input --mangle filter--&amp;gt; local(local process) local --&amp;gt; output(OUTPUT) output --raw mangle nat filter--&amp;gt; postrouting(POSTROUTING) route --&amp;gt; forward(forward) forward --mangle filter--&amp;gt; postrouting postrouting --mangle nat--&amp;gt; NETWORK2(NETWORK) netfilter hooks +-----------&amp;gt; local +-----------+ | process | | | | | | | | v MANGLE +-------------+--------+ FILTER | | +----------------------+ RAW SECURITY | input | |"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="iptables的使用">
 <meta property="og:description" content="iptables 流向图 graph LR NETWORK --> prerouting(RPEROUTING) prerouting --raw mangle nat--> route(route) route --> input(INPUT) input --mangle filter--> local(local process) local --> output(OUTPUT) output --raw mangle nat filter--> postrouting(POSTROUTING) route --> forward(forward) forward --mangle filter--> postrouting postrouting --mangle nat--> NETWORK2(NETWORK) netfilter hooks +-----------> local +-----------+ | process | | | | | | | | v MANGLE +-------------+--------+ FILTER | | +----------------------+ RAW SECURITY | input | |">
 <meta property="og:type" content="article">
@@ -10,56 +10,28 @@
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="3742">
 <meta itemprop=keywords content="iptables,command,linux,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>iptables的使用</h1>
-<p>
+<h1 class=post-title>iptables的使用</h1><p>
 <small>
 2021-02-07, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
+</p></header><aside>
 <nav id=TableOfContents>
 <ul>
 <li><a href=#基本说明>基本说明</a>
 <ul>
-<li><a href=#表>表</a></li>
-<li><a href=#链>链</a></li>
-<li><a href=#动作>动作</a></li>
-<li><a href=#规则>规则</a></li>
-<li><a href=#其他参数>其他参数</a></li>
-</ul>
-</li>
-<li><a href=#tcpmss>TCPMSS</a>
+<li><a href=#表>表</a></li><li><a href=#链>链</a></li><li><a href=#动作>动作</a></li><li><a href=#规则>规则</a></li><li><a href=#其他参数>其他参数</a></li></ul></li><li><a href=#tcpmss>TCPMSS</a>
 <ul>
-<li><a href=#mtu相关>mtu相关</a></li>
-</ul>
-</li>
-<li><a href=#state>state</a></li>
-<li><a href=#mangle表>mangle表</a></li>
-<li><a href=#mark和connmark>mark和connmark</a>
+<li><a href=#mtu相关>mtu相关</a></li></ul></li><li><a href=#state>state</a></li><li><a href=#mangle表>mangle表</a></li><li><a href=#mark和connmark>mark和connmark</a>
 <ul>
-<li><a href=#应用场景>应用场景</a></li>
-</ul>
-</li>
-<li><a href=#mac>mac</a></li>
-<li><a href=#其他命令>其他命令</a>
+<li><a href=#应用场景>应用场景</a></li></ul></li><li><a href=#mac>mac</a></li><li><a href=#其他命令>其他命令</a>
 <ul>
-<li><a href=#iptables-save>iptables-save</a></li>
-<li><a href=#iptables-restore>iptables-restore</a></li>
-</ul>
-</li>
-</ul>
-</nav>
-</aside>
-<p>iptables 流向图</p>
-<pre tabindex=0><code class=language-mermaid data-lang=mermaid>graph LR
+<li><a href=#iptables-save>iptables-save</a></li><li><a href=#iptables-restore>iptables-restore</a></li></ul></li></ul></nav></aside><p>iptables 流向图</p><pre tabindex=0><code class=language-mermaid data-lang=mermaid>graph LR
 	NETWORK --&gt; prerouting(RPEROUTING)
 	prerouting --raw mangle nat--&gt; route(route)
 	route --&gt; input(INPUT)
@@ -96,353 +68,115 @@
      MANGLE                                    SECURITY
      DNAT
      routing
-</code></pre><h2 id=基本说明>基本说明</h2>
-<h3 id=表>表</h3>
-<table>
+</code></pre><h2 id=基本说明>基本说明</h2><h3 id=表>表</h3><table>
 <thead>
 <tr>
-<th style=text-align:left>优先级</th>
-<th style=text-align:left>表名</th>
-<th style=text-align:left>功能</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
+<th style=text-align:left>优先级</th><th style=text-align:left>表名</th><th style=text-align:left>功能</th><th>说明</th></tr></thead><tbody>
 <tr>
-<td style=text-align:left>1</td>
-<td style=text-align:left>raw</td>
-<td style=text-align:left>追踪</td>
-<td>(connection tracking enabled)</td>
-</tr>
-<tr>
-<td style=text-align:left>2</td>
-<td style=text-align:left>mangle</td>
-<td style=text-align:left>分组</td>
-<td></td>
-</tr>
-<tr>
-<td style=text-align:left>3</td>
-<td style=text-align:left>nat (DNAT)</td>
-<td style=text-align:left>NAT</td>
-<td>(routing decision)</td>
-</tr>
-<tr>
-<td style=text-align:left>4</td>
-<td style=text-align:left>filter</td>
-<td style=text-align:left>过滤</td>
-<td></td>
-</tr>
-<tr>
-<td style=text-align:left>5</td>
-<td style=text-align:left>security</td>
-<td style=text-align:left></td>
-<td></td>
-</tr>
-<tr>
-<td style=text-align:left>6</td>
-<td style=text-align:left>nat (SNAT)</td>
-<td style=text-align:left>NAT</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id=链>链</h3>
-<table>
+<td style=text-align:left>1</td><td style=text-align:left>raw</td><td style=text-align:left>追踪</td><td>(connection tracking enabled)</td></tr><tr>
+<td style=text-align:left>2</td><td style=text-align:left>mangle</td><td style=text-align:left>分组</td><td></td></tr><tr>
+<td style=text-align:left>3</td><td style=text-align:left>nat (DNAT)</td><td style=text-align:left>NAT</td><td>(routing decision)</td></tr><tr>
+<td style=text-align:left>4</td><td style=text-align:left>filter</td><td style=text-align:left>过滤</td><td></td></tr><tr>
+<td style=text-align:left>5</td><td style=text-align:left>security</td><td style=text-align:left></td><td></td></tr><tr>
+<td style=text-align:left>6</td><td style=text-align:left>nat (SNAT)</td><td style=text-align:left>NAT</td><td></td></tr></tbody></table><h3 id=链>链</h3><table>
 <thead>
 <tr>
-<th style=text-align:left>链名</th>
-<th style=text-align:left>作用</th>
-</tr>
-</thead>
-<tbody>
+<th style=text-align:left>链名</th><th style=text-align:left>作用</th></tr></thead><tbody>
 <tr>
-<td style=text-align:left>INPUT</td>
-<td style=text-align:left>发往本机的报文</td>
-</tr>
-<tr>
-<td style=text-align:left>OUTPUT</td>
-<td style=text-align:left>由本机发出的报文</td>
-</tr>
-<tr>
-<td style=text-align:left>FORWARD</td>
-<td style=text-align:left>经由本机转发的报文</td>
-</tr>
-<tr>
-<td style=text-align:left>PREROUTING</td>
-<td style=text-align:left>报文到达本机，进行路由决策之前</td>
-</tr>
-<tr>
-<td style=text-align:left>POSTROUTING</td>
-<td style=text-align:left>报文由本机发出，进行路由决策之后</td>
-</tr>
-</tbody>
-</table>
-<h3 id=动作>动作</h3>
-<table>
+<td style=text-align:left>INPUT</td><td style=text-align:left>发往本机的报文</td></tr><tr>
+<td style=text-align:left>OUTPUT</td><td style=text-align:left>由本机发出的报文</td></tr><tr>
+<td style=text-align:left>FORWARD</td><td style=text-align:left>经由本机转发的报文</td></tr><tr>
+<td style=text-align:left>PREROUTING</td><td style=text-align:left>报文到达本机，进行路由决策之前</td></tr><tr>
+<td style=text-align:left>POSTROUTING</td><td style=text-align:left>报文由本机发出，进行路由决策之后</td></tr></tbody></table><h3 id=动作>动作</h3><table>
 <thead>
 <tr>
-<th style=text-align:left>动作</th>
-<th style=text-align:left>说明</th>
-</tr>
-</thead>
-<tbody>
+<th style=text-align:left>动作</th><th style=text-align:left>说明</th></tr></thead><tbody>
 <tr>
-<td style=text-align:left>iptables -A</td>
-<td style=text-align:left>添加规则</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -D 2</td>
-<td style=text-align:left>删除规则</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -F</td>
-<td style=text-align:left>删除所有规则</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -I</td>
-<td style=text-align:left>指定编号插入一个规则</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -L</td>
-<td style=text-align:left>列出指定链中所有规则</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -t nat -vnL –line-number</td>
-<td style=text-align:left>列出 NAT 表中规则</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -N</td>
-<td style=text-align:left>添加用户定义链</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -X</td>
-<td style=text-align:left>删除用户定义链</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -P</td>
-<td style=text-align:left>修改链的默认设置</td>
-</tr>
-<tr>
-<td style=text-align:left>iptables -S</td>
-<td style=text-align:left>显示命令历史</td>
-</tr>
-</tbody>
-</table>
-<h3 id=规则>规则</h3>
-<table>
+<td style=text-align:left>iptables -A</td><td style=text-align:left>添加规则</td></tr><tr>
+<td style=text-align:left>iptables -D 2</td><td style=text-align:left>删除规则</td></tr><tr>
+<td style=text-align:left>iptables -F</td><td style=text-align:left>删除所有规则</td></tr><tr>
+<td style=text-align:left>iptables -I</td><td style=text-align:left>指定编号插入一个规则</td></tr><tr>
+<td style=text-align:left>iptables -L</td><td style=text-align:left>列出指定链中所有规则</td></tr><tr>
+<td style=text-align:left>iptables -t nat -vnL –line-number</td><td style=text-align:left>列出 NAT 表中规则</td></tr><tr>
+<td style=text-align:left>iptables -N</td><td style=text-align:left>添加用户定义链</td></tr><tr>
+<td style=text-align:left>iptables -X</td><td style=text-align:left>删除用户定义链</td></tr><tr>
+<td style=text-align:left>iptables -P</td><td style=text-align:left>修改链的默认设置</td></tr><tr>
+<td style=text-align:left>iptables -S</td><td style=text-align:left>显示命令历史</td></tr></tbody></table><h3 id=规则>规则</h3><table>
 <thead>
 <tr>
-<th style=text-align:left>规则</th>
-<th style=text-align:left>说明</th>
-</tr>
-</thead>
-<tbody>
+<th style=text-align:left>规则</th><th style=text-align:left>说明</th></tr></thead><tbody>
 <tr>
-<td style=text-align:left>-j DROP</td>
-<td style=text-align:left>拒绝</td>
-</tr>
-<tr>
-<td style=text-align:left>-j ACCEPT</td>
-<td style=text-align:left>允许</td>
-</tr>
-<tr>
-<td style=text-align:left>-j REJECT</td>
-<td style=text-align:left>拒绝并向返回</td>
-</tr>
-<tr>
-<td style=text-align:left>-j LOG</td>
-<td style=text-align:left>/var/log/messages</td>
-</tr>
-<tr>
-<td style=text-align:left>–dport</td>
-<td style=text-align:left>指定目标端口</td>
-</tr>
-<tr>
-<td style=text-align:left>–sport</td>
-<td style=text-align:left>指定源端口</td>
-</tr>
-<tr>
-<td style=text-align:left>-p tcp</td>
-<td style=text-align:left>指定协议为 tcp</td>
-</tr>
-<tr>
-<td style=text-align:left>-m mac –mac</td>
-<td style=text-align:left>绑定 MAC 地址</td>
-</tr>
-<tr>
-<td style=text-align:left>-m limit –limit</td>
-<td style=text-align:left>设置时间策列</td>
-</tr>
-<tr>
-<td style=text-align:left>-s 10.10.0.0/16</td>
-<td style=text-align:left>指定源地址或地址段</td>
-</tr>
-<tr>
-<td style=text-align:left>-d 10.10.0.0/16</td>
-<td style=text-align:left>指定目标地址或地址段</td>
-</tr>
-</tbody>
-</table>
-<h3 id=其他参数>其他参数</h3>
-<ul>
-<li>iptables -n -v -L -t filter 默认是使用易读的单位，也就是自动转化成M，G。如过需要Bytes做单位，则增加一个-x参数</li>
-<li>iptables -n -v -L -t filter -x</li>
-</ul>
-<h2 id=tcpmss>TCPMSS</h2>
-<h3 id=mtu相关>mtu相关</h3>
-<p>修改mtu为1400</p>
-<pre tabindex=0><code>iptables -A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1400
-</code></pre><p>设置mtu自动协商</p>
-<pre tabindex=0><code>iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-</code></pre><h2 id=state>state</h2>
-<p>nf_conntrack(在老版本的 Linux 内核中叫 ip_conntrack)是一个内核模块,用于跟踪一个连接的状态的。连接状态跟踪可以供其他模块使用,最常见的两个使用场景是 iptables 的 nat 的 state 模块。 iptables 的 nat 通过规则来修改目的/源地址,但光修改地址不行,我们还需要能让回来的包能路由到最初的来源主机。这就需要借助 nf_conntrack 来找到原来那个连接的记录才行。而 state 模块则是直接使用 nf_conntrack 里记录的连接的状态来匹配用户定义的相关规则。例如下面这条 INPUT 规则用于放行 80 端口上的状态为 NEW 的连接上的包。</p>
-<pre tabindex=0><code>iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT。
-</code></pre><p>iptables中的状态检测功能是由state选项来实现iptable的。对这个选项，在iptables的手册页中有以下描述：</p>
-<pre tabindex=0><code>state
-</code></pre><p>这个模块能够跟踪分组的连接状态(即状态检测)。</p>
-<p>格式：<code>--state XXXXX</code></p>
-<p>这里，state是一个用逗号分割的列表，表示要匹配的连接状态。</p>
-<p>在iptables中有四种状态：<code>NEW，ESTABLISHED，RELATED，INVALID。</code></p>
-<ul>
+<td style=text-align:left>-j DROP</td><td style=text-align:left>拒绝</td></tr><tr>
+<td style=text-align:left>-j ACCEPT</td><td style=text-align:left>允许</td></tr><tr>
+<td style=text-align:left>-j REJECT</td><td style=text-align:left>拒绝并向返回</td></tr><tr>
+<td style=text-align:left>-j LOG</td><td style=text-align:left>/var/log/messages</td></tr><tr>
+<td style=text-align:left>–dport</td><td style=text-align:left>指定目标端口</td></tr><tr>
+<td style=text-align:left>–sport</td><td style=text-align:left>指定源端口</td></tr><tr>
+<td style=text-align:left>-p tcp</td><td style=text-align:left>指定协议为 tcp</td></tr><tr>
+<td style=text-align:left>-m mac –mac</td><td style=text-align:left>绑定 MAC 地址</td></tr><tr>
+<td style=text-align:left>-m limit –limit</td><td style=text-align:left>设置时间策列</td></tr><tr>
+<td style=text-align:left>-s 10.10.0.0/16</td><td style=text-align:left>指定源地址或地址段</td></tr><tr>
+<td style=text-align:left>-d 10.10.0.0/16</td><td style=text-align:left>指定目标地址或地址段</td></tr></tbody></table><h3 id=其他参数>其他参数</h3><ul>
+<li>iptables -n -v -L -t filter 默认是使用易读的单位，也就是自动转化成M，G。如过需要Bytes做单位，则增加一个-x参数</li><li>iptables -n -v -L -t filter -x</li></ul><h2 id=tcpmss>TCPMSS</h2><h3 id=mtu相关>mtu相关</h3><p>修改mtu为1400</p><pre tabindex=0><code>iptables -A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1400
+</code></pre><p>设置mtu自动协商</p><pre tabindex=0><code>iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+</code></pre><h2 id=state>state</h2><p>nf_conntrack(在老版本的 Linux 内核中叫 ip_conntrack)是一个内核模块,用于跟踪一个连接的状态的。连接状态跟踪可以供其他模块使用,最常见的两个使用场景是 iptables 的 nat 的 state 模块。 iptables 的 nat 通过规则来修改目的/源地址,但光修改地址不行,我们还需要能让回来的包能路由到最初的来源主机。这就需要借助 nf_conntrack 来找到原来那个连接的记录才行。而 state 模块则是直接使用 nf_conntrack 里记录的连接的状态来匹配用户定义的相关规则。例如下面这条 INPUT 规则用于放行 80 端口上的状态为 NEW 的连接上的包。</p><pre tabindex=0><code>iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT。
+</code></pre><p>iptables中的状态检测功能是由state选项来实现iptable的。对这个选项，在iptables的手册页中有以下描述：</p><pre tabindex=0><code>state
+</code></pre><p>这个模块能够跟踪分组的连接状态(即状态检测)。</p><p>格式：<code>--state XXXXX</code></p><p>这里，state是一个用逗号分割的列表，表示要匹配的连接状态。</p><p>在iptables中有四种状态：<code>NEW，ESTABLISHED，RELATED，INVALID。</code></p><ul>
 <li>
-<p><strong>NEW</strong>，表示这个分组需要发起一个连接，或者说，分组对应的连接在两个方向上都没有进行过分组传输。NEW说明 这个包是我们看到的第一个包。意思就是，这是conntrack模块看到的某个连接第一个包，它即将被匹配了。比如，我们看到一个SYN包，是我们所留意 的连接的第一个包，就要匹配它。第一个包也可能不是SYN包，但它仍会被认为是NEW状态。比如一个特意发出的探测包，可能只有RST位，但仍然是 NEW。</p>
-</li>
+<p><strong>NEW</strong>，表示这个分组需要发起一个连接，或者说，分组对应的连接在两个方向上都没有进行过分组传输。NEW说明 这个包是我们看到的第一个包。意思就是，这是conntrack模块看到的某个连接第一个包，它即将被匹配了。比如，我们看到一个SYN包，是我们所留意 的连接的第一个包，就要匹配它。第一个包也可能不是SYN包，但它仍会被认为是NEW状态。比如一个特意发出的探测包，可能只有RST位，但仍然是 NEW。</p></li><li>
+<p><strong>ESTABLISHED</strong>，表示分组对应的连接已经进行了双向的分组传输，也就是说连接已经建立，而且会继续匹配 这个连接的包。处于ESTABLISHED状态的连接是非常容易理解的。只要发送并接到应答，连接就是ESTABLISHED的了。一个连接要从NEW变 为ESTABLISHED，只需要接到应答包即可，不管这个包是发往防火墙的，还是要由防火墙转发的。ICMP的错误和重定向等信息包也被看作是 ESTABLISHED，只要它们是我们所发出的信息的应答。</p></li><li>
+<p><strong>RELATED</strong>，表示分组要发起一个新的连接，但是这个连接和一个现有的连接有关，例如：FTP的数据传输连接 和控制连接之间就是RELATED关系。RELATED是个比较麻烦的状态。当一个连接和某个已处于ESTABLISHED状态的连接有关系时，就被认为 是RELATED的了。换句话说，一个连接要想是RELATED的，首先要有一个ESTABLISHED的连接。这个ESTABLISHED连接再产生一 个主连接之外的连接，这个新的连接就是RELATED的了，当然前提是conntrack模块要能理解RELATED。ftp是个很好的例子，FTP- data连接就是和FTP-control有RELATED的。还有其他的例子，</p></li><li>
+<p><strong>INVAILD</strong>，表示分组对应的连接是未知的，说明数据包不能被识别属于哪个连接或没有任何状态。有几个原因可以产生这种情况，比如，内存溢出，收到不知属于哪个连接的ICMP错误信息。一般地，我们DROP这个状态的任何东西。</p></li></ul><h2 id=mangle表>mangle表</h2><p>mangle表主要用于修改数据包的TOS(Type of Service, 服务类型)、TTL(Time To Live，生存周期)值以及为数据包设置Mark标记，以实现Qos(Quality Of Service，服务质量)调整以及策略路由等应用</p><h2 id=mark和connmark>mark和connmark</h2><p>关于mangle模块，内核里主要有三个功能模块：mark match、MARK target、CONNMARK target。</p><ol>
 <li>
-<p><strong>ESTABLISHED</strong>，表示分组对应的连接已经进行了双向的分组传输，也就是说连接已经建立，而且会继续匹配 这个连接的包。处于ESTABLISHED状态的连接是非常容易理解的。只要发送并接到应答，连接就是ESTABLISHED的了。一个连接要从NEW变 为ESTABLISHED，只需要接到应答包即可，不管这个包是发往防火墙的，还是要由防火墙转发的。ICMP的错误和重定向等信息包也被看作是 ESTABLISHED，只要它们是我们所发出的信息的应答。</p>
-</li>
-<li>
-<p><strong>RELATED</strong>，表示分组要发起一个新的连接，但是这个连接和一个现有的连接有关，例如：FTP的数据传输连接 和控制连接之间就是RELATED关系。RELATED是个比较麻烦的状态。当一个连接和某个已处于ESTABLISHED状态的连接有关系时，就被认为 是RELATED的了。换句话说，一个连接要想是RELATED的，首先要有一个ESTABLISHED的连接。这个ESTABLISHED连接再产生一 个主连接之外的连接，这个新的连接就是RELATED的了，当然前提是conntrack模块要能理解RELATED。ftp是个很好的例子，FTP- data连接就是和FTP-control有RELATED的。还有其他的例子，</p>
-</li>
-<li>
-<p><strong>INVAILD</strong>，表示分组对应的连接是未知的，说明数据包不能被识别属于哪个连接或没有任何状态。有几个原因可以产生这种情况，比如，内存溢出，收到不知属于哪个连接的ICMP错误信息。一般地，我们DROP这个状态的任何东西。</p>
-</li>
-</ul>
-<h2 id=mangle表>mangle表</h2>
-<p>mangle表主要用于修改数据包的TOS(Type of Service, 服务类型)、TTL(Time To Live，生存周期)值以及为数据包设置Mark标记，以实现Qos(Quality Of Service，服务质量)调整以及策略路由等应用</p>
-<h2 id=mark和connmark>mark和connmark</h2>
-<p>关于mangle模块，内核里主要有三个功能模块：mark match、MARK target、CONNMARK target。</p>
-<ol>
-<li>
-<p>CONNMARK target</p>
-<table>
+<p>CONNMARK target</p><table>
 <thead>
 <tr>
-<th>选项</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
+<th>选项</th><th>功能</th></tr></thead><tbody>
 <tr>
-<td>&ndash;set-mark value[/mask]</td>
-<td>给链接跟踪记录打标记</td>
-</tr>
-<tr>
-<td>&ndash;save-mark [&ndash;mark mask]</td>
-<td>将数据包上的标记值记录到链接跟踪记录上</td>
-</tr>
-<tr>
-<td>&ndash;restore-mark [&ndash;mark mask]</td>
-<td>重新设置数据包的nfmark值</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>MARK target</p>
-<table>
+<td>&ndash;set-mark value[/mask]</td><td>给链接跟踪记录打标记</td></tr><tr>
+<td>&ndash;save-mark [&ndash;mark mask]</td><td>将数据包上的标记值记录到链接跟踪记录上</td></tr><tr>
+<td>&ndash;restore-mark [&ndash;mark mask]</td><td>重新设置数据包的nfmark值</td></tr></tbody></table></li><li>
+<p>MARK target</p><table>
 <thead>
 <tr>
-<th>选项</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
+<th>选项</th><th>功能</th></tr></thead><tbody>
 <tr>
-<td>&ndash;set-mark value</td>
-<td>设置数据包的nfmark值</td>
-</tr>
-<tr>
-<td>&ndash;and-mark value</td>
-<td>数据包的nfmark值和value进行按位与运算</td>
-</tr>
-<tr>
-<td>&ndash;or-mark value</td>
-<td>数据包的nfmark值和value进行按位或运算</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>MARK match</p>
-<table>
+<td>&ndash;set-mark value</td><td>设置数据包的nfmark值</td></tr><tr>
+<td>&ndash;and-mark value</td><td>数据包的nfmark值和value进行按位与运算</td></tr><tr>
+<td>&ndash;or-mark value</td><td>数据包的nfmark值和value进行按位或运算</td></tr></tbody></table></li><li>
+<p>MARK match</p><table>
 <thead>
 <tr>
-<th>选项</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
+<th>选项</th><th>功能</th></tr></thead><tbody>
 <tr>
-<td>[!] &ndash;mark value[/mask]</td>
-<td>数据包的 nfmark值与value进行匹配，其中mask的值为可选的</td>
-</tr>
-</tbody>
-</table>
-</li>
-</ol>
-<blockquote>
-<p><strong>CONNMARK和MARK的区别</strong></p>
-<p>同样是打标记，CONNMARK是针对连接的，MARK是针对单一数据包的</p>
-<p>两种机制一般都和ip rule联用，实现对满足一类条件的数据包的策略路由</p>
-<ol>
-<li>对连接打了标记，只是标记了连接，没有标记连接中的每个数据包。标记单个数据包，也不会对整条连接的标记有影响。二者是相对独立的</li>
-<li>路由判定(routing decision)是以单一数据包为单位的。或者说，在netfilter框架之外，并没有连接标记的概念。或者说，ip命令只知道MARK，而不知道CONNMARK是什么</li>
-<li>关键在于：给所有要进行ip rule匹配的单一数据包打上标记。方法一般有二：用MARK直接打，或者用CONNMARK &ndash;restore-mark把搭载连接上的标记转移到数据包上。</li>
-</ol>
-</blockquote>
-<p><strong>mangle表工作流程</strong></p>
-<ol>
-<li>iptable_mangle.c的主要工作就是注册和初始化mangle表，注册mangle钩子</li>
-<li>除了ct的hook是单独处理外，其他的filter、nat、mangle都是通过hook之后调用ipt_do_table来处理，要么重点在match里，要么重点在target处理中。但是这个基本机制框架没变。即都是通过rules。</li>
-</ol>
-<p>先看一下target的执行</p>
-<pre tabindex=0><code>iptables -t mangle -A PREROUTING -i eth0 -p tcp --dport 80 -j MARK --set-mark 1
-</code></pre><p>内核里对target MARK的处理代码</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=c1>// linux-5.10.55
-</span><span class=c1></span><span class=k>static</span> <span class=kt>unsigned</span> <span class=kt>int</span>
-<span class=nf>mark_tg</span><span class=p>(</span><span class=k>struct</span> <span class=n>sk_buff</span> <span class=o>*</span><span class=n>skb</span><span class=p>,</span> <span class=k>const</span> <span class=k>struct</span> <span class=n>xt_action_param</span> <span class=o>*</span><span class=n>par</span><span class=p>)</span>
-<span class=p>{</span>
-    <span class=k>const</span> <span class=k>struct</span> <span class=n>xt_mark_tginfo2</span> <span class=o>*</span><span class=n>info</span> <span class=o>=</span> <span class=n>par</span><span class=o>-&gt;</span><span class=n>targinfo</span><span class=p>;</span>
-
-    <span class=n>skb</span><span class=o>-&gt;</span><span class=n>mark</span> <span class=o>=</span> <span class=p>(</span><span class=n>skb</span><span class=o>-&gt;</span><span class=n>mark</span> <span class=o>&amp;</span> <span class=o>~</span><span class=n>info</span><span class=o>-&gt;</span><span class=n>mask</span><span class=p>)</span> <span class=o>^</span> <span class=n>info</span><span class=o>-&gt;</span><span class=n>mark</span><span class=p>;</span>
-    <span class=k>return</span> <span class=n>XT_CONTINUE</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><p>只是设置了<code>skb->mark</code>而已，没有改变报文内容。</p>
-<p>mark match: 匹配mark非0的直接放通，mark为0的继续匹配下面的规则</p>
-<pre tabindex=0><code>iptables -A POSTROUTING -t mangle -m mark ! --mark 0 -j ACCEPT
-</code></pre><p>MARK target: 设置标记</p>
-<pre tabindex=0><code>iptables -t mangle -A PREROUTING -i eth0 -p tcp --dport 80 -j MARK --set-mark 1
-</code></pre><p>CONNMARK target:将mark打到连接跟踪记录上</p>
-<pre tabindex=0><code>iptables -A POSTROUTING -t mangle -j CONNMARK --save-mark
-</code></pre><h3 id=应用场景>应用场景</h3>
-<ol>
-<li>策略路由</li>
-</ol>
-<p>要求对内网进行策略路由，所有通过TCP协议访问80端口的数据包都从ChinaNet线路出去，而所有访问UDP协议53端口对的数据包都从cernet线路出去</p>
-<pre tabindex=0><code class=language-mermaid data-lang=mermaid>graph LR
-	A[LAN] --&gt;|eth0| B[&quot;gw&quot;]
+<td>[!] &ndash;mark value[/mask]</td><td>数据包的 nfmark值与value进行匹配，其中mask的值为可选的</td></tr></tbody></table></li></ol><blockquote>
+<p><strong>CONNMARK和MARK的区别</strong></p><p>同样是打标记，CONNMARK是针对连接的，MARK是针对单一数据包的</p><p>两种机制一般都和ip rule联用，实现对满足一类条件的数据包的策略路由</p><ol>
+<li>对连接打了标记，只是标记了连接，没有标记连接中的每个数据包。标记单个数据包，也不会对整条连接的标记有影响。二者是相对独立的</li><li>路由判定(routing decision)是以单一数据包为单位的。或者说，在netfilter框架之外，并没有连接标记的概念。或者说，ip命令只知道MARK，而不知道CONNMARK是什么</li><li>关键在于：给所有要进行ip rule匹配的单一数据包打上标记。方法一般有二：用MARK直接打，或者用CONNMARK &ndash;restore-mark把搭载连接上的标记转移到数据包上。</li></ol></blockquote><p><strong>mangle表工作流程</strong></p><ol>
+<li>iptable_mangle.c的主要工作就是注册和初始化mangle表，注册mangle钩子</li><li>除了ct的hook是单独处理外，其他的filter、nat、mangle都是通过hook之后调用ipt_do_table来处理，要么重点在match里，要么重点在target处理中。但是这个基本机制框架没变。即都是通过rules。</li></ol><p>先看一下target的执行</p><pre tabindex=0><code>iptables -t mangle -A PREROUTING -i eth0 -p tcp --dport 80 -j MARK --set-mark 1
+</code></pre><p>内核里对target MARK的处理代码</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// linux-5.10.55
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>static</span> <span class=kt>unsigned</span> <span class=kt>int</span>
+</span></span><span class=line><span class=cl><span class=nf>mark_tg</span><span class=p>(</span><span class=k>struct</span> <span class=n>sk_buff</span> <span class=o>*</span><span class=n>skb</span><span class=p>,</span> <span class=k>const</span> <span class=k>struct</span> <span class=n>xt_action_param</span> <span class=o>*</span><span class=n>par</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=k>struct</span> <span class=n>xt_mark_tginfo2</span> <span class=o>*</span><span class=n>info</span> <span class=o>=</span> <span class=n>par</span><span class=o>-&gt;</span><span class=n>targinfo</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>skb</span><span class=o>-&gt;</span><span class=n>mark</span> <span class=o>=</span> <span class=p>(</span><span class=n>skb</span><span class=o>-&gt;</span><span class=n>mark</span> <span class=o>&amp;</span> <span class=o>~</span><span class=n>info</span><span class=o>-&gt;</span><span class=n>mask</span><span class=p>)</span> <span class=o>^</span> <span class=n>info</span><span class=o>-&gt;</span><span class=n>mark</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>XT_CONTINUE</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>只是设置了<code>skb->mark</code>而已，没有改变报文内容。</p><p>mark match: 匹配mark非0的直接放通，mark为0的继续匹配下面的规则</p><pre tabindex=0><code>iptables -A POSTROUTING -t mangle -m mark ! --mark 0 -j ACCEPT
+</code></pre><p>MARK target: 设置标记</p><pre tabindex=0><code>iptables -t mangle -A PREROUTING -i eth0 -p tcp --dport 80 -j MARK --set-mark 1
+</code></pre><p>CONNMARK target:将mark打到连接跟踪记录上</p><pre tabindex=0><code>iptables -A POSTROUTING -t mangle -j CONNMARK --save-mark
+</code></pre><h3 id=应用场景>应用场景</h3><ol>
+<li>策略路由</li></ol><p>要求对内网进行策略路由，所有通过TCP协议访问80端口的数据包都从ChinaNet线路出去，而所有访问UDP协议53端口对的数据包都从cernet线路出去</p><pre tabindex=0><code class=language-mermaid data-lang=mermaid>graph LR
+	A[LAN] --&gt;|eth0| B[&#34;gw&#34;]
 	B --&gt;|eth1 10.10.1.1| C[chinanet]
 	B --&gt;|eth2 10.10.2.1| D[cernet]
-	C --&gt; E((&quot;internet&quot;))
-	D --&gt; E((&quot;internet&quot;))
-</code></pre><p>打标记</p>
-<pre tabindex=0><code>iptables -t mangle -A PREROUTING -i eth0 -p tcp --dport 80 -j MARK --set-mark 1
+	C --&gt; E((&#34;internet&#34;))
+	D --&gt; E((&#34;internet&#34;))
+</code></pre><p>打标记</p><pre tabindex=0><code>iptables -t mangle -A PREROUTING -i eth0 -p tcp --dport 80 -j MARK --set-mark 1
 iptables -t mangle -A PREROUTING -i eth0 -p udp --dport 53 -j MARK --set-mark 2
-</code></pre><p>建表：</p>
-<pre tabindex=0><code>ip rule add from all fwmark 1 table 10
+</code></pre><p>建表：</p><pre tabindex=0><code>ip rule add from all fwmark 1 table 10
 ip rule add from all fwmark 2 table 20
-</code></pre><p>策略路由：</p>
-<pre tabindex=0><code>ip route add default via 10.10.1.1 dev eth1 table 10
+</code></pre><p>策略路由：</p><pre tabindex=0><code>ip route add default via 10.10.1.1 dev eth1 table 10
 ip route add default via 10.10.2.1 dev eth2 table 20
 </code></pre><ol start=2>
 <li>CONNMARK和MARK结合
@@ -452,61 +186,28 @@ iptables -A POSTROUTING -m mark --mark 0 -p tcp --dport 21 -t mangle -j MARK --s
 iptables -A POSTROUTING -m mark --mark 0 -p tcp --dport 80 -t mangle -j MARK --set-mark 2
 iptables -A POSTROUTING -m mark --mark 0 -t mangle -p tcp -j MARK --set-mark 3 
 iptables -A POSTROUTING -t mangle -j CONNMARK --save-mark
-</code></pre></li>
-</ol>
-<blockquote>
+</code></pre></li></ol><blockquote>
 <ol>
-<li>第1条规则就是完成了将连接跟踪上的标记记录到该连接上的每一个数据包中</li>
-<li>第2条规则判断数据包的标记，如果不为0，则直接ACCEPT。如果数据包上没有被打标记，则交由后面的规则进行匹配并打标记。这里为什么会出现经过了CONNMARK模块，数据包仍未被打标记呢？可以想到，如果一条链接的第1个数据包经过第1条规则处理之后，由于ct->mark为0，所以其数据包的标记skb->nfmark应该仍旧为0，就需要进行后面规则的匹配。</li>
-<li>第3~5条规则，则按照匹配选项对符合规则的数据包打上不同的标记</li>
-<li>第6条规则，则是把之前打的标记信息保存到ct里.</li>
-</ol>
-</blockquote>
-<h2 id=mac>mac</h2>
-<p>以下命令将允许所有端口访问其物理地址 3E:D7:88:A6:66:8E</p>
-<pre tabindex=0><code># iptables -I INPUT -m mac --mac-source 3E:D7:88:A6:66:8E -j ACCEPT
-</code></pre><p>以下命令将允许SSH访问（端口22）具有物理地址 3E:D7:88:A6:66:8E。其他物理地址禁止访问SSH</p>
-<pre tabindex=0><code># iptables -I INPUT -p tcp --port 22 -m mac ! --mac-source 3E:D7:88:A6:66:8E -j REJECT
-</code></pre><h2 id=其他命令>其他命令</h2>
-<h3 id=iptables-save>iptables-save</h3>
-<p>dump 已配置的规则，可以用 > 重定向到一个文件中</p>
-<p>参数</p>
-<ul>
+<li>第1条规则就是完成了将连接跟踪上的标记记录到该连接上的每一个数据包中</li><li>第2条规则判断数据包的标记，如果不为0，则直接ACCEPT。如果数据包上没有被打标记，则交由后面的规则进行匹配并打标记。这里为什么会出现经过了CONNMARK模块，数据包仍未被打标记呢？可以想到，如果一条链接的第1个数据包经过第1条规则处理之后，由于ct->mark为0，所以其数据包的标记skb->nfmark应该仍旧为0，就需要进行后面规则的匹配。</li><li>第3~5条规则，则按照匹配选项对符合规则的数据包打上不同的标记</li><li>第6条规则，则是把之前打的标记信息保存到ct里.</li></ol></blockquote><h2 id=mac>mac</h2><p>以下命令将允许所有端口访问其物理地址 3E:D7:88:A6:66:8E</p><pre tabindex=0><code># iptables -I INPUT -m mac --mac-source 3E:D7:88:A6:66:8E -j ACCEPT
+</code></pre><p>以下命令将允许SSH访问（端口22）具有物理地址 3E:D7:88:A6:66:8E。其他物理地址禁止访问SSH</p><pre tabindex=0><code># iptables -I INPUT -p tcp --port 22 -m mac ! --mac-source 3E:D7:88:A6:66:8E -j REJECT
+</code></pre><h2 id=其他命令>其他命令</h2><h3 id=iptables-save>iptables-save</h3><p>dump 已配置的规则，可以用 > 重定向到一个文件中</p><p>参数</p><ul>
 <li>
-<p>-t 表示要dump的表(不指定的话dump所有表的配置)</p>
-</li>
-<li>
-<p>-c 表示输出中显示每条规则当前报文计数</p>
-</li>
-</ul>
-<pre tabindex=0><code>iptables-save -t nat -c &gt; iptables.save
-</code></pre><h3 id=iptables-restore>iptables-restore</h3>
-<p>从之前导出的iptable规则配置文件加载规则。</p>
-<ul>
-<li>-c 指定在还原iptables表时候，还原当前的数据包计数器和字节计数器的值</li>
-<li>-t 指定要还原表的名称</li>
-</ul>
-<p>还原iptables配置：</p>
-<pre tabindex=0><code>iptables-restore &lt; iptables.save
-</code></pre><p>指定在还原iptables表时候，还原当前的数据包计数器和字节计数器的值：</p>
-<pre tabindex=0><code>iptables-restore -c &lt; iptables.save
-</code></pre>
-</article>
-</div>
-</body>
-<div>
+<p>-t 表示要dump的表(不指定的话dump所有表的配置)</p></li><li>
+<p>-c 表示输出中显示每条规则当前报文计数</p></li></ul><pre tabindex=0><code>iptables-save -t nat -c &gt; iptables.save
+</code></pre><h3 id=iptables-restore>iptables-restore</h3><p>从之前导出的iptable规则配置文件加载规则。</p><ul>
+<li>-c 指定在还原iptables表时候，还原当前的数据包计数器和字节计数器的值</li><li>-t 指定要还原表的名称</li></ul><p>还原iptables配置：</p><pre tabindex=0><code>iptables-restore &lt; iptables.save
+</code></pre><p>指定在还原iptables表时候，还原当前的数据包计数器和字节计数器的值：</p><pre tabindex=0><code>iptables-restore -c &lt; iptables.save
+</code></pre></article></div></body><div>
 <small> words: 3742 tags:</small>
 <small><code><a href=https://arair.net/tags/iptables>iptables</a></code></small>
 <small><code><a href=https://arair.net/tags/command>command</a></code></small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

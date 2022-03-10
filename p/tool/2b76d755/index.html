@@ -1,5 +1,5 @@
 <!doctype html><html><title>使用github action发布hugo到github page</title><meta name=description content="可以使用github action来进行发布hugo
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="使用github action发布hugo到github page">
 <meta property="og:description" content="可以使用github action来进行发布hugo">
 <meta property="og:type" content="article">
@@ -11,108 +11,70 @@
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="623">
 <meta itemprop=keywords content="github-action,hugo,site,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>使用github action发布hugo到github page</h1>
-<p>
+<h1 class=post-title>使用github action发布hugo到github page</h1><p>
 <small>
 2021-06-25, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
+</p></header><aside>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#示例代码>示例代码</a></li>
-<li><a href=#问题一-将对应的key填入两个github仓库>问题一: 将对应的key填入两个github仓库</a></li>
-<li><a href=#问题二-自定义域名>问题二: 自定义域名</a></li>
-</ul>
-</nav>
-</aside>
-<p>可以使用github action来进行发布hugo</p>
-<p>hugo发布到新的仓库作为github page</p>
-<p>在github仓库上选择action，选择<code>set up a workflow yourself </code>，将下面的内容填入打开的编辑框。</p>
-<p>external_repository配置为对应的github page的仓库.</p>
-<h2 id=示例代码>示例代码</h2>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>github pages</span><span class=w>
-</span><span class=w>
-</span><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span>- <span class=l>main </span><span class=w> </span><span class=c># Set a branch to deploy</span><span class=w>
-</span><span class=w>  </span><span class=nt>pull_request</span><span class=p>:</span><span class=w>
-</span><span class=w>
-</span><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>deploy</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-20.04</span><span class=w>
-</span><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v2</span><span class=w>
-</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span><span class=nt>submodules</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>  </span><span class=c># Fetch Hugo themes (true OR recursive)</span><span class=w>
-</span><span class=w>          </span><span class=nt>fetch-depth</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>    </span><span class=c># Fetch all history for .GitInfo and .Lastmod</span><span class=w>
-</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Hugo</span><span class=w>
-</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-hugo@v2</span><span class=w>
-</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span><span class=nt>hugo-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;latest&#39;</span><span class=w>
-</span><span class=w>          </span><span class=nt>extended</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
-</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build</span><span class=w>
-</span><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>hugo --minify</span><span class=w>
-</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy</span><span class=w>
-</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-gh-pages@v3</span><span class=w>
-</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span><span class=nt>deploy_key</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.ACTIONS_DEPLOY_KEY }}</span><span class=w>
-</span><span class=w>          </span><span class=nt>external_repository: xxxx # 发布到的repository. 例如</span><span class=p>:</span><span class=w> </span><span class=l>https://github.com/torvalds/linux.git填入torvalds/linux</span><span class=w>
-</span><span class=w>          </span><span class=nt>publish_branch: main  # default</span><span class=p>:</span><span class=w> </span><span class=l>gh-pages</span><span class=w>
-</span><span class=w>          </span><span class=nt>publish_dir</span><span class=p>:</span><span class=w> </span><span class=l>./public</span><span class=w>
-</span></code></pre></div><h2 id=问题一-将对应的key填入两个github仓库>问题一: 将对应的key填入两个github仓库</h2>
-<ol>
+<li><a href=#示例代码>示例代码</a></li><li><a href=#问题一-将对应的key填入两个github仓库>问题一: 将对应的key填入两个github仓库</a></li><li><a href=#问题二-自定义域名>问题二: 自定义域名</a></li></ul></nav></aside><p>可以使用github action来进行发布hugo</p><p>hugo发布到新的仓库作为github page</p><p>在github仓库上选择action，选择<code>set up a workflow yourself </code>，将下面的内容填入打开的编辑框。</p><p>external_repository配置为对应的github page的仓库.</p><h2 id=示例代码>示例代码</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>github pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>main </span><span class=w> </span><span class=c># Set a branch to deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>pull_request</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-20.04</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>submodules</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>  </span><span class=c># Fetch Hugo themes (true OR recursive)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>fetch-depth</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>    </span><span class=c># Fetch all history for .GitInfo and .Lastmod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Hugo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-hugo@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>hugo-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;latest&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>extended</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>hugo --minify</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-gh-pages@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>deploy_key</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.ACTIONS_DEPLOY_KEY }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>external_repository: xxxx # 发布到的repository. 例如</span><span class=p>:</span><span class=w> </span><span class=l>https://github.com/torvalds/linux.git填入torvalds/linux</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_branch: main  # default</span><span class=p>:</span><span class=w> </span><span class=l>gh-pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_dir</span><span class=p>:</span><span class=w> </span><span class=l>./public</span><span class=w>
+</span></span></span></code></pre></div><h2 id=问题一-将对应的key填入两个github仓库>问题一: 将对应的key填入两个github仓库</h2><ol>
 <li>
-<p>生成key</p>
-<pre tabindex=0><code>ssh-keygen -t rsa -C 'xxxxx@company.com' -f ~/.ssh/action_deploy_key`
-</code></pre><p>会生成两个文件<code>action_deploy_key.pub</code>和<code>action_deploy_key</code></p>
-</li>
-<li>
-<p>选择external_repository仓库的<code>Settings-->Deploy keys-->Add deploy key</code></p>
-<ul>
-<li><code>Title</code>中填入<code>ACTIONS_DEPLOY_KEY</code></li>
-<li><code>Key</code>中填入<code>action_deploy_key.pub</code>文件内容</li>
-</ul>
-</li>
-<li>
-<p>选择当前仓库的<code>Settings-->Secrets-->New repository secret</code></p>
-<ul>
-<li><code>Name</code>中填入<code>ACTIONS_DEPLOY_KEY</code></li>
-<li><code>Value</code>中填入<code>action_deploy_key</code>文件内容</li>
-</ul>
-</li>
-</ol>
-<h2 id=问题二-自定义域名>问题二: 自定义域名</h2>
-<p>添加CNAME到hugo的staic目录，内容为<code>custom-domain.com</code></p>
-<p>详细内容查看 <a href=https://docs.github.com/cn/actions/learn-github-actions>https://docs.github.com/cn/actions/learn-github-actions</a></p>
-</article>
-</div>
-</body>
-<div>
+<p>生成key</p><pre tabindex=0><code>ssh-keygen -t rsa -C &#39;xxxxx@company.com&#39; -f ~/.ssh/action_deploy_key`
+</code></pre><p>会生成两个文件<code>action_deploy_key.pub</code>和<code>action_deploy_key</code></p></li><li>
+<p>选择external_repository仓库的<code>Settings-->Deploy keys-->Add deploy key</code></p><ul>
+<li><code>Title</code>中填入<code>ACTIONS_DEPLOY_KEY</code></li><li><code>Key</code>中填入<code>action_deploy_key.pub</code>文件内容</li></ul></li><li>
+<p>选择当前仓库的<code>Settings-->Secrets-->New repository secret</code></p><ul>
+<li><code>Name</code>中填入<code>ACTIONS_DEPLOY_KEY</code></li><li><code>Value</code>中填入<code>action_deploy_key</code>文件内容</li></ul></li></ol><h2 id=问题二-自定义域名>问题二: 自定义域名</h2><p>添加CNAME到hugo的staic目录，内容为<code>custom-domain.com</code></p><p>详细内容查看 <a href=https://docs.github.com/cn/actions/learn-github-actions>https://docs.github.com/cn/actions/learn-github-actions</a></p></article></div></body><div>
 <small> words: 623 tags:</small>
 <small><code><a href=https://arair.net/tags/github-action>github-action</a></code></small>
 <small><code><a href=https://arair.net/tags/hugo>hugo</a></code></small>
 <small><code><a href=https://arair.net/tags/site>site</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

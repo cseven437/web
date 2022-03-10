@@ -1,5 +1,5 @@
 <!doctype html><html><title>linux Get Set Time函数</title><meta name=description content="gettimeofday与settimeofday函数说明
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="linux Get Set Time函数">
 <meta property="og:description" content="gettimeofday与settimeofday函数说明">
 <meta property="og:type" content="article">
@@ -11,65 +11,44 @@
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="322">
 <meta itemprop=keywords content="linux,c,time,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>linux Get Set Time函数</h1>
-<p>
+<h1 class=post-title>linux Get Set Time函数</h1><p>
 <small>
 2021-03-22, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
-<nav id=TableOfContents></nav>
-</aside>
-<p>gettimeofday与settimeofday函数说明</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/time.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=kt>int</span> <span class=nf>gettimeofday</span><span class=p>(</span><span class=k>struct</span> <span class=n>timeval</span> <span class=o>*</span><span class=n>tv</span><span class=p>,</span> <span class=k>struct</span> <span class=n>timezone</span> <span class=o>*</span><span class=n>tz</span><span class=p>);</span>
-
-<span class=kt>int</span> <span class=nf>settimeofday</span><span class=p>(</span><span class=k>const</span> <span class=k>struct</span> <span class=n>timeval</span> <span class=o>*</span><span class=n>tv</span><span class=p>,</span> <span class=k>const</span> <span class=k>struct</span> <span class=n>timezone</span> <span class=o>*</span><span class=n>tz</span><span class=p>);</span>
-</code></pre></div><p>The functions gettimeofday() and settimeofday() can get and set the time as well as a timezone. The tv argument is a struct timeval (as specified in &lt;sys/time.h>):</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>timeval</span> <span class=p>{</span>
-    <span class=n>time_t</span>      <span class=n>tv_sec</span><span class=p>;</span>     <span class=cm>/* seconds */</span>
-    <span class=n>suseconds_t</span> <span class=n>tv_usec</span><span class=p>;</span>    <span class=cm>/* microseconds */</span>
-<span class=p>};</span>
-</code></pre></div><p>and gives the number of seconds and microseconds since the Epoch (see time(2)). The tz argument is a struct timezone:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>timezone</span> <span class=p>{</span>
-    <span class=kt>int</span> <span class=n>tz_minuteswest</span><span class=p>;</span>     <span class=cm>/* minutes west of Greenwich */</span>
-    <span class=kt>int</span> <span class=n>tz_dsttime</span><span class=p>;</span>         <span class=cm>/* type of DST correction */</span>
-<span class=p>};</span>
-</code></pre></div><p>If either tv or tz is NULL, the corresponding structure is not set or returned. (However, compilation warnings will result if tv is NULL.)</p>
-<p>The use of the timezone structure is obsolete; the tz argument should normally be specified as NULL. (See NOTES below.)</p>
-<p>Under Linux there are some peculiar &ldquo;warp clock&rdquo; semantics associated with the settimeofday() system call if on the very first call (after booting) that has a non-NULL tz argument, the tv argument is NULL and the tz_minuteswest field is nonzero. (The tz_dsttime field should be zero for this case.) In such a case it is assumed that the CMOS clock is on local time, and that it has to be incremented by this amount to get UTC system time. No doubt it is a bad idea to use this feature.</p>
-<p>RETURN VALUE</p>
-<pre><code>gettimeofday() and settimeofday() return 0 for success, or -1 for failure (in which case errno is set appropriately).
-</code></pre>
-<p>ERRORS</p>
-<pre><code>- EFAULT One of tv or tz pointed outside the accessible address space.
+</p></header><aside>
+<nav id=TableOfContents></nav></aside><p>gettimeofday与settimeofday函数说明</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/time.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>gettimeofday</span><span class=p>(</span><span class=k>struct</span> <span class=n>timeval</span> <span class=o>*</span><span class=n>tv</span><span class=p>,</span> <span class=k>struct</span> <span class=n>timezone</span> <span class=o>*</span><span class=n>tz</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>settimeofday</span><span class=p>(</span><span class=k>const</span> <span class=k>struct</span> <span class=n>timeval</span> <span class=o>*</span><span class=n>tv</span><span class=p>,</span> <span class=k>const</span> <span class=k>struct</span> <span class=n>timezone</span> <span class=o>*</span><span class=n>tz</span><span class=p>);</span>
+</span></span></code></pre></div><p>The functions gettimeofday() and settimeofday() can get and set the time as well as a timezone. The tv argument is a struct timeval (as specified in &lt;sys/time.h>):</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>struct</span> <span class=n>timeval</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>time_t</span>      <span class=n>tv_sec</span><span class=p>;</span>     <span class=cm>/* seconds */</span>
+</span></span><span class=line><span class=cl>    <span class=n>suseconds_t</span> <span class=n>tv_usec</span><span class=p>;</span>    <span class=cm>/* microseconds */</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></div><p>and gives the number of seconds and microseconds since the Epoch (see time(2)). The tz argument is a struct timezone:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>struct</span> <span class=n>timezone</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>tz_minuteswest</span><span class=p>;</span>     <span class=cm>/* minutes west of Greenwich */</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>tz_dsttime</span><span class=p>;</span>         <span class=cm>/* type of DST correction */</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></div><p>If either tv or tz is NULL, the corresponding structure is not set or returned. (However, compilation warnings will result if tv is NULL.)</p><p>The use of the timezone structure is obsolete; the tz argument should normally be specified as NULL. (See NOTES below.)</p><p>Under Linux there are some peculiar &ldquo;warp clock&rdquo; semantics associated with the settimeofday() system call if on the very first call (after booting) that has a non-NULL tz argument, the tv argument is NULL and the tz_minuteswest field is nonzero. (The tz_dsttime field should be zero for this case.) In such a case it is assumed that the CMOS clock is on local time, and that it has to be incremented by this amount to get UTC system time. No doubt it is a bad idea to use this feature.</p><p>RETURN VALUE</p><pre><code>gettimeofday() and settimeofday() return 0 for success, or -1 for failure (in which case errno is set appropriately).
+</code></pre><p>ERRORS</p><pre><code>- EFAULT One of tv or tz pointed outside the accessible address space.
 - EINVAL Timezone (or something else) is invalid.
-- EPERM  The calling process has insufficient privilege to call settimeofday(); under Linux the CAP_SYS_TIME capability is required.</code></pre>
-</article>
-</div>
-</body>
-<div>
+- EPERM  The calling process has insufficient privilege to call settimeofday(); under Linux the CAP_SYS_TIME capability is required.</code></pre></article></div></body><div>
 <small> words: 322 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 <small><code><a href=https://arair.net/tags/time>time</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

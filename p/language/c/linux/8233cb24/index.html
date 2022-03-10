@@ -1,5 +1,5 @@
 <!doctype html><html><title>inet相关函数</title><meta name=description content="inet_pton - convert IPv4 and IPv6 addresses from text to binary form
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="inet相关函数">
 <meta property="og:description" content="inet_pton - convert IPv4 and IPv6 addresses from text to binary form">
 <meta property="og:type" content="article">
@@ -11,131 +11,108 @@
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="324">
 <meta itemprop=keywords content="c,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>inet相关函数</h1>
-<p>
+<h1 class=post-title>inet相关函数</h1><p>
 <small>
 2021-04-02, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
-<nav id=TableOfContents></nav>
-</aside>
-<p>inet_pton - convert IPv4 and IPv6 addresses from text to binary form</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=kt>int</span> <span class=nf>inet_pton</span><span class=p>(</span><span class=kt>int</span> <span class=n>af</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=kr>restrict</span> <span class=n>src</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=kr>restrict</span> <span class=n>dst</span><span class=p>);</span>
-</code></pre></div><p>参数</p>
-<ul>
+</p></header><aside>
+<nav id=TableOfContents></nav></aside><p>inet_pton - convert IPv4 and IPv6 addresses from text to binary form</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>inet_pton</span><span class=p>(</span><span class=kt>int</span> <span class=n>af</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=kr>restrict</span> <span class=n>src</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=kr>restrict</span> <span class=n>dst</span><span class=p>);</span>
+</span></span></code></pre></div><p>参数</p><ul>
 <li>af
 <ul>
-<li>AF_INET</li>
-<li>AF_INET6</li>
-</ul>
-</li>
-</ul>
-<p>返回值</p>
-<p>inet_pton() returns 1 on success (network address was successfully converted). 0 is returned if src does not contain a character string representing a valid network address in the specified address family. If af does not contain a valid address family, -1 is returned and errno is set to EAFNOSUPPORT.</p>
-<p>示例</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;         /* See NOTES */</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=cp>#include</span> <span class=cpf>&lt;netinet/in.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=cp>#define NS_INADDRSZ 4
-</span><span class=cp></span>
-<span class=k>static</span> <span class=kt>int</span> <span class=nf>my_inet_pton4</span><span class=p>(</span><span class=n>src</span><span class=p>,</span> <span class=n>dst</span><span class=p>)</span>
-    <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>src</span><span class=p>;</span>
-    <span class=n>u_char</span> <span class=o>*</span><span class=n>dst</span><span class=p>;</span>
-<span class=p>{</span>
-    <span class=kt>int</span> <span class=n>saw_digit</span><span class=p>,</span> <span class=n>octets</span><span class=p>,</span> <span class=n>ch</span><span class=p>;</span>
-    <span class=n>u_char</span> <span class=n>tmp</span><span class=p>[</span><span class=n>NS_INADDRSZ</span><span class=p>],</span> <span class=o>*</span><span class=n>tp</span><span class=p>;</span>
-
-    <span class=n>saw_digit</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
-    <span class=n>octets</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
-    <span class=o>*</span><span class=p>(</span><span class=n>tp</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>)</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
-    <span class=k>while</span> <span class=p>((</span><span class=n>ch</span> <span class=o>=</span> <span class=o>*</span><span class=n>src</span><span class=o>++</span><span class=p>)</span> <span class=o>!=</span> <span class=sc>&#39;\0&#39;</span><span class=p>)</span> <span class=p>{</span>
-
-        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;ch:%c</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ch</span><span class=p>);</span>
-        <span class=k>if</span> <span class=p>(</span><span class=n>ch</span> <span class=o>&gt;=</span> <span class=sc>&#39;0&#39;</span> <span class=o>&amp;&amp;</span> <span class=n>ch</span> <span class=o>&lt;=</span> <span class=sc>&#39;9&#39;</span><span class=p>)</span> <span class=p>{</span>
-            <span class=n>u_int</span> <span class=n>new</span> <span class=o>=</span> <span class=o>*</span><span class=n>tp</span> <span class=o>*</span> <span class=mi>10</span> <span class=o>+</span> <span class=p>(</span><span class=n>ch</span> <span class=o>-</span> <span class=sc>&#39;0&#39;</span><span class=p>);</span>
-
-<span class=cp>#if 1
-</span><span class=cp></span>            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;saw_digit:%d *tp:%d </span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>saw_digit</span><span class=p>,</span> <span class=o>*</span><span class=n>tp</span><span class=p>);</span>
-            <span class=k>if</span> <span class=p>(</span><span class=n>saw_digit</span> <span class=o>&amp;&amp;</span> <span class=o>*</span><span class=n>tp</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
-                <span class=n>printf</span><span class=p>(</span><span class=s>&#34;saw_digit:%d *tp:%d </span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>saw_digit</span><span class=p>,</span> <span class=o>*</span><span class=n>tp</span><span class=p>);</span>
-                <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-            <span class=p>}</span>
-<span class=cp>#endif
-</span><span class=cp></span>            <span class=k>if</span> <span class=p>(</span><span class=n>new</span> <span class=o>&gt;</span> <span class=mi>255</span><span class=p>)</span> <span class=p>{</span>
-                <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-            <span class=p>}</span>
-            <span class=o>*</span><span class=n>tp</span> <span class=o>=</span> <span class=n>new</span><span class=p>;</span>
-            <span class=k>if</span> <span class=p>(</span><span class=o>!</span> <span class=n>saw_digit</span><span class=p>)</span> <span class=p>{</span>
-                <span class=k>if</span> <span class=p>(</span><span class=o>++</span><span class=n>octets</span> <span class=o>&gt;</span> <span class=mi>4</span><span class=p>)</span> <span class=p>{</span>
-                    <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-                <span class=p>}</span>
-                <span class=n>saw_digit</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
-            <span class=p>}</span>
-        <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>ch</span> <span class=o>==</span> <span class=sc>&#39;.&#39;</span> <span class=o>&amp;&amp;</span> <span class=n>saw_digit</span><span class=p>)</span> <span class=p>{</span>
-            <span class=k>if</span> <span class=p>(</span><span class=n>octets</span> <span class=o>==</span> <span class=mi>4</span><span class=p>)</span> <span class=p>{</span>
-                <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-            <span class=p>}</span>
-            <span class=o>*++</span><span class=n>tp</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
-            <span class=n>saw_digit</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
-        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
-            <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-        <span class=p>}</span>
-    <span class=p>}</span>
-    <span class=k>if</span> <span class=p>(</span><span class=n>octets</span> <span class=o>&lt;</span> <span class=mi>4</span><span class=p>)</span> <span class=p>{</span>
-        <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-    <span class=p>}</span>
-    <span class=n>memcpy</span><span class=p>(</span><span class=n>dst</span><span class=p>,</span> <span class=n>tmp</span><span class=p>,</span> <span class=n>NS_INADDRSZ</span><span class=p>);</span>
-    <span class=k>return</span> <span class=p>(</span><span class=mi>1</span><span class=p>);</span>
-<span class=p>}</span>
-
-<span class=kt>int</span> <span class=n>main</span><span class=p>()</span>
-<span class=p>{</span>
-    <span class=kt>int</span> <span class=n>gw_ip</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
-    <span class=k>struct</span> <span class=n>in_addr</span> <span class=n>addr</span><span class=p>;;</span>
-    <span class=kt>char</span> <span class=n>temp_buf</span><span class=p>[</span><span class=mi>512</span><span class=p>]</span><span class=o>=</span><span class=p>{</span><span class=mi>0</span><span class=p>};</span>
-    <span class=kt>int</span> <span class=n>wan_mode</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
-
-    <span class=n>memset</span><span class=p>(</span><span class=o>&amp;</span><span class=n>addr</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=n>in_addr</span><span class=p>));</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>inet_pton</span><span class=p>(</span><span class=n>AF_INET</span><span class=p>,</span> <span class=s>&#34;192.168.44.1&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>addr</span><span class=p>));</span>
-    <span class=c1>// printf(&#34;%d\n&#34;, my_inet_pton4(&#34;192.168.01.1&#34;, &amp;addr));
-</span><span class=c1></span>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>addr</span><span class=p>.</span><span class=n>s_addr</span><span class=p>);</span>
-    <span class=n>gw_ip</span> <span class=o>=</span> <span class=n>ntohl</span><span class=p>(</span><span class=n>addr</span><span class=p>.</span><span class=n>s_addr</span><span class=p>);</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>gw_ip</span><span class=p>);</span>
-    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><p>问题：</p>
-<p>glibc中不能处理192.168.044.1，uclib 中可以正常处理</p>
-</article>
-</div>
-</body>
-<div>
+<li>AF_INET</li><li>AF_INET6</li></ul></li></ul><p>返回值</p><p>inet_pton() returns 1 on success (network address was successfully converted). 0 is returned if src does not contain a character string representing a valid network address in the specified address family. If af does not contain a valid address family, -1 is returned and errno is set to EAFNOSUPPORT.</p><p>示例</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;         /* See NOTES */</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;netinet/in.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=cp>#define NS_INADDRSZ 4
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kt>int</span> <span class=nf>my_inet_pton4</span><span class=p>(</span><span class=n>src</span><span class=p>,</span> <span class=n>dst</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>src</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>u_char</span> <span class=o>*</span><span class=n>dst</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>saw_digit</span><span class=p>,</span> <span class=n>octets</span><span class=p>,</span> <span class=n>ch</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>u_char</span> <span class=n>tmp</span><span class=p>[</span><span class=n>NS_INADDRSZ</span><span class=p>],</span> <span class=o>*</span><span class=n>tp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>saw_digit</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>octets</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>*</span><span class=p>(</span><span class=n>tp</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>)</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>((</span><span class=n>ch</span> <span class=o>=</span> <span class=o>*</span><span class=n>src</span><span class=o>++</span><span class=p>)</span> <span class=o>!=</span> <span class=sc>&#39;\0&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;ch:%c</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ch</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>ch</span> <span class=o>&gt;=</span> <span class=sc>&#39;0&#39;</span> <span class=o>&amp;&amp;</span> <span class=n>ch</span> <span class=o>&lt;=</span> <span class=sc>&#39;9&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>u_int</span> <span class=n>new</span> <span class=o>=</span> <span class=o>*</span><span class=n>tp</span> <span class=o>*</span> <span class=mi>10</span> <span class=o>+</span> <span class=p>(</span><span class=n>ch</span> <span class=o>-</span> <span class=sc>&#39;0&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#if 1
+</span></span></span><span class=line><span class=cl><span class=cp></span>            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;saw_digit:%d *tp:%d </span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>saw_digit</span><span class=p>,</span> <span class=o>*</span><span class=n>tp</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>saw_digit</span> <span class=o>&amp;&amp;</span> <span class=o>*</span><span class=n>tp</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>printf</span><span class=p>(</span><span class=s>&#34;saw_digit:%d *tp:%d </span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>saw_digit</span><span class=p>,</span> <span class=o>*</span><span class=n>tp</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cp>#endif
+</span></span></span><span class=line><span class=cl><span class=cp></span>            <span class=k>if</span> <span class=p>(</span><span class=n>new</span> <span class=o>&gt;</span> <span class=mi>255</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>*</span><span class=n>tp</span> <span class=o>=</span> <span class=n>new</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=o>!</span> <span class=n>saw_digit</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=p>(</span><span class=o>++</span><span class=n>octets</span> <span class=o>&gt;</span> <span class=mi>4</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>                <span class=n>saw_digit</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>ch</span> <span class=o>==</span> <span class=sc>&#39;.&#39;</span> <span class=o>&amp;&amp;</span> <span class=n>saw_digit</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>octets</span> <span class=o>==</span> <span class=mi>4</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>*++</span><span class=n>tp</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>saw_digit</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>octets</span> <span class=o>&lt;</span> <span class=mi>4</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>memcpy</span><span class=p>(</span><span class=n>dst</span><span class=p>,</span> <span class=n>tmp</span><span class=p>,</span> <span class=n>NS_INADDRSZ</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>main</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>gw_ip</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>in_addr</span> <span class=n>addr</span><span class=p>;;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>temp_buf</span><span class=p>[</span><span class=mi>512</span><span class=p>]</span><span class=o>=</span><span class=p>{</span><span class=mi>0</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>wan_mode</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>memset</span><span class=p>(</span><span class=o>&amp;</span><span class=n>addr</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=n>in_addr</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>inet_pton</span><span class=p>(</span><span class=n>AF_INET</span><span class=p>,</span> <span class=s>&#34;192.168.44.1&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>addr</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// printf(&#34;%d\n&#34;, my_inet_pton4(&#34;192.168.01.1&#34;, &amp;addr));
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>addr</span><span class=p>.</span><span class=n>s_addr</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>gw_ip</span> <span class=o>=</span> <span class=n>ntohl</span><span class=p>(</span><span class=n>addr</span><span class=p>.</span><span class=n>s_addr</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>gw_ip</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>问题：</p><p>glibc中不能处理192.168.044.1，uclib 中可以正常处理</p></article></div></body><div>
 <small> words: 324 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

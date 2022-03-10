@@ -1,5 +1,5 @@
 <!doctype html><html><title>getaddrinfo函数</title><meta name=description content="getaddrinfo, freeaddrinfo, gai_strerror - network address and service translation
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="getaddrinfo函数">
 <meta property="og:description" content="getaddrinfo, freeaddrinfo, gai_strerror - network address and service translation">
 <meta property="og:type" content="article">
@@ -11,128 +11,112 @@
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="178">
 <meta itemprop=keywords content="c,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>getaddrinfo函数</h1>
-<p>
+<h1 class=post-title>getaddrinfo函数</h1><p>
 <small>
 2021-03-01, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
-<nav id=TableOfContents></nav>
-</aside>
-<p>getaddrinfo, freeaddrinfo, gai_strerror - network address and service translation</p>
-<p>函数声明</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;netdb.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=kt>int</span> <span class=nf>getaddrinfo</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>node</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>service</span><span class=p>,</span>
-               <span class=k>const</span> <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>hints</span><span class=p>,</span>
-               <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>**</span><span class=n>res</span><span class=p>);</span>
-
-<span class=kt>void</span> <span class=nf>freeaddrinfo</span><span class=p>(</span><span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>res</span><span class=p>);</span>
-
-<span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=nf>gai_strerror</span><span class=p>(</span><span class=kt>int</span> <span class=n>errcode</span><span class=p>);</span>
-</code></pre></div><p>addrinfo 结构体</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>addrinfo</span> <span class=p>{</span>
-    <span class=kt>int</span>              <span class=n>ai_flags</span><span class=p>;</span>
-    <span class=kt>int</span>              <span class=n>ai_family</span><span class=p>;</span>
-    <span class=kt>int</span>              <span class=n>ai_socktype</span><span class=p>;</span>
-    <span class=kt>int</span>              <span class=n>ai_protocol</span><span class=p>;</span>
-    <span class=n>socklen_t</span>        <span class=n>ai_addrlen</span><span class=p>;</span>
-    <span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=n>ai_addr</span><span class=p>;</span>
-    <span class=kt>char</span>            <span class=o>*</span><span class=n>ai_canonname</span><span class=p>;</span>
-    <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>ai_next</span><span class=p>;</span>
-<span class=p>};</span>
-</code></pre></div><p>示例</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;netdb.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;error.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
-<span class=p>{</span>
-
-    <span class=kt>char</span> <span class=o>*</span><span class=n>host</span> <span class=o>=</span> <span class=s>&#34;www.baiduffdsfsdklfjrklger.com&#34;</span><span class=p>;</span>
-    <span class=kt>char</span> <span class=o>*</span><span class=n>service</span> <span class=o>=</span> <span class=s>&#34;443&#34;</span><span class=p>;</span>
-    <span class=kt>char</span> <span class=n>hostip</span><span class=p>[</span><span class=mi>64</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=mi>0</span><span class=p>};</span>
-    <span class=k>struct</span> <span class=n>addrinfo</span>     <span class=o>*</span><span class=n>ailist</span><span class=p>,</span><span class=o>*</span><span class=n>aip</span><span class=p>;</span>
-    <span class=k>struct</span> <span class=n>addrinfo</span>     <span class=n>hint</span><span class=p>;</span>
-    <span class=k>struct</span> <span class=n>sockaddr_in</span>  <span class=o>*</span><span class=n>sinp</span><span class=p>;</span>
-    <span class=k>const</span> <span class=kt>char</span>          <span class=o>*</span><span class=n>addr</span><span class=p>;</span>
-
-    <span class=kt>int</span>                 <span class=n>err</span><span class=p>;</span>
-    <span class=kt>int</span>                 <span class=n>rt</span><span class=o>=-</span><span class=mi>1</span><span class=p>;</span>
-
-    <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>p</span><span class=p>;</span>
-    <span class=n>p</span> <span class=o>=</span> <span class=s>&#34;abcdef&#34;</span><span class=p>;</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;p:%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>p</span><span class=p>);</span>
-    <span class=n>ailist</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
-
-    <span class=n>hint</span><span class=p>.</span><span class=n>ai_flags</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
-    <span class=n>hint</span><span class=p>.</span><span class=n>ai_family</span><span class=o>=</span><span class=n>AF_INET</span><span class=p>;</span>
-    <span class=n>hint</span><span class=p>.</span><span class=n>ai_socktype</span><span class=o>=</span><span class=n>SOCK_STREAM</span><span class=p>;</span>
-    <span class=n>hint</span><span class=p>.</span><span class=n>ai_protocol</span><span class=o>=</span><span class=n>IPPROTO_TCP</span><span class=p>;</span>
-    <span class=n>hint</span><span class=p>.</span><span class=n>ai_addrlen</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
-    <span class=n>hint</span><span class=p>.</span><span class=n>ai_canonname</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
-    <span class=n>hint</span><span class=p>.</span><span class=n>ai_addr</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
-    <span class=n>hint</span><span class=p>.</span><span class=n>ai_next</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
-    <span class=k>if</span><span class=p>((</span><span class=n>err</span><span class=o>=</span><span class=n>getaddrinfo</span><span class=p>(</span><span class=n>host</span><span class=p>,</span><span class=n>service</span><span class=p>,</span><span class=o>&amp;</span><span class=n>hint</span><span class=p>,</span><span class=o>&amp;</span><span class=n>ailist</span><span class=p>))</span><span class=o>!=</span><span class=mi>0</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s():getaddrinfo err:%s </span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>__func__</span><span class=p>,</span><span class=n>gai_strerror</span><span class=p>(</span><span class=n>err</span><span class=p>));</span>
-        <span class=k>goto</span> <span class=n>end</span><span class=p>;</span>
-    <span class=p>}</span>
-    <span class=k>for</span><span class=p>(</span><span class=n>aip</span><span class=o>=</span><span class=n>ailist</span><span class=p>;</span><span class=n>aip</span><span class=o>!=</span><span class=nb>NULL</span><span class=p>;</span> <span class=n>aip</span><span class=o>=</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_next</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=k>if</span><span class=p>(</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_family</span><span class=o>==</span><span class=n>AF_INET</span><span class=p>)</span>
-        <span class=p>{</span>
-            <span class=n>sinp</span><span class=o>=</span><span class=p>(</span><span class=k>struct</span> <span class=n>sockaddr_in</span> <span class=o>*</span><span class=p>)</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_addr</span><span class=p>;</span>
-            <span class=n>addr</span><span class=o>=</span><span class=n>inet_ntop</span><span class=p>(</span><span class=n>AF_INET</span><span class=p>,</span><span class=o>&amp;</span><span class=n>sinp</span><span class=o>-&gt;</span><span class=n>sin_addr</span><span class=p>,</span><span class=n>hostip</span><span class=p>,</span><span class=n>INET_ADDRSTRLEN</span><span class=p>);</span>
-
-            <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>addr</span><span class=p>)</span> <span class=p>{</span>
-                <span class=n>perror</span><span class=p>(</span><span class=s>&#34;inet_ntop&#34;</span><span class=p>);</span>
-            <span class=p>}</span>
-            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
-            <span class=n>printf</span><span class=p>(</span><span class=s>&#34; address %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>addr</span><span class=o>?</span><span class=nl>addr</span><span class=p>:</span><span class=s>&#34;unknown&#34;</span><span class=p>);</span>
-            <span class=n>printf</span><span class=p>(</span><span class=s>&#34; port %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>ntohs</span><span class=p>(</span><span class=n>sinp</span><span class=o>-&gt;</span><span class=n>sin_port</span><span class=p>));</span>
-            <span class=n>rt</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
-            <span class=k>goto</span> <span class=n>end</span><span class=p>;</span>
-        <span class=p>}</span>
-    <span class=p>}</span>
-
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
-
-<span class=nl>end</span><span class=p>:</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
-    <span class=k>if</span><span class=p>(</span><span class=n>ailist</span><span class=p>)</span>
-        <span class=n>freeaddrinfo</span><span class=p>(</span><span class=n>ailist</span><span class=p>);</span>    
-    <span class=k>return</span> <span class=n>rt</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div>
-</article>
-</div>
-</body>
-<div>
+</p></header><aside>
+<nav id=TableOfContents></nav></aside><p>getaddrinfo, freeaddrinfo, gai_strerror - network address and service translation</p><p>函数声明</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;netdb.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>getaddrinfo</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>node</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>service</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>               <span class=k>const</span> <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>hints</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>               <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>**</span><span class=n>res</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>freeaddrinfo</span><span class=p>(</span><span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>res</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=nf>gai_strerror</span><span class=p>(</span><span class=kt>int</span> <span class=n>errcode</span><span class=p>);</span>
+</span></span></code></pre></div><p>addrinfo 结构体</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>struct</span> <span class=n>addrinfo</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span>              <span class=n>ai_flags</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span>              <span class=n>ai_family</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span>              <span class=n>ai_socktype</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span>              <span class=n>ai_protocol</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>socklen_t</span>        <span class=n>ai_addrlen</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=n>ai_addr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span>            <span class=o>*</span><span class=n>ai_canonname</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>addrinfo</span> <span class=o>*</span><span class=n>ai_next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></div><p>示例</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;netdb.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;error.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;arpa/inet.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>host</span> <span class=o>=</span> <span class=s>&#34;www.baiduffdsfsdklfjrklger.com&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>service</span> <span class=o>=</span> <span class=s>&#34;443&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>hostip</span><span class=p>[</span><span class=mi>64</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=mi>0</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>addrinfo</span>     <span class=o>*</span><span class=n>ailist</span><span class=p>,</span><span class=o>*</span><span class=n>aip</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>addrinfo</span>     <span class=n>hint</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>sockaddr_in</span>  <span class=o>*</span><span class=n>sinp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=kt>char</span>          <span class=o>*</span><span class=n>addr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span>                 <span class=n>err</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span>                 <span class=n>rt</span><span class=o>=-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>p</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>p</span> <span class=o>=</span> <span class=s>&#34;abcdef&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;p:%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>p</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>ailist</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>hint</span><span class=p>.</span><span class=n>ai_flags</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>hint</span><span class=p>.</span><span class=n>ai_family</span><span class=o>=</span><span class=n>AF_INET</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>hint</span><span class=p>.</span><span class=n>ai_socktype</span><span class=o>=</span><span class=n>SOCK_STREAM</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>hint</span><span class=p>.</span><span class=n>ai_protocol</span><span class=o>=</span><span class=n>IPPROTO_TCP</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>hint</span><span class=p>.</span><span class=n>ai_addrlen</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>hint</span><span class=p>.</span><span class=n>ai_canonname</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>hint</span><span class=p>.</span><span class=n>ai_addr</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>hint</span><span class=p>.</span><span class=n>ai_next</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>((</span><span class=n>err</span><span class=o>=</span><span class=n>getaddrinfo</span><span class=p>(</span><span class=n>host</span><span class=p>,</span><span class=n>service</span><span class=p>,</span><span class=o>&amp;</span><span class=n>hint</span><span class=p>,</span><span class=o>&amp;</span><span class=n>ailist</span><span class=p>))</span><span class=o>!=</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s():getaddrinfo err:%s </span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>__func__</span><span class=p>,</span><span class=n>gai_strerror</span><span class=p>(</span><span class=n>err</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=k>goto</span> <span class=n>end</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>aip</span><span class=o>=</span><span class=n>ailist</span><span class=p>;</span><span class=n>aip</span><span class=o>!=</span><span class=nb>NULL</span><span class=p>;</span> <span class=n>aip</span><span class=o>=</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_next</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_family</span><span class=o>==</span><span class=n>AF_INET</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>sinp</span><span class=o>=</span><span class=p>(</span><span class=k>struct</span> <span class=n>sockaddr_in</span> <span class=o>*</span><span class=p>)</span><span class=n>aip</span><span class=o>-&gt;</span><span class=n>ai_addr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>addr</span><span class=o>=</span><span class=n>inet_ntop</span><span class=p>(</span><span class=n>AF_INET</span><span class=p>,</span><span class=o>&amp;</span><span class=n>sinp</span><span class=o>-&gt;</span><span class=n>sin_addr</span><span class=p>,</span><span class=n>hostip</span><span class=p>,</span><span class=n>INET_ADDRSTRLEN</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>addr</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>perror</span><span class=p>(</span><span class=s>&#34;inet_ntop&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>printf</span><span class=p>(</span><span class=s>&#34; address %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>addr</span><span class=o>?</span><span class=nl>addr</span><span class=p>:</span><span class=s>&#34;unknown&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>printf</span><span class=p>(</span><span class=s>&#34; port %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>ntohs</span><span class=p>(</span><span class=n>sinp</span><span class=o>-&gt;</span><span class=n>sin_port</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>            <span class=n>rt</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>goto</span> <span class=n>end</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nl>end</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s %s %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>__FILE__</span><span class=p>,</span> <span class=n>__func__</span><span class=p>,</span> <span class=n>__LINE__</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>ailist</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>freeaddrinfo</span><span class=p>(</span><span class=n>ailist</span><span class=p>);</span>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>rt</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div></article></div></body><div>
 <small> words: 178 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

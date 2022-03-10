@@ -1,4 +1,4 @@
-<!doctype html><html><title>xml</title><meta name=description content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。 所有 XML 文档中的文本均会被解析器解析。 只有"><meta name=generator content="Hugo 0.91.0">
+<!doctype html><html><title>xml</title><meta name=description content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。 所有 XML 文档中的文本均会被解析器解析。 只有"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="xml">
 <meta property="og:description" content="可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。 所有 XML 文档中的文本均会被解析器解析。 只有">
 <meta property="og:type" content="article">
@@ -10,40 +10,20 @@
 <meta itemprop=dateModified content="2021-09-20T15:53:35+08:00">
 <meta itemprop=wordCount content="512">
 <meta itemprop=keywords content="language,xml,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>xml</h1>
-<p>
+<h1 class=post-title>xml</h1><p>
 <small>
 2021-02-09, updated 2021-09-20
 </small>
-</p>
-</header>
-<aside>
+</p></header><aside>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#cdata>CDATA</a></li>
-<li><a href=#转义字符>转义字符</a></li>
-</ul>
-</nav>
-</aside>
-<p>可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。</p>
-<p>所有 XML 文档中的文本均会被解析器解析。</p>
-<p>只有 CDATA 区段（CDATA section）中的文本会被解析器忽略。</p>
-<h2 id=cdata>CDATA</h2>
-<p>术语 CDATA 指的是不应由 XML 解析器进行解析的文本数据（Unparsed Character Data）。</p>
-<p>在 XML 元素中，"&lt;" 和 &ldquo;&&rdquo; 是非法的。</p>
-<p>&ldquo;&lt;&rdquo; 会产生错误，因为解析器会把该字符解释为新元素的开始。</p>
-<p>&ldquo;&&rdquo; 也会产生错误，因为解析器会把该字符解释为字符实体的开始。</p>
-<p>某些文本，比如 JavaScript 代码，包含大量 &ldquo;&lt;&rdquo; 或 &ldquo;&&rdquo; 字符。为了避免错误，可以将脚本代码定义为 CDATA。</p>
-<p>CDATA 部分中的所有内容都会被解析器忽略。</p>
-<p>CDATA 部分由 <code>"&lt;![CDATA["</code> 开始，由 <code>"]]>"</code> 结束：</p>
-<pre tabindex=0><code>&lt;script&gt;
+<li><a href=#cdata>CDATA</a></li><li><a href=#转义字符>转义字符</a></li></ul></nav></aside><p>可扩展标记语言，标准通用标记语言的子集，简称XML。是一种用于标记电子文件使其具有结构性的标记语言。</p><p>所有 XML 文档中的文本均会被解析器解析。</p><p>只有 CDATA 区段（CDATA section）中的文本会被解析器忽略。</p><h2 id=cdata>CDATA</h2><p>术语 CDATA 指的是不应由 XML 解析器进行解析的文本数据（Unparsed Character Data）。</p><p>在 XML 元素中，"&lt;" 和 &ldquo;&&rdquo; 是非法的。</p><p>&ldquo;&lt;&rdquo; 会产生错误，因为解析器会把该字符解释为新元素的开始。</p><p>&ldquo;&&rdquo; 也会产生错误，因为解析器会把该字符解释为字符实体的开始。</p><p>某些文本，比如 JavaScript 代码，包含大量 &ldquo;&lt;&rdquo; 或 &ldquo;&&rdquo; 字符。为了避免错误，可以将脚本代码定义为 CDATA。</p><p>CDATA 部分中的所有内容都会被解析器忽略。</p><p>CDATA 部分由 <code>"&lt;![CDATA["</code> 开始，由 <code>"]]>"</code> 结束：</p><pre tabindex=0><code>&lt;script&gt;
 &lt;![CDATA[
 function matchwo(a,b)
 {
@@ -58,71 +38,28 @@ else
 }
 ]]&gt;
 &lt;/script&gt;
-</code></pre><p>在上面的例子中，解析器会忽略 CDATA 部分中的所有内容。</p>
-<p>关于 CDATA 部分的注释：
-CDATA 部分不能包含字符串 &ldquo;]]>"。也不允许嵌套的 CDATA 部分。</p>
-<p>标记 CDATA 部分结尾的 &ldquo;]]>&rdquo; 不能包含空格或折行。</p>
-<h2 id=转义字符>转义字符</h2>
-<table>
+</code></pre><p>在上面的例子中，解析器会忽略 CDATA 部分中的所有内容。</p><p>关于 CDATA 部分的注释：
+CDATA 部分不能包含字符串 &ldquo;]]>"。也不允许嵌套的 CDATA 部分。</p><p>标记 CDATA 部分结尾的 &ldquo;]]>&rdquo; 不能包含空格或折行。</p><h2 id=转义字符>转义字符</h2><table>
 <thead>
 <tr>
-<th>转义字符</th>
-<th>字符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
+<th>转义字符</th><th>字符</th><th>说明</th></tr></thead><tbody>
 <tr>
-<td><code>&amp;lt;</code></td>
-<td>&lt;</td>
-<td>小于号</td>
-</tr>
-<tr>
-<td><code>&amp;gt;</code></td>
-<td>></td>
-<td>大于号</td>
-</tr>
-<tr>
-<td><code>&amp;amp;</code></td>
-<td>&</td>
-<td>和</td>
-</tr>
-<tr>
-<td><code>&amp;apos;</code></td>
-<td>'</td>
-<td>单引号</td>
-</tr>
-<tr>
-<td><code>&amp;quot;</code></td>
-<td>"</td>
-<td>双引号</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>说明：</p>
-<ol>
-<li>转义序列字符之间不能有空格；</li>
-<li>转义序列必须以”;”结束；</li>
-<li>单独出现的”&”不会被认为是转义的开始；</li>
-<li>区分大小写。</li>
-</ol>
-</blockquote>
-</article>
-</div>
-</body>
-<div>
+<td><code>&amp;lt;</code></td><td>&lt;</td><td>小于号</td></tr><tr>
+<td><code>&amp;gt;</code></td><td>></td><td>大于号</td></tr><tr>
+<td><code>&amp;amp;</code></td><td>&</td><td>和</td></tr><tr>
+<td><code>&amp;apos;</code></td><td>'</td><td>单引号</td></tr><tr>
+<td><code>&amp;quot;</code></td><td>"</td><td>双引号</td></tr></tbody></table><blockquote>
+<p>说明：</p><ol>
+<li>转义序列字符之间不能有空格；</li><li>转义序列必须以”;”结束；</li><li>单独出现的”&”不会被认为是转义的开始；</li><li>区分大小写。</li></ol></blockquote></article></div></body><div>
 <small> words: 512 tags:</small>
 <small><code><a href=https://arair.net/tags/language>language</a></code></small>
 <small><code><a href=https://arair.net/tags/xml>xml</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

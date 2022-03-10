@@ -16,12 +16,12 @@ adb reboot recovery　命令行进recovery模式&lt;/p></description></item><ite
 &lt;p>iperf是一个网络性能测试工具。可以测试TCP和UDP带宽质量，可以测量最大TCP带宽，具有多种参数和UDP特性，可以报告带宽，延迟抖动和数据包丢失。Iperf在linux和windows平台均有二进制版本供自由使用。&lt;/p>
 &lt;p>iperf was developed by NLANRDAST as a modern alternative for measuring maximum TCP and UDP bandwidth performance. Iperf allows the tuning of various parameters and UDP characteristics. Iperf reports bandwidth, delay jitter, datagram loss.&lt;/p></description></item><item><title>ping命令</title><link>https://arair.net/p/tool/4d462862/</link><pubDate>Mon, 25 Jan 2021 14:58:01 +0800</pubDate><guid>https://arair.net/p/tool/4d462862/</guid><description>当前使用linux下ping为例 -I 指定接口 -i interval 发送数据包之间等待的间隔(单位秒)。默认设置是等待一秒 -c count 发送count次ECHO_REQUE</description></item><item><title>sublime使用记录</title><link>https://arair.net/p/tool/ee5ba116/</link><pubDate>Sun, 24 Jan 2021 20:21:48 +0800</pubDate><guid>https://arair.net/p/tool/ee5ba116/</guid><description>&lt;p>使用 sublime记录&lt;/p></description></item><item><title>Makefile使用记录</title><link>https://arair.net/p/tool/ddeb0201/</link><pubDate>Sun, 24 Jan 2021 11:15:04 +0800</pubDate><guid>https://arair.net/p/tool/ddeb0201/</guid><description>= 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 $(MAKELEVEL) makefile的内置变量，用于查看当前make</description></item><item><title>vim使用记录以及相关配置</title><link>https://arair.net/p/4bf0af7f1033434786bb38da554a63ba/</link><pubDate>Sat, 23 Jan 2021 20:08:30 +0800</pubDate><guid>https://arair.net/p/4bf0af7f1033434786bb38da554a63ba/</guid><description>&lt;h2 id="源码编译">源码编译&lt;/h2>
 &lt;p>获取代码并编译&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">git clone https://github.com/vim/vim.git
-&lt;span class="nb">cd&lt;/span> vim/src
-./configure --prefix&lt;span class="o">=&lt;/span>~/opt/usr/local/
-make
-make install
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改PATH&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git clone https://github.com/vim/vim.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> vim/src
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./configure --prefix&lt;span class="o">=&lt;/span>~/opt/usr/local/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">make
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">make install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改PATH&lt;/p>
 &lt;pre tabindex="0">&lt;code>~/.bashrc
 export PATH=~/usr/local/bin:$PATH
-&lt;/code>&lt;/pre></description></item><item><title>git的使用记录</title><link>https://arair.net/p/31d5a06321a7456a80e33b23b3fd8f8b/</link><pubDate>Thu, 21 Jan 2021 10:39:15 +0800</pubDate><guid>https://arair.net/p/31d5a06321a7456a80e33b23b3fd8f8b/</guid><description>记录git的使用方法 git log 查看每次提交的diff git log -p filename 查看filename相关的commit记录 git log filename 查看某个人的提交记录 git log author=&amp;quot;username&amp;quot; filename 查看变更文</description></item></channel></rss>
+&lt;/code>&lt;/pre></description></item><item><title>git的使用记录</title><link>https://arair.net/p/31d5a06321a7456a80e33b23b3fd8f8b/</link><pubDate>Thu, 21 Jan 2021 10:39:15 +0800</pubDate><guid>https://arair.net/p/31d5a06321a7456a80e33b23b3fd8f8b/</guid><description>记录git的使用方法 git log 查看每次提交的diff git log -p filename 查看filename相关的commit记录 git log filename 查看某个人的提交记录 git log author=&amp;#34;username&amp;#34; filename 查看变更文</description></item></channel></rss>

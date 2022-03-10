@@ -1,5 +1,5 @@
 <!doctype html><html><title>fastboot</title><meta name=description content="adb reboot bootloader 命令进入bootloader/fastboot模式，才可以使用fastboot进行烧写 adb reboot recovery　命令行进recovery模式
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="fastboot">
 <meta property="og:description" content="adb reboot bootloader   命令进入bootloader/fastboot模式，才可以使用fastboot进行烧写
 adb reboot recovery　命令行进recovery模式">
@@ -13,30 +13,23 @@ adb reboot recovery　命令行进recovery模式"><meta itemprop=datePublished c
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="880">
 <meta itemprop=keywords content="fastboot,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>fastboot</h1>
-<p>
+<h1 class=post-title>fastboot</h1><p>
 <small>
 2021-02-07, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
-<nav id=TableOfContents></nav>
-</aside>
-<p>adb reboot bootloader 命令进入bootloader/fastboot模式，才可以使用fastboot进行烧写
-adb reboot recovery　命令行进recovery模式</p>
-<pre tabindex=0><code>usage: fastboot [ &lt;option&gt; ] &lt;command&gt;  
+</p></header><aside>
+<nav id=TableOfContents></nav></aside><p>adb reboot bootloader 命令进入bootloader/fastboot模式，才可以使用fastboot进行烧写
+adb reboot recovery　命令行进recovery模式</p><pre tabindex=0><code>usage: fastboot [ &lt;option&gt; ] &lt;command&gt;  
 
 commands:  
 update &lt;filename&gt;   reflash device from update.zip  
-flashall    &quot;flash boot&quot; + &quot;flash system&quot;  
+flashall    &#34;flash boot&#34; + &#34;flash system&#34;  
 flash &lt;partition&gt; [ &lt;filename&gt; ] write a file to a flash partition  
 erase &lt;partition&gt;   erase a flash partition  
 getvar &lt;variable&gt;   display a bootloader variable  
@@ -51,8 +44,7 @@ options:
 -p &lt;product&gt;    specify product name  
 -c &lt;cmdline&gt;    override kernel commandline  
 -i &lt;vendor id&gt;    specify a custom USB vendor id 
-</code></pre><p>1 升级系统</p>
-<pre tabindex=0><code>fastboot flash bootloader u-boot.bin
+</code></pre><p>1 升级系统</p><pre tabindex=0><code>fastboot flash bootloader u-boot.bin
 fastboot flash kernel uImage
 fastboot flash system system.img
 fastboot flash userdata userdata.img
@@ -62,27 +54,15 @@ fastboot erase cache
 fastboot flash {partition} {*.img}   例：fastboot flash boot boot.img或fastboot flash system system.img等。
 
 fastboot flashall   注意：此命令会在当前目录中查找所有img文件，将这些img文件烧写到所有对应的分区中，并重新启动手机。
-</code></pre><p>一次烧写boot，system，recovery分区：</p>
-<pre><code>（1）创建包含boot.img，system.img，recovery.img文件的zip包。
+</code></pre><p>一次烧写boot，system，recovery分区：</p><pre><code>（1）创建包含boot.img，system.img，recovery.img文件的zip包。
 
 （2）执行：fastboot update {*.zip}
-</code></pre>
-<p>烧写开机画面：</p>
-<blockquote>
-<p>fastboot flash splash1 开机画面</p>
-</blockquote>
-<p>2 重启系统</p>
-<pre tabindex=0><code>fastboot reboot
-</code></pre><p>3 不烧写flash情况下调试</p>
-<pre tabindex=0><code>fastboot boot uImage 或者u-boot.bin
-</code></pre><p>4 查看版本号</p>
-<pre tabindex=0><code>fastboot getver:version
-</code></pre><p>5 复位到bootloader</p>
-<pre tabindex=0><code>fastboot reboot-bootloader
-</code></pre><p>6 命令格式</p>
-<p>主机端发送字符串的命令，字符串小于等于64个字节，客户端首先返回四个字节的内容，是OKAY、FAIL、DATA、INFO之一，随后跟着是信息或数数据。</p>
-<p>7 清空分区</p>
-<pre tabindex=0><code>fastboot erase {partition}   例：fastboot erase boot或fastboot erase system等。
+</code></pre><p>烧写开机画面：</p><blockquote>
+<p>fastboot flash splash1 开机画面</p></blockquote><p>2 重启系统</p><pre tabindex=0><code>fastboot reboot
+</code></pre><p>3 不烧写flash情况下调试</p><pre tabindex=0><code>fastboot boot uImage 或者u-boot.bin
+</code></pre><p>4 查看版本号</p><pre tabindex=0><code>fastboot getver:version
+</code></pre><p>5 复位到bootloader</p><pre tabindex=0><code>fastboot reboot-bootloader
+</code></pre><p>6 命令格式</p><p>主机端发送字符串的命令，字符串小于等于64个字节，客户端首先返回四个字节的内容，是OKAY、FAIL、DATA、INFO之一，随后跟着是信息或数数据。</p><p>7 清空分区</p><pre tabindex=0><code>fastboot erase {partition}   例：fastboot erase boot或fastboot erase system等。
 
 fastboot erase boot
 
@@ -91,19 +71,10 @@ fastboot erase system
 fastboot erase data
 
 fastboot erase cache
-</code></pre><p>上面的命令也可以简化成一条命令</p>
-<pre tabindex=0><code>fastboot erase system -w
-</code></pre><p>8 获取客户端(手机端)变量信息</p>
-<pre tabindex=0><code>fastboot getvar version:version-bootloader:version-baseband:product:serialno:secure 
+</code></pre><p>上面的命令也可以简化成一条命令</p><pre tabindex=0><code>fastboot erase system -w
+</code></pre><p>8 获取客户端(手机端)变量信息</p><pre tabindex=0><code>fastboot getvar version:version-bootloader:version-baseband:product:serialno:secure 
 </code></pre><ul>
-<li>version 客户端支持的fastboot协议版本</li>
-<li>version-bootloader Bootloader的版本号</li>
-<li>version-baseband 基带版本</li>
-<li>product 产品名称</li>
-<li>serialno 产品序列号</li>
-<li>secure 返回yes 表示在刷机时需要获取签名</li>
-</ul>
-<pre tabindex=0><code>/ # df
+<li>version 客户端支持的fastboot协议版本</li><li>version-bootloader Bootloader的版本号</li><li>version-baseband 基带版本</li><li>product 产品名称</li><li>serialno 产品序列号</li><li>secure 返回yes 表示在刷机时需要获取签名</li></ul><pre tabindex=0><code>/ # df
 df
 Filesystem           1K-blocks      Used Available Use% Mounted on
 ubi0:rootfs              57800     34888     22912  60% /
@@ -119,43 +90,37 @@ ubi0:usrfs               44036        24     44012   0% /data
 /dev/ubi4_0              55048     10484     44564  19% /bmdefsys
 / # cat /pr     mt
 / # cat /proc/mt
-cat: can't open '/proc/mt': No such file or directory
+cat: can&#39;t open &#39;/proc/mt&#39;: No such file or directory
 / # cat /pr     mtd
 / # cat /proc/mtd
 dev:    size   erasesize  name
-mtd0: 00140000 00020000 &quot;sbl&quot;
-mtd1: 00140000 00020000 &quot;mibib&quot;
-mtd2: 00c00000 00020000 &quot;efs2&quot;
-mtd3: 000c0000 00020000 &quot;tz&quot;
-mtd4: 00060000 00020000 &quot;rpm&quot;
-mtd5: 00100000 00020000 &quot;aboot&quot;
-mtd6: 00940000 00020000 &quot;boot&quot;
-mtd7: 01040000 00020000 &quot;scrub&quot;
-mtd8: 037c0000 00020000 &quot;modem&quot;
-mtd9: 01420000 00020000 &quot;misc&quot;
-mtd10: 00940000 00020000 &quot;recovery&quot;
-mtd11: 05040000 00020000 &quot;fota&quot;
-mtd12: 01980000 00020000 &quot;recoveryfs&quot;
-mtd13: 01420000 00020000 &quot;cdrom&quot;
-mtd14: 04c00000 00020000 &quot;bmdefsys&quot;
-mtd15: 00040000 00020000 &quot;sec&quot;
-mtd16: 0b6a0000 00020000 &quot;system&quot;
+mtd0: 00140000 00020000 &#34;sbl&#34;
+mtd1: 00140000 00020000 &#34;mibib&#34;
+mtd2: 00c00000 00020000 &#34;efs2&#34;
+mtd3: 000c0000 00020000 &#34;tz&#34;
+mtd4: 00060000 00020000 &#34;rpm&#34;
+mtd5: 00100000 00020000 &#34;aboot&#34;
+mtd6: 00940000 00020000 &#34;boot&#34;
+mtd7: 01040000 00020000 &#34;scrub&#34;
+mtd8: 037c0000 00020000 &#34;modem&#34;
+mtd9: 01420000 00020000 &#34;misc&#34;
+mtd10: 00940000 00020000 &#34;recovery&#34;
+mtd11: 05040000 00020000 &#34;fota&#34;
+mtd12: 01980000 00020000 &#34;recoveryfs&#34;
+mtd13: 01420000 00020000 &#34;cdrom&#34;
+mtd14: 04c00000 00020000 &#34;bmdefsys&#34;
+mtd15: 00040000 00020000 &#34;sec&#34;
+mtd16: 0b6a0000 00020000 &#34;system&#34;
 / #
-</code></pre>
-</article>
-</div>
-</body>
-<div>
+</code></pre></article></div></body><div>
 <small> words: 880 tags:</small>
 <small><code><a href=https://arair.net/tags/fastboot>fastboot</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

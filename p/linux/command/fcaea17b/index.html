@@ -1,7 +1,7 @@
 <!doctype html><html><title>sed命令的使用</title><meta name=description content="Linux sed 命令是利用脚本来处理文本文件。
 sed 可依照脚本的指令来处理、编辑文本文件。
 Sed 主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="sed命令的使用">
 <meta property="og:description" content="Linux sed 命令是利用脚本来处理文本文件。
 sed 可依照脚本的指令来处理、编辑文本文件。
@@ -17,97 +17,46 @@ Sed 主要用来自动编辑一个或多个文件、简化对文件的反复操�
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="685">
 <meta itemprop=keywords content="sed,linux-command,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>sed命令的使用</h1>
-<p>
+<h1 class=post-title>sed命令的使用</h1><p>
 <small>
 2021-06-23, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
+</p></header><aside>
 <nav id=TableOfContents>
 <ul>
 <li><a href=#语法>语法</a>
 <ul>
-<li><a href=#参数说明>参数说明：</a></li>
-<li><a href=#动作说明>动作说明：</a></li>
-</ul>
-</li>
-<li><a href=#实例>实例</a>
+<li><a href=#参数说明>参数说明：</a></li><li><a href=#动作说明>动作说明：</a></li></ul></li><li><a href=#实例>实例</a>
 <ul>
-<li><a href=#删除-d>删除 d</a></li>
-<li><a href=#打印-p>打印 p</a></li>
-</ul>
-</li>
-<li><a href=#参考链接>参考链接</a></li>
-</ul>
-</nav>
-</aside>
-<p>Linux sed 命令是利用脚本来处理文本文件。</p>
-<p>sed 可依照脚本的指令来处理、编辑文本文件。</p>
-<p>Sed 主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。</p>
-<h2 id=语法>语法</h2>
-<pre tabindex=0><code>sed [-hnV][-e&lt;script&gt;][-f&lt;script文件&gt;][文本文件]
-</code></pre><h3 id=参数说明>参数说明：</h3>
-<ul>
-<li>-e&lt;script>或&ndash;expression=&lt;script> 以选项中指定的script来处理输入的文本文件。</li>
-<li>-f&lt;script文件>或&ndash;file=&lt;script文件> 以选项中指定的script文件来处理输入的文本文件。</li>
-<li>-h或&ndash;help 显示帮助。</li>
-<li>-n或&ndash;quiet或&ndash;silent 仅显示script处理后的结果。</li>
-<li>-V或&ndash;version 显示版本信息。</li>
-<li>-i：直接修改读取的文件内容，而不是输出到终端。</li>
-</ul>
-<h3 id=动作说明>动作说明：</h3>
-<ul>
-<li>a ：新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～</li>
-<li>c ：取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！</li>
-<li>d ：删除，因为是删除啊，所以 d 后面通常不接任何咚咚；</li>
-<li>i ：插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；</li>
-<li>p ：打印，亦即将某个选择的数据印出。通常 p 会与参数 sed -n 一起运行～</li>
-<li>s ：取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！</li>
-</ul>
-<h2 id=实例>实例</h2>
-<h3 id=删除-d>删除 d</h3>
-<ol>
+<li><a href=#删除-d>删除 d</a></li><li><a href=#打印-p>打印 p</a></li></ul></li><li><a href=#参考链接>参考链接</a></li></ul></nav></aside><p>Linux sed 命令是利用脚本来处理文本文件。</p><p>sed 可依照脚本的指令来处理、编辑文本文件。</p><p>Sed 主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。</p><h2 id=语法>语法</h2><pre tabindex=0><code>sed [-hnV][-e&lt;script&gt;][-f&lt;script文件&gt;][文本文件]
+</code></pre><h3 id=参数说明>参数说明：</h3><ul>
+<li>-e&lt;script>或&ndash;expression=&lt;script> 以选项中指定的script来处理输入的文本文件。</li><li>-f&lt;script文件>或&ndash;file=&lt;script文件> 以选项中指定的script文件来处理输入的文本文件。</li><li>-h或&ndash;help 显示帮助。</li><li>-n或&ndash;quiet或&ndash;silent 仅显示script处理后的结果。</li><li>-V或&ndash;version 显示版本信息。</li><li>-i：直接修改读取的文件内容，而不是输出到终端。</li></ul><h3 id=动作说明>动作说明：</h3><ul>
+<li>a ：新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～</li><li>c ：取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！</li><li>d ：删除，因为是删除啊，所以 d 后面通常不接任何咚咚；</li><li>i ：插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；</li><li>p ：打印，亦即将某个选择的数据印出。通常 p 会与参数 sed -n 一起运行～</li><li>s ：取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！</li></ul><h2 id=实例>实例</h2><h3 id=删除-d>删除 d</h3><ol>
 <li>删除有reboot的行
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>sed -i <span class=s1>&#39;/reboot/d&#39;</span> testfile
-</code></pre></div></li>
-</ol>
-<h3 id=打印-p>打印 p</h3>
-<p><code>/etc/passwd</code>文件的部分内容</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ cat /etc/passwd
-syslog:x:104:110::/home/syslog:/usr/sbin/nologin
-uuidd:x:107:112::/run/uuidd:/usr/sbin/nologin
-</code></pre></div><p>取<code>uuid:</code>后面的字符串</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ sed -n <span class=s1>&#39;s/uuidd://p&#39;</span> /etc/passwd
-x:107:112::/run/uuidd:/usr/sbin/nologin
-</code></pre></div><p>与<code>uuid:</code>有关的字符串</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ sed -n <span class=s1>&#39;/uuidd:/p&#39;</span> /etc/passwd
-uuidd:x:107:112::/run/uuidd:/usr/sbin/nologin
-</code></pre></div><h2 id=参考链接>参考链接</h2>
-<p>(<a href=https://www.runoob.com/linux/linux-comm-sed.html>https://www.runoob.com/linux/linux-comm-sed.html</a>)</p>
-</article>
-</div>
-</body>
-<div>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sed -i <span class=s1>&#39;/reboot/d&#39;</span> testfile
+</span></span></code></pre></div></li></ol><h3 id=打印-p>打印 p</h3><p><code>/etc/passwd</code>文件的部分内容</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ cat /etc/passwd
+</span></span><span class=line><span class=cl>syslog:x:104:110::/home/syslog:/usr/sbin/nologin
+</span></span><span class=line><span class=cl>uuidd:x:107:112::/run/uuidd:/usr/sbin/nologin
+</span></span></code></pre></div><p>取<code>uuid:</code>后面的字符串</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ sed -n <span class=s1>&#39;s/uuidd://p&#39;</span> /etc/passwd
+</span></span><span class=line><span class=cl>x:107:112::/run/uuidd:/usr/sbin/nologin
+</span></span></code></pre></div><p>与<code>uuid:</code>有关的字符串</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ sed -n <span class=s1>&#39;/uuidd:/p&#39;</span> /etc/passwd
+</span></span><span class=line><span class=cl>uuidd:x:107:112::/run/uuidd:/usr/sbin/nologin
+</span></span></code></pre></div><h2 id=参考链接>参考链接</h2><p>(<a href=https://www.runoob.com/linux/linux-comm-sed.html>https://www.runoob.com/linux/linux-comm-sed.html</a>)</p></article></div></body><div>
 <small> words: 685 tags:</small>
 <small><code><a href=https://arair.net/tags/sed>sed</a></code></small>
 <small><code><a href=https://arair.net/tags/linux-command>linux-command</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

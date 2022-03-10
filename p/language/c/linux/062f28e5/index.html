@@ -1,5 +1,5 @@
 <!doctype html><html><title>linux进程间通信-消息队列</title><meta name=description content="简介 消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 msgget用于创建一个新队列或打开一个现存的队列。 msgsnd用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给msgsnd。msgrcv用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="linux进程间通信-消息队列">
 <meta property="og:description" content="简介
 消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 msgget用于创建一个新队列或打开一个现存的队列。 msgsnd用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给msgsnd。msgrcv用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。">
@@ -13,169 +13,121 @@
 <meta itemprop=dateModified content="2021-03-14T10:41:23+08:00">
 <meta itemprop=wordCount content="1072">
 <meta itemprop=keywords content="linux进程间通信,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>linux进程间通信-消息队列</h1>
-<p>
+<h1 class=post-title>linux进程间通信-消息队列</h1><p>
 <small>
 2021-03-14
 </small>
-</p>
-</header>
-<aside>
+</p></header><aside>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#简介>简介</a></li>
-<li><a href=#函数介绍>函数介绍</a>
+<li><a href=#简介>简介</a></li><li><a href=#函数介绍>函数介绍</a>
 <ul>
-<li><a href=#ftok>ftok</a></li>
-<li><a href=#msgget>msgget</a></li>
-<li><a href=#msgsnd>msgsnd</a></li>
-<li><a href=#msgrcv>msgrcv</a></li>
-<li><a href=#msgctl>msgctl</a></li>
-</ul>
-</li>
-<li><a href=#示例>示例</a></li>
-<li><a href=#其它>其它</a></li>
-</ul>
-</nav>
-</aside>
-<h2 id=简介>简介</h2>
-<p>消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 <code>msgget</code>用于创建一个新队列或打开一个现存的队列。 <code>msgsnd</code>用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给<code>msgsnd</code>。<code>msgrcv</code>用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。</p>
-<h2 id=函数介绍>函数介绍</h2>
-<h3 id=ftok>ftok</h3>
-<p>生成一个key(键值)</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=n>key_t</span> <span class=nf>ftok</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>pathname</span><span class=p>,</span> <span class=kt>int</span> <span class=n>proj_id</span><span class=p>);</span>
-</code></pre></div><ul>
-<li>ftok根据路径名，提取文件信息，再根据这些文件信息及project ID合成key，该路径可以随便设置。</li>
-<li>该路径是必须存在的，ftok只是根据文件inode在系统内的唯一性来取一个数值，和文件的权限无关。</li>
-<li>proj_id是可以根据自己的约定，随意设置。这个数字,有的称之为project ID; 在UNIX系统上,它的取值是1到255;</li>
-</ul>
-<h3 id=msgget>msgget</h3>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/msg.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=kt>int</span> <span class=nf>msgget</span><span class=p>(</span><span class=n>key_t</span> <span class=n>key</span><span class=p>,</span> <span class=kt>int</span> <span class=n>msgflg</span><span class=p>);</span>
-</code></pre></div><p>功能：创建或取得一个消息队列对象
+<li><a href=#ftok>ftok</a></li><li><a href=#msgget>msgget</a></li><li><a href=#msgsnd>msgsnd</a></li><li><a href=#msgrcv>msgrcv</a></li><li><a href=#msgctl>msgctl</a></li></ul></li><li><a href=#示例>示例</a></li><li><a href=#其它>其它</a></li></ul></nav></aside><h2 id=简介>简介</h2><p>消息队列是消息的链接表 ,存放在内核中并由消息队列标识符标识。我们将称消息队列为“队列”，其标识符为“队列ID”。 <code>msgget</code>用于创建一个新队列或打开一个现存的队列。 <code>msgsnd</code>用于将新消息添加到队列尾端。每个消息包含一个正长整型类型字段，一个非负长度以及实际数据字节（对应于长度），所有这些都在将消息添加到队列时，传送给<code>msgsnd</code>。<code>msgrcv</code>用于从队列中取消息。我们并不一定要以先进先出次序取消息，也可以按消息的类型字段取消息。</p><h2 id=函数介绍>函数介绍</h2><h3 id=ftok>ftok</h3><p>生成一个key(键值)</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=n>key_t</span> <span class=nf>ftok</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>pathname</span><span class=p>,</span> <span class=kt>int</span> <span class=n>proj_id</span><span class=p>);</span>
+</span></span></code></pre></div><ul>
+<li>ftok根据路径名，提取文件信息，再根据这些文件信息及project ID合成key，该路径可以随便设置。</li><li>该路径是必须存在的，ftok只是根据文件inode在系统内的唯一性来取一个数值，和文件的权限无关。</li><li>proj_id是可以根据自己的约定，随意设置。这个数字,有的称之为project ID; 在UNIX系统上,它的取值是1到255;</li></ul><h3 id=msgget>msgget</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/msg.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>msgget</span><span class=p>(</span><span class=n>key_t</span> <span class=n>key</span><span class=p>,</span> <span class=kt>int</span> <span class=n>msgflg</span><span class=p>);</span>
+</span></span></code></pre></div><p>功能：创建或取得一个消息队列对象
 返回：消息队列对象的id 同一个key得到同一个对象
 格式：msgget(key,flag|mode);
 flag:可以是0或者IPC_CREAT(不存在就创建)
-mode:同文件权限一样</p>
-<h3 id=msgsnd>msgsnd</h3>
-<p>将msgp消息写入标识为msgid的消息队列</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>msgsnd</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=k>const</span> <span class=kt>void</span> <span class=o>*</span><span class=n>msgp</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>msgsz</span><span class=p>,</span> <span class=kt>int</span> <span class=n>msgflg</span><span class=p>);</span>
-</code></pre></div><ul>
+mode:同文件权限一样</p><h3 id=msgsnd>msgsnd</h3><p>将msgp消息写入标识为msgid的消息队列</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>msgsnd</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=k>const</span> <span class=kt>void</span> <span class=o>*</span><span class=n>msgp</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>msgsz</span><span class=p>,</span> <span class=kt>int</span> <span class=n>msgflg</span><span class=p>);</span>
+</span></span></code></pre></div><ul>
 <li>msgp
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>msgbuf</span> <span class=p>{</span>
-    <span class=kt>long</span> <span class=n>mtype</span><span class=p>;</span> <span class=cm>/* message type, must be &gt; 0 */</span><span class=err>消息的类型必须</span><span class=o>&gt;</span><span class=mi>0</span>
-    <span class=kt>char</span> <span class=n>mtext</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span> <span class=cm>/* message data */</span><span class=err>长度随意</span>
-<span class=p>};</span>
-</code></pre></div></li>
-<li>msgsz：要发送的消息的大小 不包括消息的类型占用的4个字节</li>
-<li>msgflg： 如果是0 当消息队列为满 msgsnd会阻塞，如果是IPC_NOWAIT 当消息队列为满时 不阻塞 立即返回</li>
-</ul>
-<p>返回值：</p>
-<ul>
-<li>成功返回id</li>
-<li>失败返回-1</li>
-</ul>
-<h3 id=msgrcv>msgrcv</h3>
-<p>从标识符为msgid的消息队列里接收一个指定类型的消息 并 存储于msgp中 读取后 把消息从消息队列中删除</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=n>ssize_t</span> <span class=nf>msgrcv</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=n>msgp</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>msgsz</span><span class=p>,</span> <span class=kt>long</span> <span class=n>msgtyp</span><span class=p>,</span>
-<span class=kt>int</span> <span class=n>msgflg</span><span class=p>);</span>
-</code></pre></div><p>参数:</p>
-<ul>
-<li>msgtyp：为 0 表示无论什么类型 都可以接收</li>
-<li>msgp：存放消息的结构体</li>
-<li>msgsz：要接收的消息的大小 不包含消息类型占用的4字节</li>
-<li>msgflg：如果是0 标识如果没有指定类型的消息 就一直等待，如果是IPC_NOWAIT 则表示不等待</li>
-</ul>
-<h3 id=msgctl>msgctl</h3>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>msgctl</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=kt>int</span> <span class=n>cmd</span><span class=p>,</span> <span class=k>struct</span> <span class=n>msqid_ds</span> <span class=o>*</span><span class=n>buf</span><span class=p>);</span>
-<span class=n>msgctl</span><span class=p>(</span><span class=n>msgid</span><span class=p>,</span><span class=n>IPC_RMID</span><span class=err>，</span><span class=nb>NULL</span><span class=p>);</span><span class=c1>//删除消息队列对象
-</span></code></pre></div><h2 id=示例>示例</h2>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=c1>// snd.c
-</span><span class=c1></span><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;    </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;  </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/msg.h&gt;  </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;error.h&gt;    </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;   </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;fcntl.h&gt;    </span><span class=cp>
-</span><span class=cp></span>
-<span class=k>typedef</span> <span class=k>struct</span><span class=p>{</span>
-    <span class=kt>long</span> <span class=n>type</span><span class=p>;</span>
-    <span class=kt>char</span> <span class=n>name</span><span class=p>[</span><span class=mi>20</span><span class=p>];</span>
-    <span class=kt>int</span> <span class=n>age</span><span class=p>;</span>
-<span class=p>}</span><span class=n>Msg</span><span class=p>;</span>
-
-<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
-<span class=p>{</span>
-    <span class=n>key_t</span> <span class=n>key</span> <span class=o>=</span> <span class=n>ftok</span><span class=p>(</span><span class=s>&#34;./ftok_kk&#34;</span><span class=p>,</span><span class=sc>&#39;6&#39;</span><span class=p>);</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;key:%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>key</span><span class=p>);</span>
-
-    <span class=kt>int</span> <span class=n>msgid</span> <span class=o>=</span> <span class=n>msgget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span><span class=n>IPC_CREAT</span><span class=o>|</span><span class=n>O_WRONLY</span><span class=o>|</span><span class=mo>0777</span><span class=p>);</span>
-    <span class=k>if</span><span class=p>(</span><span class=n>msgid</span><span class=o>&lt;</span><span class=mi>0</span><span class=p>)</span>
-    <span class=p>{</span>   
-        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;msgget error!&#34;</span><span class=p>);</span>
-        <span class=n>exit</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
-    <span class=p>}</span>   
-
-    <span class=n>Msg</span> <span class=n>m</span><span class=p>;</span>
-    <span class=n>puts</span><span class=p>(</span><span class=s>&#34;please input your type name age:&#34;</span><span class=p>);</span>
-    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%ld%s%d&#34;</span><span class=p>,</span><span class=o>&amp;</span><span class=n>m</span><span class=p>.</span><span class=n>type</span><span class=p>,</span><span class=n>m</span><span class=p>.</span><span class=n>name</span><span class=p>,</span><span class=o>&amp;</span><span class=n>m</span><span class=p>.</span><span class=n>age</span><span class=p>);</span>
-    <span class=n>msgsnd</span><span class=p>(</span><span class=n>msgid</span><span class=p>,</span><span class=o>&amp;</span><span class=n>m</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>m</span><span class=p>)</span><span class=o>-</span><span class=k>sizeof</span><span class=p>(</span><span class=n>m</span><span class=p>.</span><span class=n>type</span><span class=p>),</span><span class=mi>0</span><span class=p>);</span>
-
-    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=c1>// rcv.c
-</span><span class=c1></span><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;    </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;  </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/msg.h&gt;  </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;error.h&gt;    </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;   </span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;fcntl.h&gt;</span><span class=cp>
-</span><span class=cp></span> 
-<span class=k>typedef</span> <span class=k>struct</span><span class=p>{</span>
-    <span class=kt>long</span> <span class=n>type</span><span class=p>;</span>
-    <span class=kt>char</span> <span class=n>name</span><span class=p>[</span><span class=mi>20</span><span class=p>];</span>
-    <span class=kt>int</span> <span class=n>age</span><span class=p>;</span>
-<span class=p>}</span><span class=n>Msg</span><span class=p>;</span>
-
-<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
-<span class=p>{</span>
-    <span class=n>key_t</span> <span class=n>key</span> <span class=o>=</span> <span class=n>ftok</span><span class=p>(</span><span class=s>&#34;./ftok_kk&#34;</span><span class=p>,</span><span class=sc>&#39;6&#39;</span><span class=p>);</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;key:%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>key</span><span class=p>);</span>
-
-    <span class=kt>int</span> <span class=n>msgid</span> <span class=o>=</span> <span class=n>msgget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span><span class=n>O_RDONLY</span><span class=p>);</span>
-    <span class=k>if</span><span class=p>(</span><span class=n>msgid</span><span class=o>&lt;</span><span class=mi>0</span><span class=p>)</span>
-    <span class=p>{</span>   
-        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;msgget error!&#34;</span><span class=p>);</span>
-        <span class=n>exit</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
-    <span class=p>}</span>   
-
-    <span class=n>Msg</span> <span class=n>rcv</span><span class=p>;</span>
-    <span class=kt>long</span> <span class=n>type</span><span class=p>;</span>
-    <span class=n>puts</span><span class=p>(</span><span class=s>&#34;please input type you want!&#34;</span><span class=p>);</span>
-    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%ld&#34;</span><span class=p>,</span><span class=o>&amp;</span><span class=n>type</span><span class=p>);</span>
-
-    <span class=n>msgrcv</span><span class=p>(</span><span class=n>msgid</span><span class=p>,</span><span class=o>&amp;</span><span class=n>rcv</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>rcv</span><span class=p>)</span><span class=o>-</span><span class=k>sizeof</span><span class=p>(</span><span class=n>type</span><span class=p>),</span><span class=n>type</span><span class=p>,</span><span class=mi>0</span><span class=p>);</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;rcv--name:%s age:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>rcv</span><span class=p>.</span><span class=n>name</span><span class=p>,</span><span class=n>rcv</span><span class=p>.</span><span class=n>age</span><span class=p>);</span>
-
-    <span class=n>msgctl</span><span class=p>(</span><span class=n>msgid</span><span class=p>,</span><span class=n>IPC_RMID</span><span class=p>,</span><span class=nb>NULL</span><span class=p>);</span>
-    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><pre tabindex=0><code>$ ./snd
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>struct</span> <span class=n>msgbuf</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>mtype</span><span class=p>;</span> <span class=cm>/* message type, must be &gt; 0 */</span><span class=err>消息的类型必须</span><span class=o>&gt;</span><span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>mtext</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span> <span class=cm>/* message data */</span><span class=err>长度随意</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></div></li><li>msgsz：要发送的消息的大小 不包括消息的类型占用的4个字节</li><li>msgflg： 如果是0 当消息队列为满 msgsnd会阻塞，如果是IPC_NOWAIT 当消息队列为满时 不阻塞 立即返回</li></ul><p>返回值：</p><ul>
+<li>成功返回id</li><li>失败返回-1</li></ul><h3 id=msgrcv>msgrcv</h3><p>从标识符为msgid的消息队列里接收一个指定类型的消息 并 存储于msgp中 读取后 把消息从消息队列中删除</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>ssize_t</span> <span class=nf>msgrcv</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=n>msgp</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>msgsz</span><span class=p>,</span> <span class=kt>long</span> <span class=n>msgtyp</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>msgflg</span><span class=p>);</span>
+</span></span></code></pre></div><p>参数:</p><ul>
+<li>msgtyp：为 0 表示无论什么类型 都可以接收</li><li>msgp：存放消息的结构体</li><li>msgsz：要接收的消息的大小 不包含消息类型占用的4字节</li><li>msgflg：如果是0 标识如果没有指定类型的消息 就一直等待，如果是IPC_NOWAIT 则表示不等待</li></ul><h3 id=msgctl>msgctl</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>msgctl</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=kt>int</span> <span class=n>cmd</span><span class=p>,</span> <span class=k>struct</span> <span class=n>msqid_ds</span> <span class=o>*</span><span class=n>buf</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>msgctl</span><span class=p>(</span><span class=n>msgid</span><span class=p>,</span><span class=n>IPC_RMID</span><span class=err>，</span><span class=nb>NULL</span><span class=p>);</span><span class=c1>//删除消息队列对象
+</span></span></span></code></pre></div><h2 id=示例>示例</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// snd.c
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;    </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;  </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/msg.h&gt;  </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;error.h&gt;    </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;   </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;fcntl.h&gt;    </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>type</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>name</span><span class=p>[</span><span class=mi>20</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>age</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span><span class=n>Msg</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>key_t</span> <span class=n>key</span> <span class=o>=</span> <span class=n>ftok</span><span class=p>(</span><span class=s>&#34;./ftok_kk&#34;</span><span class=p>,</span><span class=sc>&#39;6&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;key:%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>msgid</span> <span class=o>=</span> <span class=n>msgget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span><span class=n>IPC_CREAT</span><span class=o>|</span><span class=n>O_WRONLY</span><span class=o>|</span><span class=mo>0777</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>msgid</span><span class=o>&lt;</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>   
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;msgget error!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>   
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>Msg</span> <span class=n>m</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>puts</span><span class=p>(</span><span class=s>&#34;please input your type name age:&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%ld%s%d&#34;</span><span class=p>,</span><span class=o>&amp;</span><span class=n>m</span><span class=p>.</span><span class=n>type</span><span class=p>,</span><span class=n>m</span><span class=p>.</span><span class=n>name</span><span class=p>,</span><span class=o>&amp;</span><span class=n>m</span><span class=p>.</span><span class=n>age</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>msgsnd</span><span class=p>(</span><span class=n>msgid</span><span class=p>,</span><span class=o>&amp;</span><span class=n>m</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>m</span><span class=p>)</span><span class=o>-</span><span class=k>sizeof</span><span class=p>(</span><span class=n>m</span><span class=p>.</span><span class=n>type</span><span class=p>),</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// rcv.c
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;    </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/ipc.h&gt;  </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/msg.h&gt;  </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;error.h&gt;    </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;   </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;fcntl.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span> 
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>type</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>name</span><span class=p>[</span><span class=mi>20</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>age</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span><span class=n>Msg</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>key_t</span> <span class=n>key</span> <span class=o>=</span> <span class=n>ftok</span><span class=p>(</span><span class=s>&#34;./ftok_kk&#34;</span><span class=p>,</span><span class=sc>&#39;6&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;key:%x</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>msgid</span> <span class=o>=</span> <span class=n>msgget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span><span class=n>O_RDONLY</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>msgid</span><span class=o>&lt;</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>   
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;msgget error!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>   
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>Msg</span> <span class=n>rcv</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>type</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>puts</span><span class=p>(</span><span class=s>&#34;please input type you want!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%ld&#34;</span><span class=p>,</span><span class=o>&amp;</span><span class=n>type</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>msgrcv</span><span class=p>(</span><span class=n>msgid</span><span class=p>,</span><span class=o>&amp;</span><span class=n>rcv</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>rcv</span><span class=p>)</span><span class=o>-</span><span class=k>sizeof</span><span class=p>(</span><span class=n>type</span><span class=p>),</span><span class=n>type</span><span class=p>,</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;rcv--name:%s age:%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>rcv</span><span class=p>.</span><span class=n>name</span><span class=p>,</span><span class=n>rcv</span><span class=p>.</span><span class=n>age</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>msgctl</span><span class=p>(</span><span class=n>msgid</span><span class=p>,</span><span class=n>IPC_RMID</span><span class=p>,</span><span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><pre tabindex=0><code>$ ./snd
 key:36012dbf
 please input your type name age:
 3
@@ -187,23 +139,15 @@ key:36012dbf
 please input type you want!
 3
 rcv--name:1 age:2
-</code></pre><h2 id=其它>其它</h2>
-<p><code>ipcs -q</code> 查看消息队列</p>
-<p>参考: <a href=https://www.cnblogs.com/liudw-0215/p/8978945.html>https://www.cnblogs.com/liudw-0215/p/8978945.html</a></p>
-</article>
-</div>
-</body>
-<div>
+</code></pre><h2 id=其它>其它</h2><p><code>ipcs -q</code> 查看消息队列</p><p>参考: <a href=https://www.cnblogs.com/liudw-0215/p/8978945.html>https://www.cnblogs.com/liudw-0215/p/8978945.html</a></p></article></div></body><div>
 <small> words: 1072 tags:</small>
 <small><code><a href=https://arair.net/tags/linux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1>linux进程间通信</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

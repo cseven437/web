@@ -1,5 +1,5 @@
 <!doctype html><html><title>内核计时器代码例子</title><meta name=description content="Makefile编写
-obj-m+=timer_test.o #SRC=&amp;#34;/lib/modules/$(shell uname -r)/build/&amp;#34;  CROSS_COMPILE=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&amp;#34; SRC=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&amp;#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean "><meta name=generator content="Hugo 0.91.0">
+obj-m+=timer_test.o #SRC=&amp;#34;/lib/modules/$(shell uname -r)/build/&amp;#34;  CROSS_COMPILE=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&amp;#34; SRC=&amp;#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&amp;#34; all: make -C $(SRC) M=$(PWD) modules clean: make -C $(SRC) M=$(PWD) clean "><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="内核计时器代码例子">
 <meta property="og:description" content="Makefile编写
 obj-m+=timer_test.o
@@ -33,131 +33,104 @@ clean:
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="679">
 <meta itemprop=keywords content>
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>内核计时器代码例子</h1>
-<p>
+<h1 class=post-title>内核计时器代码例子</h1><p>
 <small>
 2021-01-24, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
-<nav id=TableOfContents></nav>
-</aside>
-<p>Makefile编写</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=nv>obj-m</span><span class=o>+=</span>timer_test.o
-<span class=c>#SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34;
-</span><span class=c></span>
-<span class=nv>CROSS_COMPILE</span><span class=o>=</span><span class=s2>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34;</span>
-<span class=nv>SRC</span><span class=o>=</span><span class=s2>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34;</span>
-
-<span class=nf>all</span><span class=o>:</span>
-    make -C <span class=k>$(</span>SRC<span class=k>)</span> <span class=nv>M</span><span class=o>=</span><span class=k>$(</span>PWD<span class=k>)</span> modules
-<span class=nf>clean</span><span class=o>:</span>
-    make -C <span class=k>$(</span>SRC<span class=k>)</span> <span class=nv>M</span><span class=o>=</span><span class=k>$(</span>PWD<span class=k>)</span> clean
-</code></pre></div><p>计时器相关结构体</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=k>struct</span> <span class=n>timer_list</span> <span class=p>{</span>
-    <span class=cm>/*
-</span><span class=cm>     * All fields that change during normal runtime grouped to the
-</span><span class=cm>     * same cacheline
-</span><span class=cm>     */</span>
-    <span class=k>struct</span> <span class=n>list_head</span> <span class=n>entry</span><span class=p>;</span>   
-    <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>expires</span><span class=p>;</span>
-    <span class=k>struct</span> <span class=n>tvec_base</span> <span class=o>*</span><span class=n>base</span><span class=p>;</span>
-    
-    <span class=kt>void</span> <span class=p>(</span><span class=o>*</span><span class=n>function</span><span class=p>)(</span><span class=kt>unsigned</span> <span class=kt>long</span><span class=p>);</span>
-    <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>data</span><span class=p>;</span>
-
-    <span class=kt>int</span> <span class=n>slack</span><span class=p>;</span>
-
-<span class=cp>#ifdef CONFIG_TIMER_STATS
-</span><span class=cp></span>    <span class=kt>int</span> <span class=n>start_pid</span><span class=p>;</span>
-    <span class=kt>void</span> <span class=o>*</span><span class=n>start_site</span><span class=p>;</span>
-    <span class=kt>char</span> <span class=n>start_comm</span><span class=p>[</span><span class=mi>16</span><span class=p>];</span>
-<span class=cp>#endif
-</span><span class=cp>#ifdef CONFIG_LOCKDEP
-</span><span class=cp></span>    <span class=k>struct</span> <span class=n>lockdep_map</span> <span class=n>lockdep_map</span><span class=p>;</span>
-<span class=cp>#endif
-</span><span class=cp></span><span class=p>};</span>
-</code></pre></div><h1 id=相关api>相关api</h1>
-<p>初始化定时器：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>void</span> <span class=nf>init_timer</span><span class=p>(</span><span class=k>struct</span> <span class=n>timer_list</span> <span class=o>*</span> <span class=n>timer</span><span class=p>);</span>
-</code></pre></div><p>增加定时器，重复调用会挂掉：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>void</span> <span class=nf>add_timer</span><span class=p>(</span><span class=k>struct</span> <span class=n>timer_list</span> <span class=o>*</span> <span class=n>timer</span><span class=p>);</span>
-</code></pre></div><p>删除定时器：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>del_timer</span><span class=p>(</span><span class=k>struct</span> <span class=n>timer_list</span> <span class=o>*</span> <span class=n>timer</span><span class=p>);</span>
-</code></pre></div><p>修改定时器的expire：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=kt>int</span> <span class=nf>mod_timer</span><span class=p>(</span><span class=k>struct</span> <span class=n>timer_list</span> <span class=o>*</span><span class=n>timer</span><span class=p>,</span> <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>expires</span><span class=p>);</span>
-</code></pre></div><h1 id=计时器使用>计时器使用</h1>
-<ol>
-<li>创建timer、编写超时定时器处理函数function；</li>
-<li>为timer的expires、data、function赋值；</li>
-<li>调用add_timer将timer加入列表&mdash;-添加一个定时器；</li>
-<li>在定时器到期时，function被执行；</li>
-<li>在程序中涉及timer控制的地方适当地调用del_timer、mod_timer删除timer或修改timer的expires。</li>
-</ol>
-<h1 id=示例>示例</h1>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;linux/module.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;linux/kernel.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;linux/init.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;linux/sched.h&gt;//jiffies在此头文件中定义</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;linux/init.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;linux/timer.h&gt;</span><span class=cp>
-</span><span class=cp></span><span class=k>struct</span> <span class=n>timer_list</span> <span class=n>mytimer</span><span class=p>;</span><span class=c1>//定义一个定时器
-</span><span class=c1></span><span class=kt>void</span>  <span class=nf>mytimer_ok</span><span class=p>(</span><span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>arg</span><span class=p>)</span>
-<span class=p>{</span>
-    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;Mytimer is ok</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
-    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;receive data from timer: %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>arg</span><span class=p>);</span>
-
-    <span class=c1>// 修改定时器
-</span><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>expires</span> <span class=o>=</span> <span class=n>jiffies</span><span class=o>+</span><span class=mi>1</span><span class=o>*</span><span class=n>HZ</span><span class=p>;</span><span class=c1>//设定超时时间，100代表1秒
-</span><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>data</span> <span class=o>=</span> <span class=mi>250</span><span class=p>;</span>    <span class=c1>//传递给定时器超时函数的值
-</span><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>function</span> <span class=o>=</span> <span class=n>mytimer_ok</span><span class=p>;</span><span class=c1>//设置定时器超时函数
-</span><span class=c1></span>    <span class=n>mod_timer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mytimer</span><span class=p>);</span> <span class=c1>//添加定时器，定时器开始生效
-</span><span class=c1></span><span class=p>}</span>
-
-<span class=k>static</span> <span class=kt>int</span> <span class=n>__init</span> <span class=nf>hello_init</span> <span class=p>(</span><span class=kt>void</span><span class=p>)</span>
-<span class=p>{</span>
-    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;hello,world</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
-    <span class=n>init_timer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mytimer</span><span class=p>);</span>     <span class=c1>//初始化定时器
-</span><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>expires</span> <span class=o>=</span> <span class=n>jiffies</span><span class=o>+</span><span class=mi>1</span><span class=o>*</span><span class=n>HZ</span><span class=p>;</span><span class=c1>//设定超时时间，100代表1秒
-</span><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>data</span> <span class=o>=</span> <span class=mi>250</span><span class=p>;</span>    <span class=c1>//传递给定时器超时函数的值
-</span><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>function</span> <span class=o>=</span> <span class=n>mytimer_ok</span><span class=p>;</span><span class=c1>//设置定时器超时函数
-</span><span class=c1></span>    <span class=n>add_timer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mytimer</span><span class=p>);</span> <span class=c1>//添加定时器，定时器开始生效
-</span><span class=c1></span>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
-<span class=p>}</span>
-
-<span class=k>static</span> <span class=kt>void</span> <span class=n>__exit</span> <span class=nf>hello_exit</span> <span class=p>(</span><span class=kt>void</span><span class=p>)</span>
-
-<span class=p>{</span>
-    <span class=n>del_timer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mytimer</span><span class=p>);</span><span class=c1>//卸载模块时，删除定时器
-</span><span class=c1></span>    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;Hello module exit</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
-<span class=p>}</span>
-
-<span class=n>module_init</span><span class=p>(</span><span class=n>hello_init</span><span class=p>);</span>
-<span class=n>module_exit</span><span class=p>(</span><span class=n>hello_exit</span><span class=p>);</span>
-<span class=n>MODULE_AUTHOR</span><span class=p>(</span><span class=s>&#34;CXF&#34;</span><span class=p>);</span>
-<span class=n>MODULE_LICENSE</span><span class=p>(</span><span class=s>&#34;Dual BSD/GPL&#34;</span><span class=p>);</span>
-</code></pre></div>
-</article>
-</div>
-</body>
-<div>
+</p></header><aside>
+<nav id=TableOfContents></nav></aside><p>Makefile编写</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=nv>obj-m</span><span class=o>+=</span>timer_test.o
+</span></span><span class=line><span class=cl><span class=c>#SRC=&#34;/lib/modules/$(shell uname -r)/build/&#34;
+</span></span></span><span class=line><span class=cl><span class=c></span>
+</span></span><span class=line><span class=cl><span class=nv>CROSS_COMPILE</span><span class=o>=</span><span class=s2>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/toolchain/msdk-4.4.7-mips-EL-3.10-u0.9.33-m32t-140827/bin/mips-linux&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>SRC</span><span class=o>=</span><span class=s2>&#34;/home/bmduser10/develop/realtek/R810/rtl819x/linux-3.10&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nf>all</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>    make -C <span class=k>$(</span>SRC<span class=k>)</span> <span class=nv>M</span><span class=o>=</span><span class=k>$(</span>PWD<span class=k>)</span> modules
+</span></span><span class=line><span class=cl><span class=nf>clean</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>    make -C <span class=k>$(</span>SRC<span class=k>)</span> <span class=nv>M</span><span class=o>=</span><span class=k>$(</span>PWD<span class=k>)</span> clean
+</span></span></code></pre></div><p>计时器相关结构体</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>struct</span> <span class=n>timer_list</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>     * All fields that change during normal runtime grouped to the
+</span></span></span><span class=line><span class=cl><span class=cm>     * same cacheline
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>list_head</span> <span class=n>entry</span><span class=p>;</span>   
+</span></span><span class=line><span class=cl>    <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>expires</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>tvec_base</span> <span class=o>*</span><span class=n>base</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>void</span> <span class=p>(</span><span class=o>*</span><span class=n>function</span><span class=p>)(</span><span class=kt>unsigned</span> <span class=kt>long</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>data</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>slack</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#ifdef CONFIG_TIMER_STATS
+</span></span></span><span class=line><span class=cl><span class=cp></span>    <span class=kt>int</span> <span class=n>start_pid</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>void</span> <span class=o>*</span><span class=n>start_site</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>start_comm</span><span class=p>[</span><span class=mi>16</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=cp>#endif
+</span></span></span><span class=line><span class=cl><span class=cp>#ifdef CONFIG_LOCKDEP
+</span></span></span><span class=line><span class=cl><span class=cp></span>    <span class=k>struct</span> <span class=n>lockdep_map</span> <span class=n>lockdep_map</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=cp>#endif
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=p>};</span>
+</span></span></code></pre></div><h1 id=相关api>相关api</h1><p>初始化定时器：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>init_timer</span><span class=p>(</span><span class=k>struct</span> <span class=n>timer_list</span> <span class=o>*</span> <span class=n>timer</span><span class=p>);</span>
+</span></span></code></pre></div><p>增加定时器，重复调用会挂掉：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>add_timer</span><span class=p>(</span><span class=k>struct</span> <span class=n>timer_list</span> <span class=o>*</span> <span class=n>timer</span><span class=p>);</span>
+</span></span></code></pre></div><p>删除定时器：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>del_timer</span><span class=p>(</span><span class=k>struct</span> <span class=n>timer_list</span> <span class=o>*</span> <span class=n>timer</span><span class=p>);</span>
+</span></span></code></pre></div><p>修改定时器的expire：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>mod_timer</span><span class=p>(</span><span class=k>struct</span> <span class=n>timer_list</span> <span class=o>*</span><span class=n>timer</span><span class=p>,</span> <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>expires</span><span class=p>);</span>
+</span></span></code></pre></div><h1 id=计时器使用>计时器使用</h1><ol>
+<li>创建timer、编写超时定时器处理函数function；</li><li>为timer的expires、data、function赋值；</li><li>调用add_timer将timer加入列表&mdash;-添加一个定时器；</li><li>在定时器到期时，function被执行；</li><li>在程序中涉及timer控制的地方适当地调用del_timer、mod_timer删除timer或修改timer的expires。</li></ol><h1 id=示例>示例</h1><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;linux/module.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;linux/kernel.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;linux/init.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;linux/sched.h&gt;//jiffies在此头文件中定义</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;linux/init.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;linux/timer.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>struct</span> <span class=n>timer_list</span> <span class=n>mytimer</span><span class=p>;</span><span class=c1>//定义一个定时器
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>void</span>  <span class=nf>mytimer_ok</span><span class=p>(</span><span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>arg</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;Mytimer is ok</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;receive data from timer: %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>arg</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 修改定时器
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>expires</span> <span class=o>=</span> <span class=n>jiffies</span><span class=o>+</span><span class=mi>1</span><span class=o>*</span><span class=n>HZ</span><span class=p>;</span><span class=c1>//设定超时时间，100代表1秒
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>data</span> <span class=o>=</span> <span class=mi>250</span><span class=p>;</span>    <span class=c1>//传递给定时器超时函数的值
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>function</span> <span class=o>=</span> <span class=n>mytimer_ok</span><span class=p>;</span><span class=c1>//设置定时器超时函数
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>mod_timer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mytimer</span><span class=p>);</span> <span class=c1>//添加定时器，定时器开始生效
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kt>int</span> <span class=n>__init</span> <span class=nf>hello_init</span> <span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;hello,world</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>init_timer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mytimer</span><span class=p>);</span>     <span class=c1>//初始化定时器
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>expires</span> <span class=o>=</span> <span class=n>jiffies</span><span class=o>+</span><span class=mi>1</span><span class=o>*</span><span class=n>HZ</span><span class=p>;</span><span class=c1>//设定超时时间，100代表1秒
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>data</span> <span class=o>=</span> <span class=mi>250</span><span class=p>;</span>    <span class=c1>//传递给定时器超时函数的值
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>mytimer</span><span class=p>.</span><span class=n>function</span> <span class=o>=</span> <span class=n>mytimer_ok</span><span class=p>;</span><span class=c1>//设置定时器超时函数
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>add_timer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mytimer</span><span class=p>);</span> <span class=c1>//添加定时器，定时器开始生效
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kt>void</span> <span class=n>__exit</span> <span class=nf>hello_exit</span> <span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>del_timer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>mytimer</span><span class=p>);</span><span class=c1>//卸载模块时，删除定时器
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>printk</span><span class=p>(</span><span class=s>&#34;Hello module exit</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>module_init</span><span class=p>(</span><span class=n>hello_init</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>module_exit</span><span class=p>(</span><span class=n>hello_exit</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>MODULE_AUTHOR</span><span class=p>(</span><span class=s>&#34;CXF&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>MODULE_LICENSE</span><span class=p>(</span><span class=s>&#34;Dual BSD/GPL&#34;</span><span class=p>);</span>
+</span></span></code></pre></div></article></div></body><div>
 <small> words: 679 tags:</small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

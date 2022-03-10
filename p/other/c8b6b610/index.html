@@ -1,5 +1,5 @@
 <!doctype html><html><title>gdb工具</title><meta name=description content="GNU调试器（英语：GNU Debugger，缩写：GDB），是GNU软件系统中的标准调试器，此外GDB也是个具有移携性的调试器，经过移携需求的调修与重新编译，如今许多的类UNIX操作系统上都可以使用GDB，而现有GDB所能支持调试的编程语言有C、C++、Pascal以及FORTRAN。
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="gdb工具">
 <meta property="og:description" content="GNU调试器（英语：GNU Debugger，缩写：GDB），是GNU软件系统中的标准调试器，此外GDB也是个具有移携性的调试器，经过移携需求的调修与重新编译，如今许多的类UNIX操作系统上都可以使用GDB，而现有GDB所能支持调试的编程语言有C、C++、Pascal以及FORTRAN。">
 <meta property="og:type" content="article">
@@ -11,39 +11,23 @@
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="1383">
 <meta itemprop=keywords content="gdb,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>gdb工具</h1>
-<p>
+<h1 class=post-title>gdb工具</h1><p>
 <small>
 2021-02-09, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
+</p></header><aside>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#ulimit设置core文件大小>ulimit设置core文件大小</a></li>
-<li><a href=#core文件的名称和生成路径>core文件的名称和生成路径</a></li>
-<li><a href=#gdb的使用>gdb的使用</a>
+<li><a href=#ulimit设置core文件大小>ulimit设置core文件大小</a></li><li><a href=#core文件的名称和生成路径>core文件的名称和生成路径</a></li><li><a href=#gdb的使用>gdb的使用</a>
 <ul>
-<li><a href=#gdb的命令>gdb的命令</a></li>
-<li><a href=#多线程调试>多线程调试</a></li>
-</ul>
-</li>
-</ul>
-</nav>
-</aside>
-<p>GNU调试器（英语：GNU Debugger，缩写：GDB），是GNU软件系统中的标准调试器，此外GDB也是个具有移携性的调试器，经过移携需求的调修与重新编译，如今许多的类UNIX操作系统上都可以使用GDB，而现有GDB所能支持调试的编程语言有C、C++、Pascal以及FORTRAN。</p>
-<h2 id=ulimit设置core文件大小>ulimit设置core文件大小</h2>
-<pre tabindex=0><code>ulimit -c unlimited
-</code></pre><p>ulimit相关选项如下：</p>
-<pre tabindex=0><code>-a：显示目前资源限制的设定；
+<li><a href=#gdb的命令>gdb的命令</a></li><li><a href=#多线程调试>多线程调试</a></li></ul></li></ul></nav></aside><p>GNU调试器（英语：GNU Debugger，缩写：GDB），是GNU软件系统中的标准调试器，此外GDB也是个具有移携性的调试器，经过移携需求的调修与重新编译，如今许多的类UNIX操作系统上都可以使用GDB，而现有GDB所能支持调试的编程语言有C、C++、Pascal以及FORTRAN。</p><h2 id=ulimit设置core文件大小>ulimit设置core文件大小</h2><pre tabindex=0><code>ulimit -c unlimited
+</code></pre><p>ulimit相关选项如下：</p><pre tabindex=0><code>-a：显示目前资源限制的设定；
 -c &lt;core文件上限&gt;：设定core文件的最大值，单位为区块；
 -d &lt;数据节区大小&gt;：程序数据节区的最大值，单位为KB；
 -f &lt;文件大小&gt;：shell所能建立的最大文件，单位为区块；
@@ -56,11 +40,8 @@
 -t &lt;CPU时间&gt;：指定CPU使用时间的上限，单位为秒；
 -u &lt;程序数目&gt;：用户最多可开启的程序数目；
 -v &lt;虚拟内存大小&gt;：指定可使用的虚拟内存上限，单位为KB。
-</code></pre><h2 id=core文件的名称和生成路径>core文件的名称和生成路径</h2>
-<p>没有进行设置的话，默认生成的core文件不带其它任何扩展名称，全部命名为core。新的core文件生成将覆盖原来的core文件 。 可对core文件的名称和生成路径进行相关配置，如下：</p>
-<ul>
-<li><code>/proc/sys/kernel/core_uses_pid</code>可以控制core文件的文件名中是否添加pid作为扩展。文件内容为1，表示添加pid作为扩展名，生成的 core文件格式为core.xxxx；为0则表示生成的core文件同一命名为core。</li>
-<li><code>proc/sys/kernel/core_pattern</code>可以控制core文件保存位置和文件名格式。
+</code></pre><h2 id=core文件的名称和生成路径>core文件的名称和生成路径</h2><p>没有进行设置的话，默认生成的core文件不带其它任何扩展名称，全部命名为core。新的core文件生成将覆盖原来的core文件 。 可对core文件的名称和生成路径进行相关配置，如下：</p><ul>
+<li><code>/proc/sys/kernel/core_uses_pid</code>可以控制core文件的文件名中是否添加pid作为扩展。文件内容为1，表示添加pid作为扩展名，生成的 core文件格式为core.xxxx；为0则表示生成的core文件同一命名为core。</li><li><code>proc/sys/kernel/core_pattern</code>可以控制core文件保存位置和文件名格式。
 <pre tabindex=0><code># cat /proc/sys/kernel/core_pattern
 /var/tmp/core.%e.%p.%s.%t
 # cat /proc/sys/kernel/core_uses_pid
@@ -68,36 +49,29 @@
 # cat /proc/sys/kernel/core_pipe_limit
 0
 #
-</code></pre></li>
-</ul>
-<p>参数列表</p>
-<pre tabindex=0><code>%p - insert pid into filename 添加pid 
+</code></pre></li></ul><p>参数列表</p><pre tabindex=0><code>%p - insert pid into filename 添加pid 
 %u - insert current uid into filename 添加当前uid 
 %g - insert current gid into filename 添加当前gid 
 %s - insert signal that caused the coredump into the filename 添加导致产生core的信号 
 %t - insert UNIX time that the coredump occurred into filename 添加core文件生成时的unix时间 
 %h - insert hostname where the coredump happened into filename 添加主机名 
 %e - insert coredumping executable name into filename 添加命令名 
-</code></pre><h2 id=gdb的使用>gdb的使用</h2>
-<p>使用<code>gcc</code>编译源文件，加上<code>-g</code>以增加调试信息；执行会产生错误，生成core文件。</p>
-<p>执行<code>gdb file</code>时出现以下信息时不能调试<code>no debugging symbols found</code></p>
-<pre tabindex=0><code>Reading symbols from a.out...(no debugging symbols found)...done.
-</code></pre><p>当执行<code>gdb file</code>可以调试时会显示以下信息</p>
-<pre tabindex=0><code>gdb a.out 
+</code></pre><h2 id=gdb的使用>gdb的使用</h2><p>使用<code>gcc</code>编译源文件，加上<code>-g</code>以增加调试信息；执行会产生错误，生成core文件。</p><p>执行<code>gdb file</code>时出现以下信息时不能调试<code>no debugging symbols found</code></p><pre tabindex=0><code>Reading symbols from a.out...(no debugging symbols found)...done.
+</code></pre><p>当执行<code>gdb file</code>可以调试时会显示以下信息</p><pre tabindex=0><code>gdb a.out 
 GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1
 Copyright (C) 2014 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
 This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
-and &quot;show warranty&quot; for details.
-This GDB was configured as &quot;x86_64-linux-gnu&quot;.
-Type &quot;show configuration&quot; for configuration details.
+There is NO WARRANTY, to the extent permitted by law.  Type &#34;show copying&#34;
+and &#34;show warranty&#34; for details.
+This GDB was configured as &#34;x86_64-linux-gnu&#34;.
+Type &#34;show configuration&#34; for configuration details.
 For bug reporting instructions, please see:
 &lt;http://www.gnu.org/software/gdb/bugs/&gt;.
 Find the GDB manual and other documentation resources online at:
 &lt;http://www.gnu.org/software/gdb/documentation/&gt;.
-For help, type &quot;help&quot;.
-Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+For help, type &#34;help&#34;.
+Type &#34;apropos word&#34; to search for commands related to &#34;word&#34;...
 Reading symbols from a.out...done.
 (gdb) 
 </code></pre><pre tabindex=0><code>$ gdb hello
@@ -114,34 +88,17 @@ Starting program: /home/hyb/workspaces/c/hello 编程珠玑
 Hello World 编程珠玑!
 [Inferior 1 (process 20201) exited normally]
 (gdb)
-</code></pre><h3 id=gdb的命令>gdb的命令</h3>
-<ul>
-<li><code>set args var1 var2</code>: 运行前添加参数</li>
-<li><code>run</code>: 运行当前程序，可以在后面加参数运行，及<code>run var1 var2</code></li>
-<li><code>bt</code>: 查看程序终止时的堆栈</li>
-</ul>
-<h3 id=多线程调试>多线程调试</h3>
-<ul>
-<li>键入<code>bt</code>可以查看程序终止线程的堆栈：</li>
-<li>键入<code>info threads</code>查看所有线程：</li>
-<li>键入<code>thread apply all bt</code>查看所有线程内容：</li>
-<li>键入<code>t 85</code>转换到thread 85中：</li>
-<li>键入<code>bt</code>查看thread 85的堆栈：</li>
-</ul>
-</article>
-</div>
-</body>
-<div>
+</code></pre><h3 id=gdb的命令>gdb的命令</h3><ul>
+<li><code>set args var1 var2</code>: 运行前添加参数</li><li><code>run</code>: 运行当前程序，可以在后面加参数运行，及<code>run var1 var2</code></li><li><code>bt</code>: 查看程序终止时的堆栈</li></ul><h3 id=多线程调试>多线程调试</h3><ul>
+<li>键入<code>bt</code>可以查看程序终止线程的堆栈：</li><li>键入<code>info threads</code>查看所有线程：</li><li>键入<code>thread apply all bt</code>查看所有线程内容：</li><li>键入<code>t 85</code>转换到thread 85中：</li><li>键入<code>bt</code>查看thread 85的堆栈：</li></ul></article></div></body><div>
 <small> words: 1383 tags:</small>
 <small><code><a href=https://arair.net/tags/gdb>gdb</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

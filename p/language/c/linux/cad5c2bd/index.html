@@ -2,7 +2,7 @@
 /dev/random和/dev/urandom是Linux系统中提供的随机伪设备，这两个设备的任务，是提供永不为空的随机字节数据流。很多解密程序与安全应用程序（如SSH Keys,SSL Keys等）需要它们提供的随机数据流。 区别
 这两个设备的差异在于：/dev/random的random依赖于系统中断，因此在系统的中断数不足时，/dev/random设备会一直封锁，尝试读取的进程就会进入等待状态，直到系统的中断数充分够用, /dev/random设备可以保证数据的随机性。
 /dev/urandom不依赖系统的中断，也就不会造成进程忙等待，但是数据的随机性也不高。 使用方式
-字符设备文件的打开方式和其它文件一样，都是使用open函数打开设备，然后从文件描述符中获取数据即可。 "><meta name=generator content="Hugo 0.91.0">
+字符设备文件的打开方式和其它文件一样，都是使用open函数打开设备，然后从文件描述符中获取数据即可。 "><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="利用random与urandom生成随机数">
 <meta property="og:description" content="
 介绍
@@ -30,66 +30,50 @@
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
 <meta itemprop=wordCount content="351">
 <meta itemprop=keywords content="random,linux,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>利用random与urandom生成随机数</h1>
-<p>
+<h1 class=post-title>利用random与urandom生成随机数</h1><p>
 <small>
 2021-02-07, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
-<nav id=TableOfContents></nav>
-</aside>
-<ol>
+</p></header><aside>
+<nav id=TableOfContents></nav></aside><ol>
 <li>介绍<br>
-<code>/dev/random</code>和<code>/dev/urandom</code>是Linux系统中提供的随机伪设备，这两个设备的任务，是提供永不为空的随机字节数据流。很多解密程序与安全应用程序（如SSH Keys,SSL Keys等）需要它们提供的随机数据流。</li>
-<li>区别<br>
+<code>/dev/random</code>和<code>/dev/urandom</code>是Linux系统中提供的随机伪设备，这两个设备的任务，是提供永不为空的随机字节数据流。很多解密程序与安全应用程序（如SSH Keys,SSL Keys等）需要它们提供的随机数据流。</li><li>区别<br>
 这两个设备的差异在于：<code>/dev/random</code>的random依赖于系统中断，因此在系统的中断数不足时，<code>/dev/random</code>设备会一直封锁，尝试读取的进程就会进入等待状态，直到系统的中断数充分够用, <code>/dev/random</code>设备可以保证数据的随机性。<br>
-<code>/dev/urandom</code>不依赖系统的中断，也就不会造成进程忙等待，但是数据的随机性也不高。</li>
-<li>使用方式<br>
-字符设备文件的打开方式和其它文件一样，都是使用open函数打开设备，然后从文件描述符中获取数据即可。</li>
-</ol>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#include</span><span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;sys/stat.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;fcntl.h&gt;</span><span class=cp>
-</span><span class=cp></span>
-<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
-<span class=p>{</span>
-    <span class=kt>int</span> <span class=n>fd</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
-    <span class=kt>char</span> <span class=o>*</span><span class=n>buff</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
-    <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>ulTest</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
-
-    <span class=n>fd</span><span class=o>=</span><span class=n>open</span><span class=p>(</span><span class=s>&#34;/dev/urandom&#34;</span><span class=p>,</span><span class=n>O_RDONLY</span><span class=p>);</span>
-
-    <span class=n>read</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span><span class=o>&amp;</span><span class=n>ulSeed</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>ulTest</span><span class=p>));</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%ul&#34;</span><span class=p>,</span><span class=n>ulTest</span><span class=p>);</span>
-
-    <span class=n>close</span><span class=p>(</span><span class=n>fd</span><span class=p>);</span>
-<span class=p>}</span>
-</code></pre></div>
-</article>
-</div>
-</body>
-<div>
+<code>/dev/urandom</code>不依赖系统的中断，也就不会造成进程忙等待，但是数据的随机性也不高。</li><li>使用方式<br>
+字符设备文件的打开方式和其它文件一样，都是使用open函数打开设备，然后从文件描述符中获取数据即可。</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/stat.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;fcntl.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>fd</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>buff</span><span class=o>=</span><span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>ulTest</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>fd</span><span class=o>=</span><span class=n>open</span><span class=p>(</span><span class=s>&#34;/dev/urandom&#34;</span><span class=p>,</span><span class=n>O_RDONLY</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>read</span><span class=p>(</span><span class=n>fd</span><span class=p>,</span><span class=o>&amp;</span><span class=n>ulSeed</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>ulTest</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%ul&#34;</span><span class=p>,</span><span class=n>ulTest</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>close</span><span class=p>(</span><span class=n>fd</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div></article></div></body><div>
 <small> words: 351 tags:</small>
 <small><code><a href=https://arair.net/tags/random>random</a></code></small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>

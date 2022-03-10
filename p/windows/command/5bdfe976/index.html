@@ -1,5 +1,5 @@
 <!doctype html><html><title>windows 网络配置命令行工具 netsh</title><meta name=description content="netsh(Network Shell) 是一个windows系统本身提供的功能强大的网络配置命令行工具
-"><meta name=generator content="Hugo 0.91.0">
+"><meta name=generator content="Hugo 0.93.3">
 <meta property="og:title" content="windows 网络配置命令行工具 netsh">
 <meta property="og:description" content="netsh(Network Shell) 是一个windows系统本身提供的功能强大的网络配置命令行工具">
 <meta property="og:type" content="article">
@@ -9,33 +9,22 @@
 <meta itemprop=name content="windows 网络配置命令行工具 netsh">
 <meta itemprop=description content="netsh(Network Shell) 是一个windows系统本身提供的功能强大的网络配置命令行工具"><meta itemprop=datePublished content="2021-05-24T10:41:30+08:00">
 <meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="312">
+<meta itemprop=wordCount content="310">
 <meta itemprop=keywords content="windows,network,netsh,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style>
-<script>function setTheme({el:a=document.documentElement,mode:b='auto',light:c='light',dark:d='dark'}){a.dataset.colorMode=b,a.dataset.lightTheme=c,a.dataset.darkTheme=d}let prefersDarkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;prefersDarkMode&&setTheme({mode:'dark'})</script>
+<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
 <link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
 <body>
 <div id=post class=post>
 <article>
 <header>
-<h1 class=post-title>windows 网络配置命令行工具 netsh</h1>
-<p>
+<h1 class=post-title>windows 网络配置命令行工具 netsh</h1><p>
 <small>
 2021-05-24, updated 2021-09-12
 </small>
-</p>
-</header>
-<aside>
+</p></header><aside>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#修改mtu>修改mtu</a></li>
-<li><a href=#初始化网络状态命令>初始化网络状态命令</a></li>
-</ul>
-</nav>
-</aside>
-<p>netsh(Network Shell) 是一个windows系统本身提供的功能强大的网络配置命令行工具</p>
-<h2 id=修改mtu>修改mtu</h2>
-<pre tabindex=0><code>C:\WINDOWS\system32&gt;netsh
+<li><a href=#修改mtu>修改mtu</a></li><li><a href=#初始化网络状态命令>初始化网络状态命令</a></li></ul></nav></aside><p>netsh(Network Shell) 是一个windows系统本身提供的功能强大的网络配置命令行工具</p><h2 id=修改mtu>修改mtu</h2><pre tabindex=0><code>C:\WINDOWS\system32&gt;netsh
 netsh&gt;interface
 在将来的 Windows 版本中，Microsoft 可能会删除 TCP/IP 的 Netsh 功能。
 
@@ -52,33 +41,23 @@ netsh interface ipv4&gt;show subinterface
 4294967295                1          0    3412447  Loopback Pseudo-Interface 1
   1500                1  3162790465  581193074  以太网 2
 
-netsh interface ipv4&gt;set subinterface &quot;以太网 2&quot; mtu=1400
+netsh interface ipv4&gt;set subinterface &#34;以太网 2&#34; mtu=1400
 确定。
 
 netsh interface ipv4&gt;
-
-</code></pre><p>也可以直接输入以下命令</p>
-<pre tabindex=0><code>netsh interface ipv4 set subinterface &quot;以太网 2&quot; mtu=1400
-
-</code></pre><h2 id=初始化网络状态命令>初始化网络状态命令</h2>
-<pre tabindex=0><code>netsh winsock reset
-</code></pre>
-</article>
-</div>
-</body>
-<div>
-<small> words: 312 tags:</small>
+</code></pre><p>也可以直接输入以下命令</p><pre tabindex=0><code>netsh interface ipv4 set subinterface &#34;以太网 2&#34; mtu=1400
+</code></pre><h2 id=初始化网络状态命令>初始化网络状态命令</h2><pre tabindex=0><code>netsh winsock reset
+</code></pre></article></div></body><div>
+<small> words: 310 tags:</small>
 <small><code><a href=https://arair.net/tags/windows>windows</a></code></small>
 <small><code><a href=https://arair.net/tags/network>network</a></code></small>
 <small><code><a href=https://arair.net/tags/netsh>netsh</a></code></small>
-</div>
-</html>
-</body>
-<script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script>
+</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
 <script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
 <link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
 <script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
 <script>hljs.highlightAll()</script>
 <script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script></html>
+<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
+</html>
