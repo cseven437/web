@@ -1,42 +1,11 @@
 <!doctype html><html><title>linux-c 格式化输出函数</title><meta name=description content="stdio.h snprintf C 库函数 **int snprintf(char str, size_t size, const char format, &amp;hellip;) 设将可变参数(&amp;hellip;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="linux-c 格式化输出函数">
-<meta property="og:description" content="stdio.h
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux-c 格式化输出函数"><meta property="og:description" content="stdio.h
 snprintf
-C 库函数 **int snprintf(char str, size_t size, const char format, &mldr;) 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/language/c/linux/c2fb0965f61f47a4b6412ce62b324548/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-07-10T17:18:13+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="linux-c 格式化输出函数">
-<meta itemprop=description content="stdio.h
+C 库函数 **int snprintf(char str, size_t size, const char format, &mldr;) 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/linux/c2fb0965f61f47a4b6412ce62b324548/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-07-10T17:18:13+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux-c 格式化输出函数"><meta itemprop=description content="stdio.h
 snprintf
-C 库函数 **int snprintf(char str, size_t size, const char format, &mldr;) 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。"><meta itemprop=datePublished content="2021-07-10T17:18:13+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="530">
-<meta itemprop=keywords content="sprintf,snprintf,linux-c,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>linux-c 格式化输出函数</h1><p>
-<small>
-2021-07-10, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#stdioh>stdio.h</a>
-<ul>
-<li><a href=#snprintf>snprintf</a></li></ul></li><li><a href=#stdargh>stdarg.h</a>
-<ul>
-<li><a href=#vsnprintf与vsprintf>vsnprintf与vsprintf</a></li></ul></li></ul></nav></aside><h2 id=stdioh>stdio.h</h2><h3 id=snprintf>snprintf</h3><p>C 库函数 **int snprintf(char <em>str, size_t size, const char <em>format, &mldr;)</em></em> 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>snprintf</span> <span class=p>(</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>str</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>size</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>format</span><span class=p>,</span> <span class=p>...</span> <span class=p>);</span>
+C 库函数 **int snprintf(char str, size_t size, const char format, &mldr;) 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。"><meta itemprop=datePublished content="2021-07-10T17:18:13+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="533"><meta itemprop=keywords content="sprintf,snprintf,linux-c,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux-c 格式化输出函数</h1><p><small>2021-07-10, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#stdioh>stdio.h</a><ul><li><a href=#snprintf>snprintf</a></li></ul></li><li><a href=#stdargh>stdarg.h</a><ul><li><a href=#vsnprintf与vsprintf>vsnprintf与vsprintf</a></li></ul></li></ul></nav></aside><h2 id=stdioh>stdio.h</h2><h3 id=snprintf>snprintf</h3><p>C 库函数 **int snprintf(char <em>str, size_t size, const char <em>format, &mldr;)</em></em> 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>snprintf</span> <span class=p>(</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>str</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>size</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>format</span><span class=p>,</span> <span class=p>...</span> <span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>sprintf</span> <span class=p>(</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>str</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>format</span><span class=p>,</span> <span class=p>...</span> <span class=p>);</span>
-</span></span></code></pre></div><p>参数</p><ul>
-<li><strong>str</strong> &ndash; 目标字符串。</li><li><strong>size</strong> &ndash; 拷贝字节数(Bytes)。</li><li><strong>format</strong> &ndash; 格式化成字符串。</li><li><strong>&mldr;</strong> &ndash; 可变参数。</li></ul><p>返回值</p><ul>
-<li>(1) 如果格式化后的字符串长度小于等于 size，则会把字符串全部复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>；</li><li>(2) 如果格式化后的字符串长度大于 size，超过 size 的部分会被截断，只将其中的 (size-1) 个字符复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>，返回值为欲写入的字符串长度。</li></ul><p>实例</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></code></pre></div><p>参数</p><ul><li><strong>str</strong> &ndash; 目标字符串。</li><li><strong>size</strong> &ndash; 拷贝字节数(Bytes)。</li><li><strong>format</strong> &ndash; 格式化成字符串。</li><li><strong>&mldr;</strong> &ndash; 可变参数。</li></ul><p>返回值</p><ul><li>(1) 如果格式化后的字符串长度小于等于 size，则会把字符串全部复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>；</li><li>(2) 如果格式化后的字符串长度大于 size，超过 size 的部分会被截断，只将其中的 (size-1) 个字符复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>，返回值为欲写入的字符串长度。</li></ul><p>实例</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span> 
 </span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
 </span></span><span class=line><span class=cl><span class=p>{</span>
@@ -81,17 +50,9 @@ C 库函数 **int snprintf(char str, size_t size, const char format, &mldr;) 设
 </span></span><span class=line><span class=cl>    <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></div><p>输出</p><pre tabindex=0><code>5 27.000000 hello world
-</code></pre></article></div></body><div>
-<small> words: 530 tags:</small>
+</code></pre></article></div></body><div><small>words: 533 tags:</small>
 <small><code><a href=https://arair.net/tags/sprintf>sprintf</a></code></small>
 <small><code><a href=https://arair.net/tags/snprintf>snprintf</a></code></small>
-<small><code><a href=https://arair.net/tags/linux-c>linux-c</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/linux-c>linux-c</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

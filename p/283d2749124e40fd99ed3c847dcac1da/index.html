@@ -1,29 +1,4 @@
-<!doctype html><html><title>linux 进程相关函数--fork vfork clone</title><meta name=description content="fork fork创造的子进程是父进程的完整副本，复制了父亲进程的资源，包括内存的内容task_struct内容 vfork vfork创建的子进程与父进程共享"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="linux 进程相关函数--fork vfork clone">
-<meta property="og:description" content="fork fork创造的子进程是父进程的完整副本，复制了父亲进程的资源，包括内存的内容task_struct内容 vfork vfork创建的子进程与父进程共享">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/283d2749124e40fd99ed3c847dcac1da/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-10-31T10:47:24+08:00">
-<meta property="article:modified_time" content="2021-10-31T10:51:42+08:00">
-<meta itemprop=name content="linux 进程相关函数--fork vfork clone">
-<meta itemprop=description content="fork fork创造的子进程是父进程的完整副本，复制了父亲进程的资源，包括内存的内容task_struct内容 vfork vfork创建的子进程与父进程共享"><meta itemprop=datePublished content="2021-10-31T10:47:24+08:00">
-<meta itemprop=dateModified content="2021-10-31T10:51:42+08:00">
-<meta itemprop=wordCount content="291">
-<meta itemprop=keywords content="linux-c,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>linux 进程相关函数--fork vfork clone</h1><p>
-<small>
-2021-10-31, updated 2021-10-31
-</small>
-</p></header><aside>
-<nav id=TableOfContents></nav></aside><ul>
-<li>fork fork创造的子进程是父进程的完整副本，复制了父亲进程的资源，包括内存的内容task_struct内容</li><li>vfork vfork创建的子进程与父进程共享数据段,而且由vfork()创建的子进程将先于父进程运行</li><li>clone产生线程，可以对父子进程之间的共享、复制进行精确控制。</li></ul><blockquote>
-<p>linux使用了写时复制技术，vfork速度优势变的并不明显，可以不使用这个了。</p></blockquote><p>vfork不要使用return退出，只有使用exit()退出父进程才能正常运行</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+<!doctype html><html><title>linux 进程相关函数--fork vfork clone</title><meta name=description content="fork fork创造的子进程是父进程的完整副本，复制了父亲进程的资源，包括内存的内容task_struct内容 vfork vfork创建的子进程与父进程共享"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux 进程相关函数--fork vfork clone"><meta property="og:description" content="fork fork创造的子进程是父进程的完整副本，复制了父亲进程的资源，包括内存的内容task_struct内容 vfork vfork创建的子进程与父进程共享"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/283d2749124e40fd99ed3c847dcac1da/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-10-31T10:47:24+08:00"><meta property="article:modified_time" content="2021-10-31T10:51:42+08:00"><meta itemprop=name content="linux 进程相关函数--fork vfork clone"><meta itemprop=description content="fork fork创造的子进程是父进程的完整副本，复制了父亲进程的资源，包括内存的内容task_struct内容 vfork vfork创建的子进程与父进程共享"><meta itemprop=datePublished content="2021-10-31T10:47:24+08:00"><meta itemprop=dateModified content="2021-10-31T10:51:42+08:00"><meta itemprop=wordCount content="295"><meta itemprop=keywords content="linux-c,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux 进程相关函数--fork vfork clone</h1><p><small>2021-10-31, updated 2021-10-31</small></p></header><aside><nav id=TableOfContents></nav></aside><ul><li>fork fork创造的子进程是父进程的完整副本，复制了父亲进程的资源，包括内存的内容task_struct内容</li><li>vfork vfork创建的子进程与父进程共享数据段,而且由vfork()创建的子进程将先于父进程运行</li><li>clone产生线程，可以对父子进程之间的共享、复制进行精确控制。</li></ul><blockquote><p>linux使用了写时复制技术，vfork速度优势变的并不明显，可以不使用这个了。</p></blockquote><p>vfork不要使用return退出，只有使用exit()退出父进程才能正常运行</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
@@ -61,15 +36,7 @@ this is son, count:2 pid:831
 son end
 this is father, count:3 oud:830
 father end
-</code></pre></article></div></body><div>
-<small> words: 291 tags:</small>
-<small><code><a href=https://arair.net/tags/linux-c>linux-c</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+</code></pre></article></div></body><div><small>words: 295 tags:</small>
+<small><code><a href=https://arair.net/tags/linux-c>linux-c</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

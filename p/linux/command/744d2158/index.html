@@ -1,33 +1,5 @@
 <!doctype html><html><title>ip命令</title><meta name=description content="Linux的ip命令和ifconfig类似，但前者功能更强大，并旨在取代后者。使用ip命令，只需一个命令，你就能很轻松地执行一些网络管理任务。iproute2套件里提供了许多增强功能的命令，ip命令即是其中之一。
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="ip命令">
-<meta property="og:description" content="Linux的ip命令和ifconfig类似，但前者功能更强大，并旨在取代后者。使用ip命令，只需一个命令，你就能很轻松地执行一些网络管理任务。iproute2套件里提供了许多增强功能的命令，ip命令即是其中之一。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/linux/command/744d2158/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-02-15T16:13:47+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="ip命令">
-<meta itemprop=description content="Linux的ip命令和ifconfig类似，但前者功能更强大，并旨在取代后者。使用ip命令，只需一个命令，你就能很轻松地执行一些网络管理任务。iproute2套件里提供了许多增强功能的命令，ip命令即是其中之一。"><meta itemprop=datePublished content="2021-02-15T16:13:47+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="609">
-<meta itemprop=keywords content="command,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>ip命令</h1><p>
-<small>
-2021-02-15, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#route>route</a></li><li><a href=#addr>addr</a></li><li><a href=#link>link</a></li><li><a href=#neighbourarp相关>neighbour(arp相关)</a></li></ul></nav></aside><p>Linux的ip命令和ifconfig类似，但前者功能更强大，并旨在取代后者。使用ip命令，只需一个命令，你就能很轻松地执行一些网络管理任务。iproute2套件里提供了许多增强功能的命令，ip命令即是其中之一。</p><p>参数</p><ul>
-<li>-c: 输出结果中添加颜色</li><li>-help: 帮助</li><li>-json: json格式输出
-<ul>
-<li>-pretty: json格式更好看点</li></ul></li></ul><h2 id=route>route</h2><p>查看默认路由表</p><pre tabindex=0><code>$ ip route
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="ip命令"><meta property="og:description" content="Linux的ip命令和ifconfig类似，但前者功能更强大，并旨在取代后者。使用ip命令，只需一个命令，你就能很轻松地执行一些网络管理任务。iproute2套件里提供了许多增强功能的命令，ip命令即是其中之一。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/744d2158/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-02-15T16:13:47+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="ip命令"><meta itemprop=description content="Linux的ip命令和ifconfig类似，但前者功能更强大，并旨在取代后者。使用ip命令，只需一个命令，你就能很轻松地执行一些网络管理任务。iproute2套件里提供了许多增强功能的命令，ip命令即是其中之一。"><meta itemprop=datePublished content="2021-02-15T16:13:47+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="609"><meta itemprop=keywords content="command,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>ip命令</h1><p><small>2021-02-15, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#route>route</a></li><li><a href=#addr>addr</a></li><li><a href=#link>link</a></li><li><a href=#neighbourarp相关>neighbour(arp相关)</a></li></ul></nav></aside><p>Linux的ip命令和ifconfig类似，但前者功能更强大，并旨在取代后者。使用ip命令，只需一个命令，你就能很轻松地执行一些网络管理任务。iproute2套件里提供了许多增强功能的命令，ip命令即是其中之一。</p><p>参数</p><ul><li>-c: 输出结果中添加颜色</li><li>-help: 帮助</li><li>-json: json格式输出<ul><li>-pretty: json格式更好看点</li></ul></li></ul><h2 id=route>route</h2><p>查看默认路由表</p><pre tabindex=0><code>$ ip route
 default via 192.168.30.2 dev ens33 
 192.168.30.0/24 dev ens33 proto kernel scope link src 192.168.30.128 
 </code></pre><p>查看指定路由表</p><pre tabindex=0><code>$ ip route show table main
@@ -96,15 +68,7 @@ $ ip -s link show ens33
 </code></pre><h2 id=neighbourarp相关>neighbour(arp相关)</h2><p>查看arp</p><pre tabindex=0><code># ip neigh show
 192.168.0.20 dev bridge0 lladdr 92:8d:73:d8:47:cf REACHABLE
 </code></pre><p>清除arp</p><pre tabindex=0><code># ip neigh flush dev eth0
-</code></pre></article></div></body><div>
-<small> words: 609 tags:</small>
-<small><code><a href=https://arair.net/tags/command>command</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+</code></pre></article></div></body><div><small>words: 609 tags:</small>
+<small><code><a href=https://arair.net/tags/command>command</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

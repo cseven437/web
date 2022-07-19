@@ -1,32 +1,8 @@
 <!doctype html><html><title>strstr函数</title><meta name=description content="描述 C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &amp;lsquo;\0&amp;rsquo;。
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="strstr函数">
-<meta property="og:description" content="描述
-C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/language/c/function/ddd81d9f/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-01-24T19:03:53+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="strstr函数">
-<meta itemprop=description content="描述
-C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。"><meta itemprop=datePublished content="2021-01-24T19:03:53+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="244">
-<meta itemprop=keywords content="C,C库函数,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>strstr函数</h1><p>
-<small>
-2021-01-24, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents></nav></aside><h1 id=描述>描述</h1><p>C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。</p><h1 id=声明>声明</h1><p>下面是 strstr() 函数的声明。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>char</span> <span class=o>*</span><span class=n>strstr</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>haystack</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>needle</span><span class=p>)</span>
-</span></span></code></pre></div><h1 id=参数>参数</h1><ul>
-<li>haystack &ndash; 要被检索的 C 字符串。</li><li>needle &ndash; 在 haystack 字符串内要搜索的小字符串。</li></ul><h1 id=返回值>返回值</h1><p>该函数返回在 haystack 中第一次出现 needle 字符串的位置，如果未找到则返回 null。</p><h1 id=实例>实例</h1><p>下面的实例演示了 strstr() 函数的用法。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="strstr函数"><meta property="og:description" content="描述
+C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/function/ddd81d9f/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-01-24T19:03:53+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="strstr函数"><meta itemprop=description content="描述
+C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。"><meta itemprop=datePublished content="2021-01-24T19:03:53+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="245"><meta itemprop=keywords content="C,C库函数,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>strstr函数</h1><p><small>2021-01-24, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><h1 id=描述>描述</h1><p>C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 &lsquo;\0&rsquo;。</p><h1 id=声明>声明</h1><p>下面是 strstr() 函数的声明。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>char</span> <span class=o>*</span><span class=n>strstr</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>haystack</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>needle</span><span class=p>)</span>
+</span></span></code></pre></div><h1 id=参数>参数</h1><ul><li>haystack &ndash; 要被检索的 C 字符串。</li><li>needle &ndash; 在 haystack 字符串内要搜索的小字符串。</li></ul><h1 id=返回值>返回值</h1><p>该函数返回在 haystack 中第一次出现 needle 字符串的位置，如果未找到则返回 null。</p><h1 id=实例>实例</h1><p>下面的实例演示了 strstr() 函数的用法。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl>
@@ -43,16 +19,8 @@ C 库函数 **char *strstr(const char *haystack, const char *needle)**在字符�
 </span></span><span class=line><span class=cl>   <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></div><p>让我们编译并运行上面的程序，这将产生以下结果：</p><pre tabindex=0><code>子字符串是： NOOB
-</code></pre></article></div></body><div>
-<small> words: 244 tags:</small>
+</code></pre></article></div></body><div><small>words: 245 tags:</small>
 <small><code><a href=https://arair.net/tags/c>C</a></code></small>
-<small><code><a href=https://arair.net/tags/c%E5%BA%93%E5%87%BD%E6%95%B0>C库函数</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/c%E5%BA%93%E5%87%BD%E6%95%B0>C库函数</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

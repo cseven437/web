@@ -1,39 +1,14 @@
 <!doctype html><html><title>Security</title><meta name=description content="环境
 debian: 10 gcc: 8.3.0 技术简介 Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="Security">
-<meta property="og:description" content="环境
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="Security"><meta property="og:description" content="环境
 debian: 10
 gcc: 8.3.0
 技术简介
-Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/gcc/f68bca17/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-01-31T17:46:10+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="Security">
-<meta itemprop=description content="环境
+Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/gcc/f68bca17/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-01-31T17:46:10+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="Security"><meta itemprop=description content="环境
 debian: 10
 gcc: 8.3.0
 技术简介
-Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。"><meta itemprop=datePublished content="2021-01-31T17:46:10+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="2726">
-<meta itemprop=keywords content="gcc,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>Security</h1><p>
-<small>
-2021-01-31, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#技术简介>技术简介</a></li><li><a href=#canary>CANARY</a></li><li><a href=#fortify>FORTIFY</a></li><li><a href=#nx>NX</a></li><li><a href=#pie>PIE</a></li><li><a href=#aslraddress-space-layout-randomization>ASLR（Address Space Layout Randomization）</a></li><li><a href=#relro>RELRO</a></li><li><a href=#编译参数>编译参数</a></li><li><a href=#保护机制检测>保护机制检测</a></li><li><a href=#地址空间布局随机化>地址空间布局随机化</a></li></ul></nav></aside><p>环境</p><pre tabindex=0><code>debian: 10
+Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。"><meta itemprop=datePublished content="2021-01-31T17:46:10+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="2728"><meta itemprop=keywords content="gcc,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>Security</h1><p><small>2021-01-31, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#技术简介>技术简介</a></li><li><a href=#canary>CANARY</a></li><li><a href=#fortify>FORTIFY</a></li><li><a href=#nx>NX</a></li><li><a href=#pie>PIE</a></li><li><a href=#aslraddress-space-layout-randomization>ASLR（Address Space Layout Randomization）</a></li><li><a href=#relro>RELRO</a></li><li><a href=#编译参数>编译参数</a></li><li><a href=#保护机制检测>保护机制检测</a></li><li><a href=#地址空间布局随机化>地址空间布局随机化</a></li></ul></nav></aside><p>环境</p><pre tabindex=0><code>debian: 10
 gcc: 8.3.0
 </code></pre><h2 id=技术简介>技术简介</h2><p>Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。</p><h2 id=canary>CANARY</h2><p>启用 CANARY 后，函数开始执行的时候会先往栈里插入 canary 信息，当函数返回时验证插入的 canary 是否被修改，如果是，则说明发生了栈溢出，程序停止运行。</p><p>下面是一个例子：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span>
@@ -218,20 +193,9 @@ libc.so.6 =&gt; /usr/lib32/libc.so.6 (0xf7599000)
 linux-gate.so.1 (0xf770a000)
 libc.so.6 =&gt; /usr/lib32/libc.so.6 (0xf750c000)
 /lib/ld-linux.so.2 (0xf770c000)
-</code></pre><p>入口地址依然固定，但是动态库变为随机。</p><p>所以在分析一个 PIE 开启的二进制文件时，只需要关闭 ASLR，即可使 PIE 和 ASLR 都失效。</p><h2 id=aslraddress-space-layout-randomization>ASLR（Address Space Layout Randomization）</h2><ul>
-<li>关闭：<code># echo 0 > /proc/sys/kernel/randomize_va_space</code></li><li>部分开启（将 mmap 的基址，stack 和 vdso 页面随机化）：<code># echo 1 > /proc/sys/kernel/randomize_va_space</code></li><li>完全开启（在部分开启的基础上增加 heap的随机化：<code># echo ２ > /proc/sys/kernel/randomize_va_space</code></li></ul><h2 id=relro>RELRO</h2><p>RELRO（ReLocation Read-Only）设置符号重定向表为只读或在程序启动时就解析并绑定所有动态符号，从而减少对 GOT（Global Offset Table）的攻击。</p><p>RELOR 有两种形式：</p><ul>
-<li>Partial RELRO：一些段（包括 .dynamic）在初始化后将会被标记为只读。</li><li>Full RELRO：除了 Partial RELRO，延迟绑定将被禁止，所有的导入符号将在开始时被解析，.got.plt 段会被完全初始化为目标函数的最终地址，并被标记为只读。另外 link_map 和 _dl_runtime_resolve 的地址也不会被装入。</li></ul><h2 id=编译参数>编译参数</h2><p>各种安全技术的编译参数如下：</p><table>
-<thead>
-<tr>
-<th>安全技术</th><th>完全开</th><th>部分开启</th><th>关闭</th></tr></thead><tbody>
-<tr>
-<td>Canary</td><td>-fstack-protector-all</td><td>-fstack-protector</td><td>-fno-stack-protector</td></tr><tr>
-<td>NX</td><td>-z noexecstack</td><td></td><td>-z execstack</td></tr><tr>
-<td>PIE</td><td>-pie</td><td></td><td>-no-pie</td></tr><tr>
-<td>RELRO</td><td>-z now</td><td>-z lazy</td><td>-z norelro</td></tr></tbody></table><p>关闭所有保护：</p><pre tabindex=0><code>gcc hello.c -o hello -fno-stack-protector -z execstack -no-pie -z norelro
+</code></pre><p>入口地址依然固定，但是动态库变为随机。</p><p>所以在分析一个 PIE 开启的二进制文件时，只需要关闭 ASLR，即可使 PIE 和 ASLR 都失效。</p><h2 id=aslraddress-space-layout-randomization>ASLR（Address Space Layout Randomization）</h2><ul><li>关闭：<code># echo 0 > /proc/sys/kernel/randomize_va_space</code></li><li>部分开启（将 mmap 的基址，stack 和 vdso 页面随机化）：<code># echo 1 > /proc/sys/kernel/randomize_va_space</code></li><li>完全开启（在部分开启的基础上增加 heap的随机化：<code># echo ２ > /proc/sys/kernel/randomize_va_space</code></li></ul><h2 id=relro>RELRO</h2><p>RELRO（ReLocation Read-Only）设置符号重定向表为只读或在程序启动时就解析并绑定所有动态符号，从而减少对 GOT（Global Offset Table）的攻击。</p><p>RELOR 有两种形式：</p><ul><li>Partial RELRO：一些段（包括 .dynamic）在初始化后将会被标记为只读。</li><li>Full RELRO：除了 Partial RELRO，延迟绑定将被禁止，所有的导入符号将在开始时被解析，.got.plt 段会被完全初始化为目标函数的最终地址，并被标记为只读。另外 link_map 和 _dl_runtime_resolve 的地址也不会被装入。</li></ul><h2 id=编译参数>编译参数</h2><p>各种安全技术的编译参数如下：</p><table><thead><tr><th>安全技术</th><th>完全开</th><th>部分开启</th><th>关闭</th></tr></thead><tbody><tr><td>Canary</td><td>-fstack-protector-all</td><td>-fstack-protector</td><td>-fno-stack-protector</td></tr><tr><td>NX</td><td>-z noexecstack</td><td></td><td>-z execstack</td></tr><tr><td>PIE</td><td>-pie</td><td></td><td>-no-pie</td></tr><tr><td>RELRO</td><td>-z now</td><td>-z lazy</td><td>-z norelro</td></tr></tbody></table><p>关闭所有保护：</p><pre tabindex=0><code>gcc hello.c -o hello -fno-stack-protector -z execstack -no-pie -z norelro
 </code></pre><p>开启所有保护：</p><pre tabindex=0><code>gcc hello.c -o hello -fstack-protector-all -z noexecstack -pie -z now
-</code></pre><p>FORTIFY</p><ul>
-<li>-D_FORTIFY_SOURCE=1：仅在编译时检测溢出</li><li>-D_FORTIFY_SOURCE=2：在编译时和运行时检测溢出</li></ul><h2 id=保护机制检测>保护机制检测</h2><p>有许多工具可以检测二进制文件所使用的编译器安全技术。下面介绍常用的几种：</p><p><a href=https://github.com/slimm609/checksec.sh.git>checksec</a></p><pre tabindex=0><code>$ checksec --file=/bin/ls
+</code></pre><p>FORTIFY</p><ul><li>-D_FORTIFY_SOURCE=1：仅在编译时检测溢出</li><li>-D_FORTIFY_SOURCE=2：在编译时和运行时检测溢出</li></ul><h2 id=保护机制检测>保护机制检测</h2><p>有许多工具可以检测二进制文件所使用的编译器安全技术。下面介绍常用的几种：</p><p><a href=https://github.com/slimm609/checksec.sh.git>checksec</a></p><pre tabindex=0><code>$ checksec --file=/bin/ls
 RELRO STACK CANARY NX PIE RPATH RUNPATH    FORTIFY    Fortified Fortifiable FILE
 Partial RELRO Canary found NX enabled No PIE No RPATH No RUNPATH Yes    5        15    /bin/ls
 </code></pre><p>peda 自带的 checksec(gdb插件)</p><pre tabindex=0><code>$ gdb /bin/ls
@@ -241,15 +205,7 @@ FORTIFY : ENABLED
 NX : ENABLED
 PIE : disabled
 RELRO : Partial
-</code></pre><h2 id=地址空间布局随机化>地址空间布局随机化</h2><p>最后再说一下地址空间布局随机化（ASLR），该技术虽然不是由 GCC 编译时提供的，但对 PIE 还是有影响。该技术旨在将程序的内存布局随机化，使得攻击者不能轻易地得到数据区的地址来构造 payload。由于程序的堆栈分配与共享库的装载都是在运行时进行，系统在程序每次执行时，随机地分配程序堆栈的地址以及共享库装载的地址。使得攻击者无法预测自己写入的数据区的虚拟地址。</p><p>针对该保护机制的攻击，往往是通过信息泄漏来实现。由于同一模块中的所有代码和数据的相对偏移是固定的，攻击者只要泄漏出某个模块中的任一代码指针或数据指针，即可通过计算得到此模块中任意代码或数据的地址。</p></article></div></body><div>
-<small> words: 2726 tags:</small>
-<small><code><a href=https://arair.net/tags/gcc>gcc</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+</code></pre><h2 id=地址空间布局随机化>地址空间布局随机化</h2><p>最后再说一下地址空间布局随机化（ASLR），该技术虽然不是由 GCC 编译时提供的，但对 PIE 还是有影响。该技术旨在将程序的内存布局随机化，使得攻击者不能轻易地得到数据区的地址来构造 payload。由于程序的堆栈分配与共享库的装载都是在运行时进行，系统在程序每次执行时，随机地分配程序堆栈的地址以及共享库装载的地址。使得攻击者无法预测自己写入的数据区的虚拟地址。</p><p>针对该保护机制的攻击，往往是通过信息泄漏来实现。由于同一模块中的所有代码和数据的相对偏移是固定的，攻击者只要泄漏出某个模块中的任一代码指针或数据指针，即可通过计算得到此模块中任意代码或数据的地址。</p></article></div></body><div><small>words: 2728 tags:</small>
+<small><code><a href=https://arair.net/tags/gcc>gcc</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

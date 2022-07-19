@@ -1,30 +1,5 @@
 <!doctype html><html><title>proc文件子系统</title><meta name=description content="proc_create使用方法
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="proc文件子系统">
-<meta property="og:description" content="proc_create使用方法">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/linux/kernel/8e8153f8/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-01-24T11:25:18+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="proc文件子系统">
-<meta itemprop=description content="proc_create使用方法"><meta itemprop=datePublished content="2021-01-24T11:25:18+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="387">
-<meta itemprop=keywords content="proc,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>proc文件子系统</h1><p>
-<small>
-2021-01-24, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#proc_create>proc_create</a></li><li><a href=#remove_proc_entry>remove_proc_entry</a></li></ul></nav></aside><p>proc_create使用方法</p><h1 id=函数原型>函数原型</h1><h2 id=proc_create>proc_create</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>static</span> <span class=kr>inline</span> <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=nf>proc_create</span><span class=p>(</span>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="proc文件子系统"><meta property="og:description" content="proc_create使用方法"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/kernel/8e8153f8/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-01-24T11:25:18+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="proc文件子系统"><meta itemprop=description content="proc_create使用方法"><meta itemprop=datePublished content="2021-01-24T11:25:18+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="390"><meta itemprop=keywords content="proc,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>proc文件子系统</h1><p><small>2021-01-24, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#proc_create>proc_create</a></li><li><a href=#remove_proc_entry>remove_proc_entry</a></li></ul></nav></aside><p>proc_create使用方法</p><h1 id=函数原型>函数原型</h1><h2 id=proc_create>proc_create</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>static</span> <span class=kr>inline</span> <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=nf>proc_create</span><span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>name</span><span class=p>,</span> <span class=n>umode_t</span> <span class=n>mode</span><span class=p>,</span> <span class=k>struct</span> <span class=n>proc_dir_entry</span> <span class=o>*</span><span class=n>parent</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=k>struct</span> <span class=n>file_operations</span> <span class=o>*</span><span class=n>proc_fops</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=p>{</span>
@@ -144,15 +119,7 @@
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span><span class=line><span class=cl><span class=n>module_init</span><span class=p>(</span><span class=n>hello_init</span><span class=p>);</span> <span class=c1>//该宏在模块的目标代码中增加一个特殊的段，用于说明内核初始化函数所在的位置
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>module_exit</span><span class=p>(</span><span class=n>hello_exit</span><span class=p>);</span> <span class=c1>//跟上面的宏对立
-</span></span></span></code></pre></div></article></div></body><div>
-<small> words: 387 tags:</small>
-<small><code><a href=https://arair.net/tags/proc>proc</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+</span></span></span></code></pre></div></article></div></body><div><small>words: 390 tags:</small>
+<small><code><a href=https://arair.net/tags/proc>proc</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

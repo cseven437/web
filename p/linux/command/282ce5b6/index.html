@@ -1,28 +1,5 @@
 <!doctype html><html><title>linux readelf工具使用</title><meta name=description content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="linux readelf工具使用">
-<meta property="og:description" content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/linux/command/282ce5b6/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-03-17T16:50:50+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="linux readelf工具使用">
-<meta itemprop=description content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。"><meta itemprop=datePublished content="2021-03-17T16:50:50+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="372">
-<meta itemprop=keywords content="linux,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>linux readelf工具使用</h1><p>
-<small>
-2021-03-17, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents></nav></aside><p>readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(<em>.so)或者静态库(</em>.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。</p><p>参数</p><pre tabindex=0><code>$ readelf
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux readelf工具使用"><meta property="og:description" content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/282ce5b6/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-17T16:50:50+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux readelf工具使用"><meta itemprop=description content="readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(.so)或者静态库(.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。"><meta itemprop=datePublished content="2021-03-17T16:50:50+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="372"><meta itemprop=keywords content="linux,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux readelf工具使用</h1><p><small>2021-03-17, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>readelf命令，一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(<em>.so)或者静态库(</em>.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。</p><p>参数</p><pre tabindex=0><code>$ readelf
 Usage: readelf &lt;option(s)&gt; elf-file(s)
  Display information about the contents of ELF format files
  Options are:
@@ -66,15 +43,7 @@ Usage: readelf &lt;option(s)&gt; elf-file(s)
   @&lt;file&gt;                Read options from &lt;file&gt;
   -H --help              Display this information
   -v --version           Display the version number of readelf
-</code></pre></article></div></body><div>
-<small> words: 372 tags:</small>
-<small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+</code></pre></article></div></body><div><small>words: 372 tags:</small>
+<small><code><a href=https://arair.net/tags/linux>linux</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

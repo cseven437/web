@@ -1,38 +1,12 @@
 <!doctype html><html><title>linux进程间通信--套接字</title><meta name=description content="套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。
 套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="linux进程间通信--套接字">
-<meta property="og:description" content="套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。
-套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/language/c/linux/e44ccd55/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-02-28T10:41:34+08:00">
-<meta property="article:modified_time" content="2021-02-28T10:41:34+08:00">
-<meta itemprop=name content="linux进程间通信--套接字">
-<meta itemprop=description content="套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。
-套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。"><meta itemprop=datePublished content="2021-02-28T10:41:34+08:00">
-<meta itemprop=dateModified content="2021-02-28T10:41:34+08:00">
-<meta itemprop=wordCount content="1103">
-<meta itemprop=keywords content="linux,c,socket,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>linux进程间通信--套接字</h1><p>
-<small>
-2021-02-28
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#socket>socket</a></li><li><a href=#getsockname和getpeername函数>getsockname和getpeername函数</a></li></ul></nav></aside><p>套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。</p><p>套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。</p><h2 id=socket>socket</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;          /* See NOTES */</span><span class=cp>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux进程间通信--套接字"><meta property="og:description" content="套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。
+套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/linux/e44ccd55/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-02-28T10:41:34+08:00"><meta property="article:modified_time" content="2021-02-28T10:41:34+08:00"><meta itemprop=name content="linux进程间通信--套接字"><meta itemprop=description content="套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。
+套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。"><meta itemprop=datePublished content="2021-02-28T10:41:34+08:00"><meta itemprop=dateModified content="2021-02-28T10:41:34+08:00"><meta itemprop=wordCount content="1105"><meta itemprop=keywords content="linux,c,socket,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux进程间通信--套接字</h1><p><small>2021-02-28</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#socket>socket</a></li><li><a href=#getsockname和getpeername函数>getsockname和getpeername函数</a></li></ul></nav></aside><p>套接字（Socket）用于协调不同计算机上的进程间通信，也就是基于网络的通信。当然，也可以在本机上使用套接字进行进程间的通信。</p><p>套接字通信的方式非常多，有Unix域套接字、TCP套接字、UDP套接字、链路层套接字等等。</p><h2 id=socket>socket</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;          /* See NOTES */</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>socket</span><span class=p>(</span><span class=kt>int</span> <span class=n>domain</span><span class=p>,</span> <span class=kt>int</span> <span class=n>type</span><span class=p>,</span> <span class=kt>int</span> <span class=n>protocol</span><span class=p>);</span>
-</span></span></code></pre></div><p>参数说明:</p><ul>
-<li>domain</li></ul><pre tabindex=0><code>Name                Purpose                          Man page
+</span></span></code></pre></div><p>参数说明:</p><ul><li>domain</li></ul><pre tabindex=0><code>Name                Purpose                          Man page
 AF_UNIX, AF_LOCAL   Local communication              unix(7)
 AF_INET             IPv4 Internet protocols          ip(7)
 AF_INET6            IPv6 Internet protocols          ipv6(7)
@@ -43,8 +17,7 @@ AF_AX25             Amateur radio AX.25 protocol
 AF_ATMPVC           Access to raw ATM PVCs
 AF_APPLETALK        Appletalk                        ddp(7)
 AF_PACKET           Low level packet interface       packet(7)
-</code></pre><ul>
-<li>type</li></ul><pre tabindex=0><code>The socket has the indicated type, which specifies the communication semantics.  Currently defined types are:
+</code></pre><ul><li>type</li></ul><pre tabindex=0><code>The socket has the indicated type, which specifies the communication semantics.  Currently defined types are:
 
 SOCK_STREAM     Provides sequenced, reliable, two-way, connection-based byte streams.  An out-of-band data transmission mechanism may be supported.
 
@@ -65,8 +38,7 @@ Since Linux 2.6.27, the type argument serves a second purpose: in addition to sp
 SOCK_NONBLOCK   Set the O_NONBLOCK file status flag on the new open file description.  Using this flag saves extra calls to fcntl(2) to achieve the same result.
 
 SOCK_CLOEXEC    Set the close-on-exec (FD_CLOEXEC) flag on the new file descriptor.  See the description of the O_CLOEXEC flag in open(2) for reasons why this may be useful.
-</code></pre><ul>
-<li>protocol</li></ul><pre tabindex=0><code>protocol(最后一个参数)为0时，会自动选择type类型对应的默认协议。
+</code></pre><ul><li>protocol</li></ul><pre tabindex=0><code>protocol(最后一个参数)为0时，会自动选择type类型对应的默认协议。
 IPPROTO_TCP、IPPTOTO_UDP、IPPROTO_SCTP、IPPROTO_TIPC
 </code></pre><p><strong>return value</strong></p><p>On success, a file descriptor for the new socket is returned.  On error, -1 is returned, and errno is set appropriately.</p><p>error number</p><pre tabindex=0><code>EACCES Permission to create a socket of the specified type and/or protocol is denied.
 
@@ -91,13 +63,7 @@ Other errors may be generated by the underlying protocol modules.
 </code></pre><p>INADDR_ANY: 0.0.0.0</p><h2 id=getsockname和getpeername函数>getsockname和getpeername函数</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/socket.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span><span class=kt>int</span> <span class=nf>getsockname</span><span class=p>(</span><span class=kt>int</span> <span class=n>sockfd</span><span class=p>,</span> <span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=n>localaddr</span><span class=p>,</span> <span class=n>socklen_t</span> <span class=o>*</span><span class=n>addrlrn</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>getpeername</span><span class=p>(</span><span class=kt>int</span> <span class=n>sockfd</span><span class=p>,</span> <span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=n>peeraddr</span><span class=p>,</span> <span class=n>socklen_t</span> <span class=o>*</span><span class=n>addrlen</span><span class=p>);</span>
-</span></span></code></pre></div><p>返回：成功返回0，出错则为-1</p><ol>
-<li>
-<p>函数用途</p><ul>
-<li>getsockname：获取与某个套接字关联的本地协议地址</li><li>getpeername：获取与某个套接字关联的外地协议地址</li></ul></li><li>
-<p>需要这两个函数的原因</p><ul>
-<li>在一个没有调用bind的TCP客户上，connect成功后，getsockname用于获取由内核赋予该连接的本地IP地址和本地端口号；</li><li>在以端口号0调用bind（告知内核去选择本地端口号）后，getsockname用于获取由内核赋予的本地端口号；</li><li>getsockname可以用于获取某个套接字的地址族　
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>sockfd_to_family</span><span class=p>(</span><span class=kt>int</span> <span class=n>sockfd</span><span class=p>)</span> <span class=p>{</span>
+</span></span></code></pre></div><p>返回：成功返回0，出错则为-1</p><ol><li><p>函数用途</p><ul><li>getsockname：获取与某个套接字关联的本地协议地址</li><li>getpeername：获取与某个套接字关联的外地协议地址</li></ul></li><li><p>需要这两个函数的原因</p><ul><li>在一个没有调用bind的TCP客户上，connect成功后，getsockname用于获取由内核赋予该连接的本地IP地址和本地端口号；</li><li>在以端口号0调用bind（告知内核去选择本地端口号）后，getsockname用于获取由内核赋予的本地端口号；</li><li>getsockname可以用于获取某个套接字的地址族　<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>sockfd_to_family</span><span class=p>(</span><span class=kt>int</span> <span class=n>sockfd</span><span class=p>)</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>sockaddr_storage</span> <span class=n>ss</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>    <span class=n>socklen_t</span> <span class=n>len</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
@@ -107,17 +73,9 @@ Other errors may be generated by the underlying protocol modules.
 </span></span><span class=line><span class=cl>    <span class=p>}</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span><span class=n>ss</span><span class=p>.</span><span class=n>ss_family</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div></li><li>在一个以通配IP地址调用bind的TCP服务器上，与某个客户的连接一旦建立（accept成功返回），getsockname就可以用于获取由内核赋予该连接的本地IP地址；在这样的调用中，套接字描述符参数必须是已连接套接字的描述符，而不是监听套接字描述符；</li><li>当一个服务器 由调用过accept的某个进程通过调用exec来执行程序时，它能够获取客户身份的唯一途径是调用getpeername</li></ul></li></ol></article></div></body><div>
-<small> words: 1103 tags:</small>
+</span></span></code></pre></div></li><li>在一个以通配IP地址调用bind的TCP服务器上，与某个客户的连接一旦建立（accept成功返回），getsockname就可以用于获取由内核赋予该连接的本地IP地址；在这样的调用中，套接字描述符参数必须是已连接套接字的描述符，而不是监听套接字描述符；</li><li>当一个服务器 由调用过accept的某个进程通过调用exec来执行程序时，它能够获取客户身份的唯一途径是调用getpeername</li></ul></li></ol></article></div></body><div><small>words: 1105 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
-<small><code><a href=https://arair.net/tags/socket>socket</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/socket>socket</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

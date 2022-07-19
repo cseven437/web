@@ -1,29 +1,4 @@
-<!doctype html><html><title>Genieacs的搭建及使用方法</title><meta name=description content="genieacs是用于tr069 服务器 acs url: http://ip:7547/genieacs 管理界面: http://ip:3000 默认登录用户名密码: admin:amdin 环境搭建 https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04 系统要求: ubuntu 16.04 脚本备份，来源于上面的链接 First you should update all components"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="Genieacs的搭建及使用方法">
-<meta property="og:description" content="genieacs是用于tr069 服务器 acs url: http://ip:7547/genieacs 管理界面: http://ip:3000 默认登录用户名密码: admin:amdin 环境搭建 https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04 系统要求: ubuntu 16.04 脚本备份，来源于上面的链接 First you should update all components">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/317f96143d6049f789422c24cea427c3/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-02-01T14:11:43+08:00">
-<meta property="article:modified_time" content="2021-10-31T10:51:42+08:00">
-<meta itemprop=name content="Genieacs的搭建及使用方法">
-<meta itemprop=description content="genieacs是用于tr069 服务器 acs url: http://ip:7547/genieacs 管理界面: http://ip:3000 默认登录用户名密码: admin:amdin 环境搭建 https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04 系统要求: ubuntu 16.04 脚本备份，来源于上面的链接 First you should update all components"><meta itemprop=datePublished content="2021-02-01T14:11:43+08:00">
-<meta itemprop=dateModified content="2021-10-31T10:51:42+08:00">
-<meta itemprop=wordCount content="468">
-<meta itemprop=keywords content="genieacs,tr069,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>Genieacs的搭建及使用方法</h1><p>
-<small>
-2021-02-01, updated 2021-10-31
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#环境搭建>环境搭建</a></li><li><a href=#docker搭建genieacs环境>docker搭建genieacs环境</a></li><li><a href=#genieacs-auth-config>genieacs auth config</a></li><li><a href=#tr111-环境搭建>tr111 环境搭建</a></li></ul></nav></aside><p>genieacs是用于tr069 服务器</p><p>acs url: <code>http://ip:7547/genieacs</code></p><p>管理界面: <code>http://ip:3000</code></p><p>默认登录用户名密码: <code>admin:amdin</code></p><h2 id=环境搭建>环境搭建</h2><p><a href=https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04>https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04</a></p><p>系统要求: ubuntu 16.04</p><p>脚本备份，来源于上面的链接</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>First you should update all components and install the following perquisites
+<!doctype html><html><title>Genieacs的搭建及使用方法</title><meta name=description content="genieacs是用于tr069 服务器 acs url: http://ip:7547/genieacs 管理界面: http://ip:3000 默认登录用户名密码: admin:amdin 环境搭建 https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04 系统要求: ubuntu 16.04 脚本备份，来源于上面的链接 First you should update all components"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="Genieacs的搭建及使用方法"><meta property="og:description" content="genieacs是用于tr069 服务器 acs url: http://ip:7547/genieacs 管理界面: http://ip:3000 默认登录用户名密码: admin:amdin 环境搭建 https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04 系统要求: ubuntu 16.04 脚本备份，来源于上面的链接 First you should update all components"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/317f96143d6049f789422c24cea427c3/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-02-01T14:11:43+08:00"><meta property="article:modified_time" content="2021-10-31T10:51:42+08:00"><meta itemprop=name content="Genieacs的搭建及使用方法"><meta itemprop=description content="genieacs是用于tr069 服务器 acs url: http://ip:7547/genieacs 管理界面: http://ip:3000 默认登录用户名密码: admin:amdin 环境搭建 https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04 系统要求: ubuntu 16.04 脚本备份，来源于上面的链接 First you should update all components"><meta itemprop=datePublished content="2021-02-01T14:11:43+08:00"><meta itemprop=dateModified content="2021-10-31T10:51:42+08:00"><meta itemprop=wordCount content="468"><meta itemprop=keywords content="genieacs,tr069,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>Genieacs的搭建及使用方法</h1><p><small>2021-02-01, updated 2021-10-31</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#环境搭建>环境搭建</a></li><li><a href=#docker搭建genieacs环境>docker搭建genieacs环境</a></li><li><a href=#genieacs-auth-config>genieacs auth config</a></li><li><a href=#tr111-环境搭建>tr111 环境搭建</a></li></ul></nav></aside><p>genieacs是用于tr069 服务器</p><p>acs url: <code>http://ip:7547/genieacs</code></p><p>管理界面: <code>http://ip:3000</code></p><p>默认登录用户名密码: <code>admin:amdin</code></p><h2 id=环境搭建>环境搭建</h2><p><a href=https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04>https://github.com/genieacs/genieacs/wiki/Installation-Guide-Ubuntu-16.04</a></p><p>系统要求: ubuntu 16.04</p><p>脚本备份，来源于上面的链接</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>First you should update all components and install the following perquisites
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>sudo apt-get update
 </span></span><span class=line><span class=cl>sudo apt-get dist-upgrade
@@ -81,16 +56,8 @@
 value: AUTH(&#34;acs-username&#34;, &#34;acs-password&#34;)
 </code></pre><h2 id=tr111-环境搭建>tr111 环境搭建</h2><p>安装stun-server</p><pre tabindex=0><code>sudo apt install stun-server
 </code></pre><p>执行命令开启stun server</p><pre tabindex=0><code>stun -h ip -m 11111
-</code></pre><p>保证<code>cpe username</code>和<code>password</code>匹配</p><p><a href=https://forum.genieacs.com/t/stun-or-whatever-server-with-genieacs/83/13>https://forum.genieacs.com/t/stun-or-whatever-server-with-genieacs/83/13</a></p><p>使用<code>coturn</code>时，需要在服务器配置<code>cwmp.udpConnectionRequestPort 3478</code></p></article></div></body><div>
-<small> words: 468 tags:</small>
+</code></pre><p>保证<code>cpe username</code>和<code>password</code>匹配</p><p><a href=https://forum.genieacs.com/t/stun-or-whatever-server-with-genieacs/83/13>https://forum.genieacs.com/t/stun-or-whatever-server-with-genieacs/83/13</a></p><p>使用<code>coturn</code>时，需要在服务器配置<code>cwmp.udpConnectionRequestPort 3478</code></p></article></div></body><div><small>words: 468 tags:</small>
 <small><code><a href=https://arair.net/tags/genieacs>genieacs</a></code></small>
-<small><code><a href=https://arair.net/tags/tr069>tr069</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/tr069>tr069</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

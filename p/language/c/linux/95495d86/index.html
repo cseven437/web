@@ -1,30 +1,5 @@
 <!doctype html><html><title>linux c string相关函数</title><meta name=description content="string 函数
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="linux c string相关函数">
-<meta property="og:description" content="string 函数">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/language/c/linux/95495d86/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-04-29T11:24:36+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="linux c string相关函数">
-<meta itemprop=description content="string 函数"><meta itemprop=datePublished content="2021-04-29T11:24:36+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="238">
-<meta itemprop=keywords content="linux,c,string,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>linux c string相关函数</h1><p>
-<small>
-2021-04-29, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#strcasecmp>strcasecmp</a></li></ul></nav></aside><p>string 函数</p><h2 id=strcasecmp>strcasecmp</h2><p>忽略大小写的比较函数</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;strings.h&gt;</span><span class=cp>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux c string相关函数"><meta property="og:description" content="string 函数"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/linux/95495d86/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-04-29T11:24:36+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux c string相关函数"><meta itemprop=description content="string 函数"><meta itemprop=datePublished content="2021-04-29T11:24:36+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="238"><meta itemprop=keywords content="linux,c,string,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux c string相关函数</h1><p><small>2021-04-29, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#strcasecmp>strcasecmp</a></li></ul></nav></aside><p>string 函数</p><h2 id=strcasecmp>strcasecmp</h2><p>忽略大小写的比较函数</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;strings.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>strcasecmp</span> <span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>s1</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>s2</span><span class=p>);</span>
 </span></span></code></pre></div><p>strcasecmp()用来比较参数s1 和s2 字符串，比较时会自动忽略大小写的差异。</p><p>返回值：若参数s1 和s2 字符串相同则返回0。s1 长度大于s2 长度则返回大于0 的值，s1 长度若小于s2 长度则返回小于0 的值。</p><p>glibc-2.32中函数实现</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cm>/* Compare S1 and S2, ignoring case, returning less than, equal to or
@@ -49,17 +24,9 @@
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>result</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div></article></div></body><div>
-<small> words: 238 tags:</small>
+</span></span></code></pre></div></article></div></body><div><small>words: 238 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
-<small><code><a href=https://arair.net/tags/string>string</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/string>string</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

@@ -1,43 +1,8 @@
 <!doctype html><html><title>Vmware</title><meta name=description content="vmware
 一个虚拟机软件
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="Vmware">
-<meta property="og:description" content="vmware
-一个虚拟机软件">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/tool/bf7189dd/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-02-01T14:16:37+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="Vmware">
-<meta itemprop=description content="vmware
-一个虚拟机软件"><meta itemprop=datePublished content="2021-02-01T14:16:37+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="251">
-<meta itemprop=keywords content="vmware,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>Vmware</h1><p>
-<small>
-2021-02-01, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#linux>linux</a></li></ul></nav></aside><p>vmware</p><p>一个虚拟机软件</p><h2 id=linux>linux</h2><p>问题：linux中vmware出现：Network configuration is missing. Ensure that /etc/vmware/networking exists.的处理方式 环境：archlinux 时间：2020-04-12</p><p>安装aur源的vmware 15后，一直无法联网</p><p>终端输入：<code>vmware-netcfg</code> ，来调用<code>vmware-netcfg</code>来初始化vmware网络模块</p><blockquote>
-<p>这时还会提示：Network configuration is missing. Ensure that /etc/vmware/networking exists.</p></blockquote><p>解决方法：<code>touch /etc/vmware/x ; vmware-networks --migrate-network-settings /etc/vmware/x ; rm /etc/vmware/x</code></p><blockquote>
-<p>这条命令是人工重建vmware-networks模块</p></blockquote><p>再次输入：<code>vmware-netcfg</code>，看看成功调用了vmware网络模块了</p></article></div></body><div>
-<small> words: 251 tags:</small>
-<small><code><a href=https://arair.net/tags/vmware>vmware</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="Vmware"><meta property="og:description" content="vmware
+一个虚拟机软件"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/tool/bf7189dd/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-02-01T14:16:37+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="Vmware"><meta itemprop=description content="vmware
+一个虚拟机软件"><meta itemprop=datePublished content="2021-02-01T14:16:37+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="251"><meta itemprop=keywords content="vmware,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>Vmware</h1><p><small>2021-02-01, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#linux>linux</a></li></ul></nav></aside><p>vmware</p><p>一个虚拟机软件</p><h2 id=linux>linux</h2><p>问题：linux中vmware出现：Network configuration is missing. Ensure that /etc/vmware/networking exists.的处理方式 环境：archlinux 时间：2020-04-12</p><p>安装aur源的vmware 15后，一直无法联网</p><p>终端输入：<code>vmware-netcfg</code> ，来调用<code>vmware-netcfg</code>来初始化vmware网络模块</p><blockquote><p>这时还会提示：Network configuration is missing. Ensure that /etc/vmware/networking exists.</p></blockquote><p>解决方法：<code>touch /etc/vmware/x ; vmware-networks --migrate-network-settings /etc/vmware/x ; rm /etc/vmware/x</code></p><blockquote><p>这条命令是人工重建vmware-networks模块</p></blockquote><p>再次输入：<code>vmware-netcfg</code>，看看成功调用了vmware网络模块了</p></article></div></body><div><small>words: 251 tags:</small>
+<small><code><a href=https://arair.net/tags/vmware>vmware</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

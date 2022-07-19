@@ -1,45 +1,9 @@
-<!doctype html><html><title>ssh使用记录</title><meta name=description content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="ssh使用记录">
-<meta property="og:description" content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/58e9487f045047d893fd28b88a434b81/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-04-23T16:55:43+08:00">
-<meta property="article:modified_time" content="2021-12-19T09:14:39+08:00">
-<meta itemprop=name content="ssh使用记录">
-<meta itemprop=description content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和"><meta itemprop=datePublished content="2021-04-23T16:55:43+08:00">
-<meta itemprop=dateModified content="2021-12-19T09:14:39+08:00">
-<meta itemprop=wordCount content="482">
-<meta itemprop=keywords content="ssh,linux-command,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>ssh使用记录</h1><p>
-<small>
-2021-04-23, updated 2021-12-19
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#登录方法>登录方法</a></li><li><a href=#免密登录>免密登录</a>
-<ul>
-<li><a href=#客户端生成公钥>客户端生成公钥</a></li><li><a href=#生成秘钥到指定目录>生成秘钥到指定目录</a></li><li><a href=#上传公钥到服务器>上传公钥到服务器</a></li><li><a href=#问题>问题</a></li></ul></li></ul></nav></aside><p>SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。SSH最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。SSH在正确使用时可弥补网络中的漏洞。SSH客户端适用于多种平台。几乎所有UNIX平台—包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。</p><h2 id=登录方法>登录方法</h2><pre tabindex=0><code>ssh username@192.168.1.12
-</code></pre><h2 id=免密登录>免密登录</h2><h3 id=客户端生成公钥>客户端生成公钥</h3><p>执行<code>ssh-keygen</code>，其它默认即可</p><p>会在<code>~/.ssh</code>目录创建两个密钥</p><ul>
-<li>id_rsa （私钥）</li><li>id_rsa.pub (公钥)</li></ul><h3 id=生成秘钥到指定目录>生成秘钥到指定目录</h3><p>默认文件为~/.ssh/id_rsa</p><pre tabindex=0><code>ssh-keygen -t rsa -C &#39;xxxxx@company.com&#39; -f ~/.ssh/github_id_rsa
+<!doctype html><html><title>ssh使用记录</title><meta name=description content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="ssh使用记录"><meta property="og:description" content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/58e9487f045047d893fd28b88a434b81/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-04-23T16:55:43+08:00"><meta property="article:modified_time" content="2021-12-19T09:14:39+08:00"><meta itemprop=name content="ssh使用记录"><meta itemprop=description content="SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和"><meta itemprop=datePublished content="2021-04-23T16:55:43+08:00"><meta itemprop=dateModified content="2021-12-19T09:14:39+08:00"><meta itemprop=wordCount content="482"><meta itemprop=keywords content="ssh,linux-command,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>ssh使用记录</h1><p><small>2021-04-23, updated 2021-12-19</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#登录方法>登录方法</a></li><li><a href=#免密登录>免密登录</a><ul><li><a href=#客户端生成公钥>客户端生成公钥</a></li><li><a href=#生成秘钥到指定目录>生成秘钥到指定目录</a></li><li><a href=#上传公钥到服务器>上传公钥到服务器</a></li><li><a href=#问题>问题</a></li></ul></li></ul></nav></aside><p>SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。SSH最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。SSH在正确使用时可弥补网络中的漏洞。SSH客户端适用于多种平台。几乎所有UNIX平台—包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。</p><h2 id=登录方法>登录方法</h2><pre tabindex=0><code>ssh username@192.168.1.12
+</code></pre><h2 id=免密登录>免密登录</h2><h3 id=客户端生成公钥>客户端生成公钥</h3><p>执行<code>ssh-keygen</code>，其它默认即可</p><p>会在<code>~/.ssh</code>目录创建两个密钥</p><ul><li>id_rsa （私钥）</li><li>id_rsa.pub (公钥)</li></ul><h3 id=生成秘钥到指定目录>生成秘钥到指定目录</h3><p>默认文件为~/.ssh/id_rsa</p><pre tabindex=0><code>ssh-keygen -t rsa -C &#39;xxxxx@company.com&#39; -f ~/.ssh/github_id_rsa
 </code></pre><h3 id=上传公钥到服务器>上传公钥到服务器</h3><p>可以直接在文件<code>~/.ssh/authorized_keys</code>中添加生成的公钥内容</p><p>然后就可以免密登录了。</p><p>注意：不需要重启ssh服务</p><h3 id=问题>问题</h3><p>update 2021-11-1</p><p>最近更新到openssh 8.8版本时，发现rsa密钥默认不支持，后续修改为ed25519替代rsa</p><pre tabindex=0><code>ssh-keygen -t ed25519
 </code></pre><p>ssh测试命令</p><pre tabindex=0><code>ssh -vT user@host -p port
-</code></pre></article></div></body><div>
-<small> words: 482 tags:</small>
+</code></pre></article></div></body><div><small>words: 482 tags:</small>
 <small><code><a href=https://arair.net/tags/ssh>ssh</a></code></small>
-<small><code><a href=https://arair.net/tags/linux-command>linux-command</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/linux-command>linux-command</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

@@ -1,38 +1,5 @@
 <!doctype html><html><title>tmux的简单使用</title><meta name=description content="Tmux 是一个终端复用器（terminal multiplexer），非常有用，属于常用的开发工具。
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="tmux的简单使用">
-<meta property="og:description" content="Tmux 是一个终端复用器（terminal multiplexer），非常有用，属于常用的开发工具。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/linux/command/4b1ad32f/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-03-15T09:22:41+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="tmux的简单使用">
-<meta itemprop=description content="Tmux 是一个终端复用器（terminal multiplexer），非常有用，属于常用的开发工具。"><meta itemprop=datePublished content="2021-03-15T09:22:41+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="1875">
-<meta itemprop=keywords content="linux,command,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>tmux的简单使用</h1><p>
-<small>
-2021-03-15, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#基本使用方法>基本使用方法</a>
-<ul>
-<li><a href=#安装>安装</a></li><li><a href=#启动与退出>启动与退出</a></li><li><a href=#前缀键>前缀键</a></li></ul></li><li><a href=#会话管理>会话管理</a>
-<ul>
-<li><a href=#新建会话>新建会话</a></li><li><a href=#分离会话>分离会话</a></li><li><a href=#接入会话>接入会话</a></li><li><a href=#杀死会话>杀死会话</a></li><li><a href=#切换会话>切换会话</a></li><li><a href=#重命名会话>重命名会话</a></li><li><a href=#会话快捷键>会话快捷键</a></li></ul></li><li><a href=#最简操作流程>最简操作流程</a></li><li><a href=#窗格操作>窗格操作</a>
-<ul>
-<li><a href=#划分窗格>划分窗格</a></li><li><a href=#移动光标>移动光标</a></li><li><a href=#窗格快捷键>窗格快捷键</a></li></ul></li><li><a href=#窗口管理>窗口管理</a>
-<ul>
-<li><a href=#新建窗口>新建窗口</a></li><li><a href=#切换窗口>切换窗口</a></li><li><a href=#重命名窗口>重命名窗口</a></li><li><a href=#窗口快捷键>窗口快捷键</a></li><li><a href=#向某个窗口发送命令>向某个窗口发送命令</a></li></ul></li><li><a href=#其他命令>其他命令</a></li></ul></nav></aside><p>Tmux 是一个终端复用器（terminal multiplexer），非常有用，属于常用的开发工具。</p><h2 id=基本使用方法>基本使用方法</h2><h3 id=安装>安装</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=c1># ubuntu/debian</span>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="tmux的简单使用"><meta property="og:description" content="Tmux 是一个终端复用器（terminal multiplexer），非常有用，属于常用的开发工具。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/4b1ad32f/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-15T09:22:41+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="tmux的简单使用"><meta itemprop=description content="Tmux 是一个终端复用器（terminal multiplexer），非常有用，属于常用的开发工具。"><meta itemprop=datePublished content="2021-03-15T09:22:41+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="1875"><meta itemprop=keywords content="linux,command,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>tmux的简单使用</h1><p><small>2021-03-15, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#基本使用方法>基本使用方法</a><ul><li><a href=#安装>安装</a></li><li><a href=#启动与退出>启动与退出</a></li><li><a href=#前缀键>前缀键</a></li></ul></li><li><a href=#会话管理>会话管理</a><ul><li><a href=#新建会话>新建会话</a></li><li><a href=#分离会话>分离会话</a></li><li><a href=#接入会话>接入会话</a></li><li><a href=#杀死会话>杀死会话</a></li><li><a href=#切换会话>切换会话</a></li><li><a href=#重命名会话>重命名会话</a></li><li><a href=#会话快捷键>会话快捷键</a></li></ul></li><li><a href=#最简操作流程>最简操作流程</a></li><li><a href=#窗格操作>窗格操作</a><ul><li><a href=#划分窗格>划分窗格</a></li><li><a href=#移动光标>移动光标</a></li><li><a href=#窗格快捷键>窗格快捷键</a></li></ul></li><li><a href=#窗口管理>窗口管理</a><ul><li><a href=#新建窗口>新建窗口</a></li><li><a href=#切换窗口>切换窗口</a></li><li><a href=#重命名窗口>重命名窗口</a></li><li><a href=#窗口快捷键>窗口快捷键</a></li><li><a href=#向某个窗口发送命令>向某个窗口发送命令</a></li></ul></li><li><a href=#其他命令>其他命令</a></li></ul></nav></aside><p>Tmux 是一个终端复用器（terminal multiplexer），非常有用，属于常用的开发工具。</p><h2 id=基本使用方法>基本使用方法</h2><h3 id=安装>安装</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=c1># ubuntu/debian</span>
 </span></span><span class=line><span class=cl>$ sudo apt-get install tmux
 </span></span></code></pre></div><h3 id=启动与退出>启动与退出</h3><p>安装完成后，键入<code>tmux</code>命令，就进入了 Tmux 窗口。</p><p>按下<code>Ctrl+d</code>或者显式输入<code>exit</code>命令，就可以退出 Tmux 窗口。</p><h3 id=前缀键>前缀键</h3><p>Tmux 窗口有大量的快捷键。所有快捷键都要通过前缀键唤起。默认的前缀键是Ctrl+b，即先按下Ctrl+b，快捷键才会生效。</p><p>举例来说，帮助命令的快捷键是Ctrl+b ?。它的用法是，在 Tmux 窗口中，先按下Ctrl+b，再按下?，就会显示帮助信息。</p><p>然后，按下 ESC 键或q键，就可以退出帮助。</p><h2 id=会话管理>会话管理</h2><h3 id=新建会话>新建会话</h3><p>第一个启动的 Tmux 窗口，编号是<code>0</code>，第二个窗口的编号是<code>1</code>，以此类推。这些窗口对应的会话，就是0号会话、1号会话。</p><p>使用编号区分会话，不太直观，更好的方法是为会话起名。</p><pre tabindex=0><code>$ tmux new -s &lt;session-name&gt;
 </code></pre><p>上面命令新建一个指定名称的会话。</p><h3 id=分离会话>分离会话</h3><p>在 Tmux 窗口中，按下<code>Ctrl+b d</code>或者输入<code>tmux detach</code>命令，就会将当前会话与窗口分离。</p><pre tabindex=0><code>$ tmux detach
@@ -58,8 +25,7 @@ $ tmux switch -t &lt;session-name&gt;
 </code></pre><p>上面命令将0号会话重命名。</p><h3 id=会话快捷键>会话快捷键</h3><p>下面是一些会话相关的快捷键。</p><pre tabindex=0><code>Ctrl+b d：分离当前会话。
 Ctrl+b s：列出所有会话。
 Ctrl+b $：重命名当前会话。
-</code></pre><h2 id=最简操作流程>最简操作流程</h2><p>以下是 Tmux 的最简操作流程。</p><ul>
-<li>新建会话 <code>tmux new -s my_session</code>或<code>tmux new-session -s my_session</code></li><li>在 Tmux 窗口运行所需的程序。</li><li>按下快捷键Ctrl+b d将会话分离。</li><li>下次使用时，重新连接到会话tmux attach-session -t my_session。</li></ul><h2 id=窗格操作>窗格操作</h2><p>Tmux 可以将窗口分成多个窗格（pane），每个窗格运行不同的命令。以下命令都是在 Tmux 窗口中执行。</p><h3 id=划分窗格>划分窗格</h3><p><code>tmux split-window</code>命令用来划分窗格。</p><pre tabindex=0><code># 划分上下两个窗格
+</code></pre><h2 id=最简操作流程>最简操作流程</h2><p>以下是 Tmux 的最简操作流程。</p><ul><li>新建会话 <code>tmux new -s my_session</code>或<code>tmux new-session -s my_session</code></li><li>在 Tmux 窗口运行所需的程序。</li><li>按下快捷键Ctrl+b d将会话分离。</li><li>下次使用时，重新连接到会话tmux attach-session -t my_session。</li></ul><h2 id=窗格操作>窗格操作</h2><p>Tmux 可以将窗口分成多个窗格（pane），每个窗格运行不同的命令。以下命令都是在 Tmux 窗口中执行。</p><h3 id=划分窗格>划分窗格</h3><p><code>tmux split-window</code>命令用来划分窗格。</p><pre tabindex=0><code># 划分上下两个窗格
 $ tmux split-window
 
 # 划分左右两个窗格
@@ -129,16 +95,8 @@ $ tmux source-file ~/.tmux.conf
 
 # 查看是否存在win1窗口
 $ tmux has-session -t &#39;win1&#39;
-</code></pre></article></div></body><div>
-<small> words: 1875 tags:</small>
+</code></pre></article></div></body><div><small>words: 1875 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
-<small><code><a href=https://arair.net/tags/command>command</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/command>command</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

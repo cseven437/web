@@ -1,40 +1,10 @@
-<!doctype html><html><title>shell--字符串截取</title><meta name=description content="Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。 从指定位置开始截取 这种方式需要两个参数：除了指定起始位置，还"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="shell--字符串截取">
-<meta property="og:description" content="Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。 从指定位置开始截取 这种方式需要两个参数：除了指定起始位置，还">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/b758e4734d0c499a9eb383676c351561/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-09-12T17:18:35+08:00">
-<meta property="article:modified_time" content="2021-10-31T10:51:42+08:00">
-<meta itemprop=name content="shell--字符串截取">
-<meta itemprop=description content="Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。 从指定位置开始截取 这种方式需要两个参数：除了指定起始位置，还"><meta itemprop=datePublished content="2021-09-12T17:18:35+08:00">
-<meta itemprop=dateModified content="2021-10-31T10:51:42+08:00">
-<meta itemprop=wordCount content="1544">
-<meta itemprop=keywords content="shell,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>shell--字符串截取</h1><p>
-<small>
-2021-09-12, updated 2021-10-31
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#从指定位置开始截取>从指定位置开始截取</a>
-<ul>
-<li><a href=#1-从字符串左边开始计数>1. 从字符串左边开始计数</a></li><li><a href=#2-从右边开始计数>2. 从右边开始计数</a></li></ul></li><li><a href=#从指定字符子字符串开始截取>从指定字符（子字符串）开始截取</a>
-<ul>
-<li><a href=#1-使用--号截取右边字符>1. 使用 # 号截取右边字符</a></li><li><a href=#2-使用--截取左边字符>2. 使用 % 截取左边字符</a></li></ul></li><li><a href=#汇总>汇总</a></li></ul></nav></aside><p>Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。</p><h2 id=从指定位置开始截取>从指定位置开始截取</h2><p>这种方式需要两个参数：除了指定起始位置，还需要截取长度，才能最终确定要截取的字符串。</p><p>既然需要指定起始位置，那么就涉及到计数方向的问题，到底是从字符串左边开始计数，还是从字符串右边开始计数。答案是 Shell 同时支持两种计数方式。</p><h3 id=1-从字符串左边开始计数>1. 从字符串左边开始计数</h3><p>如果想从字符串的左边开始计数，那么截取字符串的具体格式如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=si>${</span><span class=nv>string</span><span class=p>: start :</span><span class=nv>length</span><span class=si>}</span>
+<!doctype html><html><title>shell--字符串截取</title><meta name=description content="Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。 从指定位置开始截取 这种方式需要两个参数：除了指定起始位置，还"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="shell--字符串截取"><meta property="og:description" content="Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。 从指定位置开始截取 这种方式需要两个参数：除了指定起始位置，还"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/b758e4734d0c499a9eb383676c351561/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-09-12T17:18:35+08:00"><meta property="article:modified_time" content="2021-10-31T10:51:42+08:00"><meta itemprop=name content="shell--字符串截取"><meta itemprop=description content="Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。 从指定位置开始截取 这种方式需要两个参数：除了指定起始位置，还"><meta itemprop=datePublished content="2021-09-12T17:18:35+08:00"><meta itemprop=dateModified content="2021-10-31T10:51:42+08:00"><meta itemprop=wordCount content="1544"><meta itemprop=keywords content="shell,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>shell--字符串截取</h1><p><small>2021-09-12, updated 2021-10-31</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#从指定位置开始截取>从指定位置开始截取</a><ul><li><a href=#1-从字符串左边开始计数>1. 从字符串左边开始计数</a></li><li><a href=#2-从右边开始计数>2. 从右边开始计数</a></li></ul></li><li><a href=#从指定字符子字符串开始截取>从指定字符（子字符串）开始截取</a><ul><li><a href=#1-使用--号截取右边字符>1. 使用 # 号截取右边字符</a></li><li><a href=#2-使用--截取左边字符>2. 使用 % 截取左边字符</a></li></ul></li><li><a href=#汇总>汇总</a></li></ul></nav></aside><p>Shell 截取字符串通常有两种方式：从指定位置开始截取和从指定字符（子字符串）开始截取。</p><h2 id=从指定位置开始截取>从指定位置开始截取</h2><p>这种方式需要两个参数：除了指定起始位置，还需要截取长度，才能最终确定要截取的字符串。</p><p>既然需要指定起始位置，那么就涉及到计数方向的问题，到底是从字符串左边开始计数，还是从字符串右边开始计数。答案是 Shell 同时支持两种计数方式。</p><h3 id=1-从字符串左边开始计数>1. 从字符串左边开始计数</h3><p>如果想从字符串的左边开始计数，那么截取字符串的具体格式如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=si>${</span><span class=nv>string</span><span class=p>: start :</span><span class=nv>length</span><span class=si>}</span>
 </span></span></code></pre></div><p>其中，string 是要截取的字符串，start 是起始位置（从左边开始，从 0 开始计数），length 是要截取的长度（省略的话表示直到字符串的末尾）。</p><p>例如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>url</span><span class=o>=</span><span class=s2>&#34;c.biancheng.net&#34;</span>
 </span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${</span><span class=nv>url</span><span class=p>: 2: 9</span><span class=si>}</span>
 </span></span></code></pre></div><p>结果为<code>biancheng</code>。</p><p>再如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>url</span><span class=o>=</span><span class=s2>&#34;c.biancheng.net&#34;</span>
 </span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${</span><span class=nv>url</span><span class=p>: 2</span><span class=si>}</span>  <span class=c1>#省略 length，截取到字符串末尾</span>
 </span></span></code></pre></div><p>结果为<code>biancheng.net</code>。</p><h3 id=2-从右边开始计数>2. 从右边开始计数</h3><p>如果想从字符串的右边开始计数，那么截取字符串的具体格式如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=si>${</span><span class=nv>string</span><span class=p>%chars*</span><span class=si>}</span>
-</span></span></code></pre></div><p>同第1种格式相比，第2种格式仅仅多了<code>0-</code>，这是固定的写法，专门用来表示从字符串右边开始计数。</p><p>这里需要强调两点：</p><ul>
-<li>从左边开始计数时，起始数字是 0（这符合程序员思维）；从右边开始计数时，起始数字是 1（这符合常人思维）。计数方向不同，起始数字也不同。</li><li>不管从哪边开始计数，截取方向都是从左到右。</li></ul><p>例如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>url</span><span class=o>=</span><span class=s2>&#34;c.biancheng.net&#34;</span>
+</span></span></code></pre></div><p>同第1种格式相比，第2种格式仅仅多了<code>0-</code>，这是固定的写法，专门用来表示从字符串右边开始计数。</p><p>这里需要强调两点：</p><ul><li>从左边开始计数时，起始数字是 0（这符合程序员思维）；从右边开始计数时，起始数字是 1（这符合常人思维）。计数方向不同，起始数字也不同。</li><li>不管从哪边开始计数，截取方向都是从左到右。</li></ul><p>例如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>url</span><span class=o>=</span><span class=s2>&#34;c.biancheng.net&#34;</span>
 </span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${</span><span class=nv>url</span><span class=p>: 0-13: 9</span><span class=si>}</span>
 </span></span></code></pre></div><p>结果为<code>biancheng</code>。从右边数，<code>b</code>是第 13 个字符。</p><p>再如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>url</span><span class=o>=</span><span class=s2>&#34;c.biancheng.net&#34;</span>
 </span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${</span><span class=nv>url</span><span class=p>: 0-13</span><span class=si>}</span>  <span class=c1>#省略 length，直接截取到字符串末尾</span>
@@ -61,27 +31,7 @@
 </span></span><span class=line><span class=cl><span class=nv>str</span><span class=o>=</span><span class=s2>&#34;---aa+++aa@@@&#34;</span>
 </span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${</span><span class=nv>str</span><span class=p>%aa*</span><span class=si>}</span>  <span class=c1>#结果为 ---aa+++</span>
 </span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${</span><span class=nv>str</span><span class=p>%%aa*</span><span class=si>}</span>  <span class=c1>#结果为 ---</span>
-</span></span></code></pre></div><h2 id=汇总>汇总</h2><p>最后，我们对以上 8 种格式做一个汇总，请看下表：</p><table>
-<thead>
-<tr>
-<th>格式</th><th>说明</th></tr></thead><tbody>
-<tr>
-<td>${string: start :length}</td><td>从 string 字符串的左边第 start 个字符开始，向右截取 length 个字符。</td></tr><tr>
-<td>${string: start}</td><td>从 string 字符串的左边第 start 个字符开始截取，直到最后。</td></tr><tr>
-<td>${string: 0-start :length}</td><td>从 string 字符串的右边第 start 个字符开始，向右截取 length 个字符。</td></tr><tr>
-<td>${string: 0-start}</td><td>从 string 字符串的右边第 start 个字符开始截取，直到最后。</td></tr><tr>
-<td>${string#*chars}</td><td>从 string 字符串第一次出现 *chars 的位置开始，截取 *chars 右边的所有字符。</td></tr><tr>
-<td>${string##*chars}</td><td>从 string 字符串最后一次出现 *chars 的位置开始，截取 *chars 右边的所有字符。</td></tr><tr>
-<td>${string%*chars}</td><td>从 string 字符串第一次出现 *chars 的位置开始，截取 *chars 左边的所有字符。</td></tr><tr>
-<td>${string%%*chars}</td><td>从 string 字符串最后一次出现 *chars 的位置开始，截取 *chars 左边的所有字符。</td></tr></tbody></table></article></div></body><div>
-<small> words: 1544 tags:</small>
-<small><code><a href=https://arair.net/tags/shell>shell</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+</span></span></code></pre></div><h2 id=汇总>汇总</h2><p>最后，我们对以上 8 种格式做一个汇总，请看下表：</p><table><thead><tr><th>格式</th><th>说明</th></tr></thead><tbody><tr><td>${string: start :length}</td><td>从 string 字符串的左边第 start 个字符开始，向右截取 length 个字符。</td></tr><tr><td>${string: start}</td><td>从 string 字符串的左边第 start 个字符开始截取，直到最后。</td></tr><tr><td>${string: 0-start :length}</td><td>从 string 字符串的右边第 start 个字符开始，向右截取 length 个字符。</td></tr><tr><td>${string: 0-start}</td><td>从 string 字符串的右边第 start 个字符开始截取，直到最后。</td></tr><tr><td>${string#*chars}</td><td>从 string 字符串第一次出现 *chars 的位置开始，截取 *chars 右边的所有字符。</td></tr><tr><td>${string##*chars}</td><td>从 string 字符串最后一次出现 *chars 的位置开始，截取 *chars 右边的所有字符。</td></tr><tr><td>${string%*chars}</td><td>从 string 字符串第一次出现 *chars 的位置开始，截取 *chars 左边的所有字符。</td></tr><tr><td>${string%%*chars}</td><td>从 string 字符串最后一次出现 *chars 的位置开始，截取 *chars 左边的所有字符。</td></tr></tbody></table></article></div></body><div><small>words: 1544 tags:</small>
+<small><code><a href=https://arair.net/tags/shell>shell</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

@@ -1,37 +1,6 @@
 <!doctype html><html><title>tcp mss的理解</title><meta name=description content="MSS 是TCP选项中最经常出现，也是最早出现的选项。MSS选项占4byte。MSS是每一个TCP报文段中数据字段的最大长度，注意：只是数据部分的字段，不包括TCP的头部。TCP在三次握手中，每一方都会通告其期望收到的MSS（MSS只出现在SYN数据包中）。如果一方不接受另一方的MSS值则定为默认值536byte。
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="tcp mss的理解">
-<meta property="og:description" content="MSS 是TCP选项中最经常出现，也是最早出现的选项。MSS选项占4byte。MSS是每一个TCP报文段中数据字段的最大长度，注意：只是数据部分的字段，不包括TCP的头部。TCP在三次握手中，每一方都会通告其期望收到的MSS（MSS只出现在SYN数据包中）。如果一方不接受另一方的MSS值则定为默认值536byte。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/network/5ec5e23f/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-06-12T11:38:30+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="tcp mss的理解">
-<meta itemprop=description content="MSS 是TCP选项中最经常出现，也是最早出现的选项。MSS选项占4byte。MSS是每一个TCP报文段中数据字段的最大长度，注意：只是数据部分的字段，不包括TCP的头部。TCP在三次握手中，每一方都会通告其期望收到的MSS（MSS只出现在SYN数据包中）。如果一方不接受另一方的MSS值则定为默认值536byte。"><meta itemprop=datePublished content="2021-06-12T11:38:30+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="415">
-<meta itemprop=keywords content="network,tcp,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>tcp mss的理解</h1><p>
-<small>
-2021-06-12, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents></nav></aside><p>MSS 是TCP选项中最经常出现，也是最早出现的选项。MSS选项占4byte。MSS是每一个TCP报文段中数据字段的最大长度，注意：只是数据部分的字段，不包括TCP的头部。TCP在三次握手中，每一方都会通告其期望收到的MSS（MSS只出现在SYN数据包中）。如果一方不接受另一方的MSS值则定为默认值536byte。</p><p>MSS值太小或太大都是不合适。太小，例如MSS值只有1byte，那么为了传输这1byte数据，至少要消耗20字节IP头部+20字节TCP头部=40byte，这还不包括其二层头部所需要的开销，显然这种数据传输效率是很低的。MSS过大，导致数据包可以封装很大，那么在IP传输中分片的可能性就会增大，接受方在处理分片包所消耗的资源和处理时间都会增大，如果分片在传输中还发生了重传，那么其网络开销也会增大。因此合理的MSS是至关重要的。MSS的合理值应为保证数据包不分片的最大值。对于以太网MSS可以达到1460byte.</p><p>MTU=MSS+TCP Header+IP Header.</p></article></div></body><div>
-<small> words: 415 tags:</small>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="tcp mss的理解"><meta property="og:description" content="MSS 是TCP选项中最经常出现，也是最早出现的选项。MSS选项占4byte。MSS是每一个TCP报文段中数据字段的最大长度，注意：只是数据部分的字段，不包括TCP的头部。TCP在三次握手中，每一方都会通告其期望收到的MSS（MSS只出现在SYN数据包中）。如果一方不接受另一方的MSS值则定为默认值536byte。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/network/5ec5e23f/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-06-12T11:38:30+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="tcp mss的理解"><meta itemprop=description content="MSS 是TCP选项中最经常出现，也是最早出现的选项。MSS选项占4byte。MSS是每一个TCP报文段中数据字段的最大长度，注意：只是数据部分的字段，不包括TCP的头部。TCP在三次握手中，每一方都会通告其期望收到的MSS（MSS只出现在SYN数据包中）。如果一方不接受另一方的MSS值则定为默认值536byte。"><meta itemprop=datePublished content="2021-06-12T11:38:30+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="415"><meta itemprop=keywords content="network,tcp,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>tcp mss的理解</h1><p><small>2021-06-12, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>MSS 是TCP选项中最经常出现，也是最早出现的选项。MSS选项占4byte。MSS是每一个TCP报文段中数据字段的最大长度，注意：只是数据部分的字段，不包括TCP的头部。TCP在三次握手中，每一方都会通告其期望收到的MSS（MSS只出现在SYN数据包中）。如果一方不接受另一方的MSS值则定为默认值536byte。</p><p>MSS值太小或太大都是不合适。太小，例如MSS值只有1byte，那么为了传输这1byte数据，至少要消耗20字节IP头部+20字节TCP头部=40byte，这还不包括其二层头部所需要的开销，显然这种数据传输效率是很低的。MSS过大，导致数据包可以封装很大，那么在IP传输中分片的可能性就会增大，接受方在处理分片包所消耗的资源和处理时间都会增大，如果分片在传输中还发生了重传，那么其网络开销也会增大。因此合理的MSS是至关重要的。MSS的合理值应为保证数据包不分片的最大值。对于以太网MSS可以达到1460byte.</p><p>MTU=MSS+TCP Header+IP Header.</p></article></div></body><div><small>words: 415 tags:</small>
 <small><code><a href=https://arair.net/tags/network>network</a></code></small>
-<small><code><a href=https://arair.net/tags/tcp>tcp</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/tcp>tcp</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>

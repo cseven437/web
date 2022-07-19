@@ -1,37 +1,10 @@
 <!doctype html><html><title>linux 线程</title><meta name=description content="pthread 相关函数
-"><meta name=generator content="Hugo 0.93.3">
-<meta property="og:title" content="linux 线程">
-<meta property="og:description" content="pthread 相关函数">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://arair.net/p/language/c/linux/a02f9d22/"><meta property="article:section" content="p">
-<meta property="article:published_time" content="2021-03-06T11:17:46+08:00">
-<meta property="article:modified_time" content="2021-09-12T18:05:24+08:00">
-<meta itemprop=name content="linux 线程">
-<meta itemprop=description content="pthread 相关函数"><meta itemprop=datePublished content="2021-03-06T11:17:46+08:00">
-<meta itemprop=dateModified content="2021-09-12T18:05:24+08:00">
-<meta itemprop=wordCount content="379">
-<meta itemprop=keywords content="pthread,c,">
-<style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script>
-<link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body>
-<body>
-<div id=post class=post>
-<article>
-<header>
-<h1 class=post-title>linux 线程</h1><p>
-<small>
-2021-03-06, updated 2021-09-12
-</small>
-</p></header><aside>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#pthread_sigmask>pthread_sigmask</a></li><li><a href=#pthread_detach>pthread_detach()</a></li><li><a href=#pthread_self>pthread_self</a></li><li><a href=#pthread_mutex>pthread_mutex</a></li><li><a href=#pthread遇到的问题>pthread遇到的问题</a></li></ul></nav></aside><p>pthread 相关函数</p><h2 id=pthread_sigmask>pthread_sigmask</h2><p>用作在主调线程里控制信号掩码。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux 线程"><meta property="og:description" content="pthread 相关函数"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/linux/a02f9d22/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-06T11:17:46+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux 线程"><meta itemprop=description content="pthread 相关函数"><meta itemprop=datePublished content="2021-03-06T11:17:46+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="379"><meta itemprop=keywords content="pthread,c,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux 线程</h1><p><small>2021-03-06, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#pthread_sigmask>pthread_sigmask</a></li><li><a href=#pthread_detach>pthread_detach()</a></li><li><a href=#pthread_self>pthread_self</a></li><li><a href=#pthread_mutex>pthread_mutex</a></li><li><a href=#pthread遇到的问题>pthread遇到的问题</a></li></ul></nav></aside><p>pthread 相关函数</p><h2 id=pthread_sigmask>pthread_sigmask</h2><p>用作在主调线程里控制信号掩码。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>pthread_sigmask</span><span class=p>(</span><span class=kt>int</span> <span class=n>how</span><span class=p>,</span> <span class=k>const</span> <span class=n>sigset_t</span> <span class=o>*</span><span class=n>set</span><span class=p>,</span> <span class=n>sigset_t</span> <span class=o>*</span><span class=n>oldset</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=n>Compile</span> <span class=n>and</span> <span class=n>link</span> <span class=n>with</span> <span class=o>-</span><span class=n>pthread</span><span class=p>.</span>
-</span></span></code></pre></div><p>参数</p><ul>
-<li>SIG_BLOCK:   结果集是当前集合参数集的并集（把参数set中的信号添加到信号屏蔽字中）</li><li>SIG_UNBLOCK: 结果集是当前集合参数集的差集（把信号屏蔽字设置为参数set中的信号）</li><li>SIG_SETMASK: 结果集是由参数集指向的集（从信号屏蔽字中删除参数set中的信号）</li></ul><p>返回值</p><ul>
-<li>成功：0</li><li>失败：error number</li></ul><h2 id=pthread_detach>pthread_detach()</h2><p>pthread_detach - detach a thread</p><p>分离子线程，线程运行结束时自动回收资源</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;pthread.h&gt;</span><span class=cp>
+</span></span></code></pre></div><p>参数</p><ul><li>SIG_BLOCK:   结果集是当前集合参数集的并集（把参数set中的信号添加到信号屏蔽字中）</li><li>SIG_UNBLOCK: 结果集是当前集合参数集的差集（把信号屏蔽字设置为参数set中的信号）</li><li>SIG_SETMASK: 结果集是由参数集指向的集（从信号屏蔽字中删除参数set中的信号）</li></ul><p>返回值</p><ul><li>成功：0</li><li>失败：error number</li></ul><h2 id=pthread_detach>pthread_detach()</h2><p>pthread_detach - detach a thread</p><p>分离子线程，线程运行结束时自动回收资源</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;pthread.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>pthread_detach</span><span class=p>(</span><span class=n>pthread_t</span> <span class=kr>thread</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>
@@ -50,16 +23,8 @@ On success, pthread_detach() returns 0; on error, it returns an error number.</p
 </span></span><span class=line><span class=cl><span class=n>pthread_mutex_lock</span><span class=p>(</span><span class=o>&amp;</span><span class=n>write_lock</span><span class=p>);</span>    
 </span></span><span class=line><span class=cl><span class=n>pthread_mutex_unlock</span><span class=p>(</span><span class=o>&amp;</span><span class=n>write_lock</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=n>pthread_mutex_destroy</span><span class=p>(</span><span class=o>&amp;</span><span class=n>write_lock</span><span class=p>);</span>
-</span></span></code></pre></div><h2 id=pthread遇到的问题>pthread遇到的问题</h2><p>调用pthread_cancel函数请求后，等到响应请求时，代码调用了pthread_clean_push函数中的clean_fun1和clean_fun2,函数clean_fun2中的语句先被打印。</p></article></div></body><div>
-<small> words: 379 tags:</small>
+</span></span></code></pre></div><h2 id=pthread遇到的问题>pthread遇到的问题</h2><p>调用pthread_cancel函数请求后，等到响应请求时，代码调用了pthread_clean_push函数中的clean_fun1和clean_fun2,函数clean_fun2中的语句先被打印。</p></article></div></body><div><small>words: 379 tags:</small>
 <small><code><a href=https://arair.net/tags/pthread>pthread</a></code></small>
-<small><code><a href=https://arair.net/tags/c>c</a></code></small>
-</div></html></body><script>var _hmt=_hmt||[];(function(){var e=document.createElement("script"),t;e.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script>
-<script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script>
-<link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css>
-<script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>window.onload=function(){mermaid.initialize({theme:"default"}),mermaid.init(void 0,".language-mermaid")}</script>
-</html>
+<small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
+<script>hljs.highlightAll()</script></html>
