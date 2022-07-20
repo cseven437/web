@@ -1,63 +1,120 @@
 <!doctype html><html><title>ioctl 通过接口获取ip netmask</title><meta name=description content="ioctl 通过接口获取ip netmask
-"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="ioctl 通过接口获取ip netmask"><meta property="og:description" content="ioctl 通过接口获取ip netmask"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/linux/8ffe602a/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-26T16:09:57+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="ioctl 通过接口获取ip netmask"><meta itemprop=description content="ioctl 通过接口获取ip netmask"><meta itemprop=datePublished content="2021-03-26T16:09:57+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="205"><meta itemprop=keywords content="linux,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>ioctl 通过接口获取ip netmask</h1><p><small>2021-03-26, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>ioctl 通过接口获取ip netmask</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>static</span> <span class=n>boolean</span> <span class=nf>GetIP</span><span class=p>(</span><span class=n>uint32</span> <span class=o>*</span><span class=n>retIP</span><span class=p>,</span> <span class=n>uint32</span> <span class=o>*</span><span class=n>netMask</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>iface</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=kt>int</span> <span class=n>s</span><span class=p>,</span> <span class=n>ret</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>  <span class=k>struct</span> <span class=n>ifreq</span> <span class=n>buffer</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>  <span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=n>sa</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>retIP</span> <span class=o>==</span> <span class=nb>NULL</span> <span class=o>||</span> <span class=n>netMask</span> <span class=o>==</span> <span class=nb>NULL</span> <span class=p>)</span>
-</span></span><span class=line><span class=cl>  <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>  <span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=cm>/* Open a socket */</span>
-</span></span><span class=line><span class=cl>  <span class=n>s</span> <span class=o>=</span> <span class=n>socket</span><span class=p>(</span><span class=n>PF_INET</span><span class=p>,</span> <span class=n>SOCK_DGRAM</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>s</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=p>)</span>
-</span></span><span class=line><span class=cl>  <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>  <span class=p>}</span>
-</span></span><span class=line><span class=cl>  <span class=cm>/* Set up the interface request buffer for wlan0. */</span>
-</span></span><span class=line><span class=cl>  <span class=n>memset</span><span class=p>(</span><span class=o>&amp;</span><span class=n>buffer</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buffer</span><span class=p>));</span>
-</span></span><span class=line><span class=cl>  <span class=n>strlcpy</span><span class=p>(</span><span class=n>buffer</span><span class=p>.</span><span class=n>ifr_name</span><span class=p>,</span> <span class=n>iface</span><span class=p>,</span> <span class=n>IFNAMSIZ</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=cm>/* Call the ioctl to get the address. */</span>
-</span></span><span class=line><span class=cl>  <span class=n>ret</span> <span class=o>=</span> <span class=n>ioctl</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=n>SIOCGIFADDR</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>buffer</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>ret</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=p>)</span>
-</span></span><span class=line><span class=cl>  <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=cm>/* Close the socket handle. */</span>
-</span></span><span class=line><span class=cl>    <span class=n>close</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>  <span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=cm>/* Copy out the ip address for the interface. */</span>
-</span></span><span class=line><span class=cl>  <span class=n>sa</span> <span class=o>=</span> <span class=p>(</span><span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=p>)</span><span class=o>&amp;</span><span class=p>(</span><span class=n>buffer</span><span class=p>.</span><span class=n>ifr_addr</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>  <span class=o>*</span><span class=n>retIP</span> <span class=o>=</span> <span class=p>((</span><span class=k>struct</span> <span class=n>sockaddr_in</span> <span class=o>*</span><span class=p>)</span><span class=n>sa</span><span class=p>)</span><span class=o>-&gt;</span><span class=n>sin_addr</span><span class=p>.</span><span class=n>s_addr</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=cm>/* Set up the interface request buffer for wlan0. */</span>
-</span></span><span class=line><span class=cl>  <span class=n>memset</span><span class=p>(</span><span class=o>&amp;</span><span class=n>buffer</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buffer</span><span class=p>));</span>
-</span></span><span class=line><span class=cl>  <span class=n>strlcpy</span><span class=p>(</span><span class=n>buffer</span><span class=p>.</span><span class=n>ifr_name</span><span class=p>,</span> <span class=n>iface</span><span class=p>,</span> <span class=n>IFNAMSIZ</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=cm>/* Call the ioctl to get the address. */</span>
-</span></span><span class=line><span class=cl>  <span class=n>ret</span> <span class=o>=</span> <span class=n>ioctl</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=n>SIOCGIFNETMASK</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>buffer</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>ret</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=p>)</span>
-</span></span><span class=line><span class=cl>  <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=cm>/* Close the socket handle. */</span>
-</span></span><span class=line><span class=cl>    <span class=n>close</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>  <span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=cm>/* Copy out the netmask for the interface. */</span>
-</span></span><span class=line><span class=cl>  <span class=n>sa</span> <span class=o>=</span> <span class=p>(</span><span class=k>struct</span> <span class=n>sockaddr</span> <span class=o>*</span><span class=p>)</span><span class=o>&amp;</span><span class=p>(</span><span class=n>buffer</span><span class=p>.</span><span class=n>ifr_netmask</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>  <span class=o>*</span><span class=n>netMask</span> <span class=o>=</span> <span class=p>((</span><span class=k>struct</span> <span class=n>sockaddr_in</span> <span class=o>*</span><span class=p>)</span><span class=n>sa</span><span class=p>)</span><span class=o>-&gt;</span><span class=n>sin_addr</span><span class=p>.</span><span class=n>s_addr</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=cm>/* Close the socket handle. */</span>
-</span></span><span class=line><span class=cl>  <span class=n>close</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div></article></div></body><div><small>words: 205 tags:</small>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="ioctl 通过接口获取ip netmask"><meta property="og:description" content="ioctl 通过接口获取ip netmask"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/linux/8ffe602a/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-26T16:09:57+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="ioctl 通过接口获取ip netmask"><meta itemprop=description content="ioctl 通过接口获取ip netmask"><meta itemprop=datePublished content="2021-03-26T16:09:57+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="263"><meta itemprop=keywords content="linux,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>ioctl 通过接口获取ip netmask</h1><p><small>2021-03-26, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>ioctl 通过接口获取ip netmask</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>static</span> boolean <span style=color:#50fa7b>GetIP</span>(uint32 <span style=color:#ff79c6>*</span>retIP, uint32 <span style=color:#ff79c6>*</span>netMask, <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span>iface)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#8be9fd>int</span> s, ret;
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>struct</span> ifreq buffer;
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>struct</span> sockaddr <span style=color:#ff79c6>*</span>sa;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>if</span> ( retIP <span style=color:#ff79c6>==</span> <span style=color:#8be9fd;font-style:italic>NULL</span> <span style=color:#ff79c6>||</span> netMask <span style=color:#ff79c6>==</span> <span style=color:#8be9fd;font-style:italic>NULL</span> )
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#8be9fd;font-style:italic>false</span>;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#6272a4>/* Open a socket */</span>
+</span></span><span style=display:flex><span>  s <span style=color:#ff79c6>=</span> socket(PF_INET, SOCK_DGRAM, <span style=color:#bd93f9>0</span>);
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>if</span> ( s <span style=color:#ff79c6>&lt;</span> <span style=color:#bd93f9>0</span> )
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#8be9fd;font-style:italic>false</span>;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  <span style=color:#6272a4>/* Set up the interface request buffer for wlan0. */</span>
+</span></span><span style=display:flex><span>  memset(<span style=color:#ff79c6>&amp;</span>buffer, <span style=color:#bd93f9>0x00</span>, <span style=color:#ff79c6>sizeof</span>(buffer));
+</span></span><span style=display:flex><span>  strlcpy(buffer.ifr_name, iface, IFNAMSIZ);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#6272a4>/* Call the ioctl to get the address. */</span>
+</span></span><span style=display:flex><span>  ret <span style=color:#ff79c6>=</span> ioctl(s, SIOCGIFADDR, <span style=color:#ff79c6>&amp;</span>buffer);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>if</span> ( ret <span style=color:#ff79c6>&lt;</span> <span style=color:#bd93f9>0</span> )
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#6272a4>/* Close the socket handle. */</span>
+</span></span><span style=display:flex><span>    close(s);
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#8be9fd;font-style:italic>false</span>;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#6272a4>/* Copy out the ip address for the interface. */</span>
+</span></span><span style=display:flex><span>  sa <span style=color:#ff79c6>=</span> (<span style=color:#ff79c6>struct</span> sockaddr <span style=color:#ff79c6>*</span>)<span style=color:#ff79c6>&amp;</span>(buffer.ifr_addr);
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>*</span>retIP <span style=color:#ff79c6>=</span> ((<span style=color:#ff79c6>struct</span> sockaddr_in <span style=color:#ff79c6>*</span>)sa)<span style=color:#ff79c6>-&gt;</span>sin_addr.s_addr;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#6272a4>/* Set up the interface request buffer for wlan0. */</span>
+</span></span><span style=display:flex><span>  memset(<span style=color:#ff79c6>&amp;</span>buffer, <span style=color:#bd93f9>0x00</span>, <span style=color:#ff79c6>sizeof</span>(buffer));
+</span></span><span style=display:flex><span>  strlcpy(buffer.ifr_name, iface, IFNAMSIZ);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#6272a4>/* Call the ioctl to get the address. */</span>
+</span></span><span style=display:flex><span>  ret <span style=color:#ff79c6>=</span> ioctl(s, SIOCGIFNETMASK, <span style=color:#ff79c6>&amp;</span>buffer);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>if</span> ( ret <span style=color:#ff79c6>&lt;</span> <span style=color:#bd93f9>0</span> )
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#6272a4>/* Close the socket handle. */</span>
+</span></span><span style=display:flex><span>    close(s);
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#8be9fd;font-style:italic>false</span>;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#6272a4>/* Copy out the netmask for the interface. */</span>
+</span></span><span style=display:flex><span>  sa <span style=color:#ff79c6>=</span> (<span style=color:#ff79c6>struct</span> sockaddr <span style=color:#ff79c6>*</span>)<span style=color:#ff79c6>&amp;</span>(buffer.ifr_netmask);
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>*</span>netMask <span style=color:#ff79c6>=</span> ((<span style=color:#ff79c6>struct</span> sockaddr_in <span style=color:#ff79c6>*</span>)sa)<span style=color:#ff79c6>-&gt;</span>sin_addr.s_addr;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#6272a4>/* Close the socket handle. */</span>
+</span></span><span style=display:flex><span>  close(s);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>return</span> <span style=color:#8be9fd;font-style:italic>true</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 263 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script></html>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

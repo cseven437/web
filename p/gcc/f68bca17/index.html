@@ -8,16 +8,23 @@ Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供�
 debian: 10
 gcc: 8.3.0
 技术简介
-Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。"><meta itemprop=datePublished content="2021-01-31T17:46:10+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="2728"><meta itemprop=keywords content="gcc,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>Security</h1><p><small>2021-01-31, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#技术简介>技术简介</a></li><li><a href=#canary>CANARY</a></li><li><a href=#fortify>FORTIFY</a></li><li><a href=#nx>NX</a></li><li><a href=#pie>PIE</a></li><li><a href=#aslraddress-space-layout-randomization>ASLR（Address Space Layout Randomization）</a></li><li><a href=#relro>RELRO</a></li><li><a href=#编译参数>编译参数</a></li><li><a href=#保护机制检测>保护机制检测</a></li><li><a href=#地址空间布局随机化>地址空间布局随机化</a></li></ul></nav></aside><p>环境</p><pre tabindex=0><code>debian: 10
+Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。"><meta itemprop=datePublished content="2021-01-31T17:46:10+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="2744"><meta itemprop=keywords content="gcc,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>Security</h1><p><small>2021-01-31, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#技术简介>技术简介</a></li><li><a href=#canary>CANARY</a></li><li><a href=#fortify>FORTIFY</a></li><li><a href=#nx>NX</a></li><li><a href=#pie>PIE</a></li><li><a href=#aslraddress-space-layout-randomization>ASLR（Address Space Layout Randomization）</a></li><li><a href=#relro>RELRO</a></li><li><a href=#编译参数>编译参数</a></li><li><a href=#保护机制检测>保护机制检测</a></li><li><a href=#地址空间布局随机化>地址空间布局随机化</a></li></ul></nav></aside><p>环境</p><pre tabindex=0><code>debian: 10
 gcc: 8.3.0
-</code></pre><h2 id=技术简介>技术简介</h2><p>Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。</p><h2 id=canary>CANARY</h2><p>启用 CANARY 后，函数开始执行的时候会先往栈里插入 canary 信息，当函数返回时验证插入的 canary 是否被修改，如果是，则说明发生了栈溢出，程序停止运行。</p><p>下面是一个例子：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span></span></span><span class=line><span class=cl><span class=cp></span>
-</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>buf</span><span class=p>[</span><span class=mi>10</span><span class=p>];</span>
-</span></span><span class=line><span class=cl>    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%s&#34;</span><span class=p>,</span> <span class=n>buf</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div><p>我们先开启 CANARY，来看看执行的结果：</p><pre tabindex=0><code>$ gcc -fstack-protector canary.c -o f.out
+</code></pre><h2 id=技术简介>技术简介</h2><p>Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。</p><h2 id=canary>CANARY</h2><p>启用 CANARY 后，函数开始执行的时候会先往栈里插入 canary 信息，当函数返回时验证插入的 canary 是否被修改，如果是，则说明发生了栈溢出，程序停止运行。</p><p>下面是一个例子：</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>#include</span> <span style=color:#ff79c6>&lt;stdio.h&gt;</span><span style=color:#ff79c6>
+</span></span></span><span style=display:flex><span><span style=color:#ff79c6></span>
+</span></span><span style=display:flex><span><span style=color:#8be9fd>int</span> <span style=color:#50fa7b>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>char</span> buf[<span style=color:#bd93f9>10</span>];
+</span></span><span style=display:flex><span>    scanf(<span style=color:#f1fa8c>&#34;%s&#34;</span>, buf);
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#bd93f9>0</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>我们先开启 CANARY，来看看执行的结果：</p><pre tabindex=0><code>$ gcc -fstack-protector canary.c -o f.out
 $ python -c &#39;print(&#34;A&#34;*20)&#39; | ./f.out
 *** stack smashing detected ***: &lt;unknown&gt; terminated
 Aborted (core dumped)
@@ -61,12 +68,17 @@ Dump of assembler code for function main:
    0x000000000000115a &lt;+37&gt;:    leaveq 
    0x000000000000115b &lt;+38&gt;:    retq   
 End of assembler dump.
-</code></pre><h2 id=fortify>FORTIFY</h2><p>FORTIFY 的选项<code>-D_FORTIFY_SOURCE</code>往往和优化<code>-O</code>选项一起使用，以检测缓冲区溢出的问题。</p><p>下面是一个简单的例子：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;string.h&gt;</span><span class=cp>
-</span></span></span><span class=line><span class=cl><span class=cp></span><span class=kt>void</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>str</span><span class=p>[</span><span class=mi>3</span><span class=p>];</span>
-</span></span><span class=line><span class=cl>    <span class=n>strcpy</span><span class=p>(</span><span class=n>str</span><span class=p>,</span> <span class=s>&#34;abcde&#34;</span><span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div><p>编译</p><pre tabindex=0><code>$ gcc -O2 fortify.c
+</code></pre><h2 id=fortify>FORTIFY</h2><p>FORTIFY 的选项<code>-D_FORTIFY_SOURCE</code>往往和优化<code>-O</code>选项一起使用，以检测缓冲区溢出的问题。</p><p>下面是一个简单的例子：</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>#include</span><span style=color:#ff79c6>&lt;string.h&gt;</span><span style=color:#ff79c6>
+</span></span></span><span style=display:flex><span><span style=color:#ff79c6></span><span style=color:#8be9fd>void</span> <span style=color:#50fa7b>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>char</span> str[<span style=color:#bd93f9>3</span>];
+</span></span><span style=display:flex><span>    strcpy(str, <span style=color:#f1fa8c>&#34;abcde&#34;</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>编译</p><pre tabindex=0><code>$ gcc -O2 fortify.c
 $ checksec --file=a.out
 RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH     Symbols          FORTIFY Fortified       Fortifiable     FILE
 Partial RELRO   No canary found   NX enabled    PIE enabled     No RPATH   No RUNPATH   62) Symbols       No    0               0               a.out
@@ -82,11 +94,15 @@ In function ‘strcpy’,
 $ checksec --file=a.out
 RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified       Fortifiable     FILE
 Partial RELRO   No canary found   NX enabled    PIE enabled     No RPATH   No RUNPATH   64) Symbols       Yes   1               1               a.out
-</code></pre><p>开启优化 -O2 后，编译没有检测出任何问题，checksec 后 FORTIFY 为 No。当配合 -D_FORTIFY_SOURCE=2（也可以 =1）使用时，提示存在溢出问题，checksec 后 FORTIFY 为 Yes。</p><h2 id=nx>NX</h2><p>No-eXecute，表示不可执行，其原理是将数据所在的内存页标识为不可执行，如果程序产生溢出转入执行 shellcode 时，CPU 会抛出异常。</p><p>在 Linux 中，当装载器将程序装载进内存空间后，将程序的 .text 段标记为可执行，而其余的数据段（.data、.bss 等）以及栈、堆均为不可执行。因此，传统利用方式中通过修改 GOT 来执行 shellcode 的方式不再可行。</p><p>但这种保护并不能阻止攻击者通过代码重用来进行攻击（ret2libc）。</p><h2 id=pie>PIE</h2><p>PIE（Position Independent Executable）需要配合 ASLR 来使用，以达到可执行文件的加载时地址随机化。简单来说，PIE 是编译时随机化，由编译器完成；ASLR 是加载时随机化，由操作系统完成。ASLR 将程序运行时的堆栈以及共享库的加载地址随机化，而 PIE 在编译时将程序编译为位置无关、即程序运行时各个段加载的虚拟地址在装载时确定。开启 PIE 时，编译生成的是动态库文件（Shared object）文件，而关闭 PIE 后生成可执行文件（Executable）。</p><p>我们通过实际例子来探索一下 PIE 和 ASLR：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span></span></span><span class=line><span class=cl><span class=cp></span><span class=kt>void</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%p</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>main</span><span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div><p>编译</p><pre tabindex=0><code>$ gcc -pie random.c -o open-pie
+</code></pre><p>开启优化 -O2 后，编译没有检测出任何问题，checksec 后 FORTIFY 为 No。当配合 -D_FORTIFY_SOURCE=2（也可以 =1）使用时，提示存在溢出问题，checksec 后 FORTIFY 为 Yes。</p><h2 id=nx>NX</h2><p>No-eXecute，表示不可执行，其原理是将数据所在的内存页标识为不可执行，如果程序产生溢出转入执行 shellcode 时，CPU 会抛出异常。</p><p>在 Linux 中，当装载器将程序装载进内存空间后，将程序的 .text 段标记为可执行，而其余的数据段（.data、.bss 等）以及栈、堆均为不可执行。因此，传统利用方式中通过修改 GOT 来执行 shellcode 的方式不再可行。</p><p>但这种保护并不能阻止攻击者通过代码重用来进行攻击（ret2libc）。</p><h2 id=pie>PIE</h2><p>PIE（Position Independent Executable）需要配合 ASLR 来使用，以达到可执行文件的加载时地址随机化。简单来说，PIE 是编译时随机化，由编译器完成；ASLR 是加载时随机化，由操作系统完成。ASLR 将程序运行时的堆栈以及共享库的加载地址随机化，而 PIE 在编译时将程序编译为位置无关、即程序运行时各个段加载的虚拟地址在装载时确定。开启 PIE 时，编译生成的是动态库文件（Shared object）文件，而关闭 PIE 后生成可执行文件（Executable）。</p><p>我们通过实际例子来探索一下 PIE 和 ASLR：</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>#include</span><span style=color:#ff79c6>&lt;stdio.h&gt;</span><span style=color:#ff79c6>
+</span></span></span><span style=display:flex><span><span style=color:#ff79c6></span><span style=color:#8be9fd>void</span> <span style=color:#50fa7b>main</span>() {
+</span></span><span style=display:flex><span>    printf(<span style=color:#f1fa8c>&#34;%p</span><span style=color:#f1fa8c>\n</span><span style=color:#f1fa8c>&#34;</span>, main);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>编译</p><pre tabindex=0><code>$ gcc -pie random.c -o open-pie
 $ readelf -h open-pie 
 ELF Header:
   Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
@@ -205,7 +221,6 @@ FORTIFY : ENABLED
 NX : ENABLED
 PIE : disabled
 RELRO : Partial
-</code></pre><h2 id=地址空间布局随机化>地址空间布局随机化</h2><p>最后再说一下地址空间布局随机化（ASLR），该技术虽然不是由 GCC 编译时提供的，但对 PIE 还是有影响。该技术旨在将程序的内存布局随机化，使得攻击者不能轻易地得到数据区的地址来构造 payload。由于程序的堆栈分配与共享库的装载都是在运行时进行，系统在程序每次执行时，随机地分配程序堆栈的地址以及共享库装载的地址。使得攻击者无法预测自己写入的数据区的虚拟地址。</p><p>针对该保护机制的攻击，往往是通过信息泄漏来实现。由于同一模块中的所有代码和数据的相对偏移是固定的，攻击者只要泄漏出某个模块中的任一代码指针或数据指针，即可通过计算得到此模块中任意代码或数据的地址。</p></article></div></body><div><small>words: 2728 tags:</small>
+</code></pre><h2 id=地址空间布局随机化>地址空间布局随机化</h2><p>最后再说一下地址空间布局随机化（ASLR），该技术虽然不是由 GCC 编译时提供的，但对 PIE 还是有影响。该技术旨在将程序的内存布局随机化，使得攻击者不能轻易地得到数据区的地址来构造 payload。由于程序的堆栈分配与共享库的装载都是在运行时进行，系统在程序每次执行时，随机地分配程序堆栈的地址以及共享库装载的地址。使得攻击者无法预测自己写入的数据区的虚拟地址。</p><p>针对该保护机制的攻击，往往是通过信息泄漏来实现。由于同一模块中的所有代码和数据的相对偏移是固定的，攻击者只要泄漏出某个模块中的任一代码指针或数据指针，即可通过计算得到此模块中任意代码或数据的地址。</p></article></div></body><div><small>words: 2744 tags:</small>
 <small><code><a href=https://arair.net/tags/gcc>gcc</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script></html>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

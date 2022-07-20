@@ -1,38 +1,69 @@
 <!doctype html><html><title>linux网络协议处理函数</title><meta name=description content="内核版本：linux-source-4.19
-"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux网络协议处理函数"><meta property="og:description" content="内核版本：linux-source-4.19"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/kernel/b21c249a/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-02-17T14:08:48+08:00"><meta property="article:modified_time" content="2021-02-17T14:08:48+08:00"><meta itemprop=name content="linux网络协议处理函数"><meta itemprop=description content="内核版本：linux-source-4.19"><meta itemprop=datePublished content="2021-02-17T14:08:48+08:00"><meta itemprop=dateModified content="2021-02-17T14:08:48+08:00"><meta itemprop=wordCount content="448"><meta itemprop=keywords content="linux,kernel,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux网络协议处理函数</h1><p><small>2021-02-17</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#协议处理函数的注册>协议处理函数的注册</a></li></ul></nav></aside><p>内核版本：linux-source-4.19</p><h2 id=协议处理函数的注册>协议处理函数的注册</h2><p>无论是系统启动或其他时刻，当一个协议注册时，内核就会调用<code>dev_add_pack</code>，把一个定义在<code>include/linux.netdevice.h</code>类型为packet_type的数据结构传进去。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>struct</span> <span class=n>packet_type</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=n>__be16</span>          <span class=n>type</span><span class=p>;</span>   <span class=cm>/* This is really htons(ether_type). */</span>
-</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>net_device</span>   <span class=o>*</span><span class=n>dev</span><span class=p>;</span>   <span class=cm>/* NULL is wildcarded here       */</span>
-</span></span><span class=line><span class=cl>    <span class=kt>int</span>         <span class=p>(</span><span class=o>*</span><span class=n>func</span><span class=p>)</span> <span class=p>(</span><span class=k>struct</span> <span class=n>sk_buff</span> <span class=o>*</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>                     <span class=k>struct</span> <span class=n>net_device</span> <span class=o>*</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>                     <span class=k>struct</span> <span class=n>packet_type</span> <span class=o>*</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>                     <span class=k>struct</span> <span class=n>net_device</span> <span class=o>*</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=kt>void</span>            <span class=p>(</span><span class=o>*</span><span class=n>list_func</span><span class=p>)</span> <span class=p>(</span><span class=k>struct</span> <span class=n>list_head</span> <span class=o>*</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>                          <span class=k>struct</span> <span class=n>packet_type</span> <span class=o>*</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>                          <span class=k>struct</span> <span class=n>net_device</span> <span class=o>*</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=kt>bool</span>            <span class=p>(</span><span class=o>*</span><span class=n>id_match</span><span class=p>)(</span><span class=k>struct</span> <span class=n>packet_type</span> <span class=o>*</span><span class=n>ptype</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>                        <span class=k>struct</span> <span class=n>sock</span> <span class=o>*</span><span class=n>sk</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=kt>void</span>            <span class=o>*</span><span class=n>af_packet_priv</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>list_head</span>    <span class=n>list</span><span class=p>;</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span></code></pre></div><ul><li>type: 协议代码</li><li>dev: 设备的指针，置为NULL时，指所有设备</li><li>func: type对应的处理函数</li><li>list_func:</li><li>id_match:</li><li>af_packet_priv:</li><li>list:</li></ul><p>为每个协议注册时，内核会对<code>packet_type</code>结构做初始化，然后调用<code>dev_add_pack</code>。</p><p>当IPv4协议在引导期间初始化时，ip_init函数会被执行。其中一种结果是，IPv4 <code>packet_type</code> 结构中的函数<code>ip_rcv</code>会注册成此协议的函数处理函数。所有Ethernet帧接收时，若<code>ETH_P_IP</code>的值为Protocol Above，就会由函数<code>ip_rcv</code>处理。</p><p>ipv4对应的例子</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// linux/net/ipv4/af_inet.c
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>static</span> <span class=k>struct</span> <span class=n>packet_type</span> <span class=n>ip_packet_type</span> <span class=n>__read_mostly</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>type</span> <span class=o>=</span> <span class=n>cpu_to_be16</span><span class=p>(</span><span class=n>ETH_P_IP</span><span class=p>),</span>
-</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>func</span> <span class=o>=</span> <span class=n>ip_rcv</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>list_func</span> <span class=o>=</span> <span class=n>ip_list_rcv</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>    
-</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kt>int</span> <span class=n>__init</span> <span class=nf>inet_init</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>inet_protosw</span> <span class=o>*</span><span class=n>q</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>list_head</span> <span class=o>*</span><span class=n>r</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>rc</span> <span class=o>=</span> <span class=o>-</span><span class=n>EINVAL</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>sock_skb_cb_check_size</span><span class=p>(</span><span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=n>inet_skb_parm</span><span class=p>));</span>
-</span></span><span class=line><span class=cl>    <span class=p>...</span>
-</span></span><span class=line><span class=cl>    <span class=n>dev_add_pack</span><span class=p>(</span><span class=o>&amp;</span><span class=n>ip_packet_type</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=p>...</span>  
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div></article></div></body><div><small>words: 448 tags:</small>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux网络协议处理函数"><meta property="og:description" content="内核版本：linux-source-4.19"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/kernel/b21c249a/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-02-17T14:08:48+08:00"><meta property="article:modified_time" content="2021-02-17T14:08:48+08:00"><meta itemprop=name content="linux网络协议处理函数"><meta itemprop=description content="内核版本：linux-source-4.19"><meta itemprop=datePublished content="2021-02-17T14:08:48+08:00"><meta itemprop=dateModified content="2021-02-17T14:08:48+08:00"><meta itemprop=wordCount content="480"><meta itemprop=keywords content="linux,kernel,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux网络协议处理函数</h1><p><small>2021-02-17</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#协议处理函数的注册>协议处理函数的注册</a></li></ul></nav></aside><p>内核版本：linux-source-4.19</p><h2 id=协议处理函数的注册>协议处理函数的注册</h2><p>无论是系统启动或其他时刻，当一个协议注册时，内核就会调用<code>dev_add_pack</code>，把一个定义在<code>include/linux.netdevice.h</code>类型为packet_type的数据结构传进去。</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>struct</span> packet_type {
+</span></span><span style=display:flex><span>    __be16          type;   <span style=color:#6272a4>/* This is really htons(ether_type). */</span>
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>struct</span> net_device   <span style=color:#ff79c6>*</span>dev;   <span style=color:#6272a4>/* NULL is wildcarded here       */</span>
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>int</span>         (<span style=color:#ff79c6>*</span>func) (<span style=color:#ff79c6>struct</span> sk_buff <span style=color:#ff79c6>*</span>,
+</span></span><span style=display:flex><span>                     <span style=color:#ff79c6>struct</span> net_device <span style=color:#ff79c6>*</span>,
+</span></span><span style=display:flex><span>                     <span style=color:#ff79c6>struct</span> packet_type <span style=color:#ff79c6>*</span>,
+</span></span><span style=display:flex><span>                     <span style=color:#ff79c6>struct</span> net_device <span style=color:#ff79c6>*</span>);
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>void</span>            (<span style=color:#ff79c6>*</span>list_func) (<span style=color:#ff79c6>struct</span> list_head <span style=color:#ff79c6>*</span>,
+</span></span><span style=display:flex><span>                          <span style=color:#ff79c6>struct</span> packet_type <span style=color:#ff79c6>*</span>,
+</span></span><span style=display:flex><span>                          <span style=color:#ff79c6>struct</span> net_device <span style=color:#ff79c6>*</span>);
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>bool</span>            (<span style=color:#ff79c6>*</span>id_match)(<span style=color:#ff79c6>struct</span> packet_type <span style=color:#ff79c6>*</span>ptype,
+</span></span><span style=display:flex><span>                        <span style=color:#ff79c6>struct</span> sock <span style=color:#ff79c6>*</span>sk);
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>void</span>            <span style=color:#ff79c6>*</span>af_packet_priv;
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>struct</span> list_head    list;
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></td></tr></table></div></div><ul><li>type: 协议代码</li><li>dev: 设备的指针，置为NULL时，指所有设备</li><li>func: type对应的处理函数</li><li>list_func:</li><li>id_match:</li><li>af_packet_priv:</li><li>list:</li></ul><p>为每个协议注册时，内核会对<code>packet_type</code>结构做初始化，然后调用<code>dev_add_pack</code>。</p><p>当IPv4协议在引导期间初始化时，ip_init函数会被执行。其中一种结果是，IPv4 <code>packet_type</code> 结构中的函数<code>ip_rcv</code>会注册成此协议的函数处理函数。所有Ethernet帧接收时，若<code>ETH_P_IP</code>的值为Protocol Above，就会由函数<code>ip_rcv</code>处理。</p><p>ipv4对应的例子</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#6272a4>// linux/net/ipv4/af_inet.c
+</span></span></span><span style=display:flex><span><span style=color:#6272a4></span><span style=color:#ff79c6>static</span> <span style=color:#ff79c6>struct</span> packet_type ip_packet_type __read_mostly <span style=color:#ff79c6>=</span> {
+</span></span><span style=display:flex><span>    .type <span style=color:#ff79c6>=</span> cpu_to_be16(ETH_P_IP),
+</span></span><span style=display:flex><span>    .func <span style=color:#ff79c6>=</span> ip_rcv,
+</span></span><span style=display:flex><span>    .list_func <span style=color:#ff79c6>=</span> ip_list_rcv,
+</span></span><span style=display:flex><span>};    
+</span></span><span style=display:flex><span><span style=color:#ff79c6>static</span> <span style=color:#8be9fd>int</span> __init <span style=color:#50fa7b>inet_init</span>(<span style=color:#8be9fd>void</span>)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>struct</span> inet_protosw <span style=color:#ff79c6>*</span>q;
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>struct</span> list_head <span style=color:#ff79c6>*</span>r;
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>int</span> rc <span style=color:#ff79c6>=</span> <span style=color:#ff79c6>-</span>EINVAL;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    sock_skb_cb_check_size(<span style=color:#ff79c6>sizeof</span>(<span style=color:#ff79c6>struct</span> inet_skb_parm));
+</span></span><span style=display:flex><span>    ...
+</span></span><span style=display:flex><span>    dev_add_pack(<span style=color:#ff79c6>&amp;</span>ip_packet_type);
+</span></span><span style=display:flex><span>    ...  
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 480 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/kernel>kernel</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script></html>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

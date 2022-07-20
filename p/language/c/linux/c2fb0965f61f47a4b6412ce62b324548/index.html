@@ -3,56 +3,101 @@
 snprintf
 C 库函数 **int snprintf(char str, size_t size, const char format, &mldr;) 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/linux/c2fb0965f61f47a4b6412ce62b324548/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-07-10T17:18:13+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux-c 格式化输出函数"><meta itemprop=description content="stdio.h
 snprintf
-C 库函数 **int snprintf(char str, size_t size, const char format, &mldr;) 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。"><meta itemprop=datePublished content="2021-07-10T17:18:13+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="533"><meta itemprop=keywords content="sprintf,snprintf,linux-c,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><link rel=stylesheet href=/style.css type=text/css><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux-c 格式化输出函数</h1><p><small>2021-07-10, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#stdioh>stdio.h</a><ul><li><a href=#snprintf>snprintf</a></li></ul></li><li><a href=#stdargh>stdarg.h</a><ul><li><a href=#vsnprintf与vsprintf>vsnprintf与vsprintf</a></li></ul></li></ul></nav></aside><h2 id=stdioh>stdio.h</h2><h3 id=snprintf>snprintf</h3><p>C 库函数 **int snprintf(char <em>str, size_t size, const char <em>format, &mldr;)</em></em> 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>snprintf</span> <span class=p>(</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>str</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>size</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>format</span><span class=p>,</span> <span class=p>...</span> <span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>sprintf</span> <span class=p>(</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>str</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span> <span class=n>format</span><span class=p>,</span> <span class=p>...</span> <span class=p>);</span>
-</span></span></code></pre></div><p>参数</p><ul><li><strong>str</strong> &ndash; 目标字符串。</li><li><strong>size</strong> &ndash; 拷贝字节数(Bytes)。</li><li><strong>format</strong> &ndash; 格式化成字符串。</li><li><strong>&mldr;</strong> &ndash; 可变参数。</li></ul><p>返回值</p><ul><li>(1) 如果格式化后的字符串长度小于等于 size，则会把字符串全部复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>；</li><li>(2) 如果格式化后的字符串长度大于 size，超过 size 的部分会被截断，只将其中的 (size-1) 个字符复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>，返回值为欲写入的字符串长度。</li></ul><p>实例</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span></span></span><span class=line><span class=cl><span class=cp></span> 
-</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>buffer</span><span class=p>[</span><span class=mi>50</span><span class=p>];</span>
-</span></span><span class=line><span class=cl>    <span class=kt>char</span><span class=o>*</span> <span class=n>s</span> <span class=o>=</span> <span class=s>&#34;runoobcom&#34;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl> 
-</span></span><span class=line><span class=cl>    <span class=c1>// 读取字符串并存储在 buffer 中
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>j</span> <span class=o>=</span> <span class=n>snprintf</span><span class=p>(</span><span class=n>buffer</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=s>&#34;%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>s</span><span class=p>);</span>
-</span></span><span class=line><span class=cl> 
-</span></span><span class=line><span class=cl>    <span class=c1>// 输出 buffer及字符数
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;string:</span><span class=se>\n</span><span class=s>%s</span><span class=se>\n</span><span class=s>character count = %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>buffer</span><span class=p>,</span> <span class=n>j</span><span class=p>);</span>
-</span></span><span class=line><span class=cl> 
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div><h2 id=stdargh>stdarg.h</h2><h3 id=vsnprintf与vsprintf>vsnprintf与vsprintf</h3><p>vsprintf与vsnprintf类似</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdarg.h&gt;</span><span class=cp>
-</span></span></span><span class=line><span class=cl><span class=cp></span>
-</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>vsprintf</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=n>str</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>format</span><span class=p>,</span> <span class=n>va_list</span> <span class=n>ap</span><span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>vsnprintf</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=n>str</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>size</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>format</span><span class=p>,</span> <span class=n>va_list</span> <span class=n>ap</span><span class=p>);</span>
-</span></span></code></pre></div><p>va_list获取</p><p>可变参数va_list获取方式通过下列函数获取,并且总是成对调用</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>va_start</span><span class=p>(</span><span class=n>va_list</span> <span class=n>ap</span><span class=p>,</span> <span class=n>last</span><span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=n>va_end</span><span class=p>(</span><span class=n>va_list</span> <span class=n>ap</span><span class=p>);</span>
-</span></span></code></pre></div><p>简单的使用vsnprintf函数实现snprintf</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdarg.h&gt;</span><span class=cp>
-</span></span></span><span class=line><span class=cl><span class=cp></span><span class=kt>int</span> <span class=nf>my_snprintf</span><span class=p>(</span><span class=kt>char</span><span class=o>*</span> <span class=n>buffer</span><span class=p>,</span> <span class=kt>int</span> <span class=n>size</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span><span class=o>*</span> <span class=n>format</span><span class=p>,</span> <span class=p>...)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=n>va_list</span> <span class=n>ap</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>    <span class=n>va_start</span><span class=p>(</span><span class=n>ap</span><span class=p>,</span> <span class=n>format</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>ret</span> <span class=o>=</span> <span class=n>vsnprintf</span><span class=p>(</span><span class=n>buffer</span><span class=p>,</span> <span class=n>size</span><span class=p>,</span> <span class=n>format</span><span class=p>,</span> <span class=n>ap</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=n>va_end</span><span class=p>(</span><span class=n>ap</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>ret</span><span class=p>;</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>5</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>    <span class=kt>float</span> <span class=n>f</span> <span class=o>=</span> <span class=mf>27.0</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>str</span><span class=p>[</span><span class=mi>50</span><span class=p>]</span> <span class=o>=</span> <span class=s>&#34;hello world&#34;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>buf</span><span class=p>[</span><span class=mi>64</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=mi>0</span><span class=p>};</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>my_snprintf</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>buf</span><span class=p>),</span> <span class=s>&#34;%d %f %s&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>f</span><span class=p>,</span> <span class=n>str</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>buf</span><span class=p>);</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>return</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div><p>输出</p><pre tabindex=0><code>5 27.000000 hello world
-</code></pre></article></div></body><div><small>words: 533 tags:</small>
+C 库函数 **int snprintf(char str, size_t size, const char format, &mldr;) 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。"><meta itemprop=datePublished content="2021-07-10T17:18:13+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="579"><meta itemprop=keywords content="sprintf,snprintf,linux-c,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux-c 格式化输出函数</h1><p><small>2021-07-10, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#stdioh>stdio.h</a><ul><li><a href=#snprintf>snprintf</a></li></ul></li><li><a href=#stdargh>stdarg.h</a><ul><li><a href=#vsnprintf与vsprintf>vsnprintf与vsprintf</a></li></ul></li></ul></nav></aside><h2 id=stdioh>stdio.h</h2><h3 id=snprintf>snprintf</h3><p>C 库函数 **int snprintf(char <em>str, size_t size, const char <em>format, &mldr;)</em></em> 设将可变参数(&mldr;)按照 format 格式化成字符串，并将字符串复制到 str 中，size 为要写入的字符的最大数目，超过 size 会被截断。</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#8be9fd>int</span> <span style=color:#50fa7b>snprintf</span> ( <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span> str, size_t size, <span style=color:#ff79c6>const</span> <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span> format, ... );
+</span></span><span style=display:flex><span><span style=color:#8be9fd>int</span> <span style=color:#50fa7b>sprintf</span> ( <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span> str, <span style=color:#ff79c6>const</span> <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span> format, ... );
+</span></span></code></pre></td></tr></table></div></div><p>参数</p><ul><li><strong>str</strong> &ndash; 目标字符串。</li><li><strong>size</strong> &ndash; 拷贝字节数(Bytes)。</li><li><strong>format</strong> &ndash; 格式化成字符串。</li><li><strong>&mldr;</strong> &ndash; 可变参数。</li></ul><p>返回值</p><ul><li>(1) 如果格式化后的字符串长度小于等于 size，则会把字符串全部复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>；</li><li>(2) 如果格式化后的字符串长度大于 size，超过 size 的部分会被截断，只将其中的 (size-1) 个字符复制到 str 中，并给其后添加一个字符串结束符 <strong>\0</strong>，返回值为欲写入的字符串长度。</li></ul><p>实例</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>#include</span> <span style=color:#ff79c6>&lt;stdio.h&gt;</span><span style=color:#ff79c6>
+</span></span></span><span style=display:flex><span><span style=color:#ff79c6></span> 
+</span></span><span style=display:flex><span><span style=color:#8be9fd>int</span> <span style=color:#50fa7b>main</span>()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>char</span> buffer[<span style=color:#bd93f9>50</span>];
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>char</span><span style=color:#ff79c6>*</span> s <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;runoobcom&#34;</span>;
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>    <span style=color:#6272a4>// 读取字符串并存储在 buffer 中
+</span></span></span><span style=display:flex><span><span style=color:#6272a4></span>    <span style=color:#8be9fd>int</span> j <span style=color:#ff79c6>=</span> snprintf(buffer, <span style=color:#bd93f9>6</span>, <span style=color:#f1fa8c>&#34;%s</span><span style=color:#f1fa8c>\n</span><span style=color:#f1fa8c>&#34;</span>, s);
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>    <span style=color:#6272a4>// 输出 buffer及字符数
+</span></span></span><span style=display:flex><span><span style=color:#6272a4></span>    printf(<span style=color:#f1fa8c>&#34;string:</span><span style=color:#f1fa8c>\n</span><span style=color:#f1fa8c>%s</span><span style=color:#f1fa8c>\n</span><span style=color:#f1fa8c>character count = %d</span><span style=color:#f1fa8c>\n</span><span style=color:#f1fa8c>&#34;</span>, buffer, j);
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#bd93f9>0</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=stdargh>stdarg.h</h2><h3 id=vsnprintf与vsprintf>vsnprintf与vsprintf</h3><p>vsprintf与vsnprintf类似</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>#include</span> <span style=color:#ff79c6>&lt;stdio.h&gt;</span><span style=color:#ff79c6>
+</span></span></span><span style=display:flex><span><span style=color:#ff79c6>#include</span> <span style=color:#ff79c6>&lt;stdarg.h&gt;</span><span style=color:#ff79c6>
+</span></span></span><span style=display:flex><span><span style=color:#ff79c6></span>
+</span></span><span style=display:flex><span><span style=color:#8be9fd>int</span> <span style=color:#50fa7b>vsprintf</span>(<span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span>str, <span style=color:#ff79c6>const</span> <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span>format, va_list ap);
+</span></span><span style=display:flex><span><span style=color:#8be9fd>int</span> <span style=color:#50fa7b>vsnprintf</span>(<span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span>str, size_t size, <span style=color:#ff79c6>const</span> <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span>format, va_list ap);
+</span></span></code></pre></td></tr></table></div></div><p>va_list获取</p><p>可变参数va_list获取方式通过下列函数获取,并且总是成对调用</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span>va_start(va_list ap, last);
+</span></span><span style=display:flex><span>va_end(va_list ap);
+</span></span></code></pre></td></tr></table></div></div><p>简单的使用vsnprintf函数实现snprintf</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>#include</span> <span style=color:#ff79c6>&lt;stdio.h&gt;</span><span style=color:#ff79c6>
+</span></span></span><span style=display:flex><span><span style=color:#ff79c6>#include</span> <span style=color:#ff79c6>&lt;stdarg.h&gt;</span><span style=color:#ff79c6>
+</span></span></span><span style=display:flex><span><span style=color:#ff79c6></span><span style=color:#8be9fd>int</span> <span style=color:#50fa7b>my_snprintf</span>(<span style=color:#8be9fd>char</span><span style=color:#ff79c6>*</span> buffer, <span style=color:#8be9fd>int</span> size, <span style=color:#ff79c6>const</span> <span style=color:#8be9fd>char</span><span style=color:#ff79c6>*</span> format, ...) {
+</span></span><span style=display:flex><span>    va_list ap;
+</span></span><span style=display:flex><span>    va_start(ap, format);
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>int</span> ret <span style=color:#ff79c6>=</span> vsnprintf(buffer, size, format, ap);
+</span></span><span style=display:flex><span>    va_end(ap);
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> ret;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8be9fd>int</span> <span style=color:#50fa7b>main</span>()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>int</span> i <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>5</span>;
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>float</span> f <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>27.0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>char</span> str[<span style=color:#bd93f9>50</span>] <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;hello world&#34;</span>;
+</span></span><span style=display:flex><span>    <span style=color:#8be9fd>char</span> buf[<span style=color:#bd93f9>64</span>] <span style=color:#ff79c6>=</span> {<span style=color:#bd93f9>0</span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    my_snprintf(buf, <span style=color:#ff79c6>sizeof</span>(buf), <span style=color:#f1fa8c>&#34;%d %f %s&#34;</span>, i, f, str);
+</span></span><span style=display:flex><span>    printf(<span style=color:#f1fa8c>&#34;%s</span><span style=color:#f1fa8c>\n</span><span style=color:#f1fa8c>&#34;</span>, buf);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span>(<span style=color:#bd93f9>0</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>输出</p><pre tabindex=0><code>5 27.000000 hello world
+</code></pre></article></div></body><div><small>words: 579 tags:</small>
 <small><code><a href=https://arair.net/tags/sprintf>sprintf</a></code></small>
 <small><code><a href=https://arair.net/tags/snprintf>snprintf</a></code></small>
 <small><code><a href=https://arair.net/tags/linux-c>linux-c</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
-<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script><link rel=stylesheet href=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css><script src=//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js></script>
-<script>hljs.highlightAll()</script></html>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>
