@@ -1,0 +1,105 @@
+<!doctype html><html><title>vim个人配置记录</title><meta name=description content="set nocompatible set backspace=eol,start,indent set autoindent set cindent set number &amp;#34; 高亮显示搜索内容 set hlsearch &amp;#34; 忽略大小写 set ignorecase &amp;#34; 输入时显示搜索内容 set incsearch set shiftwidth=4 set softtabstop=4 set noexpandtab set tabstop=4 set nowrap &amp;#34; 记住上次退出位置 ===================== if has(&amp;#34;autocmd&amp;#34;) au BufReadPost * if line(&amp;#34;&amp;#39;\&amp;#34;&amp;#34;) &amp;gt; 1"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="vim个人配置记录"><meta property="og:description" content="set nocompatible set backspace=eol,start,indent set autoindent set cindent set number &#34; 高亮显示搜索内容 set hlsearch &#34; 忽略大小写 set ignorecase &#34; 输入时显示搜索内容 set incsearch set shiftwidth=4 set softtabstop=4 set noexpandtab set tabstop=4 set nowrap &#34; 记住上次退出位置 ===================== if has(&#34;autocmd&#34;) au BufReadPost * if line(&#34;'\&#34;&#34;) > 1"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/1658656440/"><meta property="article:section" content="p"><meta property="article:published_time" content="2022-07-24T17:54:00+08:00"><meta property="article:modified_time" content="2022-07-24T18:26:03+08:00"><meta itemprop=name content="vim个人配置记录"><meta itemprop=description content="set nocompatible set backspace=eol,start,indent set autoindent set cindent set number &#34; 高亮显示搜索内容 set hlsearch &#34; 忽略大小写 set ignorecase &#34; 输入时显示搜索内容 set incsearch set shiftwidth=4 set softtabstop=4 set noexpandtab set tabstop=4 set nowrap &#34; 记住上次退出位置 ===================== if has(&#34;autocmd&#34;) au BufReadPost * if line(&#34;'\&#34;&#34;) > 1"><meta itemprop=datePublished content="2022-07-24T17:54:00+08:00"><meta itemprop=dateModified content="2022-07-24T18:26:03+08:00"><meta itemprop=wordCount content="298"><meta itemprop=keywords content="vim,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>vim个人配置记录</h1><p><small>2022-07-24, updated 2022-07-24</small></p></header><aside><nav id=TableOfContents></nav></aside><pre tabindex=0><code>set nocompatible
+set backspace=eol,start,indent
+set autoindent
+set cindent
+set number
+&#34; 高亮显示搜索内容
+set hlsearch
+&#34; 忽略大小写
+set ignorecase
+&#34; 输入时显示搜索内容
+set incsearch
+
+
+set shiftwidth=4
+set softtabstop=4
+set noexpandtab
+set tabstop=4
+set nowrap
+
+&#34; 记住上次退出位置 =====================
+if has(&#34;autocmd&#34;)
+  au BufReadPost * if line(&#34;&#39;\&#34;&#34;) &gt; 1 &amp;&amp; line(&#34;&#39;\&#34;&#34;) &lt;= line(&#34;$&#34;) | exe &#34;normal! g&#39;\&#34;&#34; | endif
+endif
+&#34; 记住上次退出位置 end==================
+
+
+let g:GtagsCscope_Auto_Map = 1
+let g:Gtags_Auto_Map = 1
+&#34; gutentags_plus vim-gutentags=======================================================
+let g:gutentags_modules = []
+&#34;if executable(&#39;ctags&#39;)
+&#34;       let g:gutentags_modules += [&#39;ctags&#39;]
+&#34;endif
+if executable(&#39;gtags-cscope&#39;) &amp;&amp; executable(&#39;gtags&#39;)
+        let g:gutentags_modules += [&#39;gtags_cscope&#39;]
+endif
+
+&#34; config project root markers.
+let g:gutentags_project_root = [&#39;.root&#39;]
+let g:gutentags_ctags_tagfile = &#39;.tags&#39;
+if exists(&#39;g:gutentags_cache_dir&#39;) == 0
+        let g:gutentags_cache_dir = expand(&#39;~/.cache/tags&#39;)
+endif
+if !isdirectory(g:gutentags_cache_dir)
+        call mkdir(g:gutentags_cache_dir, &#39;p&#39;)
+endif
+
+let g:gutentags_ctags_extra_args = []
+let g:gutentags_ctags_extra_args = [&#39;--fields=+niazS&#39;, &#39;--extra=+q&#39;]
+let g:gutentags_ctags_extra_args += [&#39;--c++-kinds=+px&#39;]
+let g:gutentags_ctags_extra_args += [&#39;--c-kinds=+px&#39;]
+
+let g:gutentags_auto_add_gtags_cscope = 0
+
+let g:gutentags_define_advanced_commands = 1
+
+if has(&#39;win32&#39;) || has(&#39;win16&#39;) || has(&#39;win64&#39;) || has(&#39;win95&#39;)
+        let g:gutentags_ctags_extra_args += [&#39;--output-format=e-ctags&#39;]
+endif
+
+&#34; generate datebases in my cache directory, prevent gtags files polluting my project
+let g:gutentags_cache_dir = expand(&#39;~/.cache/tags&#39;)
+
+&#34; change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
+
+&#34; let $GTAGSLABEL=&#39;native&#39;
+
+&#34; =================================end==============================================
+
+
+&#34; Leaderf start================
+let g:Lf_PreviewInPopup = 1
+let g:Lf_WindowPosition = &#39;popup&#39;
+
+noremap &lt;C-r&gt; :LeaderfFunction&lt;CR&gt;
+&#34; Leaderf end  ================
+
+&#34; lightline plug start ====================
+set laststatus=2
+&#34; lightline plug end  ====================
+
+
+call plug#begin()
+
+&#34; gutentags plug start=================
+Plug &#39;skywind3000/gutentags_plus&#39;
+Plug &#39;ludovicchabant/vim-gutentags&#39;
+&#34; =====================================
+Plug &#39;itchyny/lightline.vim&#39;
+
+Plug &#39;Yggdroot/LeaderF&#39;, { &#39;do&#39;: &#39;:LeaderfInstallCExtension&#39; }
+
+&#34; vim lsp plug
+&#34; Plug &#39;prabirshrestha/vim-lsp&#39;
+
+&#34;Plug &#39;autozimu/LanguageClient-neovim&#39;, {
+&#34;    \ &#39;branch&#39;: &#39;next&#39;,
+&#34;    \ &#39;do&#39;: &#39;bash install.sh&#39;,
+&#34;    \ }
+
+call plug#end()
+</code></pre></article></div></body><div><small>words: 298 tags:</small>
+<small><code><a href=https://arair.net/tags/vim>vim</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
+<script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>
