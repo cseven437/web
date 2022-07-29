@@ -1,39 +1,74 @@
 <!doctype html><html><title>telnet</title><meta name=description content="Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。
-"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="telnet"><meta property="og:description" content="Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/ebe9242e/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-04-23T15:45:47+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="telnet"><meta itemprop=description content="Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。"><meta itemprop=datePublished content="2021-04-23T15:45:47+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="317"><meta itemprop=keywords content="telnet,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>telnet</h1><p><small>2021-04-23, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#服务端程序telnetd>服务端程序telnetd</a></li><li><a href=#客户端程序telnet>客户端程序telnet</a></li><li><a href=#问题解决root用户无法使用telnet命令登录服务器>问题：解决root用户无法使用telnet命令登录服务器</a></li></ul></nav></aside><p>Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。</p><h2 id=服务端程序telnetd>服务端程序telnetd</h2><pre tabindex=0><code>~ # telnetd -h
-telnetd: invalid option -- &#39;h&#39;
-BusyBox v1.23.1 (2021-04-16 11:26:22 CST) multi-call binary.
-
-Usage: telnetd [OPTIONS]
-
-Handle incoming telnet connections
-
-        -l LOGIN        Exec LOGIN on connect
-        -f ISSUE_FILE   Display ISSUE_FILE instead of /etc/issue
-        -K              Close connection as soon as login exits
-                        (normally wait until all programs close slave pty)
-        -p PORT         Port to listen on
-        -b ADDR[:PORT]  Address to bind to
-        -F              Run in foreground
-        -i              Inetd mode
-        -w SEC          Inetd &#39;wait&#39; mode, linger time SEC
-        -S              Log to syslog (implied by -i or without -F and -w)
-</code></pre><h2 id=客户端程序telnet>客户端程序telnet</h2><pre tabindex=0><code>~ # telnet
-BusyBox v1.23.1 (2021-04-16 11:26:22 CST) multi-call binary.
-
-Usage: telnet [-a] [-l USER] HOST [PORT]
-
-Connect to telnet server
-
-        -a      Automatic login with $USER variable
-        -l USER Automatic login as USER
-</code></pre><h2 id=问题解决root用户无法使用telnet命令登录服务器>问题：解决root用户无法使用telnet命令登录服务器</h2><p>telnet 密码修改命令：passwd</p><p>使用tty命令查询用户登录方式，</p><pre tabindex=0><code>#tty
-/dev/pts/3
-</code></pre><p>并将登录方式添加到/etc/securetty文件中</p><p>解决办法：</p><p>在/etc/sucuretty内容中添加如下内容</p><pre tabindex=0><code>pts/0
-pts/1
-pts/2
-pts/3
-pts/4
-pts/5
-</code></pre></article></div></body><div><small>words: 317 tags:</small>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="telnet"><meta property="og:description" content="Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/ebe9242e/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-04-23T15:45:47+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="telnet"><meta itemprop=description content="Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。"><meta itemprop=datePublished content="2021-04-23T15:45:47+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="352"><meta itemprop=keywords content="telnet,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>telnet</h1><p><small>2021-04-23, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#服务端程序telnetd>服务端程序telnetd</a></li><li><a href=#客户端程序telnet>客户端程序telnet</a></li><li><a href=#问题解决root用户无法使用telnet命令登录服务器>问题：解决root用户无法使用telnet命令登录服务器</a></li></ul></nav></aside><p>Telnet协议是TCP/IP协议族中的一员，是Internet远程登录服务的标准协议和主要方式。</p><h2 id=服务端程序telnetd>服务端程序telnetd</h2><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>~ # telnetd -h
+</span></span><span style=display:flex><span>telnetd: invalid option -- &#39;h&#39;
+</span></span><span style=display:flex><span>BusyBox v1.23.1 (2021-04-16 11:26:22 CST) multi-call binary.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Usage: telnetd [OPTIONS]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Handle incoming telnet connections
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        -l LOGIN        Exec LOGIN on connect
+</span></span><span style=display:flex><span>        -f ISSUE_FILE   Display ISSUE_FILE instead of /etc/issue
+</span></span><span style=display:flex><span>        -K              Close connection as soon as login exits
+</span></span><span style=display:flex><span>                        (normally wait until all programs close slave pty)
+</span></span><span style=display:flex><span>        -p PORT         Port to listen on
+</span></span><span style=display:flex><span>        -b ADDR[:PORT]  Address to bind to
+</span></span><span style=display:flex><span>        -F              Run in foreground
+</span></span><span style=display:flex><span>        -i              Inetd mode
+</span></span><span style=display:flex><span>        -w SEC          Inetd &#39;wait&#39; mode, linger time SEC
+</span></span><span style=display:flex><span>        -S              Log to syslog (implied by -i or without -F and -w)
+</span></span></code></pre></td></tr></table></div></div><h2 id=客户端程序telnet>客户端程序telnet</h2><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>~ # telnet
+</span></span><span style=display:flex><span>BusyBox v1.23.1 (2021-04-16 11:26:22 CST) multi-call binary.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Usage: telnet [-a] [-l USER] HOST [PORT]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Connect to telnet server
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        -a      Automatic login with $USER variable
+</span></span><span style=display:flex><span>        -l USER Automatic login as USER
+</span></span></code></pre></td></tr></table></div></div><h2 id=问题解决root用户无法使用telnet命令登录服务器>问题：解决root用户无法使用telnet命令登录服务器</h2><p>telnet 密码修改命令：passwd</p><p>使用tty命令查询用户登录方式，</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>#tty
+</span></span><span style=display:flex><span>/dev/pts/3
+</span></span></code></pre></td></tr></table></div></div><p>并将登录方式添加到/etc/securetty文件中</p><p>解决办法：</p><p>在/etc/sucuretty内容中添加如下内容</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>pts/0
+</span></span><span style=display:flex><span>pts/1
+</span></span><span style=display:flex><span>pts/2
+</span></span><span style=display:flex><span>pts/3
+</span></span><span style=display:flex><span>pts/4
+</span></span><span style=display:flex><span>pts/5
+</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 352 tags:</small>
 <small><code><a href=https://arair.net/tags/telnet>telnet</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

@@ -1,27 +1,50 @@
 <!doctype html><html><title>linux磁盘空间查看命令du</title><meta name=description content="显示文件或目录所占用的磁盘空间。
-"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux磁盘空间查看命令du"><meta property="og:description" content="显示文件或目录所占用的磁盘空间。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/1766f803/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-23T19:36:35+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux磁盘空间查看命令du"><meta itemprop=description content="显示文件或目录所占用的磁盘空间。"><meta itemprop=datePublished content="2021-03-23T19:36:35+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="702"><meta itemprop=keywords content="linux,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux磁盘空间查看命令du</h1><p><small>2021-03-23, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>显示文件或目录所占用的磁盘空间。</p><pre tabindex=0><code>命令格式：
-du [option] 文件/目录
--h 输出文件系统分区使用的情况，例如：10KB，10MB，10GB等
--s 显示文件或整个目录的大小，默认单位是KB
--a或-all 显示目录中个别文件的大小。
--b或-bytes 显示目录或文件大小时，以byte为单位。
--c或--total 除了显示个别目录或文件的大小外，同时也显示所有目录或文件的总和。
--D或--dereference-args 显示指定符号连接的源文件大小。
--h或--human-readable 以K，M，G为单位，提高信息的可读性。
--H或--si 与-h参数相同，但是K，M，G是以1000为换算单位。
--k或--kilobytes 以1024 bytes为单位。
--l或--count-links 重复计算硬件连接的文件。
--L&lt;符号连接&gt;或--dereference&lt;符号连接&gt; 显示选项中所指定符号连接的源文件大小。
--m或--megabytes 以1MB为单位。
--s或--summarize 仅显示总计。
--S或--separate-dirs 显示个别目录的大小时，并不含其子目录的大小。
--x或--one-file-xystem 以一开始处理时的文件系统为准，若遇上其它不同的文件系统目录则略过。
--X&lt;文件&gt;或--exclude-from=&lt;文件&gt; 在&lt;文件&gt;指定目录或文件。
---exclude=&lt;目录或文件&gt; 略过指定的目录或文件。
---max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。
---help 显示帮助。
---version 显示版本信息。
-</code></pre><p>查看隐藏文件的方法</p><pre tabindex=0><code>du -sh .[!.]*
-</code></pre><p>可以配合sort命令进行排序</p></article></div></body><div><small>words: 702 tags:</small>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux磁盘空间查看命令du"><meta property="og:description" content="显示文件或目录所占用的磁盘空间。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/1766f803/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-23T19:36:35+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux磁盘空间查看命令du"><meta itemprop=description content="显示文件或目录所占用的磁盘空间。"><meta itemprop=datePublished content="2021-03-23T19:36:35+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="725"><meta itemprop=keywords content="linux,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux磁盘空间查看命令du</h1><p><small>2021-03-23, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>显示文件或目录所占用的磁盘空间。</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>命令格式：
+</span></span><span style=display:flex><span>du [option] 文件/目录
+</span></span><span style=display:flex><span>-h 输出文件系统分区使用的情况，例如：10KB，10MB，10GB等
+</span></span><span style=display:flex><span>-s 显示文件或整个目录的大小，默认单位是KB
+</span></span><span style=display:flex><span>-a或-all 显示目录中个别文件的大小。
+</span></span><span style=display:flex><span>-b或-bytes 显示目录或文件大小时，以byte为单位。
+</span></span><span style=display:flex><span>-c或--total 除了显示个别目录或文件的大小外，同时也显示所有目录或文件的总和。
+</span></span><span style=display:flex><span>-D或--dereference-args 显示指定符号连接的源文件大小。
+</span></span><span style=display:flex><span>-h或--human-readable 以K，M，G为单位，提高信息的可读性。
+</span></span><span style=display:flex><span>-H或--si 与-h参数相同，但是K，M，G是以1000为换算单位。
+</span></span><span style=display:flex><span>-k或--kilobytes 以1024 bytes为单位。
+</span></span><span style=display:flex><span>-l或--count-links 重复计算硬件连接的文件。
+</span></span><span style=display:flex><span>-L&lt;符号连接&gt;或--dereference&lt;符号连接&gt; 显示选项中所指定符号连接的源文件大小。
+</span></span><span style=display:flex><span>-m或--megabytes 以1MB为单位。
+</span></span><span style=display:flex><span>-s或--summarize 仅显示总计。
+</span></span><span style=display:flex><span>-S或--separate-dirs 显示个别目录的大小时，并不含其子目录的大小。
+</span></span><span style=display:flex><span>-x或--one-file-xystem 以一开始处理时的文件系统为准，若遇上其它不同的文件系统目录则略过。
+</span></span><span style=display:flex><span>-X&lt;文件&gt;或--exclude-from=&lt;文件&gt; 在&lt;文件&gt;指定目录或文件。
+</span></span><span style=display:flex><span>--exclude=&lt;目录或文件&gt; 略过指定的目录或文件。
+</span></span><span style=display:flex><span>--max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。
+</span></span><span style=display:flex><span>--help 显示帮助。
+</span></span><span style=display:flex><span>--version 显示版本信息。
+</span></span></code></pre></td></tr></table></div></div><p>查看隐藏文件的方法</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>du -sh .[!.]*
+</span></span></code></pre></td></tr></table></div></div><p>可以配合sort命令进行排序</p></article></div></body><div><small>words: 725 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

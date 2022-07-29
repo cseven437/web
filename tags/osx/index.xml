@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>osx on ARAIR</title><link>https://arair.net/tags/osx/</link><description>Recent content in osx on ARAIR</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Sun, 07 Feb 2021 20:26:49 +0800</lastBuildDate><atom:link href="https://arair.net/tags/osx/index.xml" rel="self" type="application/rss+xml"/><item><title>macbook使用</title><link>https://arair.net/p/other/95e9e6a8/</link><pubDate>Sun, 07 Feb 2021 20:26:49 +0800</pubDate><guid>https://arair.net/p/other/95e9e6a8/</guid><description>&lt;h2 id="macbook使用">macbook使用&lt;/h2>
 &lt;p>安装git等工具&lt;/p>
-&lt;pre tabindex="0">&lt;code>xcode-select --install
-&lt;/code>&lt;/pre></description></item></channel></rss>
+&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>xcode-select --install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

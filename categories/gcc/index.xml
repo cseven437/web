@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>gcc on ARAIR</title><link>https://arair.net/categories/gcc/</link><description>Recent content in gcc on ARAIR</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Tue, 02 Feb 2021 10:57:17 +0800</lastBuildDate><atom:link href="https://arair.net/categories/gcc/index.xml" rel="self" type="application/rss+xml"/><item><title>gcc说明</title><link>https://arair.net/p/9fe45fbf4bd04bbea1ab9dc245c2b9b3/</link><pubDate>Tue, 02 Feb 2021 10:57:17 +0800</pubDate><guid>https://arair.net/p/9fe45fbf4bd04bbea1ab9dc245c2b9b3/</guid><description>GCC（GNU Compiler Collection，GNU编译器套件）是由GNU开发的编程语言译器。GNU编译器套件包括C、C++、 Objective-C</description></item><item><title>Security</title><link>https://arair.net/p/gcc/f68bca17/</link><pubDate>Sun, 31 Jan 2021 17:46:10 +0800</pubDate><guid>https://arair.net/p/gcc/f68bca17/</guid><description>&lt;p>环境&lt;/p>
-&lt;pre tabindex="0">&lt;code>debian: 10
-gcc: 8.3.0
-&lt;/code>&lt;/pre>&lt;h2 id="技术简介">技术简介&lt;/h2>
+&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+&lt;/span>&lt;span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>debian: 10
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gcc: 8.3.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="技术简介">技术简介&lt;/h2>
 &lt;p>Linux 中有各种各样的安全防护，其中 ASLR 是由内核直接提供的，通过系统配置文件控制。NX，Canary，PIE，RELRO 等需要在编译时根据各项参数开启或关闭。未指定参数时，使用默认设置。&lt;/p></description></item><item><title>gcc使用问题及解决方法</title><link>https://arair.net/p/f609f22c1c814e96bacdad6a541352ab/</link><pubDate>Sat, 23 Jan 2021 20:09:44 +0800</pubDate><guid>https://arair.net/p/f609f22c1c814e96bacdad6a541352ab/</guid><description>C++11 error: unable to find string literal operator &amp;lsquo;operator&amp;quot; 一个简单的宏 1 #define LOG_INFORMATION(x, ...) LOG_ME(&amp;#34;%s:%d, &amp;#34;x, __FUNCTION__,__LINE__, ##__VA_ARGS__) 一直都可以正常编译，但是当启用C++11的时候，报告编译错误 C++ 11 Complier ErrorShell 1 error: unable to find string literal operator &amp;#39;operator&amp;#34;&amp;#34;x&amp;#39; 网上搜了</description></item></channel></rss>

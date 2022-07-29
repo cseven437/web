@@ -1,5 +1,5 @@
 <!doctype html><html><title>sqlite3 C相关函数</title><meta name=description content="sqlite3 c相关函数
-"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="sqlite3 C相关函数"><meta property="og:description" content="sqlite3 c相关函数"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/1a131392/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-06-16T15:52:54+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="sqlite3 C相关函数"><meta itemprop=description content="sqlite3 c相关函数"><meta itemprop=datePublished content="2021-06-16T15:52:54+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="1610"><meta itemprop=keywords content="c,sqlite3,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>sqlite3 C相关函数</h1><p><small>2021-06-16, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>sqlite3 c相关函数</p><p>sqlite3的C/C++接口API主要有3个重要函数，分别为</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="sqlite3 C相关函数"><meta property="og:description" content="sqlite3 c相关函数"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/1a131392/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-06-16T15:52:54+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="sqlite3 C相关函数"><meta itemprop=description content="sqlite3 c相关函数"><meta itemprop=datePublished content="2021-06-16T15:52:54+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="1695"><meta itemprop=keywords content="c,sqlite3,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>sqlite3 C相关函数</h1><p><small>2021-06-16, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>sqlite3 c相关函数</p><p>sqlite3的C/C++接口API主要有3个重要函数，分别为</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -19,94 +19,179 @@
 </span></span><span style=display:flex><span>   );
 </span></span><span style=display:flex><span> 
 </span></span><span style=display:flex><span>sqlite3_close(sqlite3<span style=color:#ff79c6>*</span>)
-</span></span></code></pre></td></tr></table></div></div><p>sqlite3_open和sqlite3_close是很好理解的，分别是打开和关闭对应的数据库。而sqlite3_exec函数是sqlite3的API函数，可以实现各种功能，所以理解sqlite3_exec对于实际的 编程十分有必要，我们来详细分析sqlite3_exec函数，</p><p>1、sqlite3_exec函数 形参</p><pre tabindex=0><code>sqlite3*                      : open 打开的数据库
-const char* sql,              : 执行的sql功能语句
-*callback,                    : sql语句对应的回调函数
-void* data,                   : 传递给回调函数的 指针参数
-char **errmsq                 : 错误信息
-</code></pre><p>其中 const char* sql表示 相应的 sql语句，如果我们直接在linux下，使用shell是可以实现所有的sqlite功能的，但是如果进行C或C++ 开发程序时，很明显是没有shell可用的，所以这个 *sql就是对应sqlite功能命令的 “字符串”，后面我们举例来分析。回调函数指针callback则是 <em>sql功能命令对应的 回调函数，所谓 回调函数的意思是，会先执行</em>sql对应的功能命令，然后将结果传递给回调函数，回调函数根据结果再进一步执行。这代表着，这个 “回调函数”才是最有意义的，我们要讲我们需要的功能，通过回调函数来实现，不管是获取数据库表中有效信息，还是其他动作。</p><p>2、sqlite3_exec的回调函数 callback</p><p>我们还是来先看下回调函数的参数：</p><pre tabindex=0><code>typedef int(*sqlite_callback)(void* para, int columenCount, char** columnValue, char** columnName);
-</code></pre><p>参数：</p><ul><li>para : 由sqlite3_exec传入的参数指针，或者说是指针参数</li><li>columnCount: 查询到的这一条记录由多少个字段（多少列）</li><li>columnValue : 该参数是双指针，查询出来的数据都保存在这里，它是一个1维数组，每一个元素都是一
+</span></span></code></pre></td></tr></table></div></div><p>sqlite3_open和sqlite3_close是很好理解的，分别是打开和关闭对应的数据库。而sqlite3_exec函数是sqlite3的API函数，可以实现各种功能，所以理解sqlite3_exec对于实际的 编程十分有必要，我们来详细分析sqlite3_exec函数，</p><p>1、sqlite3_exec函数 形参</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>sqlite3*                      : open 打开的数据库
+</span></span><span style=display:flex><span>const char* sql,              : 执行的sql功能语句
+</span></span><span style=display:flex><span>*callback,                    : sql语句对应的回调函数
+</span></span><span style=display:flex><span>void* data,                   : 传递给回调函数的 指针参数
+</span></span><span style=display:flex><span>char **errmsq                 : 错误信息
+</span></span></code></pre></td></tr></table></div></div><p>其中 const char* sql表示 相应的 sql语句，如果我们直接在linux下，使用shell是可以实现所有的sqlite功能的，但是如果进行C或C++ 开发程序时，很明显是没有shell可用的，所以这个 *sql就是对应sqlite功能命令的 “字符串”，后面我们举例来分析。回调函数指针callback则是 <em>sql功能命令对应的 回调函数，所谓 回调函数的意思是，会先执行</em>sql对应的功能命令，然后将结果传递给回调函数，回调函数根据结果再进一步执行。这代表着，这个 “回调函数”才是最有意义的，我们要讲我们需要的功能，通过回调函数来实现，不管是获取数据库表中有效信息，还是其他动作。</p><p>2、sqlite3_exec的回调函数 callback</p><p>我们还是来先看下回调函数的参数：</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>typedef int(*sqlite_callback)(void* para, int columenCount, char** columnValue, char** columnName);
+</span></span></code></pre></td></tr></table></div></div><p>参数：</p><ul><li>para : 由sqlite3_exec传入的参数指针，或者说是指针参数</li><li>columnCount: 查询到的这一条记录由多少个字段（多少列）</li><li>columnValue : 该参数是双指针，查询出来的数据都保存在这里，它是一个1维数组，每一个元素都是一
 个char*,是一个字段内容，所以这个参数就可以不是单字节，而是可以为字符串等不定
-长度的数值，用字符串表示，以&rsquo;\0&rsquo;结尾。</li><li>columnName : 该参数是双指针，语columnValue是对应的，表示这个字段的字段名称，</li></ul><p>返回 : 执行成果则返回SQLITE_OK，否则返回其他值</p><p>这里面有几个地方容易理解错，回调函数的参数一定是 sql功能命令执行结果的进一步处理，其中para好理解，就是sqlite3_exec传递的参数，</p><p>columnCount：表示sql功能结果的“字段”，也就是“列”的个数，没错，就是“列”的个数。</p><p>另外需要特别注意的是：回调函数多数时候不是执行1次，而是会循环执行n次，当我们使用select进行sql功能时，往往输出的结果会是 多行，那么 有n行，就会执行n次的 回调函数。举例如下：</p><pre tabindex=0><code>#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;sqlite3.h&gt;
- 
-static int callback(void *data, int argc, char **argv, char **azColName){
-   int i;
-   fprintf(stderr, &#34;%s: &#34;, (const char*)data);
-   for(i=0; i&lt;argc; i++){
-      printf(&#34;%s = %s\n&#34;, azColName[i], argv[i] ? argv[i] : &#34;NULL&#34;);
-   }
-   printf(&#34;\n&#34;);
-   return 0;
-}
- 
-int main(int argc, char* argv[])
-{
-   sqlite3 *db;
-   char *zErrMsg = 0;
-   int rc;
-   char *sql;
-   const char* data = &#34;Callback function called&#34;;
- 
-   /* Open database */
-   rc = sqlite3_open(&#34;test.db&#34;, &amp;db);
-   if( rc ){
-      fprintf(stderr, &#34;Can&#39;t open database: %s\n&#34;, sqlite3_errmsg(db));
-      exit(0);
-   }else{
-      fprintf(stderr, &#34;Opened database successfully\n&#34;);
-   }
- 
-   /* Create SQL statement */
-   sql = &#34;SELECT * from COMPANY&#34;;
- 
-   /* Execute SQL statement */
-   rc = sqlite3_exec(db, sql, callback, (void*)data, &amp;zErrMsg);
-   if( rc != SQLITE_OK ){
-      fprintf(stderr, &#34;SQL error: %s\n&#34;, zErrMsg);
-      sqlite3_free(zErrMsg);
-   }else{
-      fprintf(stdout, &#34;Operation done successfully\n&#34;);
-   }
-   sqlite3_close(db);
-   return 0;
-}
-</code></pre><p>这个数据库中表的内容如下（这里照搬了https://www.runoob.com/sqlite/sqlite-c-cpp.html 中的例子）：</p><pre tabindex=0><code>&#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) &#34;  \
-         &#34;VALUES (1, &#39;Paul&#39;, 32, &#39;California&#39;, 20000.00 ); &#34; \
-         &#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) &#34;  \
-         &#34;VALUES (2, &#39;Allen&#39;, 25, &#39;Texas&#39;, 15000.00 ); &#34;     \
-         &#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)&#34; \
-         &#34;VALUES (3, &#39;Teddy&#39;, 23, &#39;Norway&#39;, 20000.00 );&#34; \
-         &#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)&#34; \
-         &#34;VALUES (4, &#39;Mark&#39;, 25, &#39;Rich-Mond &#39;, 65000.00 );&#34;;
-</code></pre><p>所以执行的结果：</p><pre tabindex=0><code>Opened database successfully
-Callback function called: ID = 1
-NAME = Paul
-AGE = 32
-ADDRESS = California
-SALARY = 20000.0
- 
-Callback function called: ID = 2
-NAME = Allen
-AGE = 25
-ADDRESS = Texas
-SALARY = 15000.0
- 
-Callback function called: ID = 3
-NAME = Teddy
-AGE = 23
-ADDRESS = Norway
-SALARY = 20000.0
- 
-Callback function called: ID = 4
-NAME = Mark
-AGE = 25
-ADDRESS = Rich-Mond
-SALARY = 65000.0
- 
-Operation done successfully
-</code></pre><p>以看出来，由于sql命令行为 select* from COMPANY，该命令会将表中所有信息都输出，总共5个字段（列），包含4条信息（行），所以这个回调函数会被执行4次，理解这个逻辑，非常重要。</p><p>而且回调函数的后两个参数是 双指针 ，也就是 指针的指针，包含了2层的指向，里层的 指向是 对应具体的数据指针，外层的指向则是 数据指针序号，也可以理解成 “列”索引。我们通过这两个指针能够进一步 编写 自定义功能代码。</p></article></div></body><div><small>words: 1610 tags:</small>
+长度的数值，用字符串表示，以&rsquo;\0&rsquo;结尾。</li><li>columnName : 该参数是双指针，语columnValue是对应的，表示这个字段的字段名称，</li></ul><p>返回 : 执行成果则返回SQLITE_OK，否则返回其他值</p><p>这里面有几个地方容易理解错，回调函数的参数一定是 sql功能命令执行结果的进一步处理，其中para好理解，就是sqlite3_exec传递的参数，</p><p>columnCount：表示sql功能结果的“字段”，也就是“列”的个数，没错，就是“列”的个数。</p><p>另外需要特别注意的是：回调函数多数时候不是执行1次，而是会循环执行n次，当我们使用select进行sql功能时，往往输出的结果会是 多行，那么 有n行，就会执行n次的 回调函数。举例如下：</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>#include &lt;stdio.h&gt;
+</span></span><span style=display:flex><span>#include &lt;stdlib.h&gt;
+</span></span><span style=display:flex><span>#include &lt;sqlite3.h&gt;
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>static int callback(void *data, int argc, char **argv, char **azColName){
+</span></span><span style=display:flex><span>   int i;
+</span></span><span style=display:flex><span>   fprintf(stderr, &#34;%s: &#34;, (const char*)data);
+</span></span><span style=display:flex><span>   for(i=0; i&lt;argc; i++){
+</span></span><span style=display:flex><span>      printf(&#34;%s = %s\n&#34;, azColName[i], argv[i] ? argv[i] : &#34;NULL&#34;);
+</span></span><span style=display:flex><span>   }
+</span></span><span style=display:flex><span>   printf(&#34;\n&#34;);
+</span></span><span style=display:flex><span>   return 0;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>int main(int argc, char* argv[])
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>   sqlite3 *db;
+</span></span><span style=display:flex><span>   char *zErrMsg = 0;
+</span></span><span style=display:flex><span>   int rc;
+</span></span><span style=display:flex><span>   char *sql;
+</span></span><span style=display:flex><span>   const char* data = &#34;Callback function called&#34;;
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   /* Open database */
+</span></span><span style=display:flex><span>   rc = sqlite3_open(&#34;test.db&#34;, &amp;db);
+</span></span><span style=display:flex><span>   if( rc ){
+</span></span><span style=display:flex><span>      fprintf(stderr, &#34;Can&#39;t open database: %s\n&#34;, sqlite3_errmsg(db));
+</span></span><span style=display:flex><span>      exit(0);
+</span></span><span style=display:flex><span>   }else{
+</span></span><span style=display:flex><span>      fprintf(stderr, &#34;Opened database successfully\n&#34;);
+</span></span><span style=display:flex><span>   }
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   /* Create SQL statement */
+</span></span><span style=display:flex><span>   sql = &#34;SELECT * from COMPANY&#34;;
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   /* Execute SQL statement */
+</span></span><span style=display:flex><span>   rc = sqlite3_exec(db, sql, callback, (void*)data, &amp;zErrMsg);
+</span></span><span style=display:flex><span>   if( rc != SQLITE_OK ){
+</span></span><span style=display:flex><span>      fprintf(stderr, &#34;SQL error: %s\n&#34;, zErrMsg);
+</span></span><span style=display:flex><span>      sqlite3_free(zErrMsg);
+</span></span><span style=display:flex><span>   }else{
+</span></span><span style=display:flex><span>      fprintf(stdout, &#34;Operation done successfully\n&#34;);
+</span></span><span style=display:flex><span>   }
+</span></span><span style=display:flex><span>   sqlite3_close(db);
+</span></span><span style=display:flex><span>   return 0;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>这个数据库中表的内容如下（这里照搬了https://www.runoob.com/sqlite/sqlite-c-cpp.html 中的例子）：</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>&#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) &#34;  \
+</span></span><span style=display:flex><span>         &#34;VALUES (1, &#39;Paul&#39;, 32, &#39;California&#39;, 20000.00 ); &#34; \
+</span></span><span style=display:flex><span>         &#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) &#34;  \
+</span></span><span style=display:flex><span>         &#34;VALUES (2, &#39;Allen&#39;, 25, &#39;Texas&#39;, 15000.00 ); &#34;     \
+</span></span><span style=display:flex><span>         &#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)&#34; \
+</span></span><span style=display:flex><span>         &#34;VALUES (3, &#39;Teddy&#39;, 23, &#39;Norway&#39;, 20000.00 );&#34; \
+</span></span><span style=display:flex><span>         &#34;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)&#34; \
+</span></span><span style=display:flex><span>         &#34;VALUES (4, &#39;Mark&#39;, 25, &#39;Rich-Mond &#39;, 65000.00 );&#34;;
+</span></span></code></pre></td></tr></table></div></div><p>所以执行的结果：</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>Opened database successfully
+</span></span><span style=display:flex><span>Callback function called: ID = 1
+</span></span><span style=display:flex><span>NAME = Paul
+</span></span><span style=display:flex><span>AGE = 32
+</span></span><span style=display:flex><span>ADDRESS = California
+</span></span><span style=display:flex><span>SALARY = 20000.0
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>Callback function called: ID = 2
+</span></span><span style=display:flex><span>NAME = Allen
+</span></span><span style=display:flex><span>AGE = 25
+</span></span><span style=display:flex><span>ADDRESS = Texas
+</span></span><span style=display:flex><span>SALARY = 15000.0
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>Callback function called: ID = 3
+</span></span><span style=display:flex><span>NAME = Teddy
+</span></span><span style=display:flex><span>AGE = 23
+</span></span><span style=display:flex><span>ADDRESS = Norway
+</span></span><span style=display:flex><span>SALARY = 20000.0
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>Callback function called: ID = 4
+</span></span><span style=display:flex><span>NAME = Mark
+</span></span><span style=display:flex><span>AGE = 25
+</span></span><span style=display:flex><span>ADDRESS = Rich-Mond
+</span></span><span style=display:flex><span>SALARY = 65000.0
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>Operation done successfully
+</span></span></code></pre></td></tr></table></div></div><p>以看出来，由于sql命令行为 select* from COMPANY，该命令会将表中所有信息都输出，总共5个字段（列），包含4条信息（行），所以这个回调函数会被执行4次，理解这个逻辑，非常重要。</p><p>而且回调函数的后两个参数是 双指针 ，也就是 指针的指针，包含了2层的指向，里层的 指向是 对应具体的数据指针，外层的指向则是 数据指针序号，也可以理解成 “列”索引。我们通过这两个指针能够进一步 编写 自定义功能代码。</p></article></div></body><div><small>words: 1695 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 <small><code><a href=https://arair.net/tags/sqlite3>sqlite3</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

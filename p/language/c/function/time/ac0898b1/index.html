@@ -1,24 +1,37 @@
 <!doctype html><html><title>c语言 strptime函数</title><meta name=description content="读取将格式化时间
-"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="c语言 strptime函数"><meta property="og:description" content="读取将格式化时间"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/function/time/ac0898b1/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-02-26T13:36:26+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="c语言 strptime函数"><meta itemprop=description content="读取将格式化时间"><meta itemprop=datePublished content="2021-02-26T13:36:26+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="222"><meta itemprop=keywords content="c,c库函数,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>c语言 strptime函数</h1><p><small>2021-02-26, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>读取将格式化时间</p><p>原型</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="c语言 strptime函数"><meta property="og:description" content="读取将格式化时间"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/language/c/function/time/ac0898b1/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-02-26T13:36:26+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="c语言 strptime函数"><meta itemprop=description content="读取将格式化时间"><meta itemprop=datePublished content="2021-02-26T13:36:26+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="235"><meta itemprop=keywords content="c,c库函数,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>c语言 strptime函数</h1><p><small>2021-02-26, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>读取将格式化时间</p><p>原型</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>#include</span> <span style=color:#ff79c6>&lt;time.h&gt;</span><span style=color:#ff79c6>
 </span></span></span><span style=display:flex><span><span style=color:#ff79c6></span>
 </span></span><span style=display:flex><span><span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span><span style=color:#50fa7b>strptime</span>(<span style=color:#ff79c6>const</span> <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span>s, <span style=color:#ff79c6>const</span> <span style=color:#8be9fd>char</span> <span style=color:#ff79c6>*</span>format, <span style=color:#ff79c6>struct</span> tm <span style=color:#ff79c6>*</span>tm);
-</span></span></code></pre></td></tr></table></div></div><p>参数</p><ul><li>s: 需要获取的时间字符串</li><li>tm: 存放时间的变量</li><li>format: 描述文件格式<ul><li>%d: The day of month (1-31).</li><li>%H: The hour (0-23).</li><li>%m: The month number (1-12).</li><li>%M: The minute (0-59).</li><li>%S: The second (0-60; 60 may occur for leap seconds; earlier also 61 was allowed).</li><li>%Y: The year, including century (for example, 1991).</li></ul></li></ul><p>相关结构体</p><pre tabindex=0><code>#include &lt;time.h&gt;
-
-struct tm {
-    int tm_sec;        /* seconds */
-    int tm_min;        /* minutes */
-    int tm_hour;       /* hours */
-    int tm_mday;       /* day of the month */
-    int tm_mon;        /* month */
-    int tm_year;       /* year */
-    int tm_wday;       /* day of the week */
-    int tm_yday;       /* day in the year */
-    int tm_isdst;      /* daylight saving time */
-};
-</code></pre><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span></span></code></pre></td></tr></table></div></div><p>参数</p><ul><li>s: 需要获取的时间字符串</li><li>tm: 存放时间的变量</li><li>format: 描述文件格式<ul><li>%d: The day of month (1-31).</li><li>%H: The hour (0-23).</li><li>%m: The month number (1-12).</li><li>%M: The minute (0-59).</li><li>%S: The second (0-60; 60 may occur for leap seconds; earlier also 61 was allowed).</li><li>%Y: The year, including century (for example, 1991).</li></ul></li></ul><p>相关结构体</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>#include &lt;time.h&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>struct tm {
+</span></span><span style=display:flex><span>    int tm_sec;        /* seconds */
+</span></span><span style=display:flex><span>    int tm_min;        /* minutes */
+</span></span><span style=display:flex><span>    int tm_hour;       /* hours */
+</span></span><span style=display:flex><span>    int tm_mday;       /* day of the month */
+</span></span><span style=display:flex><span>    int tm_mon;        /* month */
+</span></span><span style=display:flex><span>    int tm_year;       /* year */
+</span></span><span style=display:flex><span>    int tm_wday;       /* day of the week */
+</span></span><span style=display:flex><span>    int tm_yday;       /* day in the year */
+</span></span><span style=display:flex><span>    int tm_isdst;      /* daylight saving time */
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -54,7 +67,7 @@ struct tm {
 </span></span><span style=display:flex><span>    printf(<span style=color:#f1fa8c>&#34;%lu</span><span style=color:#f1fa8c>\n</span><span style=color:#f1fa8c>&#34;</span>, tt);
 </span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#bd93f9>0</span>;
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 222 tags:</small>
+</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 235 tags:</small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small>
 <small><code><a href=https://arair.net/tags/c%E5%BA%93%E5%87%BD%E6%95%B0>c库函数</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

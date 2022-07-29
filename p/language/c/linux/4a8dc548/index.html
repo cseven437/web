@@ -22,7 +22,7 @@
 忽略信号：对信号不做任何处理，但是有两个信号不能忽略：即SIGKILL及SIGSTOP。
 捕捉信号：定义信号处理函数，当信号发生时，执行相应的处理函数。
 执行缺省操作：Linux对每种信号都规定了默认操作
-"><meta itemprop=datePublished content="2021-03-08T10:41:17+08:00"><meta itemprop=dateModified content="2021-03-08T10:41:17+08:00"><meta itemprop=wordCount content="2395"><meta itemprop=keywords content="linux,c,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux进程间通信--信号</h1><p><small>2021-03-08</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#signal>signal</a></li><li><a href=#常用信号列表>常用信号列表</a></li><li><a href=#sigemptyset>sigemptyset</a></li><li><a href=#sigaddset>sigaddset</a></li><li><a href=#sigaction>sigaction</a></li><li><a href=#sigqueue>sigqueue</a></li></ul></nav></aside><p>概念：</p><ol><li>信号是在软件层次上对中断机制的一种模拟，是一种异步通信方式</li><li>信号可以直接进行用户空间进程和内核进程之间的交互，内核进程也可以利用它来通知用户空间进程发生了哪些系统事件。</li><li>如果该进程当前并未处于执行态，则该信号就由内核保存起来，直到该进程恢复执行再传递给它；如果一个信号被进程设置为阻塞，则该信号的传递被延迟，直到其阻塞被 取消时才被传递给进程。</li></ol><p>用户进程对信号的响应方式：</p><ol><li>忽略信号：对信号不做任何处理，但是有两个信号不能忽略：即SIGKILL及SIGSTOP。</li><li>捕捉信号：定义信号处理函数，当信号发生时，执行相应的处理函数。</li><li>执行缺省操作：Linux对每种信号都规定了默认操作</li></ol><h2 id=signal>signal</h2><p>设置信号处理方式</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+"><meta itemprop=datePublished content="2021-03-08T10:41:17+08:00"><meta itemprop=dateModified content="2021-03-08T10:41:17+08:00"><meta itemprop=wordCount content="2436"><meta itemprop=keywords content="linux,c,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux进程间通信--信号</h1><p><small>2021-03-08</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#signal>signal</a></li><li><a href=#常用信号列表>常用信号列表</a></li><li><a href=#sigemptyset>sigemptyset</a></li><li><a href=#sigaddset>sigaddset</a></li><li><a href=#sigaction>sigaction</a></li><li><a href=#sigqueue>sigqueue</a></li></ul></nav></aside><p>概念：</p><ol><li>信号是在软件层次上对中断机制的一种模拟，是一种异步通信方式</li><li>信号可以直接进行用户空间进程和内核进程之间的交互，内核进程也可以利用它来通知用户空间进程发生了哪些系统事件。</li><li>如果该进程当前并未处于执行态，则该信号就由内核保存起来，直到该进程恢复执行再传递给它；如果一个信号被进程设置为阻塞，则该信号的传递被延迟，直到其阻塞被 取消时才被传递给进程。</li></ol><p>用户进程对信号的响应方式：</p><ol><li>忽略信号：对信号不做任何处理，但是有两个信号不能忽略：即SIGKILL及SIGSTOP。</li><li>捕捉信号：定义信号处理函数，当信号发生时，执行相应的处理函数。</li><li>执行缺省操作：Linux对每种信号都规定了默认操作</li></ol><h2 id=signal>signal</h2><p>设置信号处理方式</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#ff79c6>#include</span> <span style=color:#ff79c6>&lt;signal.h&gt;</span><span style=color:#ff79c6>
@@ -84,48 +84,89 @@
 </span></span><span style=display:flex><span>     
 </span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#bd93f9>0</span>;
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></td></tr></table></div></div><h2 id=常用信号列表>常用信号列表</h2><pre tabindex=0><code>SIGABRT     由调用abort函数产生，进程非正常退出
-SIGALRM     用alarm函数设置的timer超时或setitimer函数设置的interval timer超时
-SIGBUS      某种特定的硬件异常，通常由内存访问引起
-SIGCANCEL   由Solaris Thread Library内部使用，通常不会使用
-SIGCHLD     进程Terminate或Stop时候，SIGCHLD会发送给它的父进程。缺省情况下该Signal会被忽略
-SIGCONT     当被stop的进程恢复运行的时候，自动发送
-SIGEMT      和实现相关的硬件异常
-SIGFPE      数学相关的异常，如被0除，浮点溢出，等等
-SIGFREEZE   Solaris专用，Hiberate或者Suspended时候发送
-SIGHUP      发送给具有Terminal的Controlling Process，当terminal被disconnect时候发送
-SIGILL      非法指令异常
-SIGINFO     BSD signal。由Status Key产生，通常是CTRL+T。发送给所有Foreground Group的进程
-SIGINT      由Interrupt Key产生，通常是CTRL+C或者DELETE。发送给所有ForeGround Group进程
-SIGIO       异步IO事件
-SIGIOT      实现相关的硬件异常，一般对应SIGABRT
-SIGKILL     无法处理和忽略。中止某个进程
-SIGLWP      由Solaris Thread Libray内部使用
-SIGPIPE     在reader中止之后写Pipe的时候发送
-SIGPOLL     当某个事件发送给Pollable Device的时候发送
-SIGPROF     Setitimer指定的Profiling Interval Timer所产生
-SIGPWR      和系统相关。和UPS相关。
-SIGQUIT     输入Quit Key的时候（CTRL+\）发送给所有Foreground Group的进程
-SIGSEGV     非法内存访问
-SIGSTKFLT   Linux专用，数学协处理器的栈异常
-SIGSTOP     中止进程。无法处理和忽略。
-SIGSYS      非法系统调用
-SIGTERM     请求中止进程，kill命令缺省发送
-SIGTHAW     Solaris专用，从Suspend恢复时候发送
-SIGTRAP     实现相关的硬件异常。一般是调试异常
-SIGTSTP     Suspend Key，一般是Ctrl+Z。发送给所有Foreground Group的进程
-SIGTTIN     当Background Group的进程尝试读取Terminal的时候发送
-SIGTTOU     当Background Group的进程尝试写Terminal的时候发送
-SIGURG      当out-of-band data接收的时候可能发送
-SIGUSR1     用户自定义signal 1
-SIGUSR2     用户自定义signal 2
-SIGVTALRM   setitimer函数设置的Virtual Interval Timer超时的时候
-SIGWAITING  Solaris Thread Library内部实现专用
-SIGWINCH    当Terminal的窗口大小改变的时候，发送给Foreground Group的所有进程
-SIGXCPU     当CPU时间限制超时的时候
-SIGXFSZ     进程超过文件大小限制
-SIGXRES     Solaris专用，进程超过资源限制的时候发送
-</code></pre><h2 id=sigemptyset>sigemptyset</h2><p>将信号集初始化为空。</p><p>glibc中的实现</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span></span></code></pre></td></tr></table></div></div><h2 id=常用信号列表>常用信号列表</h2><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>SIGABRT     由调用abort函数产生，进程非正常退出
+</span></span><span style=display:flex><span>SIGALRM     用alarm函数设置的timer超时或setitimer函数设置的interval timer超时
+</span></span><span style=display:flex><span>SIGBUS      某种特定的硬件异常，通常由内存访问引起
+</span></span><span style=display:flex><span>SIGCANCEL   由Solaris Thread Library内部使用，通常不会使用
+</span></span><span style=display:flex><span>SIGCHLD     进程Terminate或Stop时候，SIGCHLD会发送给它的父进程。缺省情况下该Signal会被忽略
+</span></span><span style=display:flex><span>SIGCONT     当被stop的进程恢复运行的时候，自动发送
+</span></span><span style=display:flex><span>SIGEMT      和实现相关的硬件异常
+</span></span><span style=display:flex><span>SIGFPE      数学相关的异常，如被0除，浮点溢出，等等
+</span></span><span style=display:flex><span>SIGFREEZE   Solaris专用，Hiberate或者Suspended时候发送
+</span></span><span style=display:flex><span>SIGHUP      发送给具有Terminal的Controlling Process，当terminal被disconnect时候发送
+</span></span><span style=display:flex><span>SIGILL      非法指令异常
+</span></span><span style=display:flex><span>SIGINFO     BSD signal。由Status Key产生，通常是CTRL+T。发送给所有Foreground Group的进程
+</span></span><span style=display:flex><span>SIGINT      由Interrupt Key产生，通常是CTRL+C或者DELETE。发送给所有ForeGround Group进程
+</span></span><span style=display:flex><span>SIGIO       异步IO事件
+</span></span><span style=display:flex><span>SIGIOT      实现相关的硬件异常，一般对应SIGABRT
+</span></span><span style=display:flex><span>SIGKILL     无法处理和忽略。中止某个进程
+</span></span><span style=display:flex><span>SIGLWP      由Solaris Thread Libray内部使用
+</span></span><span style=display:flex><span>SIGPIPE     在reader中止之后写Pipe的时候发送
+</span></span><span style=display:flex><span>SIGPOLL     当某个事件发送给Pollable Device的时候发送
+</span></span><span style=display:flex><span>SIGPROF     Setitimer指定的Profiling Interval Timer所产生
+</span></span><span style=display:flex><span>SIGPWR      和系统相关。和UPS相关。
+</span></span><span style=display:flex><span>SIGQUIT     输入Quit Key的时候（CTRL+\）发送给所有Foreground Group的进程
+</span></span><span style=display:flex><span>SIGSEGV     非法内存访问
+</span></span><span style=display:flex><span>SIGSTKFLT   Linux专用，数学协处理器的栈异常
+</span></span><span style=display:flex><span>SIGSTOP     中止进程。无法处理和忽略。
+</span></span><span style=display:flex><span>SIGSYS      非法系统调用
+</span></span><span style=display:flex><span>SIGTERM     请求中止进程，kill命令缺省发送
+</span></span><span style=display:flex><span>SIGTHAW     Solaris专用，从Suspend恢复时候发送
+</span></span><span style=display:flex><span>SIGTRAP     实现相关的硬件异常。一般是调试异常
+</span></span><span style=display:flex><span>SIGTSTP     Suspend Key，一般是Ctrl+Z。发送给所有Foreground Group的进程
+</span></span><span style=display:flex><span>SIGTTIN     当Background Group的进程尝试读取Terminal的时候发送
+</span></span><span style=display:flex><span>SIGTTOU     当Background Group的进程尝试写Terminal的时候发送
+</span></span><span style=display:flex><span>SIGURG      当out-of-band data接收的时候可能发送
+</span></span><span style=display:flex><span>SIGUSR1     用户自定义signal 1
+</span></span><span style=display:flex><span>SIGUSR2     用户自定义signal 2
+</span></span><span style=display:flex><span>SIGVTALRM   setitimer函数设置的Virtual Interval Timer超时的时候
+</span></span><span style=display:flex><span>SIGWAITING  Solaris Thread Library内部实现专用
+</span></span><span style=display:flex><span>SIGWINCH    当Terminal的窗口大小改变的时候，发送给Foreground Group的所有进程
+</span></span><span style=display:flex><span>SIGXCPU     当CPU时间限制超时的时候
+</span></span><span style=display:flex><span>SIGXFSZ     进程超过文件大小限制
+</span></span><span style=display:flex><span>SIGXRES     Solaris专用，进程超过资源限制的时候发送
+</span></span></code></pre></td></tr></table></div></div><h2 id=sigemptyset>sigemptyset</h2><p>将信号集初始化为空。</p><p>glibc中的实现</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -405,7 +446,7 @@ SIGXRES     Solaris专用，进程超过资源限制的时候发送
 </span></span><span style=display:flex><span>    <span style=color:#ff79c6>return</span> <span style=color:#bd93f9>0</span>;                                                                           
 </span></span><span style=display:flex><span>}                                                                                       
 </span></span><span style=display:flex><span>                                                                                        
-</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 2395 tags:</small>
+</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 2436 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small>
 <small><code><a href=https://arair.net/tags/c>c</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

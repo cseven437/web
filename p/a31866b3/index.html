@@ -2,99 +2,192 @@
 环境：hugo+github+vercel
 "><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="Create Hugo Site"><meta property="og:description" content="记录站点建立方法
 环境：hugo+github+vercel"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/a31866b3/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-01-20T10:48:02+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="Create Hugo Site"><meta itemprop=description content="记录站点建立方法
-环境：hugo+github+vercel"><meta itemprop=datePublished content="2021-01-20T10:48:02+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="635"><meta itemprop=keywords content="hugo,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>Create Hugo Site</h1><p><small>2021-01-20, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#hugo>hugo</a><ul><li><a href=#帮助>帮助</a></li><li><a href=#查看文章列表>查看文章列表</a></li></ul></li></ul></nav></aside><p>记录站点建立方法</p><p>环境：<a href=https://gohugo.io>hugo</a>+<a href=https://github.com>github</a>+<a href=https://vercel.com>vercel</a></p><h2 id=hugo>hugo</h2><pre tabindex=0><code>hugo new site blog
-cd blog
-git clone https://github.com/funkydan2/hugo-kiera.git themes/kiera
-cp themes/kiera/exampleSite/config.toml .
-</code></pre><p>新建文章</p><pre tabindex=0><code>hugo new posts/test.md
-</code></pre><p>开启本地服务可以访问<code>localhost:1313</code>预览效果</p><pre tabindex=0><code>hugo server
-</code></pre><p>首页只显示一部分内容</p><p>在文章中插入<code>&lt;!--more--></code></p><h3 id=帮助>帮助</h3><pre tabindex=0><code>$ hugo help
-hugo is the main command, used to build your Hugo site.
-
-Hugo is a Fast and Flexible Static Site Generator
-built with love by spf13 and friends in Go.
-
-Complete documentation is available at http://gohugo.io/.
-
-Usage:
-  hugo [flags]
-  hugo [command]
-
-Available Commands:
-  config      Print the site configuration
-  convert     Convert your content to different formats
-  deploy      Deploy your site to a Cloud provider.
-  env         Print Hugo version and environment info
-  gen         A collection of several useful generators.
-  help        Help about any command
-  import      Import your site from others.
-  list        Listing out various types of content
-  mod         Various Hugo Modules helpers.
-  new         Create new content for your site
-  server      A high performance webserver
-  version     Print the version number of Hugo
-
-Flags:
-  -b, --baseURL string             hostname (and path) to the root, e.g. http://spf13.com/
-  -D, --buildDrafts                include content marked as draft
-  -E, --buildExpired               include expired content
-  -F, --buildFuture                include content with publishdate in the future
-      --cacheDir string            filesystem path to cache directory. Defaults: $TMPDIR/hugo_cache/
-      --cleanDestinationDir        remove files from destination not found in static directories
-      --config string              config file (default is path/config.yaml|json|toml)
-      --configDir string           config dir (default &#34;config&#34;)
-  -c, --contentDir string          filesystem path to content directory
-      --debug                      debug output
-  -d, --destination string         filesystem path to write files to
-      --disableKinds strings       disable different kind of pages (home, RSS etc.)
-      --enableGitInfo              add Git revision, date and author info to the pages
-  -e, --environment string         build environment
-      --forceSyncStatic            copy all files when static is changed.
-      --gc                         enable to run some cleanup tasks (remove unused cache files) after the build
-  -h, --help                       help for hugo
-      --i18n-warnings              print missing translations
-      --ignoreCache                ignores the cache directory
-      --ignoreVendor               ignores any _vendor directory
-      --ignoreVendorPaths string   ignores any _vendor for module paths matching the given Glob pattern
-  -l, --layoutDir string           filesystem path to layout directory
-      --log                        enable Logging
-      --logFile string             log File path (if set, logging enabled automatically)
-      --minify                     minify any supported output format (HTML, XML etc.)
-      --noChmod                    don&#39;t sync permission mode of files
-      --noTimes                    don&#39;t sync modification time of files
-      --path-warnings              print warnings on duplicate target paths etc.
-      --print-mem                  print memory usage to screen at intervals
-      --quiet                      build in quiet mode
-      --renderToMemory             render to memory (only useful for benchmark testing)
-  -s, --source string              filesystem path to read files relative from
-      --templateMetrics            display metrics about template executions
-      --templateMetricsHints       calculate some improvement hints when combined with --templateMetrics
-  -t, --theme strings              themes to use (located in /themes/THEMENAME/)
-      --themesDir string           filesystem path to themes directory
-      --trace file                 write trace to file (not useful in general)
-  -v, --verbose                    verbose output
-      --verboseLog                 verbose logging
-  -w, --watch                      watch filesystem for changes and recreate as needed
-
-Additional help topics:
-  hugo check   Contains some verification checks
-
-Use &#34;hugo [command] --help&#34; for more information about a command.
-</code></pre><h3 id=查看文章列表>查看文章列表</h3><pre tabindex=0><code>hugo list
-Listing out various types of content.
-
-List requires a subcommand, e.g. `hugo list drafts`.
-
-Usage:
-  hugo list [command]
-
-Available Commands:
-  all         List all posts
-  drafts      List all drafts
-  expired     List all posts already expired
-  future      List all posts dated in the future
-</code></pre><p>查看所有posts</p><pre tabindex=0><code>hugo list all
-</code></pre><p>查看drafts</p><pre tabindex=0><code>hugo list drafts
-</code></pre></article></div></body><div><small>words: 635 tags:</small>
+环境：hugo+github+vercel"><meta itemprop=datePublished content="2021-01-20T10:48:02+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="728"><meta itemprop=keywords content="hugo,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>Create Hugo Site</h1><p><small>2021-01-20, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents><ul><li><a href=#hugo>hugo</a><ul><li><a href=#帮助>帮助</a></li><li><a href=#查看文章列表>查看文章列表</a></li></ul></li></ul></nav></aside><p>记录站点建立方法</p><p>环境：<a href=https://gohugo.io>hugo</a>+<a href=https://github.com>github</a>+<a href=https://vercel.com>vercel</a></p><h2 id=hugo>hugo</h2><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>hugo new site blog
+</span></span><span style=display:flex><span>cd blog
+</span></span><span style=display:flex><span>git clone https://github.com/funkydan2/hugo-kiera.git themes/kiera
+</span></span><span style=display:flex><span>cp themes/kiera/exampleSite/config.toml .
+</span></span></code></pre></td></tr></table></div></div><p>新建文章</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>hugo new posts/test.md
+</span></span></code></pre></td></tr></table></div></div><p>开启本地服务可以访问<code>localhost:1313</code>预览效果</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>hugo server
+</span></span></code></pre></td></tr></table></div></div><p>首页只显示一部分内容</p><p>在文章中插入<code>&lt;!--more--></code></p><h3 id=帮助>帮助</h3><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-zed data-lang=zed><span style=display:flex><span>$ hugo help
+</span></span><span style=display:flex><span>hugo is the main command, used to build your Hugo site.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Hugo is a Fast and Flexible Static Site Generator
+</span></span><span style=display:flex><span>built with love by spf13 and friends in Go.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Complete documentation is available at http<span style=color:#ff79c6>:</span><span style=color:#6272a4>//gohugo.io/.
+</span></span></span><span style=display:flex><span><span style=color:#6272a4></span>
+</span></span><span style=display:flex><span>Usage<span style=color:#ff79c6>:</span>
+</span></span><span style=display:flex><span>  hugo [flags]
+</span></span><span style=display:flex><span>  hugo [command]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Available Commands<span style=color:#ff79c6>:</span>
+</span></span><span style=display:flex><span>  config      Print the site configuration
+</span></span><span style=display:flex><span>  convert     Convert your content to different formats
+</span></span><span style=display:flex><span>  deploy      Deploy your site to a Cloud provider.
+</span></span><span style=display:flex><span>  env         Print Hugo version and environment info
+</span></span><span style=display:flex><span>  gen         A collection of several useful generators.
+</span></span><span style=display:flex><span>  help        Help about any command
+</span></span><span style=display:flex><span>  import      Import your site from others.
+</span></span><span style=display:flex><span>  list        Listing out various types of content
+</span></span><span style=display:flex><span>  mod         Various Hugo Modules helpers.
+</span></span><span style=display:flex><span>  new         Create new content for your site
+</span></span><span style=display:flex><span>  server      A high performance webserver
+</span></span><span style=display:flex><span>  version     Print the version number of Hugo
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Flags<span style=color:#ff79c6>:</span>
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>b, <span style=color:#ff79c6>--</span>baseURL string             hostname (and path) to the root, e.g. http<span style=color:#ff79c6>:</span><span style=color:#6272a4>//spf13.com/
+</span></span></span><span style=display:flex><span><span style=color:#6272a4></span>  <span style=color:#ff79c6>-</span>D, <span style=color:#ff79c6>--</span>buildDrafts                include content marked as draft
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>E, <span style=color:#ff79c6>--</span>buildExpired               include expired content
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>F, <span style=color:#ff79c6>--</span>buildFuture                include content with publishdate in the future
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>cacheDir string            filesystem path to cache directory. Defaults<span style=color:#ff79c6>:</span> $TMPDIR/hugo_cache/
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>cleanDestinationDir        remove files from destination not found in static directories
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>config string              config file (default is path/config.yaml<span style=color:#ff79c6>|</span>json<span style=color:#ff79c6>|</span>toml)
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>configDir string           config dir (default &#34;config&#34;)
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>c, <span style=color:#ff79c6>--</span>contentDir string          filesystem path to content directory
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>debug                      debug output
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>d, <span style=color:#ff79c6>--</span>destination string         filesystem path to write files to
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>disableKinds strings       disable different kind of pages (home, RSS etc.)
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>enableGitInfo              add Git revision, date and author info to the pages
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>e, <span style=color:#ff79c6>--</span>environment string         build environment
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>forceSyncStatic            copy all files when static is changed.
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>gc                         enable to run some cleanup tasks (remove unused cache files) after the build
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>h, <span style=color:#ff79c6>--</span>help                       help for hugo
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>i18n<span style=color:#ff79c6>-</span>warnings              print missing translations
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>ignoreCache                ignores the cache directory
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>ignoreVendor               ignores any _vendor directory
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>ignoreVendorPaths string   ignores any _vendor for module paths matching the given Glob pattern
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>l, <span style=color:#ff79c6>--</span>layoutDir string           filesystem path to layout directory
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>log                        enable Logging
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>logFile string             log File path (if set, logging enabled automatically)
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>minify                     minify any supported output format (HTML, XML etc.)
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>noChmod                    don&#39;t sync <span style=color:#8be9fd;font-style:italic>permission</span> mode of files
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>noTimes                    don&#39;t sync modification time of files
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>path<span style=color:#ff79c6>-</span>warnings              print warnings on duplicate target paths etc.
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>print<span style=color:#ff79c6>-</span>mem                  print memory usage to screen at intervals
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>quiet                      build in quiet mode
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>renderToMemory             render to memory (only useful for benchmark testing)
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>s, <span style=color:#ff79c6>--</span>source string              filesystem path to read files relative from
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>templateMetrics            display metrics about template executions
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>templateMetricsHints       calculate some improvement hints when combined with <span style=color:#ff79c6>--</span>templateMetrics
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>t, <span style=color:#ff79c6>--</span>theme strings              themes to use (located in <span style=color:#ff79c6>/</span>themes/THEMENAME/)
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>themesDir string           filesystem path to themes directory
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>trace file                 write trace to file (not useful in general)
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>v, <span style=color:#ff79c6>--</span>verbose                    verbose output
+</span></span><span style=display:flex><span>      <span style=color:#ff79c6>--</span>verboseLog                 verbose logging
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>-</span>w, <span style=color:#ff79c6>--</span>watch                      watch filesystem for changes and recreate as needed
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Additional help topics<span style=color:#ff79c6>:</span>
+</span></span><span style=display:flex><span>  hugo check   Contains some verification checks
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Use &#34;hugo [command] <span style=color:#ff79c6>--</span>help&#34; for more information about a command.
+</span></span></code></pre></td></tr></table></div></div><h3 id=查看文章列表>查看文章列表</h3><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>hugo list
+</span></span><span style=display:flex><span>Listing out various types of content.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>List requires a subcommand, e.g. `hugo list drafts`.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Usage:
+</span></span><span style=display:flex><span>  hugo list [command]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Available Commands:
+</span></span><span style=display:flex><span>  all         List all posts
+</span></span><span style=display:flex><span>  drafts      List all drafts
+</span></span><span style=display:flex><span>  expired     List all posts already expired
+</span></span><span style=display:flex><span>  future      List all posts dated in the future
+</span></span></code></pre></td></tr></table></div></div><p>查看所有posts</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>hugo list all
+</span></span></code></pre></td></tr></table></div></div><p>查看drafts</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>hugo list drafts
+</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 728 tags:</small>
 <small><code><a href=https://arair.net/tags/hugo>hugo</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>

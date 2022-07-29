@@ -1,31 +1,58 @@
 <!doctype html><html><title>linux objdump命令</title><meta name=description content="objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。
-"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux objdump命令"><meta property="og:description" content="objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/840e9ae2/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-06T18:52:48+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux objdump命令"><meta itemprop=description content="objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。"><meta itemprop=datePublished content="2021-03-06T18:52:48+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="254"><meta itemprop=keywords content="linux,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux objdump命令</h1><p><small>2021-03-06, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。</p><p>参数</p><pre tabindex=0><code>  -a, --archive-headers    Display archive header information
-  -f, --file-headers       Display the contents of the overall file header
-  -p, --private-headers    Display object format specific file header contents
-  -P, --private=OPT,OPT... Display object format specific contents
-  -h, --[section-]headers  Display the contents of the section headers
-  -x, --all-headers        Display the contents of all headers
-  -d, --disassemble        Display assembler contents of executable sections
-  -D, --disassemble-all    Display assembler contents of all sections
-  -S, --source             Intermix source code with disassembly
-  -s, --full-contents      Display the full contents of all sections requested
-  -g, --debugging          Display debug information in object file
-  -e, --debugging-tags     Display debug information using ctags style
-  -G, --stabs              Display (in raw form) any STABS info in the file
-  -W[lLiaprmfFsoRtUuTgAckK] or
-  --dwarf[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,
-          =frames-interp,=str,=loc,=Ranges,=pubtypes,
-          =gdb_index,=trace_info,=trace_abbrev,=trace_aranges,
-          =addr,=cu_index,=links,=follow-links]
-                           Display DWARF info in the file
-  -t, --syms               Display the contents of the symbol table(s)
-  -T, --dynamic-syms       Display the contents of the dynamic symbol table
-  -r, --reloc              Display the relocation entries in the file
-  -R, --dynamic-reloc      Display the dynamic relocation entries in the file
-  @&lt;file&gt;                  Read options from &lt;file&gt;
-  -v, --version            Display this program&#39;s version number
-  -i, --info               List object formats and architectures supported
-  -H, --help               Display this information
-</code></pre></article></div></body><div><small>words: 254 tags:</small>
+"><meta name=generator content="Hugo 0.101.0"><meta property="og:title" content="linux objdump命令"><meta property="og:description" content="objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。"><meta property="og:type" content="article"><meta property="og:url" content="https://arair.net/p/linux/command/840e9ae2/"><meta property="article:section" content="p"><meta property="article:published_time" content="2021-03-06T18:52:48+08:00"><meta property="article:modified_time" content="2021-09-12T18:05:24+08:00"><meta itemprop=name content="linux objdump命令"><meta itemprop=description content="objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。"><meta itemprop=datePublished content="2021-03-06T18:52:48+08:00"><meta itemprop=dateModified content="2021-09-12T18:05:24+08:00"><meta itemprop=wordCount content="281"><meta itemprop=keywords content="linux,"><style type=text/css>.markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;font-family:Consolas,courier new,monospace}@media(max-width:767px){.markdown-body{padding:15px}}</style><script>function setTheme({el:e=document.documentElement,mode:t="auto",light:n="light",dark:s="dark"}){e.dataset.colorMode=t,e.dataset.lightTheme=n,e.dataset.darkTheme=s}let prefersDarkMode=window.matchMedia("(prefers-color-scheme: dark)").matches;prefersDarkMode&&setTheme({mode:"dark"})</script><body id=content class=markdown-body><body><div id=post class=post><article><header><h1 class=post-title>linux objdump命令</h1><p><small>2021-03-06, updated 2021-09-12</small></p></header><aside><nav id=TableOfContents></nav></aside><p>objdump命令是Linux下的反汇编目标文件或者可执行文件的命令，它以一种可阅读的格式让你更多地了解二进制文件可能带有的附加信息。</p><p>参数</p><div class=highlight><div style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>  -a, --archive-headers    Display archive header information
+</span></span><span style=display:flex><span>  -f, --file-headers       Display the contents of the overall file header
+</span></span><span style=display:flex><span>  -p, --private-headers    Display object format specific file header contents
+</span></span><span style=display:flex><span>  -P, --private=OPT,OPT... Display object format specific contents
+</span></span><span style=display:flex><span>  -h, --[section-]headers  Display the contents of the section headers
+</span></span><span style=display:flex><span>  -x, --all-headers        Display the contents of all headers
+</span></span><span style=display:flex><span>  -d, --disassemble        Display assembler contents of executable sections
+</span></span><span style=display:flex><span>  -D, --disassemble-all    Display assembler contents of all sections
+</span></span><span style=display:flex><span>  -S, --source             Intermix source code with disassembly
+</span></span><span style=display:flex><span>  -s, --full-contents      Display the full contents of all sections requested
+</span></span><span style=display:flex><span>  -g, --debugging          Display debug information in object file
+</span></span><span style=display:flex><span>  -e, --debugging-tags     Display debug information using ctags style
+</span></span><span style=display:flex><span>  -G, --stabs              Display (in raw form) any STABS info in the file
+</span></span><span style=display:flex><span>  -W[lLiaprmfFsoRtUuTgAckK] or
+</span></span><span style=display:flex><span>  --dwarf[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,
+</span></span><span style=display:flex><span>          =frames-interp,=str,=loc,=Ranges,=pubtypes,
+</span></span><span style=display:flex><span>          =gdb_index,=trace_info,=trace_abbrev,=trace_aranges,
+</span></span><span style=display:flex><span>          =addr,=cu_index,=links,=follow-links]
+</span></span><span style=display:flex><span>                           Display DWARF info in the file
+</span></span><span style=display:flex><span>  -t, --syms               Display the contents of the symbol table(s)
+</span></span><span style=display:flex><span>  -T, --dynamic-syms       Display the contents of the dynamic symbol table
+</span></span><span style=display:flex><span>  -r, --reloc              Display the relocation entries in the file
+</span></span><span style=display:flex><span>  -R, --dynamic-reloc      Display the dynamic relocation entries in the file
+</span></span><span style=display:flex><span>  @&lt;file&gt;                  Read options from &lt;file&gt;
+</span></span><span style=display:flex><span>  -v, --version            Display this program&#39;s version number
+</span></span><span style=display:flex><span>  -i, --info               List object formats and architectures supported
+</span></span><span style=display:flex><span>  -H, --help               Display this information
+</span></span></code></pre></td></tr></table></div></div></article></div></body><div><small>words: 281 tags:</small>
 <small><code><a href=https://arair.net/tags/linux>linux</a></code></small></div></html></body><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?bd28dafb59c7621d0ab721cefd01691b",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><script id=LA_COLLECT src=//sdk.51.la/js-sdk-pro.min.js></script>
 <script>LA.init({id:"JMTlKgP6j8mqnJSa",ck:"JMTlKgP6j8mqnJSa"})</script></html>
